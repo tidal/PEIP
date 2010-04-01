@@ -1,0 +1,176 @@
+<?php
+
+/*
+ * This file is part of the PEIP package.
+ * (c) 2010 Timo Michna <timomichna/yahoo.de>
+ * 
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
+/**
+ * PEIP_Event 
+ *
+ * @author Timo Michna <timomichna/yahoo.de>
+ * @package PEIP 
+ * @subpackage event 
+ * @extends PEIP_Generic_Message
+ * @implements PEIP_INF_Buildable, PEIP_INF_Message, PEIP_INF_Container, PEIP_INF_Event
+ */
+
+
+
+
+class PEIP_Event 
+    extends 
+        PEIP_Generic_Message 
+    implements 
+        PEIP_INF_Event {
+            
+    protected
+        $value      = null,
+        $processed  = false,
+        $subject    = null,
+        $name       = '',
+        $parameters = null;
+
+  /**
+   * Constructs a new sfEvent.
+   *
+   * @param mixed   $subject      The subject
+   * @param string  $name         The event name
+   * @param array   $parameters   An array of parameters
+   */
+  
+    /**
+     * @access public
+     * @param $subject 
+     * @param $name 
+     * @param $parameters 
+     * @return 
+     */
+    public function __construct($subject, $name, array $parameters = array())
+  {
+    parent::__construct($subject, new ArrayObject($parameters));
+  
+    $this->name = $name;
+    //$this->parameters = $parameters;
+  }
+
+  /**
+   * Returns the event name.
+   *
+   * @return string The event name
+   */
+  
+    /**
+     * @access public
+     * @return 
+     */
+    public function getName(){
+    return $this->name;
+  }
+
+  /**
+   * Sets the return value for this event.
+   *
+   * @param mixed $value The return value
+   */
+  
+    /**
+     * @access public
+     * @param $value 
+     * @return 
+     */
+    public function setReturnValue($value){
+    $this->value = $value;
+  }
+
+  /**
+   * Returns the return value.
+   *
+   * @return mixed The return value
+   */
+  
+    /**
+     * @access public
+     * @return 
+     */
+    public function getReturnValue(){
+    return $this->value;
+  }
+
+  /**
+   * Sets the processed flag.
+   *
+   * @param Boolean $processed The processed flag value
+   */
+  
+    /**
+     * @access public
+     * @param $processed 
+     * @return 
+     */
+    public function setProcessed($processed){
+    $this->processed = (boolean) $processed;
+  }
+
+  /**
+   * Returns whether the event has been processed by a listener or not.
+   *
+   * @return Boolean true if the event has been processed, false otherwise
+   */
+  
+    /**
+     * @access public
+     * @return 
+     */
+    public function isProcessed(){
+    return $this->processed;
+  }
+
+
+  /**
+   * Returns true if the parameter exists (implements the ArrayAccess interface).
+   *
+   * @param  string  $name  The parameter name
+   *
+   * @return Boolean true if the parameter exists, false otherwise
+   */
+  
+    /**
+     * @access public
+     * @param $name 
+     * @return 
+     */
+    public function offsetExists($name)
+  {
+    return array_key_exists($name, $this->parameters);
+  }
+
+  /**
+   * Returns a parameter value (implements the ArrayAccess interface).
+   *
+   * @param  string  $name  The parameter name
+   *
+   * @return mixed  The parameter value
+   */
+  
+    /**
+     * @access public
+     * @param $name 
+     * @return 
+     */
+    public function offsetGet($name)
+  {
+    if (!array_key_exists($name, $this->parameters))
+    {
+      throw new InvalidArgumentException(sprintf('The event "%s" has no "%s" parameter.', $this->name, $name));
+    }
+
+    return $this->parameters[$name];
+  }
+
+}
+    
+
