@@ -22,7 +22,9 @@ class PEIP_Content_Type_Selector
     implements PEIP_INF_Message_Selector {
             
     protected 
-        $type,
+        $type;
+        
+    protected static 
         $types = array(
             'string' => 'is_string',
             'int' => 'is_int',
