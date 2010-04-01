@@ -50,18 +50,12 @@ class PEIP_Generic_Builder
         }
         if($storeRef){
             self::$instances[$className] = $this;
-        }   
-            
+        }            
     }
     
     public static function getInstance($className){
         if(!array_key_exists((string)$className, self::$instances)) {
-            try{
-                new PEIP_Generic_Builder($className);
-            }
-            catch(Exception $e){
-                throw new Exception ('Could not create Builder: '.$e->getMessage());
-            } 
+            new PEIP_Generic_Builder($className);
         }
         return self::$instances[$className];
     }
