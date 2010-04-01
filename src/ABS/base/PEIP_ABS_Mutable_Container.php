@@ -27,7 +27,7 @@ abstract class PEIP_ABS_Mutable_Container
     
     /**
      * @access public
-     * @return 
+     * @return mixed content
      */
     public function getContent(){
         return parent::getContent();

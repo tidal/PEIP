@@ -17,13 +17,11 @@
  * @implements PEIP_INF_Container
  */
 
-
 abstract class PEIP_ABS_Container 
     implements PEIP_INF_Container{
 
     protected $content;
-    
-    
+       
     /**
      * @access public
      * @return 

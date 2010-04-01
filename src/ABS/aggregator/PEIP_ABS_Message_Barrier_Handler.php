@@ -18,10 +18,9 @@
  * @implements PEIP_INF_Handler, PEIP_INF_Message_Builder
  */
 
-
 abstract class PEIP_ABS_Message_Barrier_Handler
 	extends PEIP_ABS_Discarding_Message_Handler {
 	
 	
-	
+
 }
