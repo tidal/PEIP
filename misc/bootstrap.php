@@ -1,4 +1,4 @@
 <?php
 
-require_once('../src/autoload/PEIP_Autoload.php');
+require_once(__DIR__.'/../src/autoload/PEIP_Autoload.php');
 PEIP_Autoload::getInstance();
