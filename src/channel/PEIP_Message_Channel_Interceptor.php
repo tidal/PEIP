@@ -18,8 +18,6 @@
  */
 
 
-
-
 class PEIP_Message_Channel_Interceptor 
 	implements PEIP_INF_Message_Channel_Interceptor {
   
@@ -30,7 +28,7 @@ class PEIP_Message_Channel_Interceptor
      * @param $sent 
      * @return 
      */
-    public function postSend(PEIP_INF_Message $message, PEIP_INF_Message_Channel $channel, $sent){
+    public function postSend(PEIP_INF_Message $message, PEIP_INF_Channel $channel, $sent){
     
     }
     
@@ -41,7 +39,7 @@ class PEIP_Message_Channel_Interceptor
      * @param $channel 
      * @return 
      */
-    public function preSend(PEIP_INF_Message $message, PEIP_INF_Message_Channel $channel){
+    public function preSend(PEIP_INF_Message $message, PEIP_INF_Channel $channel){
     
     }
     
