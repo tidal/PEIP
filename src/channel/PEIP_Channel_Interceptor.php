@@ -9,7 +9,7 @@
  */
 
 /**
- * PEIP_Abstract_Message_Channel_Interceptor 
+ * PEIP_Channel_Interceptor 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -18,8 +18,8 @@
  */
 
 
-class PEIP_Message_Channel_Interceptor 
-	implements PEIP_INF_Message_Channel_Interceptor {
+class PEIP_Channel_Interceptor 
+	implements PEIP_INF_Channel_Interceptor {
   
     /**
      * @access public
