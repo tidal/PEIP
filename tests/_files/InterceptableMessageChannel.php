@@ -1,6 +1,6 @@
 <?php
 
-class InterceptableMessageChannel extends PEIA_ABS_Interceptable_Message_Channel {
+class InterceptableMessageChannel extends PEIP_ABS_Interceptable_Message_Channel {
 
 	protected $messages = array();
 
@@ -8,7 +8,7 @@ class InterceptableMessageChannel extends PEIA_ABS_Interceptable_Message_Channel
 		$this->name = $name;
 	}
 	
-	protected function doSend(PEIA_Message_Interface $message){
+	protected function doSend(PEIP_INF_Message $message){
 		$this->messages[] = $message;
 		return true;		 
 	}	

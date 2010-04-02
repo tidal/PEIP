@@ -146,6 +146,7 @@ class PEIP_Autoload_Paths {
   'PEIP_Service_Activator' => '/service/PEIP_Service_Activator.php',
   'PEIP_Service_Container' => '/service/PEIP_Service_Container.php',
   'PEIP_Service_Container_Builder' => '/service/PEIP_Service_Container_Builder.php',
+  'PEIP_String_Service_Activator' => '/service/PEIP_String_Service_Activator.php',
   'PEIP_Autoload' => '/autoload/PEIP_Autoload.php',
   'PEIP_Simple_Autoload' => '/autoload/PEIP_Simple_Autoload.php',
   'PEIP_Autoload_Paths' => '/autoload/PEIP_Autoload_Paths.php',

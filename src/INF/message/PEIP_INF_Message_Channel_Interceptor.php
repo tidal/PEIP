@@ -20,10 +20,8 @@
 
 interface PEIP_INF_Message_Channel_Interceptor {
     
-
-    public function postSend(PEIP_INF_Message $message, PEIP_INF_Message_Channel $channel, $sent);
+    public function postSend(PEIP_INF_Message $message, PEIP_INF_Channel $channel, $sent);
     
-
-    public function preSend(PEIP_INF_Message $message, PEIP_INF_Message_Channel $channel);
+    public function preSend(PEIP_INF_Message $message, PEIP_INF_Channel $channel);
 
 }

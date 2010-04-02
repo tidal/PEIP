@@ -39,13 +39,12 @@ abstract class PEIP_ABS_Service_Activator
                 $res = $this->serviceCallable->handle($message->getContent());
             }
         }
-        $out = (bool)$message->hasHeader('REPLY_CHANNEL') ? $message->getHeader('REPLY_CHANNEL') : $this->outputChannel;    
+        $out = (bool)$message->hasHeader('REPLY_CHANNEL') 
+        	? $message->getHeader('REPLY_CHANNEL') 
+        	: $this->outputChannel;    
         if($out){
-            $this->replyMessage($out, $res);    
+            $this->replyMessage($res, $res);    
         }
-    }
-            
-    
-    
+    }  
     
 } 
