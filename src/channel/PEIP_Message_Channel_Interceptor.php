@@ -20,9 +20,9 @@
 
 
 
-class PEIP_Abstract_Message_Channel_Interceptor implements PEIP_INF_Message_Channel_Interceptor{
-
-    
+class PEIP_Message_Channel_Interceptor 
+	implements PEIP_INF_Message_Channel_Interceptor {
+  
     /**
      * @access public
      * @param $message 
