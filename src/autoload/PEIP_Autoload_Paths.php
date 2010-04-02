@@ -107,6 +107,7 @@ class PEIP_Autoload_Paths {
   'PEIP_Publish_Subscribe_Channel' => '/channel/PEIP_Publish_Subscribe_Channel.php',
   'PEIP_Queue_Channel' => '/channel/PEIP_Queue_Channel.php',
   'PEIP_Priority_Channel' => '/channel/PEIP_Priority_Channel.php',
+  'PEIP_Message_Channel_Interceptor' => '/channel/PEIP_Message_Channel_Interceptor.php',
   'PEIP_Command' => '/command/PEIP_Command.php',
   'PEIP_XML_Context' => '/context/PEIP_XML_Context.php',
   'PEIP_Array_Access' => '/data/PEIP_Array_Access.php',
