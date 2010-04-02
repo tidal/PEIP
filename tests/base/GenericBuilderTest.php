@@ -1,9 +1,9 @@
 <?php
 
-require_once '../../misc/bootstrap.php';
+require_once __DIR__.'/../../misc/bootstrap.php';
 
-PHPUnit_Util_Fileloader::checkAndLoad('../_files/BuilderObjectMock.php');
-PHPUnit_Util_Fileloader::checkAndLoad('../_files/BuilderObjectMockConstructor.php');
+PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/BuilderObjectMock.php');
+PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/BuilderObjectMockConstructor.php');
 
 class GenericBuilderTest  extends PHPUnit_Framework_TestCase { 
 

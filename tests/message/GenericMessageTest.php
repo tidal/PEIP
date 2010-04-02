@@ -1,8 +1,8 @@
 <?php
 
-require_once '../../misc/bootstrap.php';
+require_once __DIR__.'/../../misc/bootstrap.php';
 
-PHPUnit_Util_Fileloader::checkAndLoad('../_files/PayloadMock.php');
+PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/PayloadMock.php');
  
 
 

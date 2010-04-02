@@ -2,7 +2,7 @@
 
 require_once __DIR__.'/../../misc/bootstrap.php';
 
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files//CallableMessageHandlerMock.php');
+PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/CallableMessageHandlerMock.php');
 
 class CallableMessageHandlerTest extends PHPUnit_Framework_TestCase  {
 
