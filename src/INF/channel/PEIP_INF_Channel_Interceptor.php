@@ -9,7 +9,7 @@
  */
 
 /**
- * PEIP_INF_Message_Channel_Interceptor 
+ * PEIP_INF_Channel_Interceptor 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -18,7 +18,7 @@
 
 
 
-interface PEIP_INF_Message_Channel_Interceptor {
+interface PEIP_INF_Channel_Interceptor {
     
     public function postSend(PEIP_INF_Message $message, PEIP_INF_Channel $channel, $sent);
     
