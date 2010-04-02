@@ -19,9 +19,9 @@
 
 interface PEIP_INF_Interceptable {
 
-    public function addInterceptor(PEIP_Abstract_Message_Channel_Interceptor $interceptor);
+    public function addInterceptor(PEIP_INF_Channel_Interceptor $interceptor);
 
-    public function deleteInterceptor(PEIP_Abstract_Message_Channel_Interceptor $interceptor);
+    public function deleteInterceptor(PEIP_INF_Channel_Interceptor $interceptor);
     
     public function getInterceptors() ;
     

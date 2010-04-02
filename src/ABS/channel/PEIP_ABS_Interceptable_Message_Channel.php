@@ -109,7 +109,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @param PEIP_Abstract_Message_Channel_Interceptor $interceptor 
      * @return 
      */
-    public function addInterceptor(PEIP_Abstract_Message_Channel_Interceptor $interceptor){
+    public function addInterceptor(PEIP_INF_Channel_Interceptor $interceptor){
         
         $hash = spl_object_hash($interceptor);
         $this->interceptors[$hash] = $interceptor;      
@@ -137,7 +137,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @param PEIP_Abstract_Message_Channel_Interceptor $interceptor 
      * @return 
      */
-    public function deleteInterceptor(PEIP_Abstract_Message_Channel_Interceptor $interceptor){
+    public function deleteInterceptor(PEIP_INF_Channel_Interceptor $interceptor){
         $hash = spl_object_hash($interceptor);
         $handlers = $this->interceptorsHandlers[$hash];
         $this->getInterceptorDispatcher()->disconnect('preSend', $handlers['preSend']);

@@ -1,7 +1,7 @@
 <?php
 
 
-class MessageChannelInterceptor extends PEIP_Message_Channel_Interceptor {
+class MessageChannelInterceptor extends PEIP_Channel_Interceptor {
 
 	public $message;
 	
