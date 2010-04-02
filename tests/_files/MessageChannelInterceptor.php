@@ -1,7 +1,7 @@
 <?php
 
 
-class MessageChannelInterceptor extends PEIP_Abstract_Message_Channel_Interceptor {
+class MessageChannelInterceptor extends PEIP_Message_Channel_Interceptor {
 
 	public $message;
 	
@@ -10,11 +10,11 @@ class MessageChannelInterceptor extends PEIP_Abstract_Message_Channel_Intercepto
 	}
 	
 
-	public function preSend(PEIA_Message_Interface $message, PEIA_Message_Channel_Interface $channel){
+	public function preSend(PEIP_INF_Message $message, PEIP_INF_Channel $channel){
 	
 	}
 
-	public function postSend(PEIA_Message_Interface $message, PEIA_Message_Channel_Interface $channel, $sent){
+	public function postSend(PEIP_INF_Message $message, PEIP_INF_Channel $channel, $sent){
 		$this->message = $message;
 	}
 
