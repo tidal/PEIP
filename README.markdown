@@ -28,7 +28,7 @@ soon to follow
 <h2>WHY?</h2>
 
 soon to follow as a blog-post.
-<br>Part 1 (<a href="http://blog.esfex.com/Why-is-their-a-need-for-SOA-in-PHP.html">Why is their a need for SOA in PHP?</a>) allerady online.
+<br>Part 1 (<a href="http://blog.esfex.com/Why-is-their-a-need-for-SOA-in-PHP.html">Why is their a need for SOA in PHP?</a>) allready online.
 
 <h2>HOW?</h2>
 
