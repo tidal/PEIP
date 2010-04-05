@@ -202,7 +202,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @return 
      */
     public function hasListeners($name){
-        return $this->getEventDispatcher()->hasListener($name, $this);
+        return $this->getEventDispatcher()->hasListeners($name, $this);
     }
        
     /**

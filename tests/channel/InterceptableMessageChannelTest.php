@@ -7,34 +7,31 @@ PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/MessageChannelIntercep
 class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 
 	
+	public function setUp(){
+		$this->channel = new InterceptableMessageChannel('TestChannel');
+	}
+	
+	
+	
 	public function testMessageChannelInterceptor(){
-		$channel = new InterceptableMessageChannel('TestChannel');
 		$interceptor = new MessageChannelInterceptor(1);
 		$message = new PEIP_Generic_Message(321);
-		$interceptor->postSend($message, $channel, true);
+		$interceptor->postSend($message, $this->channel, true);
 		$this->assertEquals($message, $interceptor->message);
 	}
 	
-	
-	public function testConstruction(){
-		$channel = new InterceptableMessageChannel('TestChannel');
-		$this->assertTrue($channel instanceof InterceptableMessageChannel);
-	}	
-
 	public function testGetName(){
-		$channel = new InterceptableMessageChannel('TestChannel');
-		$this->assertEquals('TestChannel', $channel->getName());
+		$this->assertEquals('TestChannel', $this->channel->getName());
 	}	
 	
 	public function testSetInterceptorDispatcher(){
-		$channel = new InterceptableMessageChannel('TestChannel');
 		$dispatcher = new PEIP_Interceptor_Dispatcher();
-		$channel->setInterceptorDispatcher($dispatcher);
-		$this->assertEquals($dispatcher, $channel->getInterceptorDispatcher());
+		$this->channel->setInterceptorDispatcher($dispatcher);
+		$this->assertEquals($dispatcher, $this->channel->getInterceptorDispatcher());
 	}
 
 	public function testAddInterceptor(){
-		$channel = new InterceptableMessageChannel('TestChannel');
+		$channel = $this->channel;
 		$iterceptor = new MessageChannelInterceptor;
 		$channel->addInterceptor($iterceptor);
 		$this->assertEquals(array($iterceptor), $channel->getInterceptors());
@@ -46,7 +43,7 @@ class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testSetInterceptors(){
-		$channel = new InterceptableMessageChannel('TestChannel');
+		$channel = $this->channel;
 		$iterceptor1 = new MessageChannelInterceptor(1);
 		$iterceptor2 = new MessageChannelInterceptor(2);
 		$channel->setInterceptors(array($iterceptor1, $iterceptor2));
@@ -59,7 +56,7 @@ class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 	}	
 	
 	public function testDeleteInterceptors(){
-		$channel = new InterceptableMessageChannel('TestChannel');
+		$channel = $this->channel;
 		$iterceptor1 = new MessageChannelInterceptor(1);
 		$iterceptor2 = new MessageChannelInterceptor(2);
 		$channel->setInterceptors(array($iterceptor1, $iterceptor2));
@@ -70,12 +67,27 @@ class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 	}	
 	
 	public function testSend(){
-		$channel = new InterceptableMessageChannel('TestChannel');
 		$iterceptor1 = new MessageChannelInterceptor(1);
-		$channel->addInterceptor($iterceptor1);
+		$this->channel->addInterceptor($iterceptor1);
 		$message = new PEIP_Generic_Message(321);	
-		$channel->send($message);
+		$this->channel->send($message);
 	}
+
+	public function testConnect(){
+		$this->assertFalse($this->channel->hasListeners('preSend'));
+		$handler = new PEIP_Callable_Handler(function(){});
+		$this->channel->connect('preSend', $handler);
+		$this->assertTrue($this->channel->hasListeners('preSend'));		
+	}
+
+	public function testDisconnect(){
+		$handler = new PEIP_Callable_Handler(function(){});
+		$this->channel->connect('preSend', $handler);
+		$this->assertTrue($this->channel->hasListeners('preSend'));	
+		$this->channel->disconnect('preSend', $handler);
+		$this->assertFalse($this->channel->hasListeners('preSend'));	
+	}	
+	
 	
 	
 }
