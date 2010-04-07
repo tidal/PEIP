@@ -25,16 +25,6 @@ class PEIP_Channel_Registry
 
     protected static $instance;
     
-    private function __construct(){
-    
-    }
-    
-    
-    /**
-     * @access public
-     * @return 
-     */
-    
     /**
      * @access public
      * @param $name 
