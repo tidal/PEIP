@@ -58,13 +58,17 @@ Basically there are two types of Channels:<br>
 <h4>Point-to-Point Channels</h4>
 A Point-to-Point Channel (for example a PollableChannel) let exactly one Consumer receive a certain Message<br>
 <h4>Publish-Subscribe Channels</h4>
-A Publish-Subscribe Channel broadcasts any Message to all of its subscribers.<br>  
+A Publish-Subscribe Channel broadcasts any Message to all of its subscribers.  
 <h3>Pipes</h3>
 Pipes are PEIP´s most powerfull components.<br>
 They are not to be mixed up with "pipes" in a "pipes-and-filters architecture" - That would be the channels instead.
 Instead Pipes in PEIP are pipes-and-filters combinded in one. They can act as a filter (or router, splitter, aggregator, ...),<br>
 Message-Handler and can be hooked up in any place, where actually a channel would be needed. Hence Pipes can be chained together<br>
-without the need for channels to connect them.
+without the need for channels to connect them.<br>
+Pipes are the base component for any component handling, examining, manipulating or routing messages.<br><br>
+A special sub-type of Pipes are EventPipes:<br>
+EventPipes can be hooked up on any component implementing the Connectable (Event-Publisher) Interface and pass its <br>
+EventObjects to the Messaging System for further routing or processing.
 
 
 <h3>Service Activators</h3>
