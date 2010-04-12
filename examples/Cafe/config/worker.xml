@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+
+	<plugin class="PEIP_Gearman_Context_Plugin"/>
+
+	<channel id="preparedDrinks"/>
+
+	<channel id="drinks"/>
+
+	<channel id="coldDrinks"/>
+
+    	<channel id="hotDrinks"/>
+
+	<gearman_worker id="Gearman_Worker">
+		<server name="localhost"/>
+	</gearman_worker>
+
+	<gearman_worker_gateway 
+		id="Gearman_Worker_Gateway" 
+		default_request_channel="drinks"
+	       default_reply_channel="preparedDrinks"/>
+
+	<service 
+		id="Gearman_Worker_Reg" 
+		class="PEIP_Gearman_Worker_Registry">
+		<constructor_arg>
+			<service ref="Gearman_Worker"/>
+		</constructor_arg>
+		<action method="set">
+			<value>cafe_channel</value>
+			<list>
+				<service ref="Gearman_Worker_Gateway"/>
+				<value>sendAndReceive</value>
+			</list>	
+		</action>
+	</service>
+
+    	<router 
+		input_channel="drinks" 
+		class="DrinkRouter" />
+
+    	<service 
+		id="barista" 
+		class="Barista"/>
+
+    	<service_activator 
+		input_channel="coldDrinks" 
+		ref="barista"
+       	method="prepareColdDrink" 
+		output_channel="preparedDrinks"/>
+
+   	<service_activator 
+		input_channel="hotDrinks" 
+		ref="barista"
+              method="prepareHotDrink" 
+		output_channel="preparedDrinks"/>
+
+</config>

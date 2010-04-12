@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>	
+
+	<publish_subscribe_channel id="orders"/>
+
+	<publish_subscribe_channel id="preparedDrinks"/>
+
+    	<channel id="coldDrinks"/>
+
+    	<channel id="hotDrinks"/>
+
+    	<channel id="deliveries"/>
+
+	<gateway 
+		id="CafeGateway" 
+		class="CafeGateway" 
+		default_request_channel="orders" 
+		default_reply_channel="deliveries"/>
+
+	<wiretap 
+		id="acceptedOrders" 
+		input_channel="orders"/>
+
+	<splitter 
+		id="OrderSplitter" 
+		input_channel="orders" 
+		class="OrderSplitter"/>
+
+    	<router 
+		input_channel="OrderSplitter" 
+		class="DrinkRouter" />
+
+    	<service id="barista" class="Barista"/>
+
+    	<service_activator 
+		input_channel="coldDrinks" 
+		ref="barista"
+              method="prepareColdDrink" 
+		output_channel="preparedDrinks"/>
+
+    	<service_activator 
+		input_channel="hotDrinks" 
+		ref="barista"
+       	method="prepareHotDrink" 
+		output_channel="preparedDrinks"/>
+
+    	<aggregator 
+		id="DrinkAggregator" 
+		input_channel="preparedDrinks" 
+		class="DrinkAggregator"/>
+
+    	<service 
+		id="waiter" 
+		class="Waiter"/>
+
+    	<service_activator 
+		input_channel="DrinkAggregator" 
+		ref="waiter"
+              method="prepareDelivery" 
+		output_channel="deliveries"/> 
+ 
+    	<service_activator 
+		input_channel="acceptedOrders" 
+		ref="DrinkAggregator"
+              method="receiveOrder"/>   
+
+</config>
