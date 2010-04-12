@@ -32,7 +32,8 @@ soon to follow as a blog-post.
 
 <h2>HOW?</h2>
 
-soon to follow
+soon to follow<br>
+API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a>
 
 <h2>TODOs:</h2>
 <ul>
