@@ -33,7 +33,10 @@ See also:<br>
 
 <h2>WHAT?</h2>
 
-soon to follow
+PEIP is a pure PHP Middleware Framework to easily create Messaging- and Work-Flows.<br>
+One of it´s goals is to provide implementations of <a href="http://www.eaipatterns.com/eaipatterns.html">Enterprise Integration Patterns</a> for PHP.<br>
+PEIP can be used by scripting or configuration (recommended).<br>
+PEIP is noninvasive - it plays nicely and intergrates with your favorite MVC, Library, Services or PHP Applications.<br> 
 
 <h2>WHY?</h2>
 
