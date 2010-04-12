@@ -38,7 +38,7 @@ One of PEIP's goals is to provide implementations of <a href="http://www.eaipatt
 PEIP can be used by scripting or configuration (recommended).<br>
 PEIP is noninvasive - it plays nicely and intergrates with your favorite MVC, Library, Services or PHP Applications.<br> 
 PEIP itself (contrary to any other Messaging Framework) is Event Driven. This allows for easily combining it's components without a need for coupling.<br> 
-PEIP's Events are first class Messages and can travel through the same components as generic messages.<br> 
+PEIP's Event Objects are first class Messages and can travel through the same components as Generic Messages.<br> 
 PEIP can be easily extended and integrated (by using its interfaces).<br>
 PEIP's configuration (ability) can be easily augmented by simple plugins.
 <h2>WHY?</h2>
