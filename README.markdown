@@ -21,6 +21,10 @@ Forgett about Coupling and Vendor-Locks<br>
 On Demand build your Index and Caches<br>
 And if you want to, Change all of that!<br><br>
 
+<h2>WHERE?</h2>
+Interim Homepage can be found <a href="http://tidal.github.com/PEIP/">here<a>
+ohloh metrics can be found <a href="http://www.ohloh.net/p/peip">here</a>
+
 <h2>WHAT?</h2>
 
 soon to follow
