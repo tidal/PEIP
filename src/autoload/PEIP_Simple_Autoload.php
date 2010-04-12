@@ -120,10 +120,10 @@ class PEIP_Simple_Autoload {
   	public function autoload($class){
   		if ($path = $this->getClassPath($class)){
   			require $path;
-      		if(class_exists($class)){
-      			return true;
-      		}
-    	}
+      			if(class_exists($class)){
+      				return true;
+      			}
+    		}
     	return false;
   	}	
 }

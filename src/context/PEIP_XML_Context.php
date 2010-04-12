@@ -414,7 +414,7 @@ class PEIP_XML_Context
                 $service,
                 $method             
             )); 
-            echo $defaultClass = $defaultClass ? $defaultClass : 'PEIP_Service_Activator';
+            $defaultClass = $defaultClass ? $defaultClass : 'PEIP_Service_Activator';
             return $this->buildAndModify($config, $args, $defaultClass);                
         }
     }   

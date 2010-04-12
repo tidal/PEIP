@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>	
+
+	<publish_subscribe_channel id="input"/>
+
+    	<channel id="output"/>
+
+	<service id="HelloService" class="HelloService"/>
+
+	<gateway id="HelloWorldGateway" default_request_channel="input" default_reply_channel="output"/>
+
+    	<service_activator input_channel="input" ref="HelloService" method="greet" output_channel="output" class="PEIP_String_Service_Activator"/>  
+
+</config>
