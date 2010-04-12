@@ -53,12 +53,20 @@ Event Objects are only created when there is a listener registered for the certa
 <h3>Channels</h3>
 (Message) Channels are the objects on which Messages can be send and received from<br>
 A Producer would send a Message and a Consumer would receive it.<br>
-Basically there are two types of Channels:
+Basically there are two types of Channels:<br>
+<em>(Note, that in implementation there is also a difference in how the Messages are received - that is publishing vs. polling)</em>
 <h4>Point-to-Point Channels</h4>
 A Point-to-Point Channel (for example a PollableChannel) let exactly one Consumer receive a certain Message<br>
 <h4>Publish-Subscribe Channels</h4>
 A Publish-Subscribe Channel broadcasts any Message to all of its subscribers.<br>  
 <h3>Pipes</h3>
+Pipes are PEIP´s most powerfull components.<br>
+They are not to be mixed up with "pipes" in a "pipes-and-filters architecture" - That would be the channels instead.
+Instead Pipes in PEIP are pipes-and-filters combinded in one. They can act as a filter (or router, splitter, aggregator, ...),<br>
+Message-Handler and can be hooked up in any place, where actually a channel would be needed. Hence Pipes can be chained together<br>
+without the need for channels to connect them.
+
+
 <h3>Service Activators</h3>
 <h3>Gateways</h3>
 
