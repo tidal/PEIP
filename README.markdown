@@ -102,7 +102,7 @@ not used in to many places.
 <h3>SPECIAL REQUIREMENTs:</h3>
 Since PEIP is to be used with a variety of Applications, Frameworks and Services there might be special
 dependencies to use them with PEIP<br>
-For example the PEIP Gearman extension (PEIP_Gearman) has a dependency on PHP's Gearman exetnsion and a Gearman server.
+For example the PEIP Gearman extension (PEIP_Gearman) has a dependency on PHP's Gearman extension and a Gearman server.
 
 
 <h2>TODOs:</h2>
