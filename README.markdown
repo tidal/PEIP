@@ -26,7 +26,7 @@ Interim Homepage can be found <a href="http://tidal.github.com/PEIP/">here</a><b
 Downloads can be found <a href="http://github.com/tidal/PEIP/downloads">here</a><br>
 API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a><br>
 Examples can be found in the <a href="http://github.com/tidal/PEIP/tree/master/examples/">source</a>.<br>
-Issue/Bug Tracker can be found <a href="http://tidal.lighthouseapp.com/projects/50364-peip/overview">here</a><br>
+Issue/Bug Tracker can be found <a href="http://tidal.lighthouseapp.com/projects/50364-peip/tickets">here</a><br>
 ohloh metrics can be found <a href="http://www.ohloh.net/p/peip">here</a><br><br>
 See also:<br>
 <a href="http://github.com/tidal/PEIP_Gearman">PEIP Gearman Extension</a><br>
