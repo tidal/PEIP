@@ -60,20 +60,26 @@ A Point-to-Point Channel (for example a PollableChannel) let exactly one Consume
 <h4>Publish-Subscribe Channels</h4>
 A Publish-Subscribe Channel broadcasts any Message to all of its subscribers.  
 <h3>Pipes</h3>
-Pipes are PEIP´s most powerfull components.<br>
-They are not to be mixed up with "pipes" in a "pipes-and-filters architecture" - That would be the channels instead.
+Pipes are PEIP's most powerfull components.<br>
+They are not to be mixed up with "pipes" in a "pipes-and-filters architecture" - That would be the Channels.<br>
 Instead Pipes in PEIP are pipes-and-filters combinded in one. They can act as a filter (or router, splitter, aggregator, ...),<br>
-Message-Handler and can be hooked up in any place, where actually a channel would be needed. Hence Pipes can be chained together<br>
+Message-Handler and can be hooked up in any place, where actually a channel would be needed.<br> Hence Pipes can be chained together<br>
 without the need for channels to connect them.<br>
 Pipes are the base component for any component handling, examining, manipulating or routing messages.<br><br>
 A special sub-type of Pipes are EventPipes:<br>
 EventPipes can be hooked up on any component implementing the Connectable (Event-Publisher) Interface and pass its <br>
 EventObjects to the Messaging System for further routing or processing.
-
-
 <h3>Service Activators</h3>
+ServiceActivators are Adapters to decouple your Services from the Messaging System.<br> 
+Service as used in PEIP does mean any arbitrary object instance which may can be manipulated before<br>
+calling a certain method on it, hence it´d fit with any of your typically used objects (including webservices). <br>
+(In Java-land service in this case would refer to a bean, but since we are talking about PHP-land there <br>
+are no beans - you could call them Peas if you like.) 
 <h3>Gateways</h3>
-
+(Message) Gateways are Adapters to decouple the entry to the Messaging System.<br>
+The will take care of creating Message Objects from abritrary inputs and send them on a appropriate channel.<br>
+On the output-level a Gateway will extract data from the received messages and pass it to a caller.<br>
+Gateways can be designed to mimick the API of your existing application, framework or library.   
 
 <h2>WHY?</h2>
 
