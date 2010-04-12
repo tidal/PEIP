@@ -44,13 +44,20 @@ PEIP's configuration (ability) can be easily augmented by simple plugins.<br><br
 PEIP's main Components are:<br>
 <h3>Messages</h3>
 Messages are basically generic wrappers for PHP Objects or any other type (strings, integers, arrays, ...).<br>
-Messages contain special header fields to provide meta data/information.
+Messages contain special header fields to provide meta data/information. For example: a return address (channel).
 <h3>Events</h3>
 Event Objects are special Messages which are created on certain incedents on PEIP components.<br>
 Events Objects wrap the object where the event happend and can provide further data in headers.<br>
 Since Event Objects are first class Messages, they can travell through the messaging system to allow further processing.<br>
 Event Objects are only created when there is a listener registered for the certain event-type on the object.<br>
 <h3>Channels</h3>
+(Message) Channels are the objects on which Messages can be send and received from<br>
+A Producer would send a Message and a Consumer would receive it.<br>
+Basically there are two types of Channels:
+<h4>Point-to-Point Channels</h4>
+A Point-to-Point Channel (for example a PollableChannel) let exactly one Consumer receive a certain Message<br>
+<h4>Publish-Subscribe Channels</h4>
+A Publish-Subscribe Channel broadcasts any Message to all of its subscribers.<br>  
 <h3>Pipes</h3>
 <h3>Service Activators</h3>
 <h3>Gateways</h3>
