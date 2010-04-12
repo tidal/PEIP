@@ -40,7 +40,7 @@ API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/clas
 <li>write readme</li>
 <li>setting up the website</li>
 <li>Add proper comments/doctags to every class/method</li>
-<li>add unit-tests for every class</li>
+<li>add unit-tests for every class (code-coverage can be found <a href="http://tidal.github.com/PEIP/docs/tests/coverage/">here</a>)</li>
 <li>writing documentation</li>
 <li>cleanup/write more examples</li>
 <li>setting up proper build and CI system</li>
