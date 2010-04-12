@@ -40,7 +40,22 @@ PEIP is noninvasive - it plays nicely and intergrates with your favorite MVC, Li
 PEIP itself (contrary to any other Messaging Framework) is Event Driven. This allows for easily combining it's components without a need for coupling.<br> 
 PEIP's Event Objects are first class Messages and can travel through the same components as Generic Messages.<br> 
 PEIP can be easily extended and integrated (by using its interfaces).<br>
-PEIP's configuration (ability) can be easily augmented by simple plugins.
+PEIP's configuration (ability) can be easily augmented by simple plugins.<br><br>
+PEIP's main Components are:<br>
+<h3>Messages</h3>
+Messages are basically generic wrappers for PHP Objects or any other type (strings, integers, arrays, ...).<br>
+Messages contain special header fields to provide meta data/information.
+<h3>Events</h3>
+Event Objects are special Messages which are created on certain incedents on PEIP components.<br>
+Events Objects wrap the object where the event happend and can provide further data in headers.<br>
+Since Event Objects are first class Messages, they can travell through the messaging system to allow further processing.<br>
+Event Objects are only created when there is a listener registered for the certain event-type on the object.<br>
+<h3>Channels</h3>
+<h3>Pipes</h3>
+<h3>Service Activators</h3>
+<h3>Gateways</h3>
+
+
 <h2>WHY?</h2>
 
 soon to follow as a blog-post.
