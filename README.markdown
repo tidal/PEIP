@@ -72,24 +72,38 @@ EventObjects to the Messaging System for further routing or processing.
 <h3>Service Activators</h3>
 ServiceActivators are Adapters to decouple your Services from the Messaging System.<br> 
 Service as used in PEIP does mean any arbitrary object instance which may can be manipulated before<br>
-calling a certain method on it, hence it´d fit with any of your typically used objects (including webservices). <br>
+calling a certain method on it, hence it'd fit with any of your typically used objects (including webservices). <br>
 (In Java-land service in this case would refer to a bean, but since we are talking about PHP-land there <br>
 are no beans - you could call them Peas if you like.) 
 <h3>Gateways</h3>
 (Message) Gateways are Adapters to decouple the entry to the Messaging System.<br>
-The will take care of creating Message Objects from abritrary inputs and send them on a appropriate channel.<br>
+They will take care of creating Message Objects from abritrary inputs and send them on a appropriate channel.<br>
 On the output-level a Gateway will extract data from the received messages and pass it to a caller.<br>
 Gateways can be designed to mimick the API of your existing application, framework or library.   
 
 <h2>WHY?</h2>
 
 soon to follow as a blog-post.
-<br>Part 1 (<a href="http://blog.esfex.com/Why-is-their-a-need-for-SOA-in-PHP.html">Why is their a need for SOA in PHP?</a>) allready online.
 
 <h2>HOW?</h2>
 
 soon to follow<br>
 API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a>
+
+<h2>REQUIREMENTs:</h2>
+PEIP needs PHP5.3 to run.<br>
+This requirement came out while developing PEIP and is mostly based on the usage of inline functions<br>
+(Lamdas/Closures) and the use of SplObjectStorage.<br>
+So the reason why there are no Namespaces used in PEIP is because the PHP5.3 dependency crept in <br>
+while developing. (This may change in future).<br>
+Also PEIP could be backported to be able to be used with lower PHP5 versions. While there is actually<br>
+no plan to do this, it would not be so hard (but worse performing), because the 5.3 dependencies are <br>
+not used in to many places.     
+<h3>SPECIAL REQUIREMENTs:</h3>
+Since PEIP is to be used with a variety of Applications, Frameworks and Services there might be special
+dependencies to use them with PEIP<br>
+For example the PEIP Gearman extension (PEIP_Gearman) has a dependency on PHP's Gearman exetnsion and a Gearman server.
+
 
 <h2>TODOs:</h2>
 <ul>
