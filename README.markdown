@@ -23,6 +23,7 @@ And if you want to, Change all of that!<br><br>
 
 <h2>WHERE?</h2>
 Interim Homepage can be found <a href="http://tidal.github.com/PEIP/">here</a><br>
+Downloads can be found <a href="http://github.com/tidal/PEIP/downloads">here</a><br>
 API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a><br>
 Examples can be found in the source.<br>
 ohloh metrics can be found <a href="http://www.ohloh.net/p/peip">here</a><br><br>
