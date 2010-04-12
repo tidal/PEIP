@@ -49,7 +49,7 @@ Messages contain special header fields to provide meta data/information. For exa
 Event Objects are special Messages which are created on certain incedents on PEIP components.<br>
 Events Objects wrap the object where the event happend and can provide further data in headers.<br>
 Since Event Objects are first class Messages, they can travell through the messaging system to allow further processing.<br>
-Event Objects are only created when there is a listener registered for the certain event-type on the object.<br>
+Event Objects are only created when there is a listener registered for the certain event-type on the object. (So no 'event-spamming')
 <h3>Channels</h3>
 (Message) Channels are the objects on which Messages can be send and received from<br>
 A Producer would send a Message and a Consumer would receive it.<br>
