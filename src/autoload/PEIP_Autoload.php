@@ -57,7 +57,7 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 		//print_r($paths);
 		$pathsFile = __DIR__.'/PEIP_Autoload_Paths.php';
 		$content = file_get_contents($pathsFile);
-		echo $content = preg_replace('/public static \$paths = array *\(.*?\);/s', sprintf("public static \$paths = %s;", var_export($paths, true)), $content);
+		$content = preg_replace('/public static \$paths = array *\(.*?\);/s', sprintf("public static \$paths = %s;", var_export($paths, true)), $content);
 		file_put_contents($pathsFile, $content);
 	}
 

@@ -78,7 +78,17 @@ class PEIP_Event_Pipe
         return $this->doGetConnected();
     }
     
-        
+    
+    /**
+     * @access public
+     * @param $channel 
+     * @return 
+     */
+    public function connectChannel(PEIP_INF_Channel $channel){
+        $this->disconnectInputChannel();        
+        $this->inputChannel = $channel;         
+        $this->connectInputChannel();       
+    }        
     
     /**
      * @access public
@@ -86,9 +96,7 @@ class PEIP_Event_Pipe
      * @return 
      */
     public function disconnectChannel(PEIP_INF_Channel $channel){
-        $this->disconnectInputChannel();        
-        $this->inputChannel = $channel;         
-        $this->connectInputChannel();       
+        $this->disconnectInputChannel();              
     }
     
     /**
