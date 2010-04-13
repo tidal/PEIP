@@ -42,14 +42,18 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 	protected static function doGetInstance(){
 		return self::$instance = new PEIP_Autoload();	
 	}		
-
-	protected function scanDirectory($dir){
-		if(is_dir($dir)){
-			$iterator = new RecursiveDirectoryIterator($dir);
-		
+ 
+    /**
+     * Scans a directory recursively for php-files and adds them to autoload
+     * 
+     * @access public
+     * @param string directoy to scan
+     * @return void
+     */	
+	public function scanDirectory($dir){
+		if(is_dir($dir)){ 
+			$this->addClassPaths($this->findPaths(NULL, new RecursiveDirectoryIterator($dir)));
 		}
-	
-	
 	} 
 	
 	

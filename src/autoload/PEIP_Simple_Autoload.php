@@ -108,6 +108,18 @@ class PEIP_Simple_Autoload {
 	}	
 
     /**
+     * adds class-paths as key(class)/value(path) pairs array
+     * 
+     * @access public
+     * @param array $classPaths class-paths as key(class)/value(path) pairs array
+     * @return void
+     */		
+	public function addClassPaths(array $classPaths){
+		$this->classPaths = array_merge($this->classPaths, $classPaths);
+	}	
+	
+	
+    /**
      * returns the path to a class-file (if registered)
      * 
      * @access public
