@@ -94,7 +94,7 @@ API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/clas
 <h2>REQUIREMENTs:</h2>
 PEIP needs PHP5.3 to run.<br>
 This requirement came out while developing PEIP and is mostly based on the usage of inline functions<br>
-(Lamdas/Closures) and the use of SplObjectStorage.<br>
+(Lamdas/Closures), the use of SplObjectStorage and some usage of late static binding.<br>
 So the reason why there are no Namespaces used in PEIP is because the PHP5.3 dependency crept in <br>
 while developing. (This may change in future).<br>
 Also PEIP could be backported to be able to be used with lower PHP5 versions. While there is actually<br>
