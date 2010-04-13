@@ -55,9 +55,7 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 			$this->addClassPaths($this->findPaths(NULL, new RecursiveDirectoryIterator($dir)));
 		}
 	} 
-	
-	
-	
+		
     /**
      * Regenerates the class/files associations and replaces them in PEIP_Autoload_Paths
      * 
@@ -98,6 +96,4 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 		}
 		return $paths;
 	}
-	
-
 }
