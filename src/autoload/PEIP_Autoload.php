@@ -54,7 +54,6 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 		$baseDir = str_replace(DIRECTORY_SEPARATOR, '/', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'));
 		$iterator = new RecursiveDirectoryIterator($baseDir);
 		$paths = self::findPaths($baseDir, $iterator);
-		//print_r($paths);
 		$pathsFile = __DIR__.'/PEIP_Autoload_Paths.php';
 		$content = file_get_contents($pathsFile);
 		$content = preg_replace('/public static \$paths = array *\(.*?\);/s', sprintf("public static \$paths = %s;", var_export($paths, true)), $content);
