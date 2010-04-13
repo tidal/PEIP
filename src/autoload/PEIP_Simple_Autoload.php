@@ -58,8 +58,7 @@ class PEIP_Simple_Autoload {
 	protected static function getBaseDirectory(){
 		return str_replace(DIRECTORY_SEPARATOR, '/', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'));		
 	}
-	
-	
+		
     /**
      * Retrieves Singleton instance 
      * 
@@ -119,7 +118,11 @@ class PEIP_Simple_Autoload {
    	 	if (!isset($this->classPaths[$class])){
       		return null;
     	}
-    	return $this->baseDir.'/'.$this->classPaths[$class];
+    	$file = $this->classPaths[$class];
+    	if(!is_file($file)){
+    		$file = $this->baseDir.DIRECTORY_SEPARATOR.$file;
+    	}   	
+    	return $file;
 	}	
 	
     /**
@@ -130,13 +133,14 @@ class PEIP_Simple_Autoload {
      * @return path to the class-file 
      */		
   	public function autoload($class){
-  		if ($path = $this->getClassPath($class)){
+  		$path = $this->getClassPath($class);
+  		if (is_file($path)){
   			require $path;
-      		if(class_exists($class)){
+      		if(class_exists($class) || interface_exists($class)){
       			return true;
       		}
     	}
-    	return false;
+    	throw new RuntimeException('unable to load class '.$class);
   	}	
 }
 
