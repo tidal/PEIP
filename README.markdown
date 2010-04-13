@@ -1,4 +1,5 @@
 <h1>PEIP - PHP Event Integration Patterns</h1>
+<small><em>pronounced: pipe</em></small>
 <em>The first Event Driven Messaging Framework (for PHP)</em>
 <h2>PREFACE</h2>
 Let your Database speak to your Chat-App<br>
