@@ -41,13 +41,25 @@ class PEIP_Simple_Autoload {
      * @access protected
      */	 	
 	protected function init(){
-		$this->baseDir = realpath(dirname(__FILE__).'/..');
+		$this->baseDir = self::getBaseDirectory();
 	    ini_set('unserialize_callback_func', 'spl_autoload_call');
     	if (false === spl_autoload_register(array($this, 'autoload'))){
       		throw new RuntimeException(sprintf('Unable to register %s::autoload as an autoloading method.', get_class($this)));
     	}	
 	}
 
+    /**
+     * returns the autoload base directory.
+     * Registers autoload with this class.
+     * 
+     * @access protected
+     * @return string the base directory
+     */	 	
+	protected static function getBaseDirectory(){
+		return str_replace(DIRECTORY_SEPARATOR, '/', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'));		
+	}
+	
+	
     /**
      * Retrieves Singleton instance 
      * 
@@ -120,10 +132,10 @@ class PEIP_Simple_Autoload {
   	public function autoload($class){
   		if ($path = $this->getClassPath($class)){
   			require $path;
-      			if(class_exists($class)){
-      				return true;
-      			}
-    		}
+      		if(class_exists($class)){
+      			return true;
+      		}
+    	}
     	return false;
   	}	
 }

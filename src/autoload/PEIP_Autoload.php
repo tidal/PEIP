@@ -43,6 +43,17 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 		return self::$instance = new PEIP_Autoload();	
 	}		
 
+	protected function scanDirectory($dir){
+		if(is_dir($dir)){
+			$iterator = new RecursiveDirectoryIterator($dir);
+		
+		}
+	
+	
+	} 
+	
+	
+	
     /**
      * Regenerates the class/files associations and replaces them in PEIP_Autoload_Paths
      * 
@@ -51,7 +62,7 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
      * @return void
      */	
 	public static function make(){
-		$baseDir = str_replace(DIRECTORY_SEPARATOR, '/', realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'));
+		$baseDir = self::getBaseDirectory();
 		$iterator = new RecursiveDirectoryIterator($baseDir);
 		$paths = self::findPaths($baseDir, $iterator);
 		$pathsFile = __DIR__.'/PEIP_Autoload_Paths.php';
@@ -75,8 +86,8 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 		while($iterator->valid()){
 			if($iterator->isDir()){
 				$paths = self::findPaths($baseDir, $iterator->getChildren(), $paths);
-			}else{
-				$class = str_replace('.php', '', $iterator->getFilename());
+			}elseif($iterator->isFile() && strrchr($iterator->getFilename(), '.') == '.php'){
+				$class = $iterator->getBasename('.php');
 				$paths[$class] = str_replace($baseDir, '', $iterator->getPathName()); 						
 			}
 			$iterator->next();
