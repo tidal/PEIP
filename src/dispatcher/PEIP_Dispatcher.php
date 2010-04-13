@@ -26,122 +26,81 @@ class PEIP_Dispatcher
 
     protected $listeners = array();
     
- /**
-   * Connects a listener to a given event name.
-   *
-   * @param string  $name      An event name
-   * @param mixed   $listener  A PHP callable
-   */
   
     /**
+     * Connects a listener.
+     * 
      * @access public
-     * @param $listener 
-     * @return 
+     * @param PEIP_INF_Handler $listener 
+     * @return void
      */
     public function connect(PEIP_INF_Handler $listener){
-    $this->listeners[] = $listener;
-  }
+    	$this->listeners[] = $listener;
+  	}
 
-  /**
-   * Disconnects a listener for a given event name.
-   *
-   * @param string   $name      An event name
-   * @param mixed    $listener  A PHP callable
-   *
-   * @return mixed false if listener does not exist, null otherwise
-   */
   
     /**
+     * Disconnects a listener.
+     * 
      * @access public
-     * @param $listener 
-     * @return 
+     * @param PEIP_INF_Handler $listener 
+     * @return void
      */
     public function disconnect(PEIP_INF_Handler $listener){
-    foreach ($this->listeners as $i => $callable){
-      if ($listener === $callable){
-        unset($this->listeners[$name][$i]);
-      }
-    }
-  }
-
-
-  /**
-   * Returns true if the given event name has some listeners.
-   *
-   * @param  string   $name    The event name
-   *
-   * @return Boolean true if some listeners are connected, false otherwise
-   */
+    	foreach ($this->listeners as $i => $callable){
+      		if ($listener === $callable){
+        		unset($this->listeners[$i]);
+      		}
+    	}
+  	}
   
     /**
+     * returns wether any listeners are registered
+     * 
      * @access public
-     * @return 
+     * @return boolean wether any listeners are registered
      */
-    public function hasListeners()
-  {
-    return (boolean) count($this->listeners);
-  }
-
-  /**
-   * Notifies all listeners of a given event.
-   *
-   * @param PEIP_Event_Inf $event A PEIP_Event_Inf instance
-   *
-   * @return PEIP_Event_Inf The PEIP_Event_Inf instance
-   */
+    public function hasListeners(){
+    	return (boolean) count($this->listeners);
+  	}
     
     /**
+     * notifies all listeners on a subject
+     * 
      * @access public
      * @param $subject 
-     * @return 
+     * @return void
      */
     public function notify($subject){
         if($this->hasListeners()){
-            return self::doNotify($this->getListeners(), $subject); 
-        }         
+            $res = self::doNotify($this->getListeners(), $subject); 
+        }   
+        return $res;      
     }
-
-   
-  /**
-   * Notifies all listeners of a given event until one returns a non null value.
-   *
-   * @param  PEIP_Event_Inf $event A PEIP_Event_Inf instance
-   *
-   * @return PEIP_Event_Inf The PEIP_Event_Inf instance
-   */
-  
-    /**
-     * @access public
-     * @param $subject 
-     * @return 
-     */
     
     /**
+     * notifies all listeners on a subject until one returns a boolean true value
+     * 
      * @access public
      * @param $subject 
-     * @return 
+     * @return PEIP_INF_Handler the listener which returns a boolean true value
      */
     public function notifyUntil($subject){
         if($this->hasListeners()){
-            return self::doNotifyUntil($this->getListeners(), $subject);    
+            $res = self::doNotifyUntil($this->getListeners(), $subject);    
         }
-  }
-  
-  /**
-   * Returns all listeners associated with a given event name.
-   *
-   * @param  string   $name    The event name
-   *
-   * @return array  An array of listeners
-   */
+        return $res;
+  	}
   
     /**
+     * returns all listeners
+     * 
      * @access public
-     * @return 
+     * @return array the listeners
      */
     public function getListeners(){
-    return $this->listeners;
-  }
+    	return $this->listeners;
+  	}
     
 
 

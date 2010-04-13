@@ -26,7 +26,7 @@ abstract class PEIP_ABS_Dispatcher {
         }   
     }  
 
-    protected static function doNotifyUntill(array $listeners, $subject){
+    protected static function doNotifyUntil(array $listeners, $subject){
         foreach ($listeners as $listener){
           if ($listener->handle($subject)){
             return $listener;
