@@ -20,7 +20,7 @@
 class PEIP_Event_Builder {
 
     protected $eventClass,
-        $defaultParameters;
+        $defaultParameters = array();
     
     protected static $instances = array();      
            
