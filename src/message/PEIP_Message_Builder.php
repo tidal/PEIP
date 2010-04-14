@@ -84,7 +84,7 @@ class PEIP_Message_Builder
      * @return PEIP_Message_Builder $this 
      */
     public function setHeader($headerName, $headerValue){
-        $this->header[$headerName] = $headerValue;
+        $this->headers[$headerName] = $headerValue;
         return $this;   
     }
     
