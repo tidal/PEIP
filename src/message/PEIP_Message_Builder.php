@@ -99,7 +99,17 @@ class PEIP_Message_Builder
         $this->headers = $headers;
         return $this;   
     }
-      
+            
+    /**
+     * returns the headers for the message to build
+     * 
+     * @access public
+     * @return array the headers for the message to build 
+     */
+    public function getHeaders(){
+        return $this->headers;
+    }  
+        
     /**
      * @access public
      * @param $arguments 
