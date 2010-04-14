@@ -17,70 +17,65 @@
  */
 
 
-
-
 class PEIP_Event_Builder {
 
     protected $eventClass,
         $defaultParameters;
     
     protected static $instances = array();      
-        
-    
+           
     /**
+     * constructor
+     * 
      * @access public
-     * @param $eventClass 
-     * @param $defaultParameters 
-     * @return 
+     * @param string $eventClass the event-class the builder shall create instances for 
+     * @param array $defaultHeaders default headers for the created events 
      */
-    public function __construct($eventClass, array $defaultParameters = array()){
+    public function __construct($eventClass, array $defaultHeaders = array()){
         $this->eventClass = $eventClass;
         $this->defaultParameters = $defaultParameters;
     }
 
+    /**
+     * returns a instance of PEIP_Event_Builder for a given event-class
+     * 
+     * @access public
+     * @param string $eventClass the event-class the builder shall create instances for 
+     * @return PEIP_Event_Builder the instance of PEIP_Event_Builder for the given event-class 
+     */    
     public static function getInstance($eventClass = false){
         $eventClass = $eventClass ? $eventClass : 'PEIP_Event';
         return isset(self::$instances[$eventClass]) 
             ? self::$instances[$eventClass] 
             : self::$instances[$eventClass] = new PEIP_Event_Builder($eventClass);
     }
-    
-    
-    
+      
     /**
+     * creates an event-object from given arguments
+     * 
      * @access public
-     * @param $subject 
-     * @param $name 
-     * @param $parameters 
+     * @param mixed $subject the subject for the event
+     * @param string $name the name of the event
+     * @param array $headers the headers for the event 
      * @return 
      */
-    public function build($subject, $name, array $parameters = array()){
+    public function build($subject, $name, array $headers = array()){
         $parameters = array_merge($this->defaultParameters, $parameters);
         return $event = new $this->eventClass($subject, $name, $parameters);
     }
-
     
     /**
+     * creates an event-object and dispatches it through given dispatcher
+     * 
      * @access public
-     * @param $subject 
-     * @param $name 
-     * @param $parameters 
-     * @return 
-     */
-    
-    /**
-     * @access public
-     * @param $dispatcher 
-     * @param $subject 
-     * @param $name 
-     * @param $parameters 
+     * @param PEIP_Object_Event_Dispatcher $dispatcher the dispatcher to dispatch the event 
+     * @param mixed $subject the subject for the event
+     * @param string $name the name of the event
+     * @param array $parameters the headers for the event
      * @return 
      */
     public function buildAndDispatch(PEIP_Object_Event_Dispatcher $dispatcher, $subject, $name, array $parameters = array()){
         $event = $this->build($subject, $name, $parameters);    
         return $dispatcher->notify($name, $event);          
     }
-
-
-
 }
