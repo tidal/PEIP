@@ -94,27 +94,6 @@ class PEIP_Event
     public function isProcessed(){
     	return $this->processed;
   	}
-  
-    /**
-     * @access public
-     * @param $name 
-     * @return 
-     */
-    public function offsetExists($name){
-    	return array_key_exists($name, $this->parameters);
-  	}
-  
-    /**
-     * @access public
-     * @param $name 
-     * @return 
-     */
-    public function offsetGet($name){
-    	if (!array_key_exists($name, $this->parameters)){
-      		throw new InvalidArgumentException(sprintf('The event "%s" has no "%s" parameter.', $this->name, $name));
-    	}
-    	return $this->parameters[$name];
-  	}
 
 }
     
