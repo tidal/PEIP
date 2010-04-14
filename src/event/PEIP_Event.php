@@ -34,13 +34,6 @@ class PEIP_Event
         $name       = '',
         $parameters = null;
 
-  /**
-   * Constructs a new sfEvent.
-   *
-   * @param mixed   $subject      The subject
-   * @param string  $name         The event name
-   * @param array   $parameters   An array of parameters
-   */
   
     /**
      * @access public
@@ -49,33 +42,21 @@ class PEIP_Event
      * @param $parameters 
      * @return 
      */
-    public function __construct($subject, $name, array $parameters = array())
-  {
-    parent::__construct($subject, new ArrayObject($parameters));
+    public function __construct($subject, $name, array $parameters = array()){
+    	parent::__construct($subject, new ArrayObject($parameters));
   
-    $this->name = $name;
-    //$this->parameters = $parameters;
-  }
-
-  /**
-   * Returns the event name.
-   *
-   * @return string The event name
-   */
+    	$this->name = $name;
+    	//$this->parameters = $parameters;
+  	}
   
     /**
      * @access public
      * @return 
      */
     public function getName(){
-    return $this->name;
-  }
+    	return $this->name;
+  	}
 
-  /**
-   * Sets the return value for this event.
-   *
-   * @param mixed $value The return value
-   */
   
     /**
      * @access public
@@ -83,28 +64,16 @@ class PEIP_Event
      * @return 
      */
     public function setReturnValue($value){
-    $this->value = $value;
-  }
-
-  /**
-   * Returns the return value.
-   *
-   * @return mixed The return value
-   */
+    	$this->value = $value;
+  	}
   
     /**
      * @access public
      * @return 
      */
     public function getReturnValue(){
-    return $this->value;
-  }
-
-  /**
-   * Sets the processed flag.
-   *
-   * @param Boolean $processed The processed flag value
-   */
+    	return $this->value;
+  	}
   
     /**
      * @access public
@@ -112,64 +81,37 @@ class PEIP_Event
      * @return 
      */
     public function setProcessed($processed){
-    $this->processed = (boolean) $processed;
-  }
+    	$this->processed = (boolean) $processed;
+  	}
 
-  /**
-   * Returns whether the event has been processed by a listener or not.
-   *
-   * @return Boolean true if the event has been processed, false otherwise
-   */
-  
     /**
      * @access public
      * @return 
      */
     public function isProcessed(){
-    return $this->processed;
-  }
-
-
-  /**
-   * Returns true if the parameter exists (implements the ArrayAccess interface).
-   *
-   * @param  string  $name  The parameter name
-   *
-   * @return Boolean true if the parameter exists, false otherwise
-   */
+    	return $this->processed;
+  	}
   
     /**
      * @access public
      * @param $name 
      * @return 
      */
-    public function offsetExists($name)
-  {
-    return array_key_exists($name, $this->parameters);
-  }
-
-  /**
-   * Returns a parameter value (implements the ArrayAccess interface).
-   *
-   * @param  string  $name  The parameter name
-   *
-   * @return mixed  The parameter value
-   */
+    public function offsetExists($name){
+    	return array_key_exists($name, $this->parameters);
+  	}
   
     /**
      * @access public
      * @param $name 
      * @return 
      */
-    public function offsetGet($name)
-  {
-    if (!array_key_exists($name, $this->parameters))
-    {
-      throw new InvalidArgumentException(sprintf('The event "%s" has no "%s" parameter.', $this->name, $name));
-    }
-
-    return $this->parameters[$name];
-  }
+    public function offsetGet($name){
+    	if (!array_key_exists($name, $this->parameters)){
+      		throw new InvalidArgumentException(sprintf('The event "%s" has no "%s" parameter.', $this->name, $name));
+    	}
+    	return $this->parameters[$name];
+  	}
 
 }
     
