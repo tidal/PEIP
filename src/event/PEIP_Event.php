@@ -36,11 +36,12 @@ class PEIP_Event
 
   
     /**
+     * constructor
+     * 
      * @access public
-     * @param $subject 
-     * @param $name 
-     * @param $parameters 
-     * @return 
+     * @param mixed $subject the subject for the event
+     * @param string $name the name of the event
+     * @param array|ArrayAccess $headers the headers for the event 
      */
     public function __construct($subject, $name, $parameters = array()){
     	if(is_array($parameters)){
@@ -53,8 +54,10 @@ class PEIP_Event
   	}
   
     /**
+     * returns the name of the event
+     * 
      * @access public
-     * @return 
+     * @return string the name of the event
      */
     public function getName(){
     	return $this->name;
@@ -62,34 +65,40 @@ class PEIP_Event
 
   
     /**
+     * sets the return-value of the event
+     * 
      * @access public
-     * @param $value 
-     * @return 
+     * @param mixed $value the return-value to set 
      */
     public function setReturnValue($value){
     	$this->value = $value;
   	}
   
     /**
+     * returns the return-value of the event
+     * 
      * @access public
-     * @return 
+     * @return mixed the return-value to set
      */
     public function getReturnValue(){
     	return $this->value;
   	}
   
     /**
+     * sets wether the event is processed
+     * 
      * @access public
-     * @param $processed 
-     * @return 
+     * @param boolean $processed 
      */
     public function setProcessed($processed){
     	$this->processed = (boolean) $processed;
   	}
 
     /**
+     * checks wether the event is processed
+     * 
      * @access public
-     * @return 
+     * @return boolean wether the event is processed 
      */
     public function isProcessed(){
     	return $this->processed;
