@@ -9,6 +9,7 @@
  */
 /**
  * PEIP_Message_Builder 
+ * Util class to easily create and copy messages
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
