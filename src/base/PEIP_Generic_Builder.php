@@ -37,10 +37,7 @@ class PEIP_Generic_Builder
      * @param $storeRef 
      * @return 
      */
-    public function __construct($className, ReflectionClass $reflectionClass = NULL, $storeRef = true){ 
-        if(!class_exists($className)){
-            spl_autoload_call($className);
-        }       
+    public function __construct($className, ReflectionClass $reflectionClass = NULL, $storeRef = true){      
         $this->className = $className;
         if($reflectionClass){
             if($className != $reflectionClass->getName()){
