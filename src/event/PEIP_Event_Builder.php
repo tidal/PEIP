@@ -60,8 +60,8 @@ class PEIP_Event_Builder {
      * @return 
      */
     public function build($subject, $name, array $headers = array()){
-        $parameters = array_merge($this->defaultParameters, $parameters);
-        return $event = new $this->eventClass($subject, $name, $parameters);
+        $parameters = array_merge($this->defaultParameters, $headers);
+        return $event = new $this->eventClass($subject, $name, $headers);
     }
     
     /**
@@ -74,8 +74,8 @@ class PEIP_Event_Builder {
      * @param array $parameters the headers for the event
      * @return 
      */
-    public function buildAndDispatch(PEIP_Object_Event_Dispatcher $dispatcher, $subject, $name, array $parameters = array()){
-        $event = $this->build($subject, $name, $parameters);    
+    public function buildAndDispatch(PEIP_Object_Event_Dispatcher $dispatcher, $subject, $name, array $headers = array()){
+        $event = $this->build($subject, $name, $headers);    
         return $dispatcher->notify($name, $event);          
     }
 }
