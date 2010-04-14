@@ -47,7 +47,7 @@ class PEIP_Message_Builder
      * @return PEIP_Message_Builder $this
      */
     public function copyHeaders(array $headers){
-        array_merge($this->headers, $headers);
+        $this->headers = array_merge($this->headers, $headers);
         return $this;       
     }
     
