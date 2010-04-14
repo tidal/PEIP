@@ -58,7 +58,7 @@ class PEIP_Message_Builder
      * @param array $headers the headers to set
      * @return PEIP_Message_Builder $this
      */
-    public function copyHeadersIfAbsent (array $headers){
+    public function copyHeadersIfAbsent(array $headers){
         array_merge($headers, $this->headers);
         return $this;   
     }
