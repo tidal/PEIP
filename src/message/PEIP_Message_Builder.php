@@ -71,7 +71,7 @@ class PEIP_Message_Builder
      * @return PEIP_Message_Builder $this
      */
     public function removeHeader($headerName){
-        unset($this->header[$headerName]);
+        unset($this->headers[$headerName]);
         return $this;
     }
        
