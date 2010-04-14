@@ -155,7 +155,7 @@ class PEIP_Message_Builder
      * @param PEIP_INF_Message $message the message to get class to build from the builder 
      * @return PEIP_Message_Builder new instance of PEIP_Message_Builder 
      */      
-    public static function createFromMessage(PEIP_INF_Message $message){
+    public static function getInstanceFromMessage(PEIP_INF_Message $message){
         return new PEIP_Message_Builder(get_class($message));
     }
    
