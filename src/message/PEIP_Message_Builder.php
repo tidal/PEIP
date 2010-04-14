@@ -59,7 +59,7 @@ class PEIP_Message_Builder
      * @return PEIP_Message_Builder $this
      */
     public function copyHeadersIfAbsent(array $headers){
-        array_merge($headers, $this->headers);
+        $this->headers = array_merge($headers, $this->headers);
         return $this;   
     }
        
