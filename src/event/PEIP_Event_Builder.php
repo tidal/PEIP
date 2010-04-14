@@ -31,7 +31,7 @@ class PEIP_Event_Builder {
      * @param string $eventClass the event-class the builder shall create instances for 
      * @param array $defaultHeaders default headers for the created events 
      */
-    public function __construct($eventClass, array $defaultHeaders = array()){
+    public function __construct($eventClass = 'PEIP_Event', array $defaultHeaders = array()){
         $this->eventClass = $eventClass;
         $this->defaultParameters = $defaultParameters;
     }
