@@ -33,7 +33,7 @@ class PEIP_Event_Builder {
      */
     public function __construct($eventClass = 'PEIP_Event', array $defaultHeaders = array()){
         $this->eventClass = $eventClass;
-        $this->defaultParameters = $defaultParameters;
+        $this->defaultParameters = $defaultHeaders;
     }
 
     /**
