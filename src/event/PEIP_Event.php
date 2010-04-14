@@ -46,7 +46,7 @@ class PEIP_Event
     	if(is_array($parameters)){
     		$parameters = new ArrayObject($parameters);	
     	}elseif(!($parameters instanceof ArrayAccess)){
-    		throw new WrongParamterException('third parameter for PEIP_Event::__construct must either be array or implement ArrayAccess');
+    		throw new InvalidArgumentException('third parameter for PEIP_Event::__construct must either be array or implement ArrayAccess');
     	}    	
     	parent::__construct($subject, $parameters);
     	$this->name = $name;
