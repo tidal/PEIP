@@ -111,12 +111,14 @@ class PEIP_Message_Builder
     }  
         
     /**
+     * creates a new message instance with given headers
+     * 
      * @access public
      * @param $arguments 
      * @return 
      */
-    public function build(array $arguments = array()){
-        $this->copyHeaders($arguments);
+    public function build(array $headers = array()){
+        $this->copyHeaders($headers);
         return PEIP_Generic_Builder::getInstance($this->messageClass)
             ->build(array($this->payload, new ArrayObject($this->headers)));        
     }
