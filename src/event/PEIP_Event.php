@@ -42,11 +42,14 @@ class PEIP_Event
      * @param $parameters 
      * @return 
      */
-    public function __construct($subject, $name, array $parameters = array()){
-    	parent::__construct($subject, new ArrayObject($parameters));
-  
+    public function __construct($subject, $name, $parameters = array()){
+    	if(is_array($parameters)){
+    		$parameters = new ArrayObject($parameters);	
+    	}elseif(!($parameters instanceof ArrayAccess)){
+    		throw new WrongParamterException('third parameter for PEIP_Event::__construct must either be array or implement ArrayAccess');
+    	}    	
+    	parent::__construct($subject, $parameters);
     	$this->name = $name;
-    	//$this->parameters = $parameters;
   	}
   
     /**

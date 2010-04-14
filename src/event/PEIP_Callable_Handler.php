@@ -17,10 +17,10 @@
  * @implements PEIP_INF_Handler
  */
 
-class PEIP_Callable_Handler implements PEIP_INF_Handler {
+class PEIP_Callable_Handler 
+	implements PEIP_INF_Handler {
 
     protected $callable;
-    
     
     /**
      * @access public
@@ -30,8 +30,7 @@ class PEIP_Callable_Handler implements PEIP_INF_Handler {
     public function __construct($callable){
         $this->callable = $callable;    
     }
-    
-    
+        
     /**
      * @access public
      * @param $subject 
@@ -40,7 +39,6 @@ class PEIP_Callable_Handler implements PEIP_INF_Handler {
     public function handle($subject){
         return call_user_func($this->callable, $subject);
     }
-
     
     /**
      * @access public
@@ -50,7 +48,6 @@ class PEIP_Callable_Handler implements PEIP_INF_Handler {
     public function __invoke($subject){
         return $this->handle($subject); 
     }
-
     
     /**
      * @access public
