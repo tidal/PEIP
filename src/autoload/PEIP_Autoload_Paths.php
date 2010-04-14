@@ -121,7 +121,6 @@ class PEIP_Autoload_Paths {
   'PEIP_Map_Dispatcher' => '/dispatcher/PEIP_Map_Dispatcher.php',
   'PEIP_Object_Event_Dispatcher' => '/dispatcher/PEIP_Object_Event_Dispatcher.php',
   'PEIP_Object_Map_Dispatcher' => '/dispatcher/PEIP_Object_Map_Dispatcher.php',
-  'PEIP_Callable_Handler' => '/event/PEIP_Callable_Handler.php',
   'PEIP_Event' => '/event/PEIP_Event.php',
   'PEIP_Event_Builder' => '/event/PEIP_Event_Builder.php',
   'PEIP_Observable' => '/event/PEIP_Observable.php',
@@ -150,6 +149,7 @@ class PEIP_Autoload_Paths {
   'PEIP_Autoload' => '/autoload/PEIP_Autoload.php',
   'PEIP_Simple_Autoload' => '/autoload/PEIP_Simple_Autoload.php',
   'PEIP_Autoload_Paths' => '/autoload/PEIP_Autoload_Paths.php',
+  'PEIP_Callable_Handler' => '/handler/PEIP_Callable_Handler.php',
 );
 	
 }
