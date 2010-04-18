@@ -65,8 +65,7 @@ A Publish-Subscribe Channel broadcasts any Message to all of its subscribers.
 Pipes are PEIP's most powerfull components.<br>
 They are not to be mixed up with "pipes" in a "pipes-and-filters architecture" - That would be the Channels.<br>
 Instead Pipes in PEIP are pipes-and-filters combinded in one. They can act as a filter (or router, splitter, aggregator, ...),<br>
-Message-Handler and can be hooked up in any place, where actually a channel would be needed.<br> Hence Pipes can be chained together<br>
-without the need for channels to connect them.<br>
+Message-Handler and can be hooked up in any place, where actually a channel would be needed.<br> Hence Pipes can be chained together without the need for channels to connect them.<br>
 Pipes are the base component for any component handling, examining, manipulating or routing messages.<br><br>
 A special sub-type of Pipes are EventPipes:<br>
 EventPipes can be hooked up on any component implementing the Connectable (Event-Publisher) Interface and pass its <br>
