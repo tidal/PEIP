@@ -112,7 +112,7 @@ run:<br>
 pear channel-discover pear.peip-project.de<br>
 pear install peip/peip
 <h3>Install From Download</h3>
-Download source from Downloads can be found <a href="http://github.com/tidal/PEIP/downloads">http://github.com/tidal/PEIP/downloads</a><br>
+Download source from Downloads <a href="http://github.com/tidal/PEIP/downloads">http://github.com/tidal/PEIP/downloads</a><br>
 Extract file to your include directory.
 <h3>Install From Source</h3>
 Change to one of your include directories.<br>
