@@ -78,7 +78,7 @@ calling a certain method on it, hence it'd fit with any of your typically used o
 are no beans - you could call them Peas if you like.) 
 <h3>Gateways</h3>
 (Message) Gateways are Adapters to decouple the entry to the Messaging System.<br>
-They will take care of creating Message Objects from abritrary inputs and send them on a appropriate channel.<br>
+They will take care of creating Message Objects from abritrary inputs and send them on an appropriate channel.<br>
 On the output-level a Gateway will extract data from the received messages and pass it to a caller.<br>
 Gateways can be designed to mimick the API of your existing application, framework or library.   
 
