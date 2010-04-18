@@ -25,6 +25,7 @@ And if you want to, Change all of that!<br><br>
 <h2>WHERE?</h2>
 Interim Homepage can be found <a href="http://tidal.github.com/PEIP/">here</a><br>
 Downloads can be found <a href="http://github.com/tidal/PEIP/downloads">here</a><br>
+PEAR packages can be found <a href="http://pear.peip-project.de/">here</a><br>
 API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a><br>
 Examples can be found in the <a href="http://github.com/tidal/PEIP/tree/master/examples/">source</a>.<br>
 Issue/Bug Tracker can be found <a href="http://tidal.lighthouseapp.com/projects/50364-peip/tickets">here</a><br>
@@ -105,7 +106,26 @@ Since PEIP is to be used with a variety of Applications, Frameworks and Services
 dependencies to use them with PEIP<br>
 For example the PEIP Gearman extension (PEIP_Gearman) has a dependency on PHP's Gearman extension and a Gearman server.
 
-
+<h2>INSTALLATION:</h2>
+PEIP needs PHP5.3 to run.<br>
+This requirement came out while developing PEIP and is mostly based on the usage of inline functions<br>
+(Lamdas/Closures), the use of SplObjectStorage and some usage of late static binding.<br>
+So the reason why there are no Namespaces used in PEIP is because the PHP5.3 dependency crept in <br>
+while developing. (This may change in future).<br>
+Also PEIP could be backported to be able to be used with lower PHP5 versions. While there is actually<br>
+no plan to do this, it would not be so hard (but worse performing), because the 5.3 dependencies are <br>
+not used in to many places.     
+<h3>PEAR Install</h3>
+run:<br>
+pear channel-discover pear.peip-project.de<br>
+pear install peip/peip
+<h3>Install From Download</h3>
+Download source from Downloads can be found <a href="http://github.com/tidal/PEIP/downloads">http://github.com/tidal/PEIP/downloads</a><br>
+Extract file to your include directory.
+<h3>Install From Source</h3>
+Change to one of your include directories.<br>
+run:<br>
+git clone git://github.com/tidal/PEIP.git 
 <h2>TODOs:</h2>
 <ul>
 <li>write readme</li>
