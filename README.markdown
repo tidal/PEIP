@@ -106,15 +106,7 @@ Since PEIP is to be used with a variety of Applications, Frameworks and Services
 dependencies to use them with PEIP<br>
 For example the PEIP Gearman extension (PEIP_Gearman) has a dependency on PHP's Gearman extension and a Gearman server.
 
-<h2>INSTALLATION:</h2>
-PEIP needs PHP5.3 to run.<br>
-This requirement came out while developing PEIP and is mostly based on the usage of inline functions<br>
-(Lamdas/Closures), the use of SplObjectStorage and some usage of late static binding.<br>
-So the reason why there are no Namespaces used in PEIP is because the PHP5.3 dependency crept in <br>
-while developing. (This may change in future).<br>
-Also PEIP could be backported to be able to be used with lower PHP5 versions. While there is actually<br>
-no plan to do this, it would not be so hard (but worse performing), because the 5.3 dependencies are <br>
-not used in to many places.     
+<h2>INSTALLATION:</h2>    
 <h3>PEAR Install</h3>
 run:<br>
 pear channel-discover pear.peip-project.de<br>
