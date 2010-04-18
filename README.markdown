@@ -38,7 +38,7 @@ See also:<br>
 PEIP is a pure PHP Middleware Framework to easily create Messaging- and Work-Flows.<br>
 One of PEIP's goals is to provide implementations of <a href="http://www.eaipatterns.com/eaipatterns.html">Enterprise Integration Patterns</a> for PHP (but with a bit different approach then usually).<br>
 PEIP can be used by scripting or configuration (recommended).<br>
-PEIP is noninvasive - it plays nicely and intergrates with your favorite MVC, Library, Services or PHP Applications.<br> 
+PEIP is noninvasive - it plays nicely and integrates with your favorite MVC, Library, Services or PHP Applications.<br> 
 PEIP itself (contrary to any other Messaging Framework) is Event Driven. This allows for easily combining it's components without a need for coupling.<br> 
 PEIP's Event Objects are first class Messages and can travel through the same components as Generic Messages.<br> 
 PEIP can be easily extended and integrated (by using its interfaces).<br>
