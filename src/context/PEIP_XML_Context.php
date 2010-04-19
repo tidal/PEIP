@@ -30,9 +30,7 @@ class PEIP_XML_Context
         $nodeBuilders = array(),
         $channelRegistry;
     
-    
-    
-    
+       
     /**
      * @access public
      * @param $xml 
@@ -108,13 +106,6 @@ class PEIP_XML_Context
         }       
     }
 
-    
-    /**
-     * @access protected
-     * @param $node 
-     * @return 
-     */
-    
     /**
      * @static
      * @access protected
@@ -128,8 +119,7 @@ class PEIP_XML_Context
             call_user_func($this->nodeBuilders[$nodeName], $node);
         }           
     }
-    
-    
+     
     /**
      * @access protected
      * @return 
@@ -144,8 +134,7 @@ class PEIP_XML_Context
             $this->buildNode($entry);
         }
     }
-
-    
+   
     /**
      * @access public
      * @param $channelName 
@@ -190,12 +179,6 @@ class PEIP_XML_Context
         } 
         return $service;
     }
-    
-    
-    /**
-     * @access protected
-     * @return 
-     */
     
     /**
      * @access protected
@@ -414,7 +397,7 @@ class PEIP_XML_Context
                 $service,
                 $method             
             )); 
-            $defaultClass = $defaultClass ? $defaultClass : 'PEIP_Service_Activator';
+            echo $defaultClass = $defaultClass ? $defaultClass : 'PEIP_Service_Activator';
             return $this->buildAndModify($config, $args, $defaultClass);                
         }
     }   
@@ -443,15 +426,6 @@ class PEIP_XML_Context
         }
         return $setter;     
     }
-    
-    
-       
-    
-    /**
-     * @access protected
-     * @param $config 
-     * @return 
-     */
     
     /**
      * @static
@@ -553,7 +527,22 @@ class PEIP_XML_Context
      * @return 
      */
     public function buildAndModify($config, $arguments, $defaultClass = false){
-        $service = $this->modifyService(self::doBuild($config, $arguments, $defaultClass), $config);
+    	if($config["class"]  || $defaultClass){
+        	 $service = self::doBuild($config, $arguments, $defaultClass);	
+        }elseif($config["ref"]){
+        	$service = $this->getService((string)$config['ref']);
+        }else{
+        	throw new RuntimeException('Could not create Service. no class or reference given.');
+        }
+		if($config["ref_property"]){
+			$service = $service->{(string)$config["ref_property"]};	
+		}elseif($config["ref_method"]){
+			$service = $service->{(string)$config["ref_method"]}();	
+		}       
+        if(!is_object($service)){
+        	throw new RuntimeException('Could not create Service.'); 
+        }
+    	$service = $this->modifyService($service, $config);
         $id = trim((string)$config['id']);
         if($service && $id != ''){
             $this->services[$id] = $service;    
@@ -565,11 +554,14 @@ class PEIP_XML_Context
         $cls = $config["class"] ? trim((string)$config["class"]) : (string)$defaultClass;
         if($cls != ''){
             try {
-                return self::build($cls, $arguments);       
+                $service = self::build($cls, $arguments);       
             }catch(Exception $e){
                 throw new RuntimeException('Could not create Service "'.$cls.'" -> '.$e->getMessage());
             }           
         }
+        if(is_object($service)){
+        	return $service;
+        }       
         throw new RuntimeException('Could not create Service "'.$cls.'". Class does not exist.');           
     }   
     
