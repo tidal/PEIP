@@ -96,4 +96,20 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 		}
 		return $paths;
 	}
+
+    /**
+     * handles the autoloading of classes
+     * scans for files in extensions dir, if no class-path set
+     * 
+     * @access public
+     * @param string $class the class to load
+     * @return path to the class-file 
+     */		
+  	public function autoload($class){ 
+  		if(!$this->getClassPath($class)){
+			$this->scanDirectory(realpath(__DIR__.'/../extensions'));	
+		}
+		parent::autoload($class);
+  	}	
+
 }
