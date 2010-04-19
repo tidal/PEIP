@@ -206,7 +206,7 @@ class PEIP_XML_Context
                 $args[] = $this->buildArg($arg);
             }
         }
-        return $this->buildAndModify($config, $args);       
+        return $this->buildAndModify($config, $args);        
     }
 
     

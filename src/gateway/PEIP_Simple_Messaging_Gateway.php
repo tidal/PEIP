@@ -17,7 +17,6 @@
  * @implements PEIP_INF_Messaging_Gateway, PEIP_INF_Message_Builder
  */
 
-
 class PEIP_Simple_Messaging_Gateway 
     implements 
         PEIP_INF_Messaging_Gateway,
@@ -89,7 +88,7 @@ class PEIP_Simple_Messaging_Gateway
         }       
         $message = $this->replyChannel->receive();
         if($message){
-            return $message;
+            return $message->getContent();
         }
         
         //return $this->replyChannel->receive()->getContent();
@@ -143,8 +142,8 @@ class PEIP_Simple_Messaging_Gateway
     
     
     /**
-     * @access public
-     * @param $messageClass 
+     * @access 	public
+     * @param 	$messageClass 
      * @return 
      */
     public function setMessageClass($messageClass){
