@@ -232,7 +232,7 @@ class PEIP_XML_Context
             foreach($config->action as $action){
                 if($action['method'] && method_exists($service, (string)$action['method'])){
                     $args = array();
-                    foreach($action->children() as $argument){
+                    foreach($action->children() as $argument){ print_r($argument);
                         $args[] = $this->buildArg($argument);
                     }
                     call_user_func_array(array($service, (string)$action['method']), $args);
