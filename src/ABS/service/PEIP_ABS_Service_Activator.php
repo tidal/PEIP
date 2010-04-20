@@ -32,13 +32,7 @@ abstract class PEIP_ABS_Service_Activator
      * @return 
      */
     public function doReply(PEIP_INF_Message $message){
-        if(is_callable($this->serviceCallable)){
-            $res = call_user_func($this->serviceCallable, $message->getContent());
-        }else{
-            if(is_object($this->serviceCallable) && method_exists($this->serviceCallable, 'handle')){
-                $res = $this->serviceCallable->handle($message->getContent());
-            }
-        }
+        $res = $this->callService($message);
         $out = (bool)$message->hasHeader('REPLY_CHANNEL') 
         	? $message->getHeader('REPLY_CHANNEL') 
         	: $this->outputChannel;    
@@ -46,5 +40,16 @@ abstract class PEIP_ABS_Service_Activator
             $this->replyMessage($res, $res);    
         }
     }  
-    
+
+    protected function callService(PEIP_INF_Message $message){
+		$res = NULL;
+    	if(is_callable($this->serviceCallable)){
+            $res = call_user_func($this->serviceCallable, $message->getContent());
+        }else{
+            if(is_object($this->serviceCallable) && method_exists($this->serviceCallable, 'handle')){
+                $res = $this->serviceCallable->handle($message->getContent());
+            }
+        }    
+    	return $res;
+    }   
 } 
