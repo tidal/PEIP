@@ -29,18 +29,13 @@ class PEIP_Splitting_Service_Activator
      * @param $message 
      * @return 
      */
-    public function doReply(PEIP_INF_Message $message){
+    public function callService(PEIP_INF_Message $message){
         if(is_callable($this->serviceCallable)){
             $res = call_user_func_array($this->serviceCallable, $message->getContent());
         }elseif(is_object($this->serviceCallable) && method_exists($this->serviceCallable, 'handle')){
             $res = call_user_func_array(array($this->serviceCallable, 'handle'), $message->getContent());            	
         }
-        $out = (bool)$message->hasHeader('REPLY_CHANNEL') 
-        	? $message->getHeader('REPLY_CHANNEL') 
-        	: $this->outputChannel;    
-        if($out){
-            $this->replyMessage($res, $res);    
-        }
+        return $res;
     } 
     	
     
