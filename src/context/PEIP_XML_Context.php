@@ -232,7 +232,7 @@ class PEIP_XML_Context
             foreach($config->action as $action){
                 if($action['method'] && method_exists($service, (string)$action['method'])){
                     $args = array();
-                    foreach($action->children() as $argument){ print_r($argument);
+                    foreach($action->children() as $argument){
                         $args[] = $this->buildArg($argument);
                     }
                     call_user_func_array(array($service, (string)$action['method']), $args);
@@ -527,7 +527,7 @@ class PEIP_XML_Context
      * @return 
      */
     public function buildAndModify($config, $arguments, $defaultClass = false){
-    	if($config["class"]  || $defaultClass){
+    	if("" != (string)$config["class"]  || $defaultClass){ 
         	 $service = self::doBuild($config, $arguments, $defaultClass);	
         }elseif($config["ref"]){
         	$service = $this->getService((string)$config['ref']);
