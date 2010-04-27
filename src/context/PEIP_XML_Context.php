@@ -74,6 +74,7 @@ class PEIP_XML_Context
     /**
      * Registers a callable as builder for given node-name
      * 
+     * @implements PEIP_INF_Context
      * @access public
      * @param string $nodeName the name of the node 
      * @param callable $callable a callable which creates instances for node-name 
@@ -85,10 +86,11 @@ class PEIP_XML_Context
     /**
      * Registers a context-plugin instance.
      * 
+     * @implements PEIP_INF_Context
      * @access public
      * @param PEIP_INF_Context_Plugin $plugin a plugin instance
      */
-    public function addPlugin(PEIP_INF_Context_Plugin $plugin){
+    public function addPlugin(PEIP_INF_Context_Plugin $plugin){ 
         $plugin->init($this);   
     }
   
@@ -108,8 +110,8 @@ class PEIP_XML_Context
      * Adds a context instance to the services stack.
      * Note: Object instances registered with the included context will
      * overwrite any instance with the same id on the including context.
-     * If you need this behavior the other around, please, make use
-     * of a include-tag in your configuration before your main
+     * If you need a different behavior, please, make use
+     * of an include-tag in your configuration before your main
      * configuration part. 
      * eg.:
      * <config>
@@ -197,6 +199,7 @@ class PEIP_XML_Context
      * Builds a specific configuration-node. Calls the build-method which
      * is registered with the node-name. If none is registered does nothing. 
      * 
+     * @see PEIP_XML_Context::doCreateChannel
      * @access protected
      * @param object $node configuration-node
      * @return void
@@ -228,11 +231,13 @@ class PEIP_XML_Context
     /**
      * Resolves a channel-name and returns channel-instace if found.
      * Main purpose is to allow the context to act as a channel-resolver for 
-     * (for example) routers.
+     * mainly routers, hence implement the PEIP_INF_Channel_Resolver pattern.
      * Note: Channels are registerd globally in a registry per thread/process.
      * This allows to connect many context instances through channels without
      * coupling them by in a include in configuration.  
      * 
+     * @see PEIP_INF_Channel_Resolver
+     * @implements PEIP_INF_Channel_Resolver
      * @access public
      * @param string $channelName the name/id of the channel to return 
      * @return PEIP_INF_Channel
@@ -244,11 +249,12 @@ class PEIP_XML_Context
     /**
      * returns a service for a given id
      * 
+     * @implements PEIP_INF_Context
      * @access public
      * @param mixed $id the id for the service
      * @return object the service instance if found
      */
-    public function getService($id){    
+    public function getService($id){     
         return $this->hasService($id)  
             ? $this->services[$id]
             : NULL;
@@ -708,13 +714,14 @@ class PEIP_XML_Context
      * 
      * @see PEIP_XML_Context::doBuild
      * @see PEIP_XML_Context::modifyService
+     * @implements PEIP_INF_Context
      * @access public
      * @param object $config configuration object to build a service instance from. 
      * @param array $arguments arguments for the service constructor 
      * @param string $defaultClass class to create instance for if none is set in config 
      * @return object build and modified srvice instance
      */
-    public function buildAndModify($config, $arguments, $defaultClass = false){
+    public function buildAndModify($config, $arguments, $defaultClass = false){ 
     	if("" != (string)$config["class"]  || $defaultClass){ 
         	 $service = self::doBuild($config, $arguments, $defaultClass);	
         }elseif($config["ref"]){
