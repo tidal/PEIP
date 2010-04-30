@@ -70,7 +70,26 @@ class PEIP_XML_Context
             throw new RuntimeException('Cannot open file  "'.$file.'".');
         }
     }
-   
+           
+    /**
+     * Initializes the context.
+     * 
+     * @access protected
+     * @return void
+     */
+    protected function init(){
+        $xml = $this->simpleXML;
+        $this->channelRegistry = PEIP_Channel_Registry::getInstance();
+        // register this context as a service if id is set.
+        if($xml['id']){
+            $this->services[(string)$xml['id']] = $this;    
+        }
+        // build services
+        foreach($xml->children() as $entry){
+            $this->buildNode($entry);
+        }
+    }    
+     
     /**
      * Registers a callable as builder for given node-name
      * 
@@ -206,26 +225,10 @@ class PEIP_XML_Context
      */
     protected function buildNode($node){
         $nodeName = $node->getName();
+        // call the builder method registered for the node.
         if(array_key_exists($nodeName, $this->nodeBuilders)){
             call_user_func($this->nodeBuilders[$nodeName], $node);
         }           
-    }
-     
-    /**
-     * Initializes the context.
-     * 
-     * @access protected
-     * @return void
-     */
-    protected function init(){
-        $xml = $this->simpleXML;
-        $this->channelRegistry = PEIP_Channel_Registry::getInstance();
-        if($xml['id']){
-            $this->services[(string)$xml['id']] = $this;    
-        }
-        foreach($xml->children() as $entry){
-            $this->buildNode($entry);
-        }
     }
    
     /**
@@ -323,6 +326,7 @@ class PEIP_XML_Context
      */
     public function createService($config){
         $args = array();
+        //build arguments for constructor
         if($config->constructor_arg){
             foreach($config->constructor_arg as $arg){
                 $args[] = $this->buildArg($arg);
@@ -441,9 +445,9 @@ class PEIP_XML_Context
      */
     public function doCreateChannel($config, $defaultChannelClass, array $additionalArguments = array()){
         $id = (string)$config['id'];
-        if($id != ''){
+        if($id != ''){ 
             array_unshift($additionalArguments, $id);
-            $channel = $this->buildAndModify($config, array($additionalArguments), $defaultChannelClass);
+            $channel = $this->buildAndModify($config, $additionalArguments, $defaultChannelClass);
             $this->channelRegistry->register($channel);
             return $channel;
         }
