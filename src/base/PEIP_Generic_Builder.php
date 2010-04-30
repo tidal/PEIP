@@ -76,10 +76,10 @@ class PEIP_Generic_Builder
 
     
     /**
-     * @access protected
+     * @access public
      * @return 
      */
-    protected function getReflectionClass(){
+    public function getReflectionClass(){
         return $this->reflectionClass 
             ? $this->reflectionClass 
             : $this->reflectionClass = new ReflectionClass($this->className); 
