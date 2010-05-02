@@ -142,7 +142,7 @@ class PEIP_XML_Context
      * @param PEIP_XML_Context $config the config to include
      */    
 	public function includeContext(PEIP_XML_Context $context){
-		array_merge($this->services, $context->getServices());			
+		$this->services = array_merge($this->services, $context->getServices());
 	}
 
     /**
