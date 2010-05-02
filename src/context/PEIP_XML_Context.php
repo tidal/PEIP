@@ -389,7 +389,7 @@ class PEIP_XML_Context
             if($config->listener){
                 foreach($config->listener as $listenerConf){
                     $event = (string)$listenerConf['event'];
-                    $listener = $this->provideService($config);  
+                    $listener = $this->provideService($listenerConf);  
                     $service->connect($event, $listener);   
                 }
             }
