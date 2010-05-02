@@ -39,7 +39,9 @@ class PEIP_Simple_Messaging_Gateway
      */
     public function __construct(PEIP_INF_Channel $requestChannel, PEIP_INF_Channel $replyChannel = NULL, array $defaultHeaders = array()){
         $this->setRequestChannel($requestChannel);
-        $this->setReplyChannel($replyChannel);
+        if($replyChannel){
+        	$this->setReplyChannel($replyChannel);
+        }     
         $this->defaultHeaders = $defaultHeaders;
         $this->messageBuilder = PEIP_Message_Builder::getInstance($this->messageClass);
     }   
@@ -90,8 +92,7 @@ class PEIP_Simple_Messaging_Gateway
         if($message){
             return $message->getContent();
         }
-        
-        //return $this->replyChannel->receive()->getContent();
+		return NULL;
     }
     
     
