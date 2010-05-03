@@ -91,8 +91,8 @@ class PEIP_Generic_Message
      * @static
      * @access public
      * @implements PEIP_INF_Buildable
-     * @param string $name the name of the header
-     * @return boolean wether the header is set
+     * @param array $arguments argumends for the constructor
+     * @return PEIP_Generic_Message new class instance
      */    
     public static function build(array $arguments = array()){
         return PEIP_Generic_Builder::getInstance('PEIP_Generic_Message')->build($arguments);    
