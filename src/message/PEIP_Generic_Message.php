@@ -52,12 +52,6 @@ class PEIP_Generic_Message
         $this->content = $content;
     }
     
-    
-    /**
-     * @access public
-     * @return 
-     */
-    
     /**
      * @access public
      * @param $name 
@@ -84,7 +78,7 @@ class PEIP_Generic_Message
      * @return 
      */
     public function hasHeader($name){
-        return (bool)$this->headers[$name];
+        return isset($this->headers[$name]);
     }
     
     public static function build(array $arguments = array()){
