@@ -31,11 +31,12 @@ class PEIP_Simple_Messaging_Gateway
 
     
     /**
+     * constructor
+     * 
      * @access public
-     * @param $requestChannel 
-     * @param $replyChannel 
-     * @param $defaultHeaders 
-     * @return 
+     * @param PEIP_INF_Channel $requestChannel The default channel to send requests from the gateway
+     * @param PEIP_INF_Pollable_Channel $replyChannel The default channel to receive requests from the gateway
+     * @param array $defaultHeaders The default headers to apply to request messages 
      */
     public function __construct(PEIP_INF_Channel $requestChannel, PEIP_INF_Channel $replyChannel = NULL, array $defaultHeaders = array()){
         $this->setRequestChannel($requestChannel);
@@ -48,8 +49,10 @@ class PEIP_Simple_Messaging_Gateway
             
     
     /**
+     * sets the channel to send requests from the gateway
+     * 
      * @access public
-     * @param $requestChannel 
+     * @param PEIP_INF_Channel $replyChannel The default channel to receive requests from the gateway
      * @return 
      */
     public function setRequestChannel(PEIP_INF_Channel $requestChannel){
@@ -58,8 +61,10 @@ class PEIP_Simple_Messaging_Gateway
 
     
     /**
+     * sets the default channel to receive requests from the gateway
+     * 
      * @access public
-     * @param $replyChannel 
+     * @param PEIP_INF_Pollable_Channel $replyChannel The default channel to receive requests from the gateway
      * @return 
      */
     public function setReplyChannel(PEIP_INF_Channel $replyChannel){
@@ -71,8 +76,10 @@ class PEIP_Simple_Messaging_Gateway
 
     
     /**
+     * sends a request/message through the gateway
+     * 
      * @access public
-     * @param $content 
+     * @param mixed $content the content/payload for the message to send 
      * @return 
      */
     public function send($content){
@@ -81,8 +88,10 @@ class PEIP_Simple_Messaging_Gateway
 
     
     /**
+     * receives a request/message from the gateway
+     * 
      * @access public
-     * @return 
+     * @return mixed content/payload of the received message
      */
     public function receive(){
         if(!isset($this->replyChannel)){
@@ -95,17 +104,12 @@ class PEIP_Simple_Messaging_Gateway
 		return NULL;
     }
     
-    
     /**
+     * sends and receives a request/message through the gateway
+     * 
      * @access public
-     * @param $content 
-     * @return 
-     */
-    
-    /**
-     * @access public
-     * @param $content 
-     * @return 
+     * @param mixed $content the content/payload for the message to send 
+     * @return mixed content/payload of the received message
      */
     public function sendAndReceive($content){
         $this->send($content);
@@ -121,9 +125,11 @@ class PEIP_Simple_Messaging_Gateway
     
     
     /**
+     * builds the message to send from given content/payload
+     * 
      * @access protected
-     * @param $content 
-     * @return 
+     * @param mixed $content the content/payload for the message to send 
+     * @return PEIP_INF_Message the built message
      */
     protected function buildMessage($content){
         return $this->getMessageBuilder()->setContent($content)->build();   
@@ -131,8 +137,10 @@ class PEIP_Simple_Messaging_Gateway
     
     
     /**
+     * returns the message builder instance for the registerd message class.
+     * 
      * @access protected
-     * @return 
+     * @return PEIP_Message_Builder message builder instance for the registerd message class
      */
     protected function getMessageBuilder(){
         return isset($this->messageBuilder) && ($this->messageBuilder->getMessageClass() == $this->getMessageClass())
@@ -143,8 +151,10 @@ class PEIP_Simple_Messaging_Gateway
     
     
     /**
+     * registers the message class to create instances from by the gateway
+     * 
      * @access 	public
-     * @param 	$messageClass 
+     * @param 	string $messageClass message class to create instances from
      * @return 
      */
     public function setMessageClass($messageClass){
@@ -153,8 +163,10 @@ class PEIP_Simple_Messaging_Gateway
 
     
     /**
+     * returns the message class to create instances from
+     * 
      * @access public
-     * @return 
+     * @return string message class to create instances from
      */
     public function getMessageClass(){
         return $this->messageClass;
