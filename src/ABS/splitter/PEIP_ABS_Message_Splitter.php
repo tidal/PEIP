@@ -9,7 +9,8 @@
  */
 
 /**
- * PEIP_ABS_Message_Splitter 
+ * PEIP_ABS_Message_Splitter
+ * Abstract base class for message-splitters. 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -21,12 +22,13 @@
 
 abstract class PEIP_ABS_Message_Splitter 
     extends PEIP_Pipe {
-
-    
+   
     /**
+     * constructor
+     * 
      * @access public
-     * @param $inputChannel 
-     * @param $outputChannel 
+     * @param PEIP_INF_Channel $inputChannel the input-channel
+     * @param PEIP_INF_Channel $outputChannel the outputs-channel 
      * @return 
      */
     public function __construct(PEIP_INF_Channel $inputChannel, PEIP_INF_Channel $outputChannel = NULL){
@@ -35,11 +37,12 @@ abstract class PEIP_ABS_Message_Splitter
             $this->setOutputChannel($outputChannel);    
         }   
     }           
-        
-    
+         
     /**
+     * Sends splitted message on output-channel
+     * 
      * @access public
-     * @param $message 
+     * @param PEIP_INF_Message $message message to split 
      * @return 
      */
     public function doReply(PEIP_INF_Message $message){     
@@ -51,14 +54,15 @@ abstract class PEIP_ABS_Message_Splitter
         }else{
             $this->replyMessage($res);
         }
-        
     }
-
-    
+  
     /**
+     * Splits a message 
+     * 
+     * @abstract
      * @access public
-     * @param $message 
-     * @return 
+     * @param PEIP_INF_Message $message 
+     * @return mixed result of splitting the message - array or arbitrary value
      */
     abstract public function split(PEIP_INF_Message $message);
 
