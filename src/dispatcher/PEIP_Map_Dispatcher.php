@@ -22,5 +22,4 @@
 class PEIP_Map_Dispatcher 
 	extends PEIP_ABS_Map_Dispatcher {
 
-
 }
