@@ -9,7 +9,8 @@
  */
 
 /**
- * PEIP_ABS_Container 
+ * PEIP_ABS_Container
+ * Basic abstract container class 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -23,11 +24,14 @@ abstract class PEIP_ABS_Container
     protected $content;
        
     /**
+     * Returns the content of the container
+     * 
+     * @implements PEIP_INF_Container
      * @access public
      * @return 
      */
     public function getContent(){
         return $this->content;
     }
-
+    
 } 
