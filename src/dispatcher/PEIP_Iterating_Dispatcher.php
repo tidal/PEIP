@@ -10,6 +10,8 @@
 
 /**
  * PEIP_Iterating_Dispatcher 
+ * Dispatcher implementation which notifies only one listener at a time 
+ * by iterating over registered listeners.
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -17,90 +19,65 @@
  * @implements PEIP_INF_Dispatcher
  */
 
-
-
 class PEIP_Iterating_Dispatcher  
     implements PEIP_INF_Dispatcher {
 
     protected $listeners;
-
     
     /**
+     * constructor
+     * 
      * @access public
-     * @param $listenerIterator 
+     * @param ArrayIterator $listenerIterator an instance of ArrayIterator to iterate over listeners
      * @return 
      */
     public function __construct(ArrayIterator $listenerIterator = NULL){
         $this->listeners = $iterator ? $iterator : new ArrayIterator;
     }
-    
- /**
-   * Connects a listener to a given event name.
-   *
-   * @param string  $name      An event name
-   * @param mixed   $listener  A PHP callable
-   */
   
     /**
+     * Registers a listener.
+     * 
      * @access public
-     * @param $listener 
+     * @param PEIP_INF_Handler $listener the listener to register
      * @return 
      */
     public function connect(PEIP_INF_Handler $listener){
-    $this->listeners[] = $listener;
-  }
+    	$this->listeners[] = $listener;
+  	}
 
-  /**
-   * Disconnects a listener for a given event name.
-   *
-   * @param string   $name      An event name
-   * @param mixed    $listener  A PHP callable
-   *
-   * @return mixed false if listener does not exist, null otherwise
-   */
-  
     /**
+     * Unregisters a listener.
+     * 
      * @access public
-     * @param $listener 
+     * @param PEIP_INF_Handler $listener the listener to unregister 
      * @return 
      */
     public function disconnect(PEIP_INF_Handler $listener){
-    foreach ($this->listeners as $i => $callable){
-      if ($listener === $callable){
-        unset($this->listeners[$name][$i]);
-      }
-    }
-  }
-    
-
-  /**
-   * Returns true if the given event name has some listeners.
-   *
-   * @param  string   $name    The event name
-   *
-   * @return Boolean true if some listeners are connected, false otherwise
-   */
+	    foreach ($this->listeners as $i => $callable){
+	      if ($listener === $callable){
+	        unset($this->listeners[$name][$i]);
+	      }
+	    }
+	}
   
     /**
+     * Check wether any listener is registered
+     * 
      * @access public
-     * @return 
+     * @return boolean wether any listener is registered
      */
-    public function hasListeners()
-  {
-    return (boolean) $this->listeners->count();
-  }
+    public function hasListeners(){
+    	return (boolean) $this->listeners->count();
+  	}
 
-  /**
-   * Notifies all listeners of a given event.
-   *
-   * @param PEIP_Event_Inf $event A PEIP_Event_Inf instance
-   *
-   * @return PEIP_Event_Inf The PEIP_Event_Inf instance
-   */
-    
     /**
+     * Notifies one listener about a subject.
+     * Iterates to the next registered listener any time method
+     * is called - Rewinds if end is reached.  
+     * 
      * @access public
-     * @param $subject 
+     * @param mixed $subject the subject to notify about 
      * @return 
      */
     public function notify($subject){
@@ -112,23 +89,15 @@ class PEIP_Iterating_Dispatcher
             $this->listeners->next();           
         }         
     }
-
-  
-  
-  /**
-   * Returns all listeners associated with a given event name.
-   *
-   * @param  string   $name    The event name
-   *
-   * @return array  An array of listeners
-   */
   
     /**
+     * Returns all registered listeners of the dispatcher
+     * 
      * @access public
-     * @return 
+     * @return array registered listeners 
      */
     public function getListeners(){
-    return $this->listeners;
-  }
+    	return $this->listeners;
+  	}
     
 }
