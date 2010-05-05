@@ -10,6 +10,9 @@
 
 /**
  * PEIP_Object_Map_Dispatcher 
+ * Event dispatcher for an abritrary amount of different objects and events.
+ * Framework internally this class (and derived classes) are used to reduce the overall
+ * amount of dispatcher instances. 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -17,14 +20,12 @@
  * @implements PEIP_INF_Object_Map_Dispatcher
  */
 
-
 class PEIP_Object_Map_Dispatcher
     implements PEIP_INF_Object_Map_Dispatcher {
 
     protected 
         $listeners = NULL;
-
-         
+        
     /**
      * connects a Handler to an event on an object
      * 
@@ -47,7 +48,7 @@ class PEIP_Object_Map_Dispatcher
   	}
 
     /**
-     * disconnects a Handler from an event on an object
+     * Disconnects a Handler from an event on an object
      * 
      * @access public
      * @param string $name the event-name 
@@ -102,6 +103,8 @@ class PEIP_Object_Map_Dispatcher
   	}
 
     /**
+     * Returns all event-names an object has registered listeners for
+     * 
      * @access public
      * @param object $object object to get event-names for
      * @return string[] array of event-names
@@ -146,7 +149,7 @@ class PEIP_Object_Map_Dispatcher
   	}
 
     /**
-     * returns all listeners of a given event on an object
+     * Returns all listeners of a given event on an object
      * 
      * @access public
      * @param string $name the event-name 
@@ -161,7 +164,7 @@ class PEIP_Object_Map_Dispatcher
   	}
     
     /**
-     * returns SplObjectStorage object to store objects to lositen to in.
+     * Returns SplObjectStorage object to store objects to lositen to in.
      * creates SplObjectStorage if not exists.
      * 
      * @access protected
@@ -170,13 +173,31 @@ class PEIP_Object_Map_Dispatcher
     protected function doGetListeners(){
         return isset($this->listeners) ? $this->listeners : $this->listeners = new SplObjectStorage();
     }
-
+   
+    /**
+     * Notifies all given listeners about an subject.
+     * 
+     * @static
+     * @access protected
+     * @param $name 
+     * @param $object 
+     * @return boolean
+     */    
     protected static function doNotify(array $listeners, $subject){
         foreach($listeners as $listener){ 
             $listener->handle($subject);    
         }   
     }  
 
+    /**
+     * Notifies all given listeners about an subject untill one returns a boolean true value.
+     * 
+     * @static
+     * @access protected
+     * @param $name 
+     * @param $object 
+     * @return PEIP_INF_Handler the listener which returned a boolean true value
+     */     
     protected static function doNotifyUntil(array $listeners, $subject){  
     	$res = NULL;
     	foreach ($listeners as $listener){
