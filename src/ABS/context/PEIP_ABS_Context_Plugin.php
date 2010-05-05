@@ -10,6 +10,7 @@
 
 /**
  * PEIP_ABS_Context_Plugin 
+ * Abstract base class for all context plugins.
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -17,18 +18,19 @@
  * @implements PEIP_INF_Context_Plugin
  */
 
-
 abstract class PEIP_ABS_Context_Plugin 
     implements PEIP_INF_Context_Plugin {
 
     protected $context;
     
     protected static $builders = array();
-    
-    
+      
     /**
+     * Initializes the plugin with given context.
+     * Registers node-builders of the plugin in with the given context.
+     * 
      * @access public
-     * @param $context 
+     * @param PEIP_INF_Context $context context instance to register the plugin with
      * @return 
      */
     public function init(PEIP_INF_Context $context){
