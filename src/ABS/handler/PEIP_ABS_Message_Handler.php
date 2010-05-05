@@ -10,6 +10,7 @@
 
 /**
  * PEIP_ABS_Message_Handler 
+ * Base class for all message handling classes.
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -17,39 +18,51 @@
  * @implements PEIP_INF_Handler
  */
 
-
 abstract class PEIP_ABS_Message_Handler 
     implements PEIP_INF_Handler {
     
     protected 
         $inputChannel;
-        
-        
-    
+           
     /**
+     * Handles a message. Delegates the handling of the message to 
+     * abstract 'doHandle' method which must be implemented by extending classes.
+     * 
+     * @see PEIP_ABS_Message_Handler::doHandle
+     * @implements PEIP_INF_Handler
      * @access public
-     * @param $message 
+     * @param object $message the message to handle
      * @return 
      */
     public function handle($message){
         return $this->doHandle($message);
     }
-
-    
+   
     /**
+     * Sets the input channel for the message handler.
+     * Delegates connecting of input-channel to protected method 'doSetInputChannel',
+     * which can be overwritten by extending classes.
+     * 
+     * @see PEIP_ABS_Message_Handler::doSetInputChannel
      * @access public
-     * @param $inputChannel 
-     * @return 
+     * @param PEIP_INF_Channel $inputChannel the input-channel
+     * @return PEIP_ABS_Message_Handler $this;
      */
     public function setInputChannel(PEIP_INF_Channel $inputChannel){
         $this->doSetInputChannel($inputChannel);
         return $this;
     }
-
     
     /**
+     * Connects the handler to the input channel. 
+     * When input-channel is instance of PEIP_INF_Subscribable_Channel,
+     * the handler subscribes to the channel.
+     * When input-channel is instance of PEIP_INF_Pollable_Channel, the
+     * handler listens to the 'preSend' event of the channel and receives
+     * a message, when the event occures.
+     * 
      * @access protected
-     * @param $inputChannel 
+     * @param PEIP_INF_Channel $inputChannel the input-channel to connect the handler to
      * @return 
      */
     protected function doSetInputChannel(PEIP_INF_Channel $inputChannel){
@@ -80,22 +93,24 @@ abstract class PEIP_ABS_Message_Handler
         $handler = new PEIP_Callable_Message_Handler($handling);
         $linkChannel($handler); 
     }
-    
-    
-    
+        
     /**
+     * Returns the input-channel for this handler.
+     * 
      * @access public
-     * @return 
+     * @return PEIP_INF_Channel input-channel for this handler
      */
     public function getInputChannel(){
         return $this->inputChannel;
     }   
-    
-    
+      
     /**
+     * Does the message handling logic for the handler. 
+     * Must be implemented by extending classes.
+     * 
+     * @abstract
      * @access protected
-     * @param $message 
-     * @return 
+     * @param PEIP_INF_Message $message the message to handle
      */
     abstract protected function doHandle(PEIP_INF_Message $message);
     
