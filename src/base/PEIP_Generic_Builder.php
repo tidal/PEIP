@@ -10,6 +10,7 @@
 
 /**
  * PEIP_Generic_Builder 
+ * Class to act as a factory for an abritrary class.
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -28,13 +29,14 @@ class PEIP_Generic_Builder
     
     protected static 
         $instances = array();   
-    
-    
+     
     /**
+     * constructor
+     * 
      * @access public
-     * @param $className 
-     * @param $reflectionClass 
-     * @param $storeRef 
+     * @param string $className class-name to create objects for
+     * @param ReflectionClass $reflectionClass reflection-class for class. default: NULL 
+     * @param boolean $storeRef wether to store a reference for new instance. default: true 
      * @return 
      */
     public function __construct($className, ReflectionClass $reflectionClass = NULL, $storeRef = true){      
@@ -49,19 +51,27 @@ class PEIP_Generic_Builder
             self::$instances[$className] = $this;
         }            
     }
-    
+
+    /**
+     * Creates (if not exists) and returns PEIP_Generic_Builder instance for class. 
+     * 
+     * @access public
+     * @param string $className class-name to return builder instance for 
+     * @return PEIP_Generic_Builder builder instance for class
+     */
     public static function getInstance($className){
         if(!array_key_exists((string)$className, self::$instances)) {
             new PEIP_Generic_Builder($className);
         }
         return self::$instances[$className];
     }
-
-    
+  
     /**
+     * Creates object instance with given arguments. 
+     * 
      * @access public
-     * @param $arguments 
-     * @return 
+     * @param array $arguments array of constructore arguments
+     * @return object the created object instance
      */
     public function build(array $arguments = array()){      
         if($constructor = $this->getReflectionClass()->getConstructor()){
@@ -73,11 +83,12 @@ class PEIP_Generic_Builder
             return $this->getReflectionClass()->newInstance();
         }               
     }
-
-    
+   
     /**
+     * returns reflection class instance
+     * 
      * @access public
-     * @return 
+     * @return ReflectionClass
      */
     public function getReflectionClass(){
         return $this->reflectionClass 
