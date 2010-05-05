@@ -10,6 +10,7 @@
 
 /**
  * PEIP_Array_Access 
+ * Simple implementation of the PHP´s native ArrayAccess interface
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -17,48 +18,49 @@
  * @implements ArrayAccess
  */
 
-
-
 class PEIP_Array_Access implements ArrayAccess {
 
     protected $values = array();
-    
-    
-    
+       
     /**
+     * Checks wether a given offset exists
+     * 
      * @access public
-     * @param $offset 
+     * @param mixed $offset the offset  
      * @return 
      */
     public function offsetExists($offset){
         return array_key_exists($name, $this->values);
     }   
-    
-    
+      
     /**
+     * returns the value for agiven offset
+     * 
      * @access public
-     * @param $offset 
+     * @param mixed $offset the offset 
      * @return 
      */
     public function offsetGet($offset){
         return array_key_exists($name, $this->values) ? $this->values[$offset] : NULL;
     }
-    
-    
+     
     /**
+     * Deletes the a given offset
+     * 
      * @access public
-     * @param $name 
+     * @param mixed $offset the offset 
      * @return 
      */
-    public function offsetUnset($name){
+    public function offsetUnset($offset){
         unset($this->values[$offset]);
     }   
-
-    
+  
     /**
+     * Sets the value for a given offset
+     * 
      * @access public
-     * @param $offset 
-     * @param $value 
+     * @param mixed $offset the offset 
+     * @param mixed $value value for the offset 
      * @return 
      */
     public function offsetSet($offset, $value){
