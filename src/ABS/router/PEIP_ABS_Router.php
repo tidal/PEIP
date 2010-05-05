@@ -9,7 +9,8 @@
  */
 
 /**
- * PEIP_ABS_Router 
+ * PEIP_ABS_Router
+ * Basic abstract implementation of a message router. 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -23,33 +24,36 @@ abstract class PEIP_ABS_Router
     extends PEIP_Pipe {
 
     protected $channelResolver;
-
-    
+   
     /**
+     * constructor
+     * 
      * @access public
-     * @param $channelResolver 
-     * @param $inputChannel 
+     * @param PEIP_INF_Channel_Resolver $channelResolver channel resolver for the router 
+     * @param PEIP_INF_Channel $inputChannel the input channel for the router 
      * @return 
      */
     public function __construct(PEIP_INF_Channel_Resolver $channelResolver, PEIP_INF_Channel $inputChannel){
         $this->channelResolver = $channelResolver;
         $this->setInputChannel($inputChannel);  
     }               
-            
-    
+               
     /**
+     * Sets the channel resolver for the router
+     * 
      * @access public
-     * @param $channelResolver 
+     * @param PEIP_INF_Channel_Resolver $channelResolver the channel resolver for the router
      * @return 
      */
     public function setChannelResolver(PEIP_INF_Channel_Resolver $channelResolver){
         $this->channelResolver = $channelResolver;
     }
-    
-    
+      
     /**
+     * Sends given message on all accepted reply-channels
+     * 
      * @access protected
-     * @param $message 
+     * @param PEIP_INF_Message $message the message to reply with
      * @return 
      */
     protected function doReply(PEIP_INF_Message $message){  
@@ -60,11 +64,14 @@ abstract class PEIP_ABS_Router
             $this->replyMessage($message); 
         }
     }   
-
-    
+  
     /**
+     * Resolves a channel from name or channel-instance.
+     * Returns first argument directly if it is intance of PEIP_INF_Channel.
+     * Else resolves channel through registered channel-resolver
+     * 
      * @access protected
-     * @param $channel 
+     * @param mixed $channel channel-name or instance of PEIP_INF_Channel 
      * @return 
      */
     protected function resolveChannel($channel){
@@ -76,14 +83,14 @@ abstract class PEIP_ABS_Router
         }
         return $channel;
     }
-    
-    
+       
     /**
+     * Selects channel(s) to route given message to.
+     * 
+     * @abstract 
      * @access protected
-     * @param $message 
-     * @return 
+     * @param PEIP_INF_Message $message message to route
      */
     abstract protected function selectChannels(PEIP_INF_Message $message);
     
-
 }
