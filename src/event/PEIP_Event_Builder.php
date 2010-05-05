@@ -9,7 +9,8 @@
  */
 
 /**
- * PEIP_Event_Builder 
+ * PEIP_Event_Builder
+ * Factory class to create event-objects 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
