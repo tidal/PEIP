@@ -16,10 +16,15 @@
  * @subpackage handler 
  */
 
-
-
 interface PEIP_INF_Handler {
 
+	/**
+     * Handles a subject. 
+     * 
+     * @abstract 
+     * @access public
+     * @param object $subject the subject to handle
+     */
     public function handle($subject);
     
 }
