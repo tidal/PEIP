@@ -10,6 +10,7 @@
 
 /**
  * PEIP_ABS_Command 
+ * Basic abstract implementation of comman pattern.
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -25,27 +26,29 @@ abstract class PEIP_ABS_Command
         PEIP_INF_Command, 
         PEIP_INF_Parameter_Holder {
 
-    protected $params;
-
-    protected $callable;
-    
-    
-    
+    protected 
+    	$params,
+    	$callable;
+       
     /**
+     * Allows a instance of the class to act as a lambda function.
+     * 
      * @access public
      * @return 
      */
     public function __invoke(){
         return $this->execute();
     }
-
-    
+   
     /**
+     * Executes/calls the registered callable with registered 
+     * parameters as arguments
+     * 
      * @access public
      * @return 
      */
     public function execute(){
         return call_user_func_array($this->callable, $this->getParameters());
     }   
-    
+        
 }
