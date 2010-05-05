@@ -10,6 +10,8 @@
 
 /**
  * PEIP_ABS_Map_Dispatcher 
+ * Abstract base class for namespaced dispatcher.
+ * Derived concrete classes can be used (for example) as event dispatchers.
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -17,7 +19,6 @@
  * @extends PEIP_ABS_Dispatcher
  * @implements PEIP_INF_Connectable
  */
-
 
 abstract class  PEIP_ABS_Map_Dispatcher
     extends 
@@ -28,97 +29,61 @@ abstract class  PEIP_ABS_Map_Dispatcher
 
     protected 
         $listeners = array();   
-    
-    
- /**
-   * Connects a listener to a given event name.
-   *
-   * @param string  $name      An event name
-   * @param mixed   $listener  A PHP callable
-   */
-  
+     
     /**
+     * Connects a listener to a given event-name
+     * 
      * @access public
-     * @param $name 
-     * @param $listener 
+     * @param string $name name of the event 
+     * @param $listener listener to connect
      * @return 
      */
-    public function connect($name, PEIP_INF_Handler $listener)
-  {
-    if (!isset($this->listeners[$name]))
-    {
-      $this->listeners[$name] = array();
+    public function connect($name, PEIP_INF_Handler $listener){
+	    if (!isset($this->listeners[$name])){
+	      $this->listeners[$name] = array();
+	    }
+	    $this->listeners[$name][] = $listener;
     }
 
-    $this->listeners[$name][] = $listener;
-  }
-
-  /**
-   * Disconnects a listener for a given event name.
-   *
-   * @param string   $name      An event name
-   * @param mixed    $listener  A PHP callable
-   *
-   * @return mixed false if listener does not exist, null otherwise
-   */
-  
     /**
+     * Disconnects a listener from a given event-name
+     * 
      * @access public
-     * @param $name 
-     * @param $listener 
+     * @param string $name name of the event 
+     * @param $listener listener to connect
      * @return 
      */
-    public function disconnect($name, PEIP_INF_Handler $listener)
-  {
-    if (!isset($this->listeners[$name]))
-    {
-      return false;
-    }
+    public function disconnect($name, PEIP_INF_Handler $listener){
+    	if (!isset($this->listeners[$name])){
+      		return false;
+    	}
+	    foreach ($this->listeners[$name] as $i => $callable){
+	      if ($listener === $callable){
+	        unset($this->listeners[$name][$i]);
+	      }
+	    }
+  	}
 
-    foreach ($this->listeners[$name] as $i => $callable)
-    {
-      if ($listener === $callable)
-      {
-        unset($this->listeners[$name][$i]);
-      }
-    }
-  }
-
-
-  /**
-   * Returns true if the given event name has some listeners.
-   *
-   * @param  string   $name    The event name
-   *
-   * @return Boolean true if some listeners are connected, false otherwise
-   */
-  
     /**
+     * Checks wether any listener is registered for a given event-name
+     * 
      * @access public
-     * @param $name 
-     * @return 
+     * @param string $name name of the event 
+     * @return boolean wether any listener is registered for event-name
      */
-    public function hasListeners($name)
-  {
-    if (!isset($this->listeners[$name]))
-    {
-      $this->listeners[$name] = array();
-    }
-    return (boolean) count($this->listeners[$name]);
-  }
-
-  /**
-   * Notifies all listeners of a given event.
-   *
-   * @param PEIP_Event_Inf $event A PEIP_Event_Inf instance
-   *
-   * @return PEIP_Event_Inf The PEIP_Event_Inf instance
-   */
+    public function hasListeners($name){
+    	if (!isset($this->listeners[$name])){
+      		$this->listeners[$name] = array();
+    	}
+    	return (boolean) count($this->listeners[$name]);
+  	}
     
     /**
+     * notifies all listeners on a event on a subject
+     * 
      * @access public
-     * @param $name 
-     * @param $subject 
+     * @param string $name name of the event 
+     * @param mixed $subject the subject 
      * @return 
      */
     public function notify($name, $subject){
@@ -127,55 +92,33 @@ abstract class  PEIP_ABS_Map_Dispatcher
         }         
     }
 
-   
-  /**
-   * Notifies all listeners of a given event until one returns a non null value.
-   *
-   * @param  PEIP_Event_Inf $event A PEIP_Event_Inf instance
-   *
-   * @return PEIP_Event_Inf The PEIP_Event_Inf instance
-   */
-  
     /**
+     * notifies all listeners on a event on a subject until one returns a boolean true value
+     * 
      * @access public
-     * @param $name 
-     * @param $subject 
-     * @return 
-     */
-    
-    /**
-     * @access public
-     * @param $name 
-     * @param $subject 
-     * @return 
+     * @param string $name name of the event 
+     * @param mixed $subject the subject 
+     * @return PEIP_INF_Handler listener which returned a boolean true value
      */
     public function notifyUntil($name, $subject){
         if($this->hasListeners($name)){
             return self::doNotifyUntil($this->getListeners($name), $subject);   
         }
-  }
-  
-  /**
-   * Returns all listeners associated with a given event name.
-   *
-   * @param  string   $name    The event name
-   *
-   * @return array  An array of listeners
-   */
+  	}
   
     /**
+     * Returns all listeners registered for a given event-name
+     * 
      * @access public
      * @param $name 
-     * @return 
+     * @return array array of PEIP_INF_Handler instances
      */
-    public function getListeners($name)
-  {
-    if (!isset($this->listeners[$name])){
-      return array();
-    }
-    return $this->listeners[$name];
-  }
-
+    public function getListeners($name){
+    	if (!isset($this->listeners[$name])){
+      	return array();
+    	}
+    	return $this->listeners[$name];
+  	}
 
 }
 
