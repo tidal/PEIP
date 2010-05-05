@@ -10,6 +10,7 @@
 
 /**
  * PEIP_Publish_Subscribe_Channel 
+ * Basic Concrete implementation of a publish-subscribe-channel
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -21,9 +22,12 @@
 
 class PEIP_Publish_Subscribe_Channel 
     extends PEIP_ABS_Subscribable_Channel {
-
-    
+   
     /**
+     * Sends a given message on the channel by notifying all subscribers
+     * 
+     * @event prePublish
+     * @event postPublish
      * @access protected
      * @param $message 
      * @return 
