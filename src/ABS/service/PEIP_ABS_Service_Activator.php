@@ -10,6 +10,7 @@
 
 /**
  * PEIP_ABS_Service_Activator 
+ * Abstract base class for all service activators
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -18,17 +19,19 @@
  * @implements PEIP_INF_Connectable, PEIP_INF_Subscribable_Channel, PEIP_INF_Channel, PEIP_INF_Handler, PEIP_INF_Message_Builder
  */
 
-
 abstract class PEIP_ABS_Service_Activator
     extends PEIP_Pipe {
         
     protected 
         $serviceCallable;
-        
-    
+         
     /**
-     * @access public
-     * @param $message 
+     * Handles the reply logic.
+     * Delegates calling of service to method 'callService'.
+     * Replies on message´s reply-channel or registered output-channel if set.
+     * 
+     * @access protected
+     * @param PEIP_INF_Message $message message to handle/reply for
      * @return 
      */
     public function doReply(PEIP_INF_Message $message){
@@ -41,6 +44,14 @@ abstract class PEIP_ABS_Service_Activator
         }
     }  
 
+    /**
+     * Calls a method on a service (registered as a callable) with 
+     * content/payload of given message as argument.
+     * 
+     * @access protected
+     * @param PEIP_INF_Message $message message to call the service with it´s content/payload
+     * @return mixed result of calling the registered service callable with message content/payload
+     */
     protected function callService(PEIP_INF_Message $message){
 		$res = NULL;
     	if(is_callable($this->serviceCallable)){
