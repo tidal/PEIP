@@ -10,6 +10,7 @@
 
 /**
  * PEIP_Dispatcher 
+ * Basic dispatcher implementation 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -18,15 +19,12 @@
  * @implements PEIP_INF_Dispatcher
  */
 
-
-
 class PEIP_Dispatcher 
     extends PEIP_ABS_Dispatcher 
     implements PEIP_INF_Dispatcher {
 
     protected $listeners = array();
-    
-  
+     
     /**
      * Connects a listener.
      * 
@@ -37,8 +35,7 @@ class PEIP_Dispatcher
     public function connect(PEIP_INF_Handler $listener){
     	$this->listeners[] = $listener;
   	}
-
-  
+ 
     /**
      * Disconnects a listener.
      * 
@@ -68,7 +65,7 @@ class PEIP_Dispatcher
      * notifies all listeners on a subject
      * 
      * @access public
-     * @param $subject 
+     * @param mixed $subject the subject
      * @return void
      */
     public function notify($subject){
@@ -82,8 +79,8 @@ class PEIP_Dispatcher
      * notifies all listeners on a subject until one returns a boolean true value
      * 
      * @access public
-     * @param $subject 
-     * @return PEIP_INF_Handler the listener which returns a boolean true value
+     * @param mixed $subject the subject 
+     * @return PEIP_INF_Handler the listener which returned a boolean true value
      */
     public function notifyUntil($subject){
         if($this->hasListeners()){
@@ -101,9 +98,5 @@ class PEIP_Dispatcher
     public function getListeners(){
     	return $this->listeners;
   	}
-    
-
-
-
 
 }
