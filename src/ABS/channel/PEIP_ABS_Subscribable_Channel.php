@@ -10,6 +10,7 @@
 
 /**
  * PEIP_ABS_Subscribable_Channel 
+ * Abstract base class for subscribable channels
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -24,11 +25,13 @@ abstract class PEIP_ABS_Subscribable_Channel
     implements PEIP_INF_Subscribable_Channel{
 
     protected $messageDispatcher;   
-    
-    
+       
     /**
+     * Subscribes a given listener to the channel
+     * 
+     * @event subscribe
      * @access public
-     * @param $handler 
+     * @param PEIP_INF_Handler $handler the listener to subscribe
      * @return 
      */
     public function subscribe(PEIP_INF_Handler $handler){
@@ -36,11 +39,13 @@ abstract class PEIP_ABS_Subscribable_Channel
         $this->getInterceptorDispatcher()->notify('subscribe', array($this, $handler));
         $this->doFireEvent('subscribe', array('SUBSCRIBER'=>$handler));
     }
-    
-    
+      
     /**
+     * Unsubscribes a given listener from the channel
+     * 
+     * @event unsubscribe
      * @access public
-     * @param $handler 
+     * @param PEIP_INF_Handler $handler the listener to unsubscribe
      * @return 
      */
     public function unsubscribe(PEIP_INF_Handler $handler){
@@ -48,12 +53,13 @@ abstract class PEIP_ABS_Subscribable_Channel
         $this->getInterceptorDispatcher()->notify('unsubscribe', array($this, $handler));
         $this->doFireEvent('unsubscribe', array('SUBSCRIBER'=>$handler));       
     }
-    
-    
+      
     /**
+     * Sets the message dispatcher resposible for notifying all subscribers about new messages.
+     * 
      * @access public
-     * @param $dispatcher 
-     * @param $transferListeners 
+     * @param PEIP_INF_Dispatcher $dispatcher instance of PEIP_INF_Dispatcher
+     * @param boolean $transferListeners wether to transfer listeners of old dispatcher (if set) to new one. default: true 
      * @return 
      */
     public function setMessageDispatcher(PEIP_INF_Dispatcher $dispatcher, $transferListeners = true){
@@ -65,9 +71,10 @@ abstract class PEIP_ABS_Subscribable_Channel
         }
         $this->dispatcher = $dispatcher;    
     }   
-    
-    
+       
     /**
+     * Returns the message dispatcher resposible for notifying all subscribers about new messages.
+     * 
      * @access public
      * @return 
      */
