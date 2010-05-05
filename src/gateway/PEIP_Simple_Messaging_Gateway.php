@@ -10,6 +10,7 @@
 
 /**
  * PEIP_Simple_Messaging_Gateway 
+ * Basic implementation of a messaging gateway
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -28,8 +29,7 @@ class PEIP_Simple_Messaging_Gateway
         $messageClass = 'PEIP_Generic_Message',
         $defaultHeaders,
         $messageBuilder; 
-
-    
+  
     /**
      * constructor
      * 
@@ -46,8 +46,7 @@ class PEIP_Simple_Messaging_Gateway
         $this->defaultHeaders = $defaultHeaders;
         $this->messageBuilder = PEIP_Message_Builder::getInstance($this->messageClass);
     }   
-            
-    
+              
     /**
      * sets the channel to send requests from the gateway
      * 
@@ -58,8 +57,7 @@ class PEIP_Simple_Messaging_Gateway
     public function setRequestChannel(PEIP_INF_Channel $requestChannel){
         $this->requestChannel = $requestChannel;
     }
-
-    
+  
     /**
      * sets the default channel to receive requests from the gateway
      * 
@@ -73,8 +71,7 @@ class PEIP_Simple_Messaging_Gateway
         }       
         $this->replyChannel = $replyChannel;
     }
-
-    
+ 
     /**
      * sends a request/message through the gateway
      * 
@@ -85,8 +82,7 @@ class PEIP_Simple_Messaging_Gateway
     public function send($content){
         return $this->requestChannel->send($this->buildMessage($content));
     }
-
-    
+   
     /**
      * receives a request/message from the gateway
      * 
@@ -121,9 +117,7 @@ class PEIP_Simple_Messaging_Gateway
         }
         return $res;
     }
-
-    
-    
+  
     /**
      * builds the message to send from given content/payload
      * 
@@ -134,8 +128,7 @@ class PEIP_Simple_Messaging_Gateway
     protected function buildMessage($content){
         return $this->getMessageBuilder()->setContent($content)->build();   
     }   
-    
-    
+      
     /**
      * returns the message builder instance for the registerd message class.
      * 
@@ -147,9 +140,7 @@ class PEIP_Simple_Messaging_Gateway
             ? $this->messageBuilder
             : $this->messageBuilder = PEIP_Message_Builder::getInstance($this->messageClass)->setHeaders($this->defaultHeaders);
     }
-    
-    
-    
+        
     /**
      * registers the message class to create instances from by the gateway
      * 
@@ -160,7 +151,6 @@ class PEIP_Simple_Messaging_Gateway
     public function setMessageClass($messageClass){
         $this->messageClass = $messageClass;
     }
-
     
     /**
      * returns the message class to create instances from
