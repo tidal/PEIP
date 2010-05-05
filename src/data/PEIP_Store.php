@@ -10,6 +10,7 @@
 
 /**
  * PEIP_Store 
+ * A simple class to act as a store for arbritrary values
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -18,16 +19,16 @@
  * @implements ArrayAccess, PEIP_INF_Store
  */
 
-
-
-
-class PEIP_Store extends PEIP_Array_Access implements PEIP_INF_Store {
-
-    
+class PEIP_Store 
+	extends PEIP_Array_Access 
+	implements PEIP_INF_Store {
+   
     /**
+     * Sets a value for a given key
+     * 
      * @access public
-     * @param $key 
-     * @param $value 
+     * @param mixed $key the key to store value for 
+     * @param mixed $value the value to store
      * @return 
      */
     public function setValue($key, $value){
@@ -35,68 +36,63 @@ class PEIP_Store extends PEIP_Array_Access implements PEIP_INF_Store {
     }
     
     /**
+     * returns the value for a given key
+     * 
      * @access public
-     * @param $key 
-     * @return 
+     * @param mixed $key the key to return value for 
+     * @return mixed the value for the given key
      */
     public function getValue($key){
         return $this->offsetGet($key, $value);
     }
-
-    
+  
     /**
+     * Unsets the value for a given key
+     * 
      * @access public
-     * @param $key 
+     * @param mixed $key the key to unset value for 
      * @return 
      */
     public function deleteValue($key){
         return $this->offsetUnset($key);
     }
-    
-    
+      
     /**
+     * Checks wether a value is stored for given key
+     * 
      * @access public
-     * @param $key 
-     * @return 
+     * @param mixed $key the key to look for a value
+     * @return boolean wether a value is stored for the key
      */
     public function hasValue($key){
         return $this->offsetExists($key);
     }   
 
-    
     /**
+     * Sets all values for the store as key/value pair array
+     * 
      * @access public
-     * @param $key 
-     * @param $value 
-     * @return 
-     */
-    
-    /**
-     * @access public
-     * @param $values 
+     * @param array $values key/value pairs to store
      * @return 
      */
     public function setValues(array $values){
         $this->values = $values;        
     }
 
-    
     /**
+     * returns all values for the store as key/value pairs
+     * 
      * @access public
-     * @param $key 
-     * @return 
-     */
-    
-    /**
-     * @access public
-     * @return 
+     * @return array stored key/value pairs
      */
     public function getValues(){
         return $this->values;
     }
-
-    
+   
     /**
+     * Adds values for the store as key/value pair array.
+     * Overwrites value for a key if allready has been set. 
+     * 
      * @access public
      * @param $values 
      * @return 
