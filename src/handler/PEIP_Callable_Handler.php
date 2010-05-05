@@ -10,6 +10,7 @@
 
 /**
  * PEIP_Callable_Handler 
+ * Class to wrap a PHP callable in a handler
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -23,8 +24,10 @@ class PEIP_Callable_Handler
     protected $callable;
     
     /**
+     * constructor
+     * 
      * @access public
-     * @param $callable 
+     * @param callable $callable the callable to wrap with the handler 
      * @return 
      */
     public function __construct($callable){
@@ -32,26 +35,35 @@ class PEIP_Callable_Handler
     }
         
     /**
+     * Handles a subject by calling the wrapped callable with the subject as argument.
+     * 
+     * @implements PEIP_INF_Handler
      * @access public
-     * @param $subject 
-     * @return 
+     * @param mixed $subject the subject to handle
+     * @return mixed result of calling the registered callable with given subject
      */
     public function handle($subject){
         return call_user_func($this->callable, $subject);
     }
     
     /**
+     * Allows the handler instance to act as a lambda function.
+     * Delegates to own 'handle' method.
+     * 
      * @access public
-     * @param $subject 
-     * @return 
+     * @param mixed $subject the subject to handle
+     * @return mixed result of calling the registered callable with given subject
+     * @see PEIP_Callable_Handler::handle 
      */
     public function __invoke($subject){
         return $this->handle($subject); 
     }
     
     /**
+     * Returns the callable wrapped by the handler instance.
+     * 
      * @access public
-     * @return 
+     * @return callable callable wrapped by the handler
      */
     public function getCallable(){
         return $this->callable;
