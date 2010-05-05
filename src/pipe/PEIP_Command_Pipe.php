@@ -9,8 +9,10 @@
  */
 
 /**
- * PEIP_Command_Pipe 
- *
+ * PEIP_Command_Pipe
+ * Class to call commands on an arbitrary pipe by passing messages from the input
+ * to the 'command' method of the commanded pipe.
+ *  
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
  * @subpackage pipe 
@@ -18,14 +20,13 @@
  * @implements PEIP_INF_Listener, PEIP_INF_Connectable, PEIP_INF_Subscribable_Channel, PEIP_INF_Channel, PEIP_INF_Handler, PEIP_INF_Message_Builder
  */
 
-
 class PEIP_Command_Pipe 
     extends PEIP_Event_Pipe {
-
-    
-
-    
+   
     /**
+     * Does the reply logic. Calls the 'command' method of the registered output-channel
+     * with request-message as argument.
+     * 
      * @access protected
      * @param $content 
      * @return 
@@ -36,4 +37,3 @@ class PEIP_Command_Pipe
     }
 
 }
-
