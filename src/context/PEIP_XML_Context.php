@@ -769,7 +769,12 @@ class PEIP_XML_Context
         $cls = $config["class"] ? trim((string)$config["class"]) : (string)$defaultClass;
         if($cls != ''){
             try {
-                $service = self::build($cls, $arguments);       
+            	$constructor = (string)$config["constructor"];
+		if($constructor != ''){
+			$service = call_user_func_array(array($cls, $constructor), $arguments);	
+		}else{
+			$service = self::build($cls, $arguments); 
+		}        
             }catch(Exception $e){
                 throw new RuntimeException('Could not create Service "'.$cls.'" -> '.$e->getMessage());
             }           
