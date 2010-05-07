@@ -736,7 +736,13 @@ class PEIP_XML_Context
 		if($config["ref_property"]){
 			$service = $service->{(string)$config["ref_property"]};	
 		}elseif($config["ref_method"]){
-			$service = $service->{(string)$config["ref_method"]}();	
+        		$args = array();
+			if($config->argument){
+            			foreach($config->argument as $arg){
+                			$args[] = $this->buildArg($arg);
+            			}
+        		}
+			$service = call_user_func_array(array($service, (string)$config["ref_method"]), $args);
 		}       
         if(!is_object($service)){
         	throw new RuntimeException('Could not create Service.'); 
