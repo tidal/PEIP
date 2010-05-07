@@ -148,11 +148,11 @@ class PEIP_Simple_Autoload {
   		$path = $this->getClassPath($class);
   		if (is_file($path)){
   			require $path;
-      		if(class_exists($class) || interface_exists($class)){
-      			return true;
-      		}
-    	}
-    	throw new RuntimeException('unable to load class '.$class);
+      			if(class_exists($class) || interface_exists($class)){
+      				return true;
+      			}
+    		}
+    		return false;
   	}	
 }
 
