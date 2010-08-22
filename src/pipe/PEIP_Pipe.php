@@ -22,12 +22,13 @@
 class PEIP_Pipe 
     extends PEIP_ABS_Reply_Producing_Message_Handler 
     implements 
-        PEIP_INF_Channel,
+        PEIP_INF_Channel,_
         PEIP_INF_Subscribable_Channel,
         PEIP_INF_Connectable {
 
-    const DEFAULT_MESSAGE_DISPATCHER = 'PEIP_Dispatcher';
-    const DEFAULT_EVENT_DISPATCHER = 'PEIP_Dispatcher';
+    const 
+        DEFAULT_MESSAGE_DISPATCHER_CLASS = 'PEIP_Dispatcher',
+        DEFAULT_EVENT_DISPATCHER_CLASS = 'PEIP_Object_Event_Dispatcher';
      
     protected 
         $eventDispatcher,
@@ -152,7 +153,7 @@ class PEIP_Pipe
      * @return 
      */
     public function getMessageDispatcher(){
-        return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new self::DEFAULT_MESSAGE_DISPATCHER;
+        return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new self::DEFAULT_MESSAGE_DISPATCHER_CLASS;
     }   
     
     
@@ -296,7 +297,7 @@ class PEIP_Pipe
     }   
     
     protected static function getSharedEventDispatcher(){
-        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new PEIP_Object_Event_Dispatcher; 
+        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new self::DEFAULT_EVENT_DISPATCHER_CLASS; 
     }
 
     
