@@ -27,6 +27,8 @@ class PEIP_Pipe
         PEIP_INF_Channel,
         PEIP_INF_Subscribable_Channel,
         PEIP_INF_Connectable {
+
+    const DEFAULT_MESSAGE_DISPATCHER = 'PEIP_Dispatcher';
      
     protected 
         $eventDispatcher,
@@ -165,7 +167,7 @@ class PEIP_Pipe
      * @return 
      */
     public function getMessageDispatcher(){
-        return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new PEIP_Dispatcher;
+        return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new self::DEFAULT_MESSAGE_DISPATCHER;
     }   
       
     /**
