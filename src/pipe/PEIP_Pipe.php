@@ -275,7 +275,7 @@ class PEIP_Pipe
     public function command(PEIP_INF_Message $cmdMessage){
         $this->doFireEvent(self::EVENT_PRE_COMMAND, array(self::HEADER_MESSAGE=>$cmdMessage));
         $commandName = trim((string)$cmdMessage->getHeader('COMMAND'));
-        if($cmd != '' && array_key_exists($commandName, $this->commands)){
+        if($commandName != '' && array_key_exists($commandName, $this->commands)){
             call_user_func($this->commands[$commandName], $cmdMessage->getContent());   
         }
         $this->doFireEvent(self::EVENT_POST_COMMAND, array(self::HEADER_MESSAGE=>$cmdMessage));
