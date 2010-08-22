@@ -27,8 +27,8 @@ class PEIP_Pipe
         PEIP_INF_Connectable {
 
     const 
-        DEFAULT_MESSAGE_DISPATCHER_CLASS = 'PEIP_Dispatcher',
-        DEFAULT_EVENT_DISPATCHER_CLASS = 'PEIP_Object_Event_Dispatcher';
+        DEFAULT_CLASS_MESSAGE_DISPATCHER = 'PEIP_Dispatcher',
+        DEFAULT_CLASS_EVENT_DISPATCHER = 'PEIP_Object_Event_Dispatcher';
      
     protected 
         $eventDispatcher,
@@ -153,7 +153,7 @@ class PEIP_Pipe
      * @return 
      */
     public function getMessageDispatcher(){
-        return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new self::DEFAULT_MESSAGE_DISPATCHER_CLASS;
+        return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new self::DEFAULT_CLASS_MESSAGE_DISPATCHER;
     }   
     
     
@@ -297,7 +297,7 @@ class PEIP_Pipe
     }   
     
     protected static function getSharedEventDispatcher(){
-        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new self::DEFAULT_EVENT_DISPATCHER_CLASS; 
+        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new self::DEFAULT_CLASS_EVENT_DISPATCHER; 
     }
 
     
