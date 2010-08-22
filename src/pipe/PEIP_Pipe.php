@@ -10,14 +10,12 @@
 
 /**
  * PEIP_Pipe 
- * Base class for all Pipes. 
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
  * @subpackage pipe 
  * @extends PEIP_ABS_Reply_Producing_Message_Handler
- * @implements PEIP_INF_Message_Builder, PEIP_INF_Handler, PEIP_INF_Channel, 
- * PEIP_INF_Subscribable_Channel, PEIP_INF_Connectable
+ * @implements PEIP_INF_Message_Builder, PEIP_INF_Handler, PEIP_INF_Channel, PEIP_INF_Subscribable_Channel, PEIP_INF_Connectable
  */
 
 
@@ -29,6 +27,7 @@ class PEIP_Pipe
         PEIP_INF_Connectable {
 
     const DEFAULT_MESSAGE_DISPATCHER = 'PEIP_Dispatcher';
+    const DEFAULT_EVENT_DISPATCHER = 'PEIP_Dispatcher';
      
     protected 
         $eventDispatcher,
@@ -41,30 +40,25 @@ class PEIP_Pipe
         
     
     /**
-     * sets Name of the Pipe
-     * 
      * @access public
-     * @param string $name the name of the pipe 
+     * @param $name 
+     * @return 
      */
     public function setName($name){
         $this->name = $name;
     }
-       
+    
+    
     /**
-     * returns name of the Pipe
-     * 
      * @access public
-     * @return string the name of the pipe 
+     * @return 
      */
     public function getName(){
         return $this->name;
     }
-  
+
+    
     /**
-     * Sends a message on the Pipe.
-     * Implements PEIP_INF_Channel
-     * 
-     * @implements PEIP_INF_Channel
      * @access public
      * @param $message 
      * @param $timeout 
@@ -73,15 +67,12 @@ class PEIP_Pipe
     public function send(PEIP_INF_Message $message, $timeout = -1){
         return $this->handle($message);
     }
-  
+
+    
     /**
-     * Publishes a message to all message subscribers
-     * 
-     * @event prePublish
-     * @event postPublish
      * @access protected
-     * @param PEIP_INF_Message $message the message to publish
-     * @return boolean 
+     * @param $message 
+     * @return 
      */
     protected function doSend(PEIP_INF_Message $message){
         $this->doFireEvent('prePublish', array('MESSAGE'=>$message));
@@ -89,14 +80,12 @@ class PEIP_Pipe
         $this->doFireEvent('postPublish', array('MESSAGE'=>$message));
         return true;
     }
-      
+    
+    
     /**
-     * Creates and sends a reply message from a given content/payload.
-     * Sends message through output channel if set,
-     * else publishes message to message subscribers.
-     * 
      * @access protected
-     * @param mixed $content content/payload for the message 
+     * @param $content 
+     * @return 
      */
     protected function replyMessage($content){
         $message = $this->ensureMessage($content);
@@ -106,7 +95,8 @@ class PEIP_Pipe
             $this->doSend($message);            
         }           
     }
-     
+    
+    
     /**
      * @access protected
      * @param $message 
@@ -115,39 +105,35 @@ class PEIP_Pipe
     protected function doReply(PEIP_INF_Message $message){
         $this->replyMessage($message);
     }
-  
+
+    
     /**
-     * Subscribes a listener to the Pipe.
-     * 
-     * @implements PEIP_INF_Subscribable_Channel
-     * @event subscribe
      * @access public
-     * @param PEIP_INF_Handler $handler the listener/handler to subscribe to the channel
+     * @param $handler 
+     * @return 
      */
     public function subscribe(PEIP_INF_Handler $handler){
         $this->getMessageDispatcher()->connect($handler);
         $this->doFireEvent('subscribe', array('SUBSCRIBER'=>$handler));
-    } 
+    }
+    
     
     /**
-     * Unsubscribes a listener from the Pipe.
-     * 
-     * @implements PEIP_INF_Subscribable_Channel
-     * @event unsubscribe
      * @access public
-     * @param PEIP_INF_Handler $handler the listener/handler to unsubscribe from the channel
+     * @param $handler e
+     * @return 
      */
     public function unsubscribe(PEIP_INF_Handler $handler){
         $this->getMessageDispatcher()->disconnect($handler);
         $this->doFireEvent('unsubscribe', array('SUBSCRIBER'=>$handler));       
     }
-     
+    
+    
     /**
-     * Sets the (message) dispatcher for the Pipe.
-     * 
      * @access public
-     * @param PEIP_INF_Dispatcher $dispatcher the (message) dispatcher
-     * @param boolean $transferListeners wether transfer listners from previous dispatcher. default: true 
+     * @param $dispatcher 
+     * @param $transferListeners 
+     * @return 
      */
     public function setMessageDispatcher(PEIP_INF_Dispatcher $dispatcher, $transferListeners = true){
         if(isset($this->dispatcher) && $transferListeners){
@@ -159,82 +145,91 @@ class PEIP_Pipe
         $this->dispatcher = $dispatcher;
         $this->doFireEvent('setMessageDispatcher', array('DISPATCHER'=>$dispatcher));       
     }   
-      
-    /**
-     * Returns the (message) dispatcher for the Pipe.
-     * 
+    
+    
+    /**NEW
      * @access public
      * @return 
      */
     public function getMessageDispatcher(){
         return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new self::DEFAULT_MESSAGE_DISPATCHER;
     }   
-      
+    
+    
     /**
-     * Registers event listeners for a given event of the Pipe.
-     * 
-     * @implements PEIP_INF_Connectable
      * @access public
-     * @param string $name name of the event 
-     * @param PEIP_INF_Handler $listener the event listener
+     * @param $name 
+     * @param $listener 
+     * @return 
      */
     public function connect($name, PEIP_INF_Handler $listener){
         $this->getEventDispatcher()->connect($name, $this, $listener);
         $this->doFireEvent('connect', array('EVENT'=>$name, 'LISTENER'=>$handler));     
     }   
- 
+
+    
     /**
-     * Unregisters event listeners for a given event of the Pipe.
-     * 
-     * @implements PEIP_INF_Connectable
      * @access public
-     * @param string $name name of the event 
-     * @param PEIP_INF_Handler $listener the event listener
+     * @param $name 
+     * @param $listener 
+     * @return 
      */
     public function disconnect($name, PEIP_INF_Handler $listener){
         $this->getEventDispatcher()->disconnect($name, $this, $listener);
         $this->doFireEvent('disconnect', array('EVENT'=>$name, 'LISTENER'=>$handler));      
     }   
-  
+
+    
     /**
-     * Checks wether a given event has a registered event listener.
-     * 
      * @access public
-     * @param string $name name of the event 
-     * @return boolean wether the event has a listener
+     * @param $name 
+     * @return 
      */
     public function hasListeners($name){
         return $this->getEventDispatcher()->hasListener($name, $this);      
     }
-   
+
+    
     /**
-     * Returns all listeners for a given event.
-     * 
      * @access public
-     * @param string $name name of the event 
-     * @return array array of event listeners 
+     * @param $name 
+     * @return 
      */
     public function getListeners($name){
         return $this->getEventDispatcher()->hasListener($name, $this);      
     }   
     
+    
     /**
-     * Registers a callable as event listener for a given event.
-     * 
      * @access public
-     * @param string $name name of the event 
-     * @param callable $callable the callable to register as event listener 
+     * @param $name 
+     * @param $listener 
+     * @return 
+     */
+    
+    /**
+     * @access public
+     * @param $eventName 
+     * @param $callable 
+     * @return 
      */
     public function connectCall($eventName, $callable){
         $this->connect($eventName, new PEIP_Callable_Handler($callable));   
     }
+
     
     /**
-     * Unregisters a callable as event listener for a given event.
-     * 
      * @access public
-     * @param string $name name of the event 
-     * @param callable $callable the callable to register as event listener 
+     * @param $name 
+     * @param $listener 
+     * @return 
+     */
+    
+    /**
+     * @access public
+     * @param $eventName 
+     * @param $callable 
+     * @return 
      */
     public function disconnectCall($eventName, $callable){
         foreach($this->getEventDispatcher()->getListeners() as $handler){
@@ -243,26 +238,23 @@ class PEIP_Pipe
             }
         }
     }   
-  
+
+    
     /**
-     * Registers a callable as executor for a given command.
-     * 
      * @access protected
-     * @param string $commandName the name of the command 
-     * @param callable $callable the callable to rgister as executor 
+     * @param $commandName 
+     * @param $callable 
+     * @return 
      */
     protected function registerCommand($commandName, $callable){
         $this->commands[$commandName] = $callable;  
     }
-      
+    
+    
     /**
-     * Executes a command given by a message on this Pipe.
-     * Note: The command will be resolved from the message`s header 'COMMAND'. 
-     * 
-     * @event preCommand
-     * @event postCommand
      * @access public
-     * @param PEIP_INF_Message $cmdMessage the message with the command
+     * @param $cmdMessage 
+     * @return 
      */
     public function command(PEIP_INF_Message $cmdMessage){
         $this->doFireEvent('preCommand', array('MESSAGE'=>$cmdMessage));
@@ -272,14 +264,13 @@ class PEIP_Pipe
         }
         $this->doFireEvent('postCommand', array('MESSAGE'=>$cmdMessage));
     }
-       
+    
+    
     /**
-     * Sets the event dipatcher for this Pipe.
-     * 
-     * @event setEventDispatcher
      * @access public
-     * @param PEIP_Object_Event_Dispatcher $dispatcher the event dispatcher
-     * @param boolean $transferListeners wether transfer listners from previous dispatcher. default: true 
+     * @param $dispatcher 
+     * @param $transferListners 
+     * @return 
      */
     public function setEventDispatcher(PEIP_Object_Event_Dispatcher $dispatcher, $transferListners = true){
         if($transferListners){
@@ -294,34 +285,26 @@ class PEIP_Pipe
         $this->eventDispatcher = $dispatcher;   
         $this->doFireEvent('setEventDispatcher', array('DISPATCHER'=>$dispatcher)); 
     }
-       
+    
+    
     /**
-     * Returns the event dipatcher for this Pipe.
-     * 
      * @access public
-     * @return PEIP_Object_Event_Dispatcher the event dispatcher for this Pipe.
+     * @return 
      */
     public function getEventDispatcher(){
         return $this->eventDispatcher ? $this->eventDispatcher : $this->eventDispatcher = self::getSharedEventDispatcher();
     }   
-  
-     /**
-     * Returns the shared (static singleton) event dispatcher for this Pipe.
-     * 
-     * @access protected
-     * @return PEIP_Object_Event_Dispatcher the shared event dispatcher for this Pipe.
-     */   
+    
     protected static function getSharedEventDispatcher(){
         return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new PEIP_Object_Event_Dispatcher; 
-    }  
+    }
+
     
     /**
-     * Does publish an given event on this Pipe.
-     * 
      * @access protected
-     * @param string $name the name of the event 
-     * @param array $headers headers for the event as key/value pairs 
-     * @param string $eventClass the event class to create instance from. default: the default event class for this Pipe.
+     * @param $name 
+     * @param $headers 
+     * @param $eventClass 
      * @return 
      */
     protected function doFireEvent($name, array $headers = array(), $eventClass = false){
