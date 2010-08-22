@@ -30,8 +30,20 @@ class PEIP_Pipe
         DEFAULT_CLASS_MESSAGE_DISPATCHER = 'PEIP_Dispatcher',
         DEFAULT_CLASS_EVENT_DISPATCHER = 'PEIP_Object_Event_Dispatcher',
         EVENT_PRE_PUBLISH = 'prePublish',
-        EVENT_POST_PUBLISH = 'postPublish'',
-        HEADER_MESSAGE = 'MESSAGE';
+        EVENT_POST_PUBLISH = 'postPublish',
+        EVENT_SUBSCRIBE = 'subscribe',
+        EVENT_UNSUBSCRIBE = 'unsubscribe',
+        EVENT_CONNECT = 'connect,
+        EVENT_DISCONNECT = 'disconnect,
+        EVENT_PRE_COMMAND = 'preCommand',
+        EVENT_POST_COMMAND = 'postCommand',
+        EVENT_SET_MESSAGE_DISPATCHER = 'setMessageDispatcher',
+        EVENT_SET_EVENT_DISPATCHER = 'setEventDispatcher',
+        HEADER_MESSAGE = 'MESSAGE',
+        HEADER_SUBSCRIBER = 'SUBSCRIBER',
+        HEADER_DISPATCHER = 'DISPATCHER',
+        HEADER_LISTENER = 'LISTENER',
+        HEADER_EVENT = 'EVENT';
      
     protected 
         $eventDispatcher,
@@ -72,7 +84,7 @@ class PEIP_Pipe
         return $this->handle($message);
     }
 
-    
+    doFireEvent
     /**
      * @access protected
      * @param $message 
@@ -118,7 +130,7 @@ class PEIP_Pipe
      */
     public function subscribe(PEIP_INF_Handler $handler){
         $this->getMessageDispatcher()->connect($handler);
-        $this->doFireEvent('subscribe', array('SUBSCRIBER'=>$handler));
+        $this->doFireEvent(self::EVENT_SUBSCRIBE, array(self::HEADER_SUBSCRIBER=>$handler));
     }
     
     
@@ -129,7 +141,7 @@ class PEIP_Pipe
      */
     public function unsubscribe(PEIP_INF_Handler $handler){
         $this->getMessageDispatcher()->disconnect($handler);
-        $this->doFireEvent('unsubscribe', array('SUBSCRIBER'=>$handler));       
+        $this->doFireEvent(self::EVENT_UNSUBSCRIBE, array(self::HEADER_SUBSCRIBER=>$handler));       
     }
     
     
@@ -147,7 +159,7 @@ class PEIP_Pipe
             }   
         }
         $this->dispatcher = $dispatcher;
-        $this->doFireEvent('setMessageDispatcher', array('DISPATCHER'=>$dispatcher));       
+        $this->doFireEvent(self::EVENT_SET_MESSAGE_DISPATCHER, array(self::HEADER_DISPATCHER=>$dispatcher));       
     }   
     
     
@@ -168,7 +180,7 @@ class PEIP_Pipe
      */
     public function connect($name, PEIP_INF_Handler $listener){
         $this->getEventDispatcher()->connect($name, $this, $listener);
-        $this->doFireEvent('connect', array('EVENT'=>$name, 'LISTENER'=>$handler));     
+        $this->doFireEvent(self::EVENT_CONNECT, array(self::HEADER_EVENT=>$name, self::HEADER_LISTENER=>$handler));     
     }   
 
     
@@ -180,7 +192,7 @@ class PEIP_Pipe
      */
     public function disconnect($name, PEIP_INF_Handler $listener){
         $this->getEventDispatcher()->disconnect($name, $this, $listener);
-        $this->doFireEvent('disconnect', array('EVENT'=>$name, 'LISTENER'=>$handler));      
+        $this->doFireEvent(self::EVENT_DISCONNECT, array(self::HEADER_EVENT=>$name, self::HEADER_LISTENER=>$handler));      
     }   
 
     
@@ -261,12 +273,12 @@ class PEIP_Pipe
      * @return 
      */
     public function command(PEIP_INF_Message $cmdMessage){
-        $this->doFireEvent('preCommand', array('MESSAGE'=>$cmdMessage));
-        $cmd = trim((string)$cmdMessage->getHeader('COMMAND'));
-        if($cmd != '' && array_key_exists($cmd, $this->commands)){
+        $this->doFireEvent(self::EVENT_PRE_COMMAND, array(self::HEADER_MESSAGE=>$cmdMessage));
+        $commandName = trim((string)$cmdMessage->getHeader('COMMAND'));
+        if($cmd != '' && array_key_exists($commandName, $this->commands)){
             call_user_func($this->commands[$commandName], $cmdMessage->getContent());   
         }
-        $this->doFireEvent('postCommand', array('MESSAGE'=>$cmdMessage));
+        $this->doFireEvent(self::EVENT_POST_COMMAND, array(self::HEADER_MESSAGE=>$cmdMessage));
     }
     
     
@@ -287,7 +299,7 @@ class PEIP_Pipe
             }   
         }   
         $this->eventDispatcher = $dispatcher;   
-        $this->doFireEvent('setEventDispatcher', array('DISPATCHER'=>$dispatcher)); 
+        $this->doFireEvent(self::EVENT_SET_EVENT_DISPATCHER, array(self::HEADER_DISPATCHER=>$dispatcher)); 
     }
     
     
