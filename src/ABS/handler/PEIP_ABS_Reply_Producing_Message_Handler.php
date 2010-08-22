@@ -218,7 +218,7 @@ abstract class PEIP_ABS_Reply_Producing_Message_Handler
      * @return 
      */
     protected function doHandle(PEIP_INF_Message $message){
-        $this->doReply($message);
+        return $this->doReply($message);
     }
        
     /**

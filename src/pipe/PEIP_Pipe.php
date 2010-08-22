@@ -28,7 +28,10 @@ class PEIP_Pipe
 
     const 
         DEFAULT_CLASS_MESSAGE_DISPATCHER = 'PEIP_Dispatcher',
-        DEFAULT_CLASS_EVENT_DISPATCHER = 'PEIP_Object_Event_Dispatcher';
+        DEFAULT_CLASS_EVENT_DISPATCHER = 'PEIP_Object_Event_Dispatcher',
+        EVENT_PRE_PUBLISH = 'prePublish',
+        EVENT_POST_PUBLISH = 'postPublish'',
+        HEADER_MESSAGE = 'MESSAGE';
      
     protected 
         $eventDispatcher,
@@ -76,9 +79,9 @@ class PEIP_Pipe
      * @return 
      */
     protected function doSend(PEIP_INF_Message $message){
-        $this->doFireEvent('prePublish', array('MESSAGE'=>$message));
+        $this->doFireEvent(self::EVENT_PRE_PUBLISH, array(self::HEADER_MESSAGE=>$message));
         $this->getMessageDispatcher()->notify($message);
-        $this->doFireEvent('postPublish', array('MESSAGE'=>$message));
+        $this->doFireEvent(self::EVENT_POST_PUBLISH, array(self::HEADER_MESSAGE'MESSAGE'=>$message));
         return true;
     }
     
