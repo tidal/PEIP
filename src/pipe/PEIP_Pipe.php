@@ -163,7 +163,7 @@ class PEIP_Pipe
     }   
     
     
-    /**NEW
+    /**
      * @access public
      * @return 
      */
