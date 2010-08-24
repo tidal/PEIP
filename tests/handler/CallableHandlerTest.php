@@ -22,7 +22,7 @@ class CallableHandlerTest
 			$handle = $this->handler;
 			$handle($this);	
 		}
-
+                $this->handler->__invoke($this);
 	}	
 
 	public function testGetCallable(){
