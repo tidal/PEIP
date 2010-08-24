@@ -68,7 +68,7 @@ class PEIP_Simple_Autoload {
      */		
 	static public function getInstance(){
 	    if (!isset(self::$instance)){
-	      static::doGetInstance();
+	    	self::$instance = new PEIP_Simple_Autoload();
 	    }
 	    return self::$instance;
 	}

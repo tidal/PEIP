@@ -41,7 +41,7 @@
     	<service_activator 
 		input_channel="hotDrinks" 
 		ref="barista"
-       	method="prepareHotDrink" 
+       		method="prepareHotDrink" 
 		output_channel="preparedDrinks"/>
 
     	<aggregator 
@@ -56,12 +56,12 @@
     	<service_activator 
 		input_channel="DrinkAggregator" 
 		ref="waiter"
-              method="prepareDelivery" 
+              	method="prepareDelivery" 
 		output_channel="deliveries"/> 
  
     	<service_activator 
 		input_channel="acceptedOrders" 
 		ref="DrinkAggregator"
-              method="receiveOrder"/>   
+              	method="receiveOrder"/>   
 
 </config>

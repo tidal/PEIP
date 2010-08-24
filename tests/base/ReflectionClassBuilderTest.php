@@ -1,7 +1,7 @@
 <?php
 
 
-require_once __DIR__.'/../../misc/bootstrap.php';
+require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
 class ReflectionClassBuilderTest extends PHPUnit_Framework_TestCase {
 

@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/../../misc/bootstrap.php';
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/DynamicAdapterMock.php');
+require_once dirname(__FILE__).'/../../misc/bootstrap.php';
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/DynamicAdapterMock.php');
 
 class DynamicAdapterTest extends PHPUnit_Framework_TestCase  {
 

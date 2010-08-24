@@ -3,7 +3,7 @@
 
 class Barista {
 
-    private $hotDrinkDelay = 1;
+    private $hotDrinkDelay = 0;
     private $coldDrinkDelay = 0;
     private $hotDrinkCounter = 0;
     private $coldDrinkCounter = 0;

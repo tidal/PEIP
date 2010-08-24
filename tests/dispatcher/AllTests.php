@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__.'/DispatcherTest.php';
-require_once __DIR__.'/ObjectEventDispatcherTest.php';
-require_once __DIR__.'/ObjectMapDispatcherTest.php';
+require_once dirname(__FILE__).'/DispatcherTest.php';
+require_once dirname(__FILE__).'/ObjectEventDispatcherTest.php';
+require_once dirname(__FILE__).'/ObjectMapDispatcherTest.php';
 
  class Dispatcher_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){

@@ -1,6 +1,7 @@
 <?php
 
-require_once __DIR__.'/../../misc/bootstrap.php';
+require_once dirname(__FILE__).'/../../misc/bootstrap.php';
+require_once dirname(__FILE__).'/../_files/CallableObject.php';
 
 class ObjectMapDispatcherTest 
 	extends PHPUnit_Framework_TestCase {
@@ -14,14 +15,14 @@ class ObjectMapDispatcherTest
 	public function testConnect(){		
 		$object = new stdClass;
 		$this->assertFalse($this->dispatcher->hasListeners('foo', $object));
-		$handler = new PEIP_Callable_Handler(function(){});
+		$handler = new PEIP_Callable_Handler(array('TestClass', 'TestMethod'));
 		$this->dispatcher->connect('foo', $object, $handler);
 		$this->assertTrue($this->dispatcher->hasListeners('foo', $object)); 
 	}
 
 	public function testDisconnect(){		
 		$object = new stdClass;
-		$handler = new PEIP_Callable_Handler(function(){});
+		$handler = new PEIP_Callable_Handler('TestClass', 'TestMethod');
 		$this->assertFalse($this->dispatcher->disconnect('foo', $object, $handler));
 		$this->dispatcher->connect('foo', $object, $handler);
 		$this->assertTrue($this->dispatcher->hasListeners('foo', $object));
@@ -32,7 +33,7 @@ class ObjectMapDispatcherTest
 
 	public function testHadListener(){
 		$object = new stdClass;
-		$handler = new PEIP_Callable_Handler(function(){});
+		$handler = new PEIP_Callable_Handler('TestClass', 'TestMethod');
 		$this->assertFalse($this->dispatcher->hadListeners('foo', $object));
 		$this->dispatcher->connect('foo', $object, $handler);
 		$this->assertTrue($this->dispatcher->hadListeners('foo', $object));
@@ -42,7 +43,7 @@ class ObjectMapDispatcherTest
 
 	public function testGetEventNames(){
 		$object = new stdClass;
-		$handler = new PEIP_Callable_Handler(function(){});
+		$handler = new PEIP_Callable_Handler('TestClass', 'TestMethod');
 		$this->assertEquals(array(), $this->dispatcher->getEventNames($object));
 		$events = array('foo', 'bar', 'test');
 		foreach($events as $event){
@@ -52,12 +53,14 @@ class ObjectMapDispatcherTest
 	}
 
 	public function testGetListeners(){
+
 		$object = new stdClass;
-		$this->assertEquals(array(), $this->dispatcher->getListeners('foo', $object));
+		$this->dispatcher->disconnectAll('foo', $object);
+                $this->assertEquals(array(), $this->dispatcher->getListeners('foo', $object));
 		$listeners = array(
-			new PEIP_Callable_Handler(function(){echo 'foo';}),
-			new PEIP_Callable_Handler(function(){echo 'bar';}),
-			new PEIP_Callable_Handler(function(){echo 'bar';})			
+			new PEIP_Callable_Handler('TestClass', 'TestMethod'),
+			new PEIP_Callable_Handler('TestClass', 'TestMethod'),
+			new PEIP_Callable_Handler('TestClass', 'TestMethod')			
 		);
 		foreach($listeners as $listener){
 			$this->dispatcher->connect('foo', $object, $listener);	
@@ -67,32 +70,26 @@ class ObjectMapDispatcherTest
 
 	public function testNotify(){
 		$object = new stdClass;
-		$test = $this;
+		$callable = new CallableObject($this);
+                $callable->setObject($object);
 		$this->assertFalse($this->dispatcher->hasListeners('foo', $object));
-		$listener = new PEIP_Callable_Handler(function($subject) use ($test, $object){
-			$test->assertSame($object, $subject);			
-		});	
+		$listener = new PEIP_Callable_Handler(array($callable, 'callNotify'));	
 		$this->dispatcher->connect('foo', $object, $listener);
 		$this->dispatcher->notify('foo', $object); 
 	}
 	
 	public function testNotifyUntil(){
 		$object = new stdClass;
-		$test = $this;
+		$callable = new CallableObject($this);
+                $callable->setObject($object);
 		$listeners = array();
-		$listener1 = new PEIP_Callable_Handler(function($subject) use ($test, $object){
-			$test->assertSame($object, $subject);			
-		});	
+		$listener1 = new PEIP_Callable_Handler(array($callable, 'callNotify'));	
 		$this->dispatcher->connect('foo', $object, $listener1);
 		$breaker = $this->dispatcher->notifyUntil('foo', $object);
-		$listener2 = new PEIP_Callable_Handler(function($subject){
-			return true;			
-		});	
+		$listener2 = new PEIP_Callable_Handler(array($callable, 'callUntil'));	
 		$this->dispatcher->connect('foo', $object, $listener2);
 		$breaker = $this->dispatcher->notifyUntil('foo', $object);
-		$listener3 = new PEIP_Callable_Handler(function($subject){
-			$test->fail('Dispatcher should have stopped on last listener');			
-		});	
+		$listener3 = new PEIP_Callable_Handler(array($callable, 'callNoMore'));	
 		$this->dispatcher->connect('foo', $object, $listener3);
 		$breaker = $this->dispatcher->notifyUntil('foo', $object); 
 		$this->assertSame($listener2, $breaker);	

@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__.'/../../misc/bootstrap.php';
+require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
-require_once __DIR__.'/GenericMessageTest.php';
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/PayloadMock.php');
+require_once dirname(__FILE__).'/GenericMessageTest.php';
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/PayloadMock.php');
 
 class StringMessageTest extends GenericMessageTest { 
 

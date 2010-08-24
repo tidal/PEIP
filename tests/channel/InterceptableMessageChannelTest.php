@@ -1,8 +1,8 @@
 <?php
-require_once __DIR__.'/../../misc/bootstrap.php';
+require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/InterceptableMessageChannel.php');
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/MessageChannelInterceptor.php');
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/InterceptableMessageChannel.php');
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/MessageChannelInterceptor.php');
 
 class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 
@@ -75,13 +75,14 @@ class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 
 	public function testConnect(){
 		$this->assertFalse($this->channel->hasListeners('preSend'));
-		$handler = new PEIP_Callable_Handler(function(){});
+		$handler = new PEIP_Callable_Handler(array('TestClass','TestMethod'));
 		$this->channel->connect('preSend', $handler);
-		$this->assertTrue($this->channel->hasListeners('preSend'));		
+		$this->assertTrue($this->channel->hasListeners('preSend'));
+                $this->channel->disconnect('preSend', $handler);
 	}
 
 	public function testDisconnect(){
-		$handler = new PEIP_Callable_Handler(function(){});
+		$handler = new PEIP_Callable_Handler(array('TestClass','TestMethod'));
 		$this->channel->connect('preSend', $handler);
 		$this->assertTrue($this->channel->hasListeners('preSend'));	
 		$this->channel->disconnect('preSend', $handler);

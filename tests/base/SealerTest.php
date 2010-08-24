@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__.'/../../misc/bootstrap.php';
+require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/SealerBoxMock.php');
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/SealerBoxMock.php');
 
 
 

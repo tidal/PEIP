@@ -1,14 +1,14 @@
 <?php
 
-require_once __DIR__.'/base/AllTests.php';
-require_once __DIR__.'/channel/AllTests.php';
-require_once __DIR__.'/command/AllTests.php';
-require_once __DIR__.'/data/AllTests.php';
-require_once __DIR__.'/dispatcher/AllTests.php';
-require_once __DIR__.'/event/AllTests.php';
-require_once __DIR__.'/handler/AllTests.php';
-require_once __DIR__.'/message/AllTests.php';
-require_once __DIR__.'/service/AllTests.php';
+require_once dirname(__FILE__).'/base/AllTests.php';
+require_once dirname(__FILE__).'/channel/AllTests.php';
+require_once dirname(__FILE__).'/command/AllTests.php';
+require_once dirname(__FILE__).'/data/AllTests.php';
+require_once dirname(__FILE__).'/dispatcher/AllTests.php';
+require_once dirname(__FILE__).'/event/AllTests.php';
+require_once dirname(__FILE__).'/handler/AllTests.php';
+require_once dirname(__FILE__).'/message/AllTests.php';
+require_once dirname(__FILE__).'/service/AllTests.php';
 
  class AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){

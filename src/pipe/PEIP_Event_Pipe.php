@@ -26,6 +26,13 @@ class PEIP_Event_Pipe
     protected 
         $eventName; 
        
+    public function connectChannel(PEIP_INF_Channel $inputChannel){
+        $this->inputChannel = $inputChannel;
+	    
+    }
+
+
+
     /**
      * Sets the input channel for this event-pipe. Contrary to PEIP_Pipe event-pipes
      * listen to a given event on the input-channel and hanle resulting event-objects.

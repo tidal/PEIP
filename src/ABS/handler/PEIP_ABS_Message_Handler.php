@@ -35,7 +35,13 @@ abstract class PEIP_ABS_Message_Handler
      * @return 
      */
     public function handle($message){
-        return $this->doHandle($message);
+         $message = $this->getMessageFromObject($message);
+         if(!is_object($message)){ 
+             throw new Exception('Could not get Message from Channel');
+         }else{
+            return $this->doHandle($message);
+         }
+        
     }
    
     /**
@@ -67,33 +73,24 @@ abstract class PEIP_ABS_Message_Handler
      */
     protected function doSetInputChannel(PEIP_INF_Channel $inputChannel){
         $this->inputChannel = $inputChannel;    
-        $messageHandler = $this;
-        if($inputChannel instanceof PEIP_INF_Subscribable_Channel){
-            $getMessage = function ($object){
-                return $object;
-            };  
-            $linkChannel = function($handler) use ($messageHandler){
-                $messageHandler->getInputChannel()->subscribe($handler);    
-            };              
+        if($this->inputChannel instanceof PEIP_INF_Subscribable_Channel){
+                $this->inputChannel->subscribe($this);
         }else{          
-            $getMessage = function ($object){
-                return $object->getContent()->receive();
-            };  
-            $linkChannel = function($handler) use ($messageHandler){
-                $messageHandler->getInputChannel()->connect('postSend', $handler);  
-            };  
-        }   
-        $handling = function($object) use ($messageHandler, $getMessage){
-            $message = $getMessage($object);
-            if(!is_object($message)){ 
-                throw new Exception('Could not get Message from Channel');
-            }               
-            $messageHandler->handle($message);          
-        };          
-        $handler = new PEIP_Callable_Message_Handler($handling);
-        $linkChannel($handler); 
+                $this->inputChannel->connect('postSend', $this);
+        }  
     }
-        
+  
+    protected function getMessageFromObject($object){ 
+	$message = NULL;
+        if($object instanceof PEIP_INF_Event){ 
+            $message = $object->getContent()->receive();
+        }elseif ($object instanceof PEIP_INF_Message) {
+            $message = $object;
+        }
+        return $message;
+    }
+
+      
     /**
      * Returns the input-channel for this handler.
      * 

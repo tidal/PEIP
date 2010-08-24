@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__.'/DynamicAdapterTest.php';
-require_once __DIR__.'/GenericBuilderTest.php';
-require_once __DIR__.'/ReflectionClassBuilderTest.php';
-require_once __DIR__.'/SealerTest.php';
+require_once dirname(__FILE__).'/DynamicAdapterTest.php';
+require_once dirname(__FILE__).'/GenericBuilderTest.php';
+require_once dirname(__FILE__).'/ReflectionClassBuilderTest.php';
+require_once dirname(__FILE__).'/SealerTest.php';
 
  class Base_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){

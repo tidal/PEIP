@@ -1,10 +1,10 @@
 <?php
 
-require_once __DIR__.'/../../misc/bootstrap.php';
+require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/HelloService.php');
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/HelloServiceHandler.php');
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/NoReplyChannel.php');
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/HelloService.php');
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/HelloServiceHandler.php');
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/NoReplyChannel.php');
 
 class ServiceActivatorTest extends PHPUnit_Framework_TestCase  {
 
@@ -35,30 +35,35 @@ class ServiceActivatorTest extends PHPUnit_Framework_TestCase  {
 		$input = new PEIP_Pollable_Channel('input');
 		$output = new PEIP_Pollable_Channel('output');	
 		$endpoint = new PEIP_Service_Activator(array($this->service, 'greet'), $input, $output);
-        $this->assertTrue(is_object($endpoint));
-    	$this->assertTrue($endpoint instanceof PEIP_Service_Activator); 	
+        	$this->assertTrue(is_object($endpoint));
+    		$this->assertTrue($endpoint instanceof PEIP_Service_Activator); 	
 	}
 
 	public function testConstructionStringServiceActivator(){
+		if(!class_exists('PEIP_String_Service_Activator')){
+			return;
+		}		
 		$input = new PEIP_Pollable_Channel('input');
 		$output = new PEIP_Pollable_Channel('output');	
 		$endpoint = new PEIP_String_Service_Activator(array($this->service, 'greet'), $input, $output);
-        $this->assertTrue(is_object($endpoint));
-    	$this->assertTrue($endpoint instanceof PEIP_String_Service_Activator); 	
+        	$this->assertTrue(is_object($endpoint));
+    		$this->assertTrue($endpoint instanceof PEIP_String_Service_Activator); 	
 	}
 
 	public function testSend(){
 		$input = new PEIP_Publish_Subscribe_Channel('input');
+                $output = new PEIP_Publish_Subscribe_Channel('output');
 		$service = $this->getService();	
-		$endpoint = new PEIP_Service_Activator(array($service, 'setSalutation'), $input);
-		$salutation = 'Good Morning';
+		$endpoint = new PEIP_Service_Activator(array($service, 'setSalutation'), $input, $output);
+		//$endpoint->setInputChannel($input);
+                $salutation = 'Good Morning';
 		$message = new PEIP_String_Message($salutation);
 		$input->send($message);		
-        $this->assertEquals($salutation, $service->salutation);	
+        	$this->assertEquals($salutation, $service->salutation);	
 	}
 	
 	public function testReplyServiceActivator(){
-		$input = new PEIP_Pollable_Channel('input');
+		$input = new PEIP_Publish_Subscribe_Channel('input');
 		$output = new PEIP_Pollable_Channel('output');
 		$service = $this->getService();	
 		$endpoint = new PEIP_Service_Activator(array($service, 'greet'), $input, $output);
@@ -71,6 +76,9 @@ class ServiceActivatorTest extends PHPUnit_Framework_TestCase  {
 	}
 	
 	public function testReplyStringServiceActivator(){
+		if(!class_exists('PEIP_String_Service_Activator')){
+			return;
+		}		
 		$input = new PEIP_Pollable_Channel('input');
 		$output = new PEIP_Pollable_Channel('output');
 		$service = $this->getService();	
@@ -85,7 +93,7 @@ class ServiceActivatorTest extends PHPUnit_Framework_TestCase  {
 	}	
 
 	public function testHandle(){
-		$input = new PEIP_Pollable_Channel('input');
+		$input = new PEIP_Publish_Subscribe_Channel('input');
 		$service = $this->getService();
 		$handler = new HelloServiceHandler($service, 'setSalutation');		
 		$endpoint = new PEIP_Service_Activator($handler, $input);

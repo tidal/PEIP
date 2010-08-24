@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/InterceptableMessageChannelTest.php';
+require_once dirname(__FILE__).'/InterceptableMessageChannelTest.php';
 
  class Channel_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){
