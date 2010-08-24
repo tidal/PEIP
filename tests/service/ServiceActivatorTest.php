@@ -79,14 +79,14 @@ class ServiceActivatorTest extends PHPUnit_Framework_TestCase  {
 		if(!class_exists('PEIP_String_Service_Activator')){
 			return;
 		}		
-		$input = new PEIP_Pollable_Channel('input');
+		$input = new PEIP_Publish_Subscribe_Channel('input');
 		$output = new PEIP_Pollable_Channel('output');
 		$service = $this->getService();	
 		$endpoint = new PEIP_String_Service_Activator(array($service, 'greet'), $input, $output);
 		$salutation = 'Foo';
 		$message = new PEIP_String_Message($salutation);
 		$input->send($message);
-		$res = $output->receive();		
+		$res = $output->receive();	echo get_class($res);
 		$this->assertTrue($res instanceof PEIP_String_Message); 
 		$this->assertTrue(is_string($res->getContent())); 
 		$this->assertEquals('Hello Foo', $res->getContent());
