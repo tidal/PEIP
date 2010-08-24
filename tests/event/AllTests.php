@@ -1,7 +1,7 @@
 <?php
 
-require_once __DIR__.'/EventBuilderTest.php';
-require_once __DIR__.'/EventTest.php';
+require_once dirname(__FILE__).'/EventBuilderTest.php';
+require_once dirname(__FILE__).'/EventTest.php';
 
  class Event_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){

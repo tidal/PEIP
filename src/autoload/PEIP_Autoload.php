@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__.'/PEIP_Simple_Autoload.php');
+require_once(dirname(__FILE__).'/PEIP_Simple_Autoload.php');
 
 /*
  * This file is part of the PEIP package.
@@ -31,9 +31,24 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
      */	
 	protected function __construct(){
 		$this->init();
-		require_once(__DIR__.'/PEIP_Autoload_Paths.php');
+		require_once(dirname(__FILE__).'/PEIP_Autoload_Paths.php');
 		$this->setClassPaths(PEIP_Autoload_Paths::$paths);
 	}
+
+    /**
+     * Retrieves Singleton instance 
+     * 
+     * @access public
+     * @static
+     * @return PEIP_Autoload
+     */		
+	static public function getInstance(){
+	    if (!isset(self::$instance)){
+	    	self::$instance = new PEIP_Autoload();
+	    }
+	    return self::$instance;
+	}
+
 	
     /**
      * @access protected
@@ -67,7 +82,7 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 		$baseDir = self::getBaseDirectory();
 		$iterator = new RecursiveDirectoryIterator($baseDir);
 		$paths = self::findPaths($baseDir, $iterator);
-		$pathsFile = __DIR__.'/PEIP_Autoload_Paths.php';
+		$pathsFile = dirname(__FILE__).'/PEIP_Autoload_Paths.php';
 		$content = file_get_contents($pathsFile);
 		$content = preg_replace('/public static \$paths = array *\(.*?\);/s', sprintf("public static \$paths = %s;", var_export($paths, true)), $content);
 		file_put_contents($pathsFile, $content);
@@ -107,7 +122,7 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
      */		
   	public function autoload($class){ 
   		if(!$this->getClassPath($class)){
-			$this->scanDirectory(realpath(__DIR__.'/../extensions'));	
+			$this->scanDirectory(realpath(dirname(__FILE__).'/../extensions'));	
 		}
 		parent::autoload($class);
   	}	

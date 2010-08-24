@@ -43,7 +43,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
     
     /**
      * @access public
-     * @return string the channel´s name
+     * @return string the channelï¿½s name
      */
     public function getName(){
         return $this->name;
@@ -183,7 +183,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @return 
      */
     public function connect($name, PEIP_INF_Handler $listener){
-        $this->getEventDispatcher()->connect($name, $this, $listener);      
+        return $this->getEventDispatcher()->connect($name, $this, $listener);
     }   
  
     /**
@@ -193,7 +193,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @return 
      */
     public function disconnect($name, PEIP_INF_Handler $listener){
-        $this->getEventDispatcher()->disconnect($name, $this, $listener);       
+        return $this->getEventDispatcher()->disconnect($name, $this, $listener);
     }   
     
     /**

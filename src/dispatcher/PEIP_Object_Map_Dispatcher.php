@@ -37,13 +37,14 @@ class PEIP_Object_Map_Dispatcher
      */
     public function connect($name, $object, PEIP_INF_Handler $listener){
 	    $listners = $this->doGetListeners();
-	    if (!isset($listners[$object])){
-	      	$listners[$object] = new ArrayObject;
+	    if (!$listners->contains($object)){
+		$listners->attach($object, new ArrayObject);
 	    }
 	    if (!array_key_exists($name, $listners[$object])){ 
 	      	$listners[$object][$name] = array();
-	    } 
-	    $this->listeners[$object][$name][spl_object_hash($listener)] = $listener; 
+	    }
+            $hash = spl_object_hash($listener);
+            $this->listeners[$object][$name][$hash] = $listener;
 	    return true; 
   	}
 
@@ -58,19 +59,25 @@ class PEIP_Object_Map_Dispatcher
      */
     public function disconnect($name, $object, PEIP_INF_Handler $listener){
 	    $listners = $this->doGetListeners();
-	    if (!isset($listners[$object]) || !isset($listners[$object][$name])){
+	    if (!$listners->contains($object) || !isset($listners[$object][$name])){
 	      	return false;
 	    }
 	    $eventListeners = $listners[$object][$name];
-	    $hash = spl_object_hash($listener);
+            $hash = spl_object_hash($listener);
 	    if(isset($eventListeners[$hash])){
-	    	unset($eventListeners[$hash]);
+	    	unset($eventListeners[$hash]); 
+
 	    	$listners[$object][$name] = $eventListeners;
 	    	return true;
 	    }
 	    return false;
   	}
-  
+
+    public function disconnectAll($name, $object){
+	    $listners = $this->doGetListeners();
+	    $listners[$object][$name] = array();
+  	}
+
     /**
      * Checks wether an object has a listener for an event
      * 
@@ -82,12 +89,13 @@ class PEIP_Object_Map_Dispatcher
     public function hasListeners($name, $object){
     	$listners = $this->doGetListeners();
     	if (!$this->hadListeners($name, $object)){
-        	$res = false;
+            $res = false;
     	}else{
-        	$res = (boolean) count($this->getListeners($name, $object));
+            $listners = $this->doGetListeners();
+            $res = (boolean) count($listners[$object][$name]);
     	}
-    	return $res;
-  	}
+        return $res;
+    }
 
     /**
      * Checks wether an object has or had a listener for an event
@@ -98,9 +106,9 @@ class PEIP_Object_Map_Dispatcher
      * @return boolean
      */
     public function hadListeners($name, $object){
-    	$listners = $this->doGetListeners();
-    	return (isset($listners[$object]) && isset($listners[$object][$name])) ? true : false;  
-  	}
+        $listners = $this->doGetListeners();
+        return ($listners->contains($object) && isset($listners[$object][$name])) ? true : false;
+    }
 
     /**
      * Returns all event-names an object has registered listeners for
@@ -111,7 +119,7 @@ class PEIP_Object_Map_Dispatcher
      */
     public function getEventNames($object){
     	$listeners = $this->doGetListeners();
-    	if (!isset($listeners[$object])){
+    	if (!$listeners->contains($object)){
       		return array();
     	}
     	return array_keys($listeners[$object]->getArrayCopy());
@@ -127,7 +135,8 @@ class PEIP_Object_Map_Dispatcher
      */
     public function notify($name, $object){
         if($this->hasListeners($name, $object)){
-            self::doNotify($this->getListeners($name, $object), $object);   
+            $listners = $this->doGetListeners();
+            self::doNotify($listners[$object][$name], $object);
         }
         return true;         
     }
@@ -146,7 +155,7 @@ class PEIP_Object_Map_Dispatcher
             $res = self::doNotifyUntil($this->getListeners($name, $subject), $subject);   
         }
         return $res;
-  	}
+    }
 
     /**
      * Returns all listeners of a given event on an object
@@ -160,18 +169,23 @@ class PEIP_Object_Map_Dispatcher
 	    if (!$this->hadListeners($name, $object)){
 	      	return array();
 	    }
-    	return array_values($this->listeners[$object][$name]);
+            $listeners = $this->listeners[$object];
+            if($listeners instanceof ArrayObject){
+                $ar = $listeners->getArrayCopy();
+                return array_values($ar[$name]);
+            }
+            return array();
   	}
     
     /**
-     * Returns SplObjectStorage object to store objects to lositen to in.
-     * creates SplObjectStorage if not exists.
+     * Returns PEIP_Object_Storage object to store objects to lositen to in.
+     * creates PEIP_Object_Storage if not exists.
      * 
      * @access protected
-     * @return SplObjectStorage
+     * @return PEIP_Object_Storage
      */
     protected function doGetListeners(){
-        return isset($this->listeners) ? $this->listeners : $this->listeners = new SplObjectStorage();
+        return isset($this->listeners) ? $this->listeners : $this->listeners = new PEIP_Object_Storage();
     }
    
     /**
@@ -185,7 +199,9 @@ class PEIP_Object_Map_Dispatcher
      */    
     protected static function doNotify(array $listeners, $subject){
         foreach($listeners as $listener){ 
-            $listener->handle($subject);    
+             if($listener instanceof PEIP_INF_Handler){
+                $listener->handle($subject);
+            }
         }   
     }  
 
@@ -199,12 +215,14 @@ class PEIP_Object_Map_Dispatcher
      * @return PEIP_INF_Handler the listener which returned a boolean true value
      */     
     protected static function doNotifyUntil(array $listeners, $subject){  
-    	$res = NULL;
-    	foreach ($listeners as $listener){
-        	$res = $listener->handle($subject);
-    		if ($res){
-            	return $listener;  
-          	}
+    	$res = NULL; 
+    	foreach ($listeners as $listener){ 
+            if($listener instanceof PEIP_INF_Handler){
+                $res = $listener->handle($subject);
+                if ($res){ 
+                    return $listener;
+                }
+            }
         }
         return $res;
     } 

@@ -1,7 +1,7 @@
 <?php
 
 // please, change "<br>" to "\n" in the follwing line, when you run this file in the CLI
-define('PEIP_LINE_SEPARATOR', "<br>");
+define('PEIP_LINE_SEPARATOR', "\n");
 
 // This is PEIP´s (basic) way of the famous starbucks example from
 // Gregor Hohpe http://www.eaipatterns.com/ramblings/18_starbucks.html 
@@ -13,9 +13,10 @@ define('PEIP_LINE_SEPARATOR', "<br>");
  
 
 // requiring autoloader
-require_once(__DIR__.'/misc/bootstrap.php');
+require_once(dirname(__FILE__).'/misc/bootstrap.php');
 
-$context = PEIP_XML_Context::createFromFile(__DIR__.'/config/config.xml'); 
+
+$context = PEIP_XML_Context::createFromFile(dirname(__FILE__).'/config/config.xml'); 
 $cafe = $context->getGateway('CafeGateway');
 
 // this would be the same done by scripting.
@@ -59,6 +60,12 @@ if($cafe){
 	throw new RuntimeException('Could not get CafeGateway');
 }
 
+function convert($size)
+ {
+    $unit=array('b','kb','mb','gb','tb','pb');
+    return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
+ }
 
+echo PHP_EOL.PHP_EOL.'memory usage: '.convert(memory_get_usage(true)).PHP_EOL.PHP_EOL; 
 
 

@@ -9,7 +9,7 @@ class HelloService {
 		return $this->salutation.' '.$name;
 	}
 	
-	public function setSalutation($salutation){
+	public function setSalutation($salutation){ 
 		$this->salutation = $salutation;
 	}
 

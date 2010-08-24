@@ -32,11 +32,11 @@ class PEIP_Sealer implements PEIP_INF_Sealer, PEIP_INF_Unsealer{
      * constructor
      * 
      * @access public
-     * @param SplObjectStorage $store an instane of SplObjectStorage to act as the internal object-store
+     * @param PEIP_Object_Storage $store an instane of PEIP_Object_Storage to act as the internal object-store
      * @return 
      */
     public function __construct(SplObjectStorage $store = NULL){
-        $this->store = (bool)$store ? $store : new SplObjectStorage;    
+        $this->store = (bool)$store ? $store : new PEIP_Object_Storage;    
     }   
       
     /**

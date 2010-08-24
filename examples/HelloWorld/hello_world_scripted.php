@@ -4,7 +4,7 @@
 
 
 // requiring autoloader
-require_once(__DIR__.'/../misc/bootstrap.php');
+require_once(dirname(__FILE__).'/../../misc/bootstrap.php');
 
 // simple service class
 class HelloService {
@@ -29,4 +29,13 @@ $message = new PEIP_String_Message('World');
 $input->send($message);
 
 // receive reply message
-echo $res = $output->receive(); 
+$res = $output->receive(); 
+echo "\nReply Message: '$res'\n\n";
+
+function convert($size)
+ {
+    $unit=array('b','kb','mb','gb','tb','pb');
+    return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
+ }
+
+echo convert(memory_get_usage(true)); 

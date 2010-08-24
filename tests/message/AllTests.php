@@ -1,9 +1,9 @@
 <?php
 
-require_once __DIR__.'/CallableMessageHandlerTest.php';
-require_once __DIR__.'/GenericMessageTest.php';
-require_once __DIR__.'/MessageBuilderTest.php';
-require_once __DIR__.'/StringMessageTest.php';
+require_once dirname(__FILE__).'/CallableMessageHandlerTest.php';
+require_once dirname(__FILE__).'/GenericMessageTest.php';
+require_once dirname(__FILE__).'/MessageBuilderTest.php';
+require_once dirname(__FILE__).'/StringMessageTest.php';
 
  class Message_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){

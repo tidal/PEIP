@@ -204,6 +204,7 @@ class PEIP_XML_Context
             'service_activator' => 'createServiceActivator',
             'gateway' => 'createGateway',
             'splitter' => 'createSplitter',
+            'transformer' => 'createTransformer',
             'router' => 'createRouter',
             'aggregator' => 'createAggregator',
             'wiretap' => 'createWiretap'
@@ -331,7 +332,7 @@ class PEIP_XML_Context
             foreach($config->constructor_arg as $arg){
                 $args[] = $this->buildArg($arg);
             }
-        }
+        } 
         return $this->buildAndModify($config, $args);        
     }
  
@@ -348,24 +349,17 @@ class PEIP_XML_Context
      * @param object $config configuration to get the modification instructions from. 
      * @return object the modificated service
      */
-    protected function modifyService($service, $config){
+    protected function modifyService($service, $config){ 
         $reflection = PEIP_Generic_Builder::getInstance(get_class($service))->getReflectionClass();
-    	// helper function
-        $hasPublic = function($type, $name)use($reflection){
-    		if($reflection->{'has'.$type}($name) && $reflection->{'get'.$type}($name)->isPublic()){
-    			return true;
-    		}
-    		return false;
-    	};
         // set instance properties
         if($config->property){          
             foreach($config->property as $property){                          
                 $arg = $this->buildArg($property);
                 if($arg){
                 	$setter = self::getSetter($property);            	
-                    if($setter &&  $hasPublic('Method', $setter)){                                   
+                    if($setter &&  self::hasPublicProperty($service, 'Method', $setter)){
 	                    $service->{$setter}($arg);  
-	                }elseif(in_array($property, $hasPublic('Property', $setter))){
+	                }elseif(in_array($property, self::hasPublicProperty($service, 'Property', $setter))){
 	                	$service->$setter = $arg;
                 	}                	
                 }
@@ -375,11 +369,11 @@ class PEIP_XML_Context
         if($config->action){            
             foreach($config->action as $action){
                 $method = (string)$action['method'] != '' ? (string)$action['method'] : NULL;
-            	if($method && $hasPublic('Method', $method)){
-                    $args = array();
+            	if($method && self::hasPublicProperty($service, 'Method', $method)){
+                    $args = array(); 
                     foreach($action->children() as $argument){
                         $args[] = $this->buildArg($argument);
-                    }
+                    } 
                     call_user_func_array(array($service, (string)$action['method']), $args);
                 }
             }
@@ -506,7 +500,20 @@ class PEIP_XML_Context
     public function createSplitter($config){
         return $this->createReplyMessageHandler($config);           
     }   
-       
+ 
+    /**
+     * Creates and registers transformer from a configuration object.
+     * 
+     * @see PEIP_XML_Context::initNodeBuilders
+     * @see PEIP_XML_Context::createReplyMessageHandler
+     * @access public
+     * @param object $config configuration object for the transformer. 
+     * @return object the transformer instance
+     */    
+    public function createTransformer($config){
+        return $this->createReplyMessageHandler($config);           
+    } 
+      
     /**
      * Creates aggregator from a configuration object.
      * 
@@ -618,7 +625,7 @@ class PEIP_XML_Context
      * @param object $config configuration object to create argument from.  
      * @return mixed build argument 
      */
-    protected function buildArg($config){
+    protected function buildArg($config){ 
         if(trim((string)$config['value']) != ''){
             $arg = (string)$config['value'];
         }elseif($config->getName() == 'value'){
@@ -642,8 +649,8 @@ class PEIP_XML_Context
             $arg = $this->buildArg($config->list);
         }elseif($config->service){
             $arg = $this->buildArg($config->service);
-        }
-        return $arg;
+        } 
+        return $arg; 
     }       
 
     
@@ -799,5 +806,12 @@ class PEIP_XML_Context
         return PEIP_Generic_Builder::getInstance($className)->build($arguments);
     }
 
+    protected static function hasPublicProperty($service, $type, $name){
+        $reflection = PEIP_Generic_Builder::getInstance(get_class($service))->getReflectionClass();
+        if($reflection->{'has'.$type}($name) && $reflection->{'get'.$type}($name)->isPublic()){
+                return true;
+        }
+        return false;
+    }
 
 } 

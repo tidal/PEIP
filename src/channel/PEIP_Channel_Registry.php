@@ -30,7 +30,7 @@ class PEIP_Channel_Registry
      * @param $name 
      * @return 
      */
-    public function getInstance(){
+    public static function getInstance(){
         return self::$instance ? self::$instance : self::$instance = new PEIP_Channel_Registry;
     }
     

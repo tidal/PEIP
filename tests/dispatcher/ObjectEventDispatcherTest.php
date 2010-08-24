@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/ObjectMapDispatcherTest.php';
+require_once dirname(__FILE__).'/ObjectMapDispatcherTest.php';
 
 class ObjectEventDispatcherTest 
 	extends ObjectMapDispatcherTest {
@@ -12,11 +12,9 @@ class ObjectEventDispatcherTest
 	public function testNotify(){
 		$object = new stdClass;
 		$event = new PEIP_Event($object, 'foo');
-		$test = $this;
+		$callable = new CallableObject($this);
 		$this->assertFalse($this->dispatcher->hasListeners('foo', $object));
-		$listener = new PEIP_Callable_Handler(function($subject) use ($test, $object){
-			$test->assertSame($object, $subject);			
-		});	
+		$listener = new PEIP_Callable_Handler(array($callable, 'callNotify'));	
 		$this->dispatcher->connect('foo', $event, $listener);
 		$this->dispatcher->notify('foo', $event); 
 	}	

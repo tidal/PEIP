@@ -169,6 +169,10 @@ class PEIP_Autoload_Paths {
   'PEIP_Service_Container_Builder' => '/service/PEIP_Service_Container_Builder.php',
   'PEIP_Splitting_Service_Activator' => '/service/PEIP_Splitting_Service_Activator.php',
   'PEIP_String_Service_Activator' => '/service/PEIP_String_Service_Activator.php',
+'PEIP_Object_Storage' => '/base/PEIP_Object_Storage.php',
+'PEIP_INF_Transformer' => '/INF/transformer/PEIP_INF_Transformer.php',
+'PEIP_ABS_Transformer' => '/ABS/transformer/PEIP_ABS_Transformer.php',
+'PEIP_ABS_Content_Transformer' => '/ABS/transformer/PEIP_ABS_Content_Transformer.php',
   'PEIP' => '/PEIP.php',
 );
 	

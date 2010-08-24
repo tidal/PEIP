@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__.'/../../misc/bootstrap.php';
+require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
-PHPUnit_Util_Fileloader::checkAndLoad(__DIR__.'/../_files/CallableMessageHandlerMock.php');
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/CallableMessageHandlerMock.php');
 
 class CallableMessageHandlerTest extends PHPUnit_Framework_TestCase  {
 
@@ -15,17 +15,15 @@ class CallableMessageHandlerTest extends PHPUnit_Framework_TestCase  {
 	
 
 	public function testConstructions(){
-		$handler = new PEIP_Callable_Message_Handler(function(){
-			return true;
-		});
-    	$this->assertTrue($handler instanceof PEIP_Callable_Message_Handler);
-		$handler = new PEIP_Callable_Message_Handler('trim');
-    	$this->assertTrue($handler instanceof PEIP_Callable_Message_Handler);
-    	$mock = new CallableMessageHandlerMock();
-    	$handler = new PEIP_Callable_Message_Handler(array($mock, 'reply'));
-    	$this->assertTrue($handler instanceof PEIP_Callable_Message_Handler);
-    	$handler = new PEIP_Callable_Message_Handler(array('CallableMessageHandlerMock', 'replyStatic'));
-    	$this->assertTrue($handler instanceof PEIP_Callable_Message_Handler);    	
+            $handler = new PEIP_Callable_Message_Handler(array('CallableMessageHandlerMock', 'replyStatic'));
+            $this->assertTrue($handler instanceof PEIP_Callable_Message_Handler);
+            $handler = new PEIP_Callable_Message_Handler('trim');
+            $this->assertTrue($handler instanceof PEIP_Callable_Message_Handler);
+            $mock = new CallableMessageHandlerMock();
+            $handler = new PEIP_Callable_Message_Handler(array($mock, 'reply'));
+            $this->assertTrue($handler instanceof PEIP_Callable_Message_Handler);
+            $handler = new PEIP_Callable_Message_Handler(array('CallableMessageHandlerMock', 'replyStatic'));
+            $this->assertTrue($handler instanceof PEIP_Callable_Message_Handler);
 	}
 
 	public function testNoCallableException(){

@@ -46,7 +46,7 @@ class PEIP_Pollable_Channel
      * @param integer $timeout timout for receiving a message 
      * @return 
      */
-    public function receive($timeout = -1){
+    public function receive($timeout = 1){
         $this->getInterceptorDispatcher()->notify('preReceive', array($this));
         $this->doFireEvent('preReceive');
         $message = NULL;
