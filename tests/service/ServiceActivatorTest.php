@@ -86,7 +86,7 @@ class ServiceActivatorTest extends PHPUnit_Framework_TestCase  {
 		$salutation = 'Foo';
 		$message = new PEIP_String_Message($salutation);
 		$input->send($message);
-		$res = $output->receive();	echo get_class($res);
+		$res = $output->receive();
 		$this->assertTrue($res instanceof PEIP_String_Message); 
 		$this->assertTrue(is_string($res->getContent())); 
 		$this->assertEquals('Hello Foo', $res->getContent());

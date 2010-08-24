@@ -22,7 +22,7 @@
 class PEIP_Pipe 
     extends PEIP_ABS_Reply_Producing_Message_Handler 
     implements 
-        PEIP_INF_Channel,_
+        PEIP_INF_Channel,
         PEIP_INF_Subscribable_Channel,
         PEIP_INF_Connectable {
 
@@ -33,8 +33,8 @@ class PEIP_Pipe
         EVENT_POST_PUBLISH = 'postPublish',
         EVENT_SUBSCRIBE = 'subscribe',
         EVENT_UNSUBSCRIBE = 'unsubscribe',
-        EVENT_CONNECT = 'connect,
-        EVENT_DISCONNECT = 'disconnect,
+        EVENT_CONNECT = 'connect',
+        EVENT_DISCONNECT = 'disconnect',
         EVENT_PRE_COMMAND = 'preCommand',
         EVENT_POST_COMMAND = 'postCommand',
         EVENT_SET_MESSAGE_DISPATCHER = 'setMessageDispatcher',
@@ -84,7 +84,7 @@ class PEIP_Pipe
         return $this->handle($message);
     }
 
-    doFireEvent
+
     /**
      * @access protected
      * @param $message 
@@ -93,7 +93,7 @@ class PEIP_Pipe
     protected function doSend(PEIP_INF_Message $message){
         $this->doFireEvent(self::EVENT_PRE_PUBLISH, array(self::HEADER_MESSAGE=>$message));
         $this->getMessageDispatcher()->notify($message);
-        $this->doFireEvent(self::EVENT_POST_PUBLISH, array(self::HEADER_MESSAGE'MESSAGE'=>$message));
+        $this->doFireEvent(self::EVENT_POST_PUBLISH, array(self::HEADER_MESSAGE=>$message));
         return true;
     }
     
@@ -168,7 +168,8 @@ class PEIP_Pipe
      * @return 
      */
     public function getMessageDispatcher(){
-        return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new self::DEFAULT_CLASS_MESSAGE_DISPATCHER;
+        $defaultDispatcher = self::DEFAULT_CLASS_MESSAGE_DISPATCHER;
+        return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new $defaultDispatcher;
     }   
     
     
@@ -215,14 +216,6 @@ class PEIP_Pipe
         return $this->getEventDispatcher()->hasListener($name, $this);      
     }   
     
-    
-    /**
-     * @access public
-     * @param $name 
-     * @param $listener 
-     * @return 
-     */
-    
     /**
      * @access public
      * @param $eventName 
@@ -232,14 +225,6 @@ class PEIP_Pipe
     public function connectCall($eventName, $callable){
         $this->connect($eventName, new PEIP_Callable_Handler($callable));   
     }
-
-    
-    /**
-     * @access public
-     * @param $name 
-     * @param $listener 
-     * @return 
-     */
     
     /**
      * @access public
@@ -312,7 +297,8 @@ class PEIP_Pipe
     }   
     
     protected static function getSharedEventDispatcher(){
-        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new self::DEFAULT_CLASS_EVENT_DISPATCHER; 
+        $defaultDispatcher = self::DEFAULT_CLASS_EVENT_DISPATCHER;
+        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new $defaultDispatcher;
     }
 
     
