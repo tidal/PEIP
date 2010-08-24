@@ -47,37 +47,33 @@ class PEIP_Object_Storage extends SplObjectStorage implements Countable, Iterato
         }
 
         public function rewind(){
-            return $this->arrayIterator->rewind();
+            return $this->getArrayIterator()->rewind();
         }
 
         public function next(){
-            return $this->arrayIterator->next();
+            return $this->getArrayIterator()->next();
         }
 
         public function current(){
-            return $this->arrayIterator->current();
+            return $this->getArrayIterator()->current();
         }
 
         public function valid(){
-            return $this->arrayIterator->valid();
+            return $this->getArrayIterator()->valid();
         }
 
         public function key(){
-            return $this->arrayIterator->key();
+            return $this->getArrayIterator()->key();
         }
 
         public function getInfo(){
-
+            return $this->offsetGet($this->getArrayIterator()->current());
         }
 
         public function addAll (SplObjectStorage $storage){
             $storage->rewind();
             while($storage->valid()){
-                $this->offsetSet($storage->current());
-
-                if($this->offsetExists($storage->current())){
-                    $this->offsetUnset($storage->current());
-                }
+                $this->offsetSet($storage->current(), $storage->getInfo());
                 $storage->next();
             }
         }
