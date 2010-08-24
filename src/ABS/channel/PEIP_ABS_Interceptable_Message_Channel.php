@@ -221,7 +221,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @return 
      */
     public function setEventDispatcher(PEIP_Object_Event_Dispatcher $dispatcher, $transferListners = true){
-        if($transferListners){
+        if($transferListners && $this->eventDispatcher){
             foreach($this->eventDispatcher->getEventNames($this) as $name){
                 if($this->eventDispatcher->hasListeners($name, $this)){
                     foreach($this->eventDispatcher->getListeners($name, $this) as $listener){
