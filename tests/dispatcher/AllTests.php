@@ -1,8 +1,9 @@
-<?php
+<?php 
 
 require_once dirname(__FILE__).'/DispatcherTest.php';
 require_once dirname(__FILE__).'/ObjectEventDispatcherTest.php';
 require_once dirname(__FILE__).'/ObjectMapDispatcherTest.php';
+require_once dirname(__FILE__).'/IteratingDispatcherTest.php';
 
  class Dispatcher_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){
@@ -10,6 +11,7 @@ require_once dirname(__FILE__).'/ObjectMapDispatcherTest.php';
 		$suite->addTestSuite('DispatcherTest');
 		$suite->addTestSuite('ObjectEventDispatcherTest');
 		$suite->addTestSuite('ObjectMapDispatcherTest');
+                $suite->addTestSuite('IteratingDispatcherTest');
 		return $suite;
 	}
 }

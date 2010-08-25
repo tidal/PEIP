@@ -16,6 +16,7 @@
  * @subpackage pipe 
  * @extends PEIP_ABS_Reply_Producing_Message_Handler
  * @implements PEIP_INF_Message_Builder, PEIP_INF_Handler, PEIP_INF_Channel, PEIP_INF_Subscribable_Channel, PEIP_INF_Connectable
+ * @todo full test-coverage, factor out constants to framework-wide constants
  */
 
 
@@ -203,7 +204,7 @@ class PEIP_Pipe
      * @return 
      */
     public function hasListeners($name){
-        return $this->getEventDispatcher()->hasListener($name, $this);      
+        return $this->getEventDispatcher()->hasListeners($name, $this);
     }
 
     
@@ -213,7 +214,7 @@ class PEIP_Pipe
      * @return 
      */
     public function getListeners($name){
-        return $this->getEventDispatcher()->hasListener($name, $this);      
+        return $this->getEventDispatcher()->getListeners($name, $this);
     }   
     
     /**

@@ -83,7 +83,7 @@ abstract class PEIP_ABS_Reply_Producing_Message_Handler
     /**
      * Resolves a reply-channel for a message.
      * Looks for a reply-channel header in the message (default: 'REPLY_CHANNEL')
-     * and returns it´s value, if found.
+     * and returns itï¿½s value, if found.
      * 
      * @access protected
      * @param PEIP_INF_Message $message 

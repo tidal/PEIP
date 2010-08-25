@@ -9,6 +9,7 @@ require_once dirname(__FILE__).'/event/AllTests.php';
 require_once dirname(__FILE__).'/handler/AllTests.php';
 require_once dirname(__FILE__).'/message/AllTests.php';
 require_once dirname(__FILE__).'/service/AllTests.php';
+require_once dirname(__FILE__).'/pipe/AllTests.php';
 
  class AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){
@@ -22,6 +23,7 @@ require_once dirname(__FILE__).'/service/AllTests.php';
 		$suite->addTestSuite('Handler_AllTests');
 		$suite->addTestSuite('Message_AllTests');
 		$suite->addTestSuite('Service_AllTests');
+                $suite->addTestSuite('Pipe_AllTests');
 		return $suite;
 	}
 }

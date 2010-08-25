@@ -18,6 +18,12 @@ class MessageChannelInterceptor extends PEIP_Channel_Interceptor {
 		$this->message = $message;
 	}
 
+	public function eventCallback(PEIP_INF_Message $message){
+		$this->message = $message;
+	}
 
+ 	public function callback($message){
+		$this->message = $message;
+	}
 
 }

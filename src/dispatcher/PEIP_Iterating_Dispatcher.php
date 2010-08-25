@@ -32,7 +32,7 @@ class PEIP_Iterating_Dispatcher
      * @return 
      */
     public function __construct(ArrayIterator $listenerIterator = NULL){
-        $this->listeners = $iterator ? $iterator : new ArrayIterator;
+        $this->listeners = $listenerIterator ? $listenerIterator : new ArrayIterator;
     }
   
     /**
@@ -54,12 +54,12 @@ class PEIP_Iterating_Dispatcher
      * @return 
      */
     public function disconnect(PEIP_INF_Handler $listener){
-	    foreach ($this->listeners as $i => $callable){
-	      if ($listener === $callable){
-	        unset($this->listeners[$name][$i]);
-	      }
-	    }
-	}
+        foreach ($this->listeners as $i => $callable){
+            if ($listener === $callable){
+                unset($this->listeners[$i]);
+            }
+        }
+    }
   
     /**
      * Check wether any listener is registered
@@ -97,7 +97,7 @@ class PEIP_Iterating_Dispatcher
      * @return array registered listeners 
      */
     public function getListeners(){
-    	return $this->listeners;
-  	}
+    	return $this->listeners->getArrayCopy();
+    }
     
 }

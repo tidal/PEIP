@@ -9,7 +9,9 @@ class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 	
 	public function setUp(){
 		$this->channel = new InterceptableMessageChannel('TestChannel');
-	}
+                $dispatcher = new PEIP_Object_Event_Dispatcher;
+		$this->channel->setEventDispatcher($dispatcher, false);
+       }
 	
 	public function testMessageChannelInterceptor(){
 		$interceptor = new MessageChannelInterceptor(1);
@@ -69,6 +71,7 @@ class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 		$this->channel->addInterceptor($iterceptor1);
 		$message = new PEIP_Generic_Message(321);	
 		$this->channel->send($message);
+                $this->assertEquals($message, $iterceptor1->message);
 	}
 
 	public function testConnect(){
@@ -87,13 +90,24 @@ class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($this->channel->hasListeners('preSend'));	
 	}	
 
+	public function testFireEvent(){
+		$interceptor = new MessageChannelInterceptor(1);
+		$message = new PEIP_Generic_Message(321);
+                $handler = new PEIP_Callable_Handler(array($interceptor,'eventCallback'));
+                $dispatcher = new PEIP_Object_Event_Dispatcher;
+		$this->channel->setEventDispatcher($dispatcher, false);
+                $this->channel->connect('preSend', $handler);
+                $this->channel->send($message);
+		$this->assertEquals($message, $interceptor->message->getHeader('MESSAGE'));
+                $this->channel->disconnect('preSend', $handler);
+	}
 
 	public function testGetListeners(){
-		$handler1 = new PEIP_Callable_Handler(array('TestClass','TestMethod'));
-                $handler2 = new PEIP_Callable_Handler(array('TestClass','TestMethod'));
-		$this->channel->connect('preSend', $handler1);
-                $this->channel->connect('preSend', $handler2);
-		$this->assertEquals(array($handler1, $handler2), $this->channel->getListeners('preSend'));
+		$handler1 = new PEIP_Callable_Handler(array('TestClass','TestMethod1'));
+                $handler2 = new PEIP_Callable_Handler(array('TestClass','TestMethod2'));
+		$this->channel->connect('postSend', $handler1);
+                $this->channel->connect('postSend', $handler2);
+		$this->assertEquals(array($handler1, $handler2), $this->channel->getListeners('postSend'));
 	}
 
 	public function testSetEventDispatcher(){
@@ -112,7 +126,6 @@ class InterceptableMessageChannelTest extends PHPUnit_Framework_TestCase {
 		$this->channel->setEventDispatcher($dispatcher, true);
                 $this->assertEquals(array($handler1, $handler2), $this->channel->getListeners('test'));
 	}
-
 
 
 }

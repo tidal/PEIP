@@ -11,10 +11,10 @@
 /**
  * PEIP_Object_Event_Dispatcher 
  * Event dispatcher for an abritrary amount of different objects and events.
- * Contrary to it´s parent class (PEIP_Object_Map_Dispatcher) this class can
+ * Contrary to itï¿½s parent class (PEIP_Object_Map_Dispatcher) this class can
  * create event-objects (PEIP_INF_Event) with the notification subject as content/subject
- * and notify it´s listners on the event-objects. Also this class only accepts instaces of 
- * PEIP_INF_Event as it´s notification subjects.
+ * and notify itï¿½s listners on the event-objects. Also this class only accepts instaces of 
+ * PEIP_INF_Event as itï¿½s notification subjects.
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 

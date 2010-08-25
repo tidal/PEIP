@@ -257,7 +257,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @param $eventClass 
      * @return 
      */
-    protected function doFireEvent($name, array $headers = array(), $eventClass = false){
+    protected function doFireEvent($name, array $headers = array(), $eventClass = false){ 
         return $this->getEventDispatcher()->buildAndNotify($name, $this, $headers, $eventClass);
     }
 }

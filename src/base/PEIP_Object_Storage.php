@@ -39,7 +39,7 @@ class PEIP_Object_Storage extends SplObjectStorage implements Countable, Iterato
 	}
 
 	public function offsetExists($offset){
-		return in_array($offset, $this->objects);
+            return in_array($offset, $this->objects);
 	}
 
         public function count(){
