@@ -111,6 +111,15 @@ class PEIP_Event
     	return $this->processed;
   	}
 
+    /**
+     * Returns the subject/content of the container
+     *
+     * @access public
+     * @return mixed the subject/content
+     */
+    public function getSubject(){
+    	return $this->getContent();
+  	}
 }
     
 
