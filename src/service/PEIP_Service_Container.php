@@ -41,7 +41,7 @@ class PEIP_Service_Container
      * @return 
      */
     public function setService($key, $service){
-        $this->services[$key] = $value;
+        $this->services[$key] = $service;
     }
     
     
