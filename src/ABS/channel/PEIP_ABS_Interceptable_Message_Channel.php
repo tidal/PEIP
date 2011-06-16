@@ -19,12 +19,10 @@
 abstract class PEIP_ABS_Interceptable_Message_Channel 
     implements 
         PEIP_INF_Channel,
-        PEIP_INF_Interceptable,
         PEIP_INF_Connectable {
 
     protected 
         $eventDispatcher,
-        $interceptorDispatcher,
         $name,
         $interceptors = array();
     
@@ -48,39 +46,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
     public function getName(){
         return $this->name;
     }
-
-    /**
-     * @access public
-     * @param PEIP_Interceptor_Dispatcher $dispatcher 
-     * @return void
-     */
-    public function setInterceptorDispatcher(PEIP_Interceptor_Dispatcher $dispatcher){
-        $this->interceptorDispatcher = $dispatcher;
-    }
-    
-    
-    /**
-     * @access public
-     * @return PEIP_Interceptor_Dispatcher dispatcher
-     */
-    public function getInterceptorDispatcher(){
-        return is_object($this->interceptorDispatcher) ? $this->interceptorDispatcher : $this->interceptorDispatcher = new PEIP_Interceptor_Dispatcher();
-    }   
-    
-    
-    /**
-     * @access protected
-     * @param PEIP_INF_Message $message 
-     * @param string $eventName 
-     * @param array $parameters 
-     * @return 
-     */
-    protected function dispatchInterceptor(PEIP_INF_Message $message, $eventName, array $parameters = array()){
-        array_unshift($parameters, $message, $this); 
-        return $this->getInterceptorDispatcher()->notify($eventName, $parameters);
-    }
-    
-    
+ 
     /**
      * @access public
      * @param PEIP_INF_Message $message 
@@ -88,11 +54,9 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @return 
      */
     public function send(PEIP_INF_Message $message, $timeout = -1){
-        $this->dispatchInterceptor($message, 'preSend');
         $this->doFireEvent('preSend', array('MESSAGE'=>$message));
         $sent = $this->doSend($message);
-        $this->dispatchInterceptor($message, 'postSend', array('sent' => $sent));
-        $this->doFireEvent('postSend', array('MESSAGE'=>$message, 'SENT' => $sent));
+       // $this->doFireEvent('postSend', array('MESSAGE'=>$message, 'SENT' => $sent));
     }
 
     
@@ -106,93 +70,21 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
     
     /**
      * @access public
-     * @param PEIP_Abstract_Message_Channel_Interceptor $interceptor 
-     * @return 
-     */
-    public function addInterceptor(PEIP_INF_Channel_Interceptor $interceptor){
-        
-        $hash = spl_object_hash($interceptor);
-        $this->interceptors[$hash] = $interceptor;      
-        $this->interceptorsHandlers[$hash] = array();
-        foreach(array('preSend', 'postSend') as $event){
-            $handler = new PEIP_Callable_Message_Handler(array($interceptor, $event));
-            $this->connectInterceptor($event, $handler); 
-            $this->interceptorsHandlers[$hash][$event]  = $handler;
-        }
-    }
-
-    
-    /**
-     * @access public
-     * @param string $eventName 
-     * @param mixed $handler 
-     * @return 
-     */
-    public function connectInterceptor($eventName, $handler){
-        $this->getInterceptorDispatcher()->connect($eventName, $handler);   
-    }
-     
-    /**
-     * @access public
-     * @param PEIP_Abstract_Message_Channel_Interceptor $interceptor 
-     * @return 
-     */
-    public function deleteInterceptor(PEIP_INF_Channel_Interceptor $interceptor){
-        $hash = spl_object_hash($interceptor);
-        $handlers = $this->interceptorsHandlers[$hash];
-        $this->getInterceptorDispatcher()->disconnect('preSend', $handlers['preSend']);
-        $this->getInterceptorDispatcher()->disconnect('postSend', $handlers['postSend']);
-        unset($this->interceptors[$hash]); 
-        unset($this->interceptors[$hash]);
-    }
-    
-    /**
-     * @access public
-     * @return array PEIP_Abstract_Message_Channel_Interceptor[] 
-     */
-    public function getInterceptors(){
-        return array_values($this->interceptors);
-    }
-      
-    /**
-     * @access public
-     * @param array $interceptors PEIP_Abstract_Message_Channel_Interceptor[] 
-     * @return 
-     */
-    public function setInterceptors(array $interceptors){
-        $this->clearInterceptors();
-        foreach($interceptors as $interceptor){
-            $this->addInterceptor($interceptor);
-        }
-    }
-         
-    /**
-     * @access public
-     * @return 
-     */
-    public function clearInterceptors(){
-        foreach($this->interceptors as $interceptor){
-            $this->deleteInterceptor($interceptor);
-        }
-    }
-  
-    /**
-     * @access public
      * @param string $name 
-     * @param PEIP_INF_Handler $listener 
+     * @param Callable|PEIP_INF_Handler $listener
      * @return 
      */
-    public function connect($name, PEIP_INF_Handler $listener){
+    public function connect($name, $listener){
         return $this->getEventDispatcher()->connect($name, $this, $listener);
     }   
  
     /**
      * @access public
      * @param string $name 
-     * @param PEIP_INF_Handler $listener 
+     * @param Callable|PEIP_INF_Handler $listener
      * @return 
      */
-    public function disconnect($name, PEIP_INF_Handler $listener){
+    public function disconnect($name, $listener){
         return $this->getEventDispatcher()->disconnect($name, $this, $listener);
     }   
     
@@ -247,7 +139,7 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @return PEIP_Object_Event_Dispatcher
      */    
     protected static function getSharedEventDispatcher(){
-        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new PEIP_Object_Event_Dispatcher; 
+        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new PEIP_Class_Event_Dispatcher;
     }
    
     /**
@@ -258,6 +150,6 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
      * @return 
      */
     protected function doFireEvent($name, array $headers = array(), $eventClass = false){ 
-        return $this->getEventDispatcher()->buildAndNotify($name, $this, $headers, $eventClass);
+        return $this->getEventDispatcher()->buildAndNotify($name, $this, $headers, 'PEIP_Event');
     }
 }

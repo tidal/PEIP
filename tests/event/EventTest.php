@@ -71,7 +71,7 @@ class EventTest
 		foreach($this->payloads as $type=>$payload){
         	$message = new $this->testClass($payload, 'foo', $headers);
         	$this->assertMessage($message);
-    		$this->assertPayloads($message, $type);
+    		$this->assertPayloads($message, $type);    
     		$this->assertEquals($headers, $message->getHeaders());		
     	} 		
 	}    
@@ -82,7 +82,7 @@ class EventTest
         	$message = new $this->testClass($payload, 'foo', $headers);
         	$this->assertMessage($message);
     		$this->assertPayloads($message, $type);
-    		$this->assertEquals(new ArrayObject($headers), $message->getHeaders());		
+    		$this->assertEquals($headers, $message->getHeaders());
     	} 		
 	} 	
 	
@@ -109,10 +109,10 @@ class EventTest
     }	
 
 	protected function getHeaders(){
-    	return new ArrayObject(array(
-        	'foo' => 'bar',
+    	return array(
+        	'foo' => 'bars', 
         	'message' => 'test'
-        ));
+        );
     }    
     
 }

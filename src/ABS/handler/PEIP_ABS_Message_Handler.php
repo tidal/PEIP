@@ -18,11 +18,13 @@
  * @implements PEIP_INF_Handler
  */
 
-abstract class PEIP_ABS_Message_Handler 
+abstract class PEIP_ABS_Message_Handler
+    extends PEIP_ABS_Connectable
     implements PEIP_INF_Handler {
     
     protected 
-        $inputChannel;
+        $inputChannel,
+        $unwrapEvents = false;
            
     /**
      * Handles a message. Delegates the handling of the message to 
@@ -35,13 +37,7 @@ abstract class PEIP_ABS_Message_Handler
      * @return 
      */
     public function handle($message){
-         $message = $this->getMessageFromObject($message);
-         if(!is_object($message)){ 
-             throw new Exception('Could not get Message from Channel');
-         }else{
-            return $this->doHandle($message);
-         }
-        
+         $this->doHandle($this->getMessageFromObject($message));      
     }
    
     /**
@@ -76,18 +72,25 @@ abstract class PEIP_ABS_Message_Handler
         if($this->inputChannel instanceof PEIP_INF_Subscribable_Channel){
                 $this->inputChannel->subscribe($this);
         }else{          
-                $this->inputChannel->connect('postSend', $this);
+            $this->unwrapEvents = true;
+            $this->inputChannel->connect('postSend', $this);
         }  
     }
   
     protected function getMessageFromObject($object){ 
-	$message = NULL;
-        if($object instanceof PEIP_INF_Event){ 
-            $message = $object->getContent()->receive();
-        }elseif ($object instanceof PEIP_INF_Message) {
-            $message = $object;
+        $content = $object->getContent();
+        if($this->unwrapEvents
+            && $object instanceof PEIP_INF_Event
+            && $object->getName() == 'postSend'
+            && $object->hasHeader(PEIP_Pipe::HEADER_MESSAGE)
+            && $content instanceof PEIP_INF_Pollable_Channel
+         ){
+            $object = $content->receive();
         }
-        return $message;
+        if (!($object instanceof PEIP_INF_Message)) {
+            throw new Exception('Could not retrieve Message from Message-Argument'.print_r($objec, 1));
+        }
+        return $object;
     }
 
       

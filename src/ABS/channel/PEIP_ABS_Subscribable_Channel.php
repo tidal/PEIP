@@ -31,12 +31,12 @@ abstract class PEIP_ABS_Subscribable_Channel
      * 
      * @event subscribe
      * @access public
-     * @param PEIP_INF_Handler $handler the listener to subscribe
+     * @param Callable|PEIP_INF_Handler  $handler the listener to subscribe
      * @return 
      */
-    public function subscribe(PEIP_INF_Handler $handler){
+    public function subscribe($handler){ 
+        PEIP_Test::ensureHandler($handler);
         $this->getMessageDispatcher()->connect($handler);
-        $this->getInterceptorDispatcher()->notify('subscribe', array($this, $handler));
         $this->doFireEvent('subscribe', array('SUBSCRIBER'=>$handler));
     }
       
@@ -45,12 +45,12 @@ abstract class PEIP_ABS_Subscribable_Channel
      * 
      * @event unsubscribe
      * @access public
-     * @param PEIP_INF_Handler $handler the listener to unsubscribe
+     * @param Callable|PEIP_INF_Handler  $handler the listener to unsubscribe
      * @return 
      */
-    public function unsubscribe(PEIP_INF_Handler $handler){
+    public function unsubscribe($handler){
+        PEIP_Test::ensureHandler($handler);
         $this->getMessageDispatcher()->disconnect($handler);
-        $this->getInterceptorDispatcher()->notify('unsubscribe', array($this, $handler));
         $this->doFireEvent('unsubscribe', array('SUBSCRIBER'=>$handler));       
     }
       

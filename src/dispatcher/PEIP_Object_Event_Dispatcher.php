@@ -25,7 +25,9 @@
 
 class PEIP_Object_Event_Dispatcher 
     extends PEIP_Object_Map_Dispatcher {
-          
+
+
+
     /**
      * Notifies all listeners of a given event-object.
      * 
@@ -60,11 +62,20 @@ class PEIP_Object_Event_Dispatcher
      * @return
      * @see PEIP_Event_Builder 
      */
-    public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false){      
-        if($this->hasListeners($name, $object)){
-            $event = PEIP_Event_Builder::getInstance($eventClass)->build($object, $name, $headers);
-            return $this->notify($name, $event);            
+    public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false, $type = false){
+        if(!$this->hasListeners($name, $object)){
+            return false;
         }
+        $event = PEIP_Event_Builder::getInstance($eventClass)->build(
+            $object,
+            $name,
+            $headers
+        );
+        $this->notify(
+                $name,
+                $event
+        );
+        return $event;
     }      
     
 }

@@ -58,18 +58,33 @@ class PublishSubscribeChanelTest
             $this->channel->send($message);
        }
 
-       public function testEventPrePublish(){
+       public function testEventPrePublish(){ 
             $handler = new PublishSubscribeHandlerEvent($this);
             $this->channel->connect('prePublish',$handler);
             $message = new PEIP_Generic_Message('Hallo');
             $handler->setAssertSubject($message);
             $this->channel->send($message);
        }
-       public function testEventPostPublish(){
-            $handler = new PublishSubscribeHandlerEvent($this);
-            $this->channel->connect('postPublish',$handler);
+       public function testEventPostPublish(){ 
+            $this->channel = new PEIP_Publish_Subscribe_Channel('TestChannel2');
+            //$handler = new PublishSubscribeHandlerEvent($this);
             $message = new PEIP_Generic_Message('Hallo');
-            $handler->setAssertSubject($message);
+            $testCase = $this;/*
+            $this->channel->connect('postPublish',function($event)use($message, $testCase){
+                $testCase->assertTrue(is_object($message));
+                $testCase->assertTrue(is_object(1));
+                $testCase->assertTrue(is_object($event->getHeader(PEIP_Pipe::HEADER_MESSAGE)));
+
+                $testCase->assertEquals(
+                    $message,
+                    $event->getHeader(PEIP_Pipe::HEADER_MESSAGE),
+                    'Objects should be equal:'.get_class($message).' - '.get_class($event->getHeader(PEIP_Pipe::HEADER_MESSAGE))
+                );
+            });
+            */
+
+             
+            //$handler->setAssertSubject($message);
             $this->channel->send($message);
        }
 

@@ -23,6 +23,15 @@
 abstract class PEIP_ABS_Router 
     extends PEIP_Pipe {
 
+    
+    const 
+        EVENT_PRE_RESOLVE = 'pre_resolve',
+        EVENT_POST_RESOLVE = 'post_resolve',
+        EVENT_ERR_RESOLVE = 'err_resolve',
+        HEADER_CHANNEL  = 'CHANNEL',
+        HEADER_CHANNEL_NAME = 'CHANNEL_NAME',
+        HEADER_CHANNEL_RESOLVER = 'HEADER_CHANNEL_RESOLVER';
+
     protected $channelResolver;
    
     /**
@@ -46,7 +55,9 @@ abstract class PEIP_ABS_Router
      * @return 
      */
     public function setChannelResolver(PEIP_INF_Channel_Resolver $channelResolver){
+        $this->doFireEvent(self::EVENT_CHANNEL_RESOLVER_SET, array(self::HEADER_CHANNEL_RESOLVER=>$channelResolver));
         $this->channelResolver = $channelResolver;
+        $this->doFireEvent(self::EVENT_CHANNEL_RESOLVER_SET, array(self::HEADER_CHANNEL_RESOLVER=>$channelResolver));
     }
       
     /**
@@ -75,12 +86,16 @@ abstract class PEIP_ABS_Router
      * @return 
      */
     protected function resolveChannel($channel){
+        $this->doFireEvent(self::EVENT_PRE_RESOLVE, array(self::HEADER_CHANNEL=>$channel));
         if(!($channel instanceof PEIP_INF_Channel)){
-            $channel = $this->channelResolver->resolveChannelName($channel);
+            $channelName = $channel;
+            $channel = $this->channelResolver->resolveChannelName($channelName);
             if(!$channel){
-                throw new RuntimeException('Could not resolve Channel : '.$channel);
+                $this->doFireEvent(self::EVENT_ERR_RESOLVE, array(self::HEADER_CHANNEL_NAME=>$channelName));
+                throw new RuntimeException('Could not resolve Channel : '.$channelName);
             }
         }
+        $this->doFireEvent(self::EVENT_POST_RESOLVE, array(self::HEADER_CHANNEL=>$channel));
         return $channel;
     }
        

@@ -29,10 +29,11 @@ class PEIP_Dispatcher
      * Connects a listener.
      * 
      * @access public
-     * @param PEIP_INF_Handler $listener 
+     * @param Callable|PEIP_INF_Handler  $listener
      * @return void
      */
-    public function connect(PEIP_INF_Handler $listener){
+    public function connect($listener){
+        PEIP_Test::ensureHandler($listener);
     	$this->listeners[] = $listener;
   	}
  
@@ -40,10 +41,11 @@ class PEIP_Dispatcher
      * Disconnects a listener.
      * 
      * @access public
-     * @param PEIP_INF_Handler $listener 
+     * @param Callable|PEIP_INF_Handler $listener
      * @return void
      */
-    public function disconnect(PEIP_INF_Handler $listener){
+    public function disconnect($listener){
+        PEIP_Test::ensureHandler($listener);
     	foreach ($this->listeners as $i => $callable){
       		if ($listener === $callable){
         		unset($this->listeners[$i]);

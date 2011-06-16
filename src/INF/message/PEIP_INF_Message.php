@@ -19,7 +19,12 @@
 
 
 interface PEIP_INF_Message extends PEIP_INF_Container {
-    
+
+
     public function getHeaders();
+
+    public function getHeader($name);
+
+    public function addHeader($name, $value);
 
 }

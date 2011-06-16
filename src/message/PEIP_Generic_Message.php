@@ -19,29 +19,39 @@
  */
 
 class PEIP_Generic_Message 
-    extends PEIP_ABS_Container
     implements 
         PEIP_INF_Message, 
         PEIP_INF_Buildable {
 
-    protected $payload;
-    
-    protected $headers; 
+    const CONTENT_CAST_TYPE = '';
+
+    private
+        $content,
+        $headers;
            
     /**
      * constructor
      * 
      * @access public
      * @param mixed $content The content/payload of the message 
-     * @param ArrayAccess $headers ArrayAccess object of headers as key/value pairs
+     * @param array|ArrayAccess $headers headers as key/value pairs
      */
-    public function __construct($content, ArrayAccess $headers = NULL){
-        $this->doSetContent($content);      
-        if($headers){
-            $this->headers = $headers;
-        }           
+    public function __construct($content, $headers = array()){
+        $this->doSetContent($content);
+        $this->doSetHeaders($headers);          
     }
-  
+
+    /**
+     * Returns the content of the container
+     *
+     * @implements PEIP_INF_Container
+     * @access public
+     * @return
+     */
+    public function getContent(){
+        return $this->content;
+    }
+
     /**
      * sets content/payload of message - to be overwritten by derived classes
      * 
@@ -49,17 +59,25 @@ class PEIP_Generic_Message
      * @param mixed $content The content/payload of the message 
      */
     protected function doSetContent($content){
-        $this->content = $content;
+        $this->content = PEIP_Test::castType($content, self::CONTENT_CAST_TYPE);
     }
-    
-    /**
+
+    protected function doSetHeaders($headers){
+        $headers = PEIP_Test::ensureArrayAccess($headers);
+        if(is_array($headers)){
+            $headers = new ArrayObject($headers);
+        }
+        $this->headers = $headers;
+    }
+
+        /**
      * returns all headers of the message
      * 
      * @access public
      * @return ArrayAccess ArrayAccess object of headers
      */
     public function getHeaders(){
-        return $this->headers;
+        return (array) $this->headers;
     }
   
     /**
@@ -70,9 +88,26 @@ class PEIP_Generic_Message
      * @return mixed the value of the header
      */
     public function getHeader($name){
-        return $this->headers[$name];
+        $name = (string)$name;
+        return isset($this->headers[$name]) ? $this->headers[$name] : NULL;
     }
-     
+
+    /**
+     * adds a specific header to the message if that header
+     * has not allready been set.
+     *
+     * @access public
+     * @param string $name the name of the header
+     * @return boolean wether the header has been successfully  set
+     */
+    public function addHeader($name, $value){
+        if(!$this->hasHeader($name)){
+            $this->headers[$name] = $value;
+            return true;
+        }
+        return false;
+    }
+
     /**
      * checks wether a specific header is set on the message
      * 
@@ -83,7 +118,17 @@ class PEIP_Generic_Message
     public function hasHeader($name){
         return isset($this->headers[$name]);
     }
-   
+
+    /**
+     * returns content/payload of the message as string representation for the instance.
+     *
+     * @access public
+     * @return string  content/payload of the message
+     */
+    public function __toString(){
+        return (string)$this->getContent();
+    }
+
     /**
      * Provides a static build method to create new Instances of this class.
      * Implements PEIP_INF_Buildable

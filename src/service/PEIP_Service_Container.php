@@ -19,9 +19,10 @@
  */
 
 
-class PEIP_Service_Container 
-    extends PEIP_Parameter_Holder 
-    implements PEIP_INF_Service_Container {
+class PEIP_Service_Container
+    extends PEIP_ABS_Connectable
+    implements 
+        PEIP_INF_Service_Container{
 
     protected $services = array();
     
@@ -32,15 +33,6 @@ class PEIP_Service_Container
    * @param array $parameters An array of parameters
    */
     
-    /**
-     * @access public
-     * @param $parameters 
-     * @return 
-     */
-    public function __construct(array $parameters = array()){
-        $this->setInternalValues($parameters);
-    }   
-
     
     /**
      * @access public

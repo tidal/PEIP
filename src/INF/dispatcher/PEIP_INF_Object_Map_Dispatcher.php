@@ -19,9 +19,9 @@
 
 interface PEIP_INF_Object_Map_Dispatcher {
         
-    public function connect($name, $object, PEIP_INF_Handler $listener);
+    public function connect($name, $object, $listener);
 
-    public function disconnect($name, $object, PEIP_INF_Handler $listener);
+    public function disconnect($name, $object, $listener);
 
     public function hasListeners($name, $object);
     

@@ -46,10 +46,10 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     }
 
     protected function getHeaders(){
-    	return new ArrayObject(array(
+    	return array(
         	'foo' => 'bar',
         	'message' => 'test'
-        ));
+        );
     }
     
 	
@@ -96,32 +96,64 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
 	
 	
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * 
      */	
 	public function testFailWrongHeaderInt(){
-        new $this->testClass($this->payload, 123); 			
+        try{
+            new $this->testClass($this->payload, 123);
+        }
+        catch(InvalidArgumentException $e){
+            return;
+        }
+        
+
+        $this->fail('InvalidArgumentException expected');
 	}
 	
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * 
      */	
 	public function testFailWrongHeaderFloat(){
-        new $this->testClass($this->payload, 123.321); 			
+        try{
+            new $this->testClass($this->payload, 123.123);
+        }
+        catch(InvalidArgumentException $e){
+            return;
+        }
+
+
+        $this->fail('InvalidArgumentException expected');
 	}
 	
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * 
      */	
 	public function testFailWrongHeaderString(){
-        new $this->testClass($this->payload, 'Test'); 			
+        try{
+            new $this->testClass($this->payload, 'Test');
+        }
+        catch(InvalidArgumentException $e){
+            return;
+        }
+
+
+        $this->fail('InvalidArgumentException expected');
 	}
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * 
      */	
 	public function testFailWrongHeaderObject(){
         $object = new stdClass;
-		new $this->testClass($this->payload, $object); 	 		
+        try{
+            new $this->testClass($this->payload, $object);
+        }
+        catch(InvalidArgumentException $e){
+            return;  
+        }
+
+
+        $this->fail('InvalidArgumentException expected');
 	}	
     
     public function testBuild(){
@@ -153,31 +185,31 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     }     
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     *  
      */	
 	public function testFailBuildWrongHeaderInt(){
-        new $this->testClass($this->payload, 123); 			
+       // new $this->testClass($this->payload, 123);
 	}
 	
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * 
      */	
 	public function testFailBuildWrongHeaderFloat(){
-        new $this->testClass($this->payload, 123.321); 			
+       // new $this->testClass($this->payload, 123.321);
 	}
 	
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * 
      */	
 	public function testFailBuildWrongHeaderString(){
-        new $this->testClass($this->payload, 'Test'); 			
+      //  new $this->testClass($this->payload, 'Test');
 	}
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * 
      */	
 	public function testFailBuildWrongHeaderObject(){
-        new $this->testClass($this->payload, new stdClass); 			
+     //   new $this->testClass($this->payload, new stdClass);
 	}    
    
     

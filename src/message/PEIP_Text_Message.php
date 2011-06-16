@@ -53,4 +53,18 @@ class PEIP_Text_Message extends PEIP_String_Message {
         return $this->title;
     }
 
+    /**
+     * Provides a static build method to create new Instances of this class.
+     * Implements PEIP_INF_Buildable. Overwrites PEIP_Generic_Message::build.
+     *
+     * @static
+     * @access public
+     * @implements PEIP_INF_Buildable
+     * @param string $name the name of the header
+     * @return boolean wether the header is set
+     */
+    public static function build(array $arguments = array()){
+        return PEIP_Generic_Builder::getInstance('PEIP_String_Message')->build($arguments);
+    }
+
 }

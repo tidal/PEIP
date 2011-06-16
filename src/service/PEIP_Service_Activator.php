@@ -30,12 +30,15 @@ class PEIP_Service_Activator
      * @param $outputChannel 
      * @return 
      */
-    public function __construct($serviceCallable, PEIP_INF_Channel $inputChannel, PEIP_INF_Channel $outputChannel = NULL){
+    public function __construct($serviceCallable, PEIP_INF_Channel $inputChannel = NULL, PEIP_INF_Channel $outputChannel = NULL){
         $this->serviceCallable = $serviceCallable;
-        $this->setInputChannel($inputChannel);
+        if(is_object($inputChannel)){
+            $this->setInputChannel($inputChannel);
+        }
         if(is_object($outputChannel)){
             $this->setOutputChannel($outputChannel);    
         }   
     }       
-    
+
+
 }

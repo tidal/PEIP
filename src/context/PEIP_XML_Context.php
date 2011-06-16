@@ -1,7 +1,7 @@
 <?php
 
 /*
- * This file is part of the PEIP package.
+ * This file is part of the PEIP package.oBuild
  * (c) 2010 Timo Michna <timomichna/yahoo.de>
  * 
  * For the full copyright and license information, please view the LICENSE
@@ -28,7 +28,8 @@ class PEIP_XML_Context
         $configs = array(),
         $gateways = array(),
         $nodeBuilders = array(),
-        $channelRegistry;
+        $channelRegistry,
+        $serviceProvider;
           
     /**
      * constructor
@@ -38,9 +39,26 @@ class PEIP_XML_Context
      * @return 
      */
     public function __construct($string){
-        $this->simpleXML = new SimpleXMLIterator($string);
         $this->initNodeBuilders();
-        $this->init();
+        $reader = new PEIP_XML_Context_Reader($string);
+        $provider = $this->getServiceProvider();
+
+        $handler =  new PEIP_Callable_Handler($callable);
+
+        $serviceActivator = new PEIP_Header_Service_Activator(array($this, 'addConfig'), 'NODE');
+
+        $reader->connect('read_node',  $serviceActivator);
+        $reader->read();
+
+       
+    }
+
+    public function addConfig($config){
+        return $this->getServiceProvider()->addConfig($config);
+    }
+
+    public function handleReadConfig(PEIP_INF_Event $event){
+        $this->addConfig($event->getHeader('NODE'));
     }
 
     /**
@@ -99,7 +117,7 @@ class PEIP_XML_Context
      * @param callable $callable a callable which creates instances for node-name 
      */
     public function registerNodeBuilder($nodeName, $callable){
-        $this->nodeBuilders[$nodeName] = $callable;     
+       return  $this->getServiceProvider()->registerNodeBuilder($nodeName, $callable);
     }
    
     /**
@@ -184,6 +202,12 @@ class PEIP_XML_Context
 	}	
      
 
+    public function getServiceProvider(){
+        return isset($this->serviceProvider)
+            ? $this->serviceProvider
+            : $this->serviceProvider = new PEIP_Service_Provider();
+    }
+
     /**
      * Registers the build-methods for the main-components with this context.
      * Note: This method and subsequent registered methods of this class are
@@ -210,6 +234,8 @@ class PEIP_XML_Context
             'wiretap' => 'createWiretap'
                 
         );
+        $plugin = new PEIP_Base_Plugin();
+        $this->addPlugin($plugin); return;
         foreach($builders as $nodeName => $method){
             $this->registerNodeBuilder($nodeName, array($this, $method));   
         }       
@@ -259,9 +285,7 @@ class PEIP_XML_Context
      * @return object the service instance if found
      */
     public function getService($id){     
-        return $this->hasService($id)  
-            ? $this->services[$id]
-            : NULL;
+        return $this->getServiceProvider()->provideService($id);
     }
              
     /**
@@ -271,7 +295,7 @@ class PEIP_XML_Context
      * @return array registered services
      */
     public function getServices(){    
-        return $this->services;
+        return $this->getServiceProvider()->getServices();
     }  
     
     /**
@@ -326,14 +350,7 @@ class PEIP_XML_Context
      * @return object the initialized service instance
      */
     public function createService($config){
-        $args = array();
-        //build arguments for constructor
-        if($config->constructor_arg){
-            foreach($config->constructor_arg as $arg){
-                $args[] = $this->buildArg($arg);
-            }
-        } 
-        return $this->buildAndModify($config, $args);        
+        return PEIP_Service_Factory::createService($config);      
     }
  
     /**
@@ -710,7 +727,8 @@ class PEIP_XML_Context
     public function doGetChannel($type, $config){
         $channelName = $config[$type."_channel"] 
             ? $config[$type."_channel"] 
-            : $config["default_".$type."_channel"]; 
+            : $config["default_".$type."_channel"];
+        return $this->serviceProvider->provideService(trim((string)$channelName));
         $channel =  $this->services[trim((string)$channelName)];
         if($channel instanceof PEIP_INF_Channel){
             return $channel;    
@@ -732,9 +750,9 @@ class PEIP_XML_Context
      * @param string $defaultClass class to create instance for if none is set in config 
      * @return object build and modified srvice instance
      */
-    public function buildAndModify($config, $arguments, $defaultClass = false){ 
-    	if("" != (string)$config["class"]  || $defaultClass){ 
-        	 $service = self::doBuild($config, $arguments, $defaultClass);	
+    public function buildAndModify($config, $arguments, $defaultClass = false){
+        if("" != (string)$config["class"]  || $defaultClass){
+        	 $service = PEIP_Service_Factory::doBuild($config, $arguments, $defaultClass);
         }elseif($config["ref"]){
         	$service = $this->getService((string)$config['ref']);
         }else{

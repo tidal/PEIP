@@ -24,7 +24,8 @@ class PEIP_Object_Map_Dispatcher
     implements PEIP_INF_Object_Map_Dispatcher {
 
     protected 
-        $listeners = NULL;
+        $listeners = NULL,
+        $classDispatcher = NULL;
         
     /**
      * connects a Handler to an event on an object
@@ -32,10 +33,11 @@ class PEIP_Object_Map_Dispatcher
      * @access public
      * @param string $name the event-name 
      * @param object $object arbitrary object to connect to
-     * @param PEIP_INF_Handler $listener event-handler
+     * @param Callable|PEIP_INF_Handler $listener event-handler
      * @return boolean
      */
-    public function connect($name, $object, PEIP_INF_Handler $listener){
+    public function connect($name, $object, $listener){
+        PEIP_Test::ensureHandler($listener);
 	    $listners = $this->doGetListeners();
 	    if (!$listners->contains($object)){
 		$listners->attach($object, new ArrayObject);
@@ -57,7 +59,7 @@ class PEIP_Object_Map_Dispatcher
      * @param PEIP_INF_Handler $listener event-handler
      * @return boolean
      */
-    public function disconnect($name, $object, PEIP_INF_Handler $listener){
+    public function disconnect($name, $object, $listener){
 	    $listners = $this->doGetListeners();
 	    if (!$listners->contains($object) || !isset($listners[$object][$name])){
 	      	return false;
@@ -74,8 +76,16 @@ class PEIP_Object_Map_Dispatcher
   	}
 
     public function disconnectAll($name, $object){
-	    $listners = $this->doGetListeners();
-	    $listners[$object][$name] = array();
+        if(is_object($object)){
+            $listners = $this->doGetListeners();
+
+            
+            if($listners){
+                $listners[$object][$name] = array(); 
+            }
+            
+        }
+
   	}
 
     /**
@@ -201,7 +211,9 @@ class PEIP_Object_Map_Dispatcher
         foreach($listeners as $listener){ 
              if($listener instanceof PEIP_INF_Handler){
                 $listener->handle($subject);
-            }
+             }elseif(is_callable($listener)){
+                 call_user_func($listener, $subject);
+             }
         }   
     }  
 

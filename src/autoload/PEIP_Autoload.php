@@ -42,7 +42,7 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
      * @static
      * @return PEIP_Autoload
      */		
-	static public function getInstance(){
+	static public function getInstance(){ 
 	    if (!isset(self::$instance)){
 	    	self::$instance = new PEIP_Autoload();
 	    }
@@ -101,7 +101,7 @@ class PEIP_Autoload extends PEIP_Simple_Autoload {
 	protected static function findPaths($baseDir, RecursiveDirectoryIterator $iterator, array $paths = array()){
 		$iterator->rewind();
 		while($iterator->valid()){
-			if($iterator->isDir()){
+			if($iterator->isDir() && !$iterator->isDot()){
 				$paths = self::findPaths($baseDir, $iterator->getChildren(), $paths);
 			}elseif($iterator->isFile() && strrchr($iterator->getFilename(), '.') == '.php'){
 				$class = $iterator->getBasename('.php');

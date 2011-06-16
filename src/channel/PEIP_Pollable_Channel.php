@@ -23,6 +23,11 @@ class PEIP_Pollable_Channel
     extends PEIP_ABS_Interceptable_Message_Channel 
     implements PEIP_INF_Pollable_Channel {
 
+    const       
+        EVENT_PRE_RECEIVE = 'pre_receive',
+        EVENT_POST_RECEIVE = 'post_receive',
+        HEADER_MESSAGE = 'MESSAGE';
+    
     protected 
         $messages = array();
           
@@ -34,7 +39,8 @@ class PEIP_Pollable_Channel
      * @return 
      */
     protected function doSend(PEIP_INF_Message $message){
-        $this->messages[] = $message;        
+        $this->messages[] = $message;
+        return true;
     }
       
     /**
@@ -46,9 +52,8 @@ class PEIP_Pollable_Channel
      * @param integer $timeout timout for receiving a message 
      * @return 
      */
-    public function receive($timeout = 1){
-        $this->getInterceptorDispatcher()->notify('preReceive', array($this));
-        $this->doFireEvent('preReceive');
+    public function receive($timeout = 0){
+        $this->doFireEvent(self::EVENT_PRE_RECEIVE);
         $message = NULL;
         if($timeout == 0){
             $message = $this->getMessage(); 
@@ -62,8 +67,11 @@ class PEIP_Pollable_Channel
                 
             }       
         }
-        $this->getInterceptorDispatcher()->notify('postReceive', array($this));
-        $this->doFireEvent('postReceive', array('MESSAGE'=>$message));
+        $this->doFireEvent(
+            self::EVENT_PRE_RECEIVE, array(
+                self::HEADER_MESSAGE=>$message
+            )
+        );
         return $message;
     }
    

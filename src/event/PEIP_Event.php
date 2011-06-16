@@ -32,7 +32,8 @@ class PEIP_Event
         $processed  = false,
         $subject    = null,
         $name       = '',
-        $parameters = null;
+        $parameters = null,
+        $type;
 
   
     /**
@@ -43,14 +44,10 @@ class PEIP_Event
      * @param string $name the name of the event
      * @param array|ArrayAccess $headers the headers for the event 
      */
-    public function __construct($subject, $name, $parameters = array()){
-    	if(is_array($parameters)){
-    		$parameters = new ArrayObject($parameters);	
-    	}elseif(!($parameters instanceof ArrayAccess)){
-    		throw new InvalidArgumentException('third parameter for PEIP_Event::__construct must either be array or implement ArrayAccess');
-    	}    	
-    	parent::__construct($subject, $parameters);
+    public function __construct($subject, $name, $parameters = array(), $type = false){
+    	parent::__construct($subject, PEIP_Test::ensureArrayAccess($parameters));
     	$this->name = $name;
+        $this->type = $type ? $type : get_class($this);
   	}
   
     /**
@@ -63,6 +60,16 @@ class PEIP_Event
     	return $this->name;
   	}
 
+    /**
+     * returns the type of the event (Name of this Event-Class if no
+     * event-type has been set in constructor)
+     *
+     * @access public
+     * @return string the type of the event
+     */
+    public function getType(){
+    	return $this->name;
+  	}
   
     /**
      * sets the return-value of the event

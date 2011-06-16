@@ -24,8 +24,7 @@ class PEIP_Generic_Builder
         PEIP_INF_Singleton_Map {
 
     protected 
-        $className,
-        $reflectionClass;
+        $className;
     
     protected static 
         $instances = array();   
@@ -40,15 +39,20 @@ class PEIP_Generic_Builder
      * @return 
      */
     public function __construct($className, ReflectionClass $reflectionClass = NULL, $storeRef = true){      
-        $this->className = $className;
-        if($reflectionClass){
-            if($className != $reflectionClass->getName()){
-                throw new Exception('Constructing PEIP_Generic_Builder with wrong ReflectionClass'); 
-            }   
-            $this->reflectionClass = $reflectionClass;  
+        if($reflectionClass ){
+            
+            if($reflectionClass->getName() != $className){
+                throw new Exception(
+                    'Constructing PEIP_Generic_Builder with wrong ReflectionClass'
+                );
+            }
+             
+             
+            $this->reflectionClass = $reflectionClass;
         }
+        $this->className = $className;
         if($storeRef){
-            self::$instances[$className] = $this;
+            self::$instances[$this->className] = $this;
         }            
     }
 
@@ -74,14 +78,13 @@ class PEIP_Generic_Builder
      * @return object the created object instance
      */
     public function build(array $arguments = array()){      
-        if($constructor = $this->getReflectionClass()->getConstructor()){
-            if(count($arguments) < $constructor->getNumberOfRequiredParameters()){ 
-                throw new Exception('Missing Argument '.(count($arguments) + 1).' for '.$className.'::__construct');
-            }       
+        if(PEIP_Test::assertClassHasConstructor($this->className)){
+            if(!PEIP_Test::assertRequiredConstructorParameters($this->className, $arguments)){
+                throw new Exception('Missing Argument '.(count($arguments) + 1).' for '.$this->className.'::__construct');
+            }
             return $this->getReflectionClass()->newInstanceArgs($arguments);
-        }else{
-            return $this->getReflectionClass()->newInstance();
-        }               
+        }
+        return $this->getReflectionClass()->newInstance();              
     }
    
     /**
@@ -91,9 +94,7 @@ class PEIP_Generic_Builder
      * @return ReflectionClass
      */
     public function getReflectionClass(){
-        return $this->reflectionClass 
-            ? $this->reflectionClass 
-            : $this->reflectionClass = new ReflectionClass($this->className); 
+        return PEIP_Reflection_Pool::getInstance($this->className);
     }
     
 }

@@ -44,11 +44,13 @@ class PEIP_Event_Builder {
      * @param string $eventClass the event-class the builder shall create instances for 
      * @return PEIP_Event_Builder the instance of PEIP_Event_Builder for the given event-class 
      */    
-    public static function getInstance($eventClass = false){
-        $eventClass = $eventClass ? $eventClass : 'PEIP_Event';
+    public static function getInstance($eventClass = 'PEIP_Event'){
+
         return isset(self::$instances[$eventClass]) 
             ? self::$instances[$eventClass] 
-            : self::$instances[$eventClass] = new PEIP_Event_Builder($eventClass);
+            : self::$instances[$eventClass] = new PEIP_Event_Builder(
+                PEIP_Test::ensureImplements($eventClass, 'PEIP_INF_Event')
+        );
     }
       
     /**
@@ -58,11 +60,15 @@ class PEIP_Event_Builder {
      * @param mixed $subject the subject for the event
      * @param string $name the name of the event
      * @param array $headers the headers for the event 
-     * @return 
+     * @return object event instance
      */
     public function build($subject, $name, array $headers = array()){
-        $parameters = array_merge($this->defaultParameters, $headers);
-        return $event = new $this->eventClass($subject, $name, $headers);
+
+        return new $this->eventClass(
+            $subject,
+            $name,
+            array_merge($this->defaultParameters, $headers)
+        );
     }
     
     /**
@@ -76,7 +82,10 @@ class PEIP_Event_Builder {
      * @return 
      */
     public function buildAndDispatch(PEIP_Object_Event_Dispatcher $dispatcher, $subject, $name, array $headers = array()){
-        $event = $this->build($subject, $name, $headers);    
-        return $dispatcher->notify($name, $event);          
+  
+        return $dispatcher->notify(
+            $name,
+            $this->build($subject, $name, $headers)
+        );
     }
 }

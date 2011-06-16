@@ -20,7 +20,7 @@
 
 abstract class PEIP_Internal_Store_Abstract {
 
-    protected $internalValues = array();
+    private $internalValues = array();
     
     
     

@@ -22,8 +22,10 @@ abstract class PEIP_ABS_Context_Plugin
     implements PEIP_INF_Context_Plugin {
 
     protected $context;
-    
-    protected static $builders = array();
+
+    protected $builders = array();
+
+    //protected static $builders = array();
       
     /**
      * Initializes the plugin with given context.
@@ -35,9 +37,24 @@ abstract class PEIP_ABS_Context_Plugin
      */
     public function init(PEIP_INF_Context $context){
         $this->context = $context;
-        foreach(static::$builders as $node=>$method){
+        foreach($this->builders as $node=>$method){
             $context->registerNodeBuilder($node, array($this, $method));        
         }   
     }
 
+     /**
+     * Builds and modifies an arbitrary service/object instance from a config-obect.
+     *
+     * @see PEIP_XML_Context::doBuild
+     * @see PEIP_XML_Context::modifyService
+     * @implements PEIP_INF_Context
+     * @access public
+     * @param object $config configuration object to build a service instance from.
+     * @param array $arguments arguments for the service constructor
+     * @param string $defaultClass class to create instance for if none is set in config
+     * @return object build and modified srvice instance
+     */
+    public function buildAndModify($config, $arguments, $defaultClass = false){
+    	return PEIP_Service_Factory::buildAndModify($config, $arguments, $defaultClass);
+    }
 }

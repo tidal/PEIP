@@ -1,10 +1,14 @@
 <?php
 
 
-if(phpversion() < '5.3.0'){
-// providing api compatibility with SplObjectStorage > php 5.3.0
-
-class PEIP_Object_Storage extends SplObjectStorage implements Countable, Iterator, Traversable, Serializable, ArrayAccess {
+class PEIP_Object_Storage
+    extends SplObjectStorage
+    implements
+        Countable,
+        Iterator,
+        Traversable,
+        Serializable,
+        ArrayAccess {
 
 	protected 
             $objects = array(),
@@ -70,20 +74,23 @@ class PEIP_Object_Storage extends SplObjectStorage implements Countable, Iterato
             return $this->offsetGet($this->getArrayIterator()->current());
         }
 
-        public function addAll (SplObjectStorage $storage){
-            $storage->rewind();
-            while($storage->valid()){
-                $this->offsetSet($storage->current(), $storage->getInfo());
-                $storage->next();
+        public function addAll ($storageSplObjectStorage){
+            $storageSplObjectStorage->rewind();
+            while($storageSplObjectStorage->valid()){
+                $this->offsetSet(
+                    $storageSplObjectStorage->current(),
+                    $storageSplObjectStorage->getInfo()
+                );
+                $storageSplObjectStorage->next();
             }
         }
-        public function removeAll (SplObjectStorage $storage){
-            $storage->rewind();
-            while($storage->valid()){
-                if($this->offsetExists($storage->current())){
-                    $this->offsetUnset($storage->current());
+        public function removeAll ($storageSplObjectStorage){
+            $storageSplObjectStorage->rewind();
+            while($storageSplObjectStorage->valid()){
+                if($this->offsetExists($storageSplObjectStorage->current())){
+                    $this->offsetUnset($storageSplObjectStorage->current());
                 }
-                $storage->next();
+                $storageSplObjectStorage->next();
             }
         }
 
@@ -99,6 +106,3 @@ class PEIP_Object_Storage extends SplObjectStorage implements Countable, Iterato
 
 }
 
-}else{
-    class PEIP_Object_Storage extends SplObjectStorage{}
-}

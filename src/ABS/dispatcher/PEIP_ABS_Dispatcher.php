@@ -30,9 +30,19 @@ abstract class PEIP_ABS_Dispatcher {
      */	
     protected static function doNotify(array $listeners, $subject){
         foreach($listeners as $listener){
-            $listener->handle($subject);    
+            self::doNotifyOne($listener, $subject);
         }   
     }  
+
+    protected static function doNotifyOne($listener, $subject){
+        if(is_callable($listener)){
+            $res = call_user_func($listener, $subject);
+        }else{
+            $res = $listener->handle($subject);
+        }
+        return $res;
+    }
+
 
     /**
      * notifies given listeners on a subject until one returns a boolean true value
@@ -45,7 +55,7 @@ abstract class PEIP_ABS_Dispatcher {
      */	    
     protected static function doNotifyUntil(array $listeners, $subject){
         foreach ($listeners as $listener){
-          if ($listener->handle($subject)){
+          if (self::doNotifyOne($listener, $subject)){
             return $listener;
           }
         }

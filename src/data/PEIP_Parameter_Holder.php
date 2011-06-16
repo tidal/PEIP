@@ -19,7 +19,7 @@
  * @implements PEIP_INF_Parameter_Holder
  */
 
-class PEIP_Parameter_Holder 
+class  PEIP_Parameter_Holder
     implements PEIP_INF_Parameter_Holder {
 
     protected $parameters = array();

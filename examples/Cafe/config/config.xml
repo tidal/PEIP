@@ -26,7 +26,8 @@
 		input_channel="orders" 
 		class="OrderSplitter"/>
 
-    	<router 
+    	<router
+        id="DrinkRouter"
 		input_channel="OrderSplitter" 
 		class="DrinkRouter" />
 
@@ -62,6 +63,6 @@
     	<service_activator 
 		input_channel="acceptedOrders" 
 		ref="DrinkAggregator"
-              	method="receiveOrder"/>   
+              	method="receiveOrder"><test foo="bar">654</test><test foo="bar">654</test></service_activator>
 
 </config>

@@ -41,7 +41,7 @@ class GenericBuilderTest  extends PHPUnit_Framework_TestCase {
 		$reflection = new ReflectionClass('BuilderObjectMock');	
 		$builder = new PEIP_Generic_Builder('BuilderObjectMock', $reflection, false);
 		$builder2 = PEIP_Generic_Builder::getInstance('BuilderObjectMock');
-		$this->assertNotSame($builder, $builder2);					
+		$this->assertNotSame($builder, $builder2);
 	}
 	
 	public function testBuild(){

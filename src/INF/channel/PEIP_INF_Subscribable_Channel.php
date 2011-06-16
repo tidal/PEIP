@@ -19,8 +19,8 @@
 
 interface PEIP_INF_Subscribable_Channel {
 
-    public function subscribe(PEIP_INF_Handler $handler);
+    public function subscribe($handler);
     
-    public function unsubscribe(PEIP_INF_Handler $handler);
+    public function unsubscribe($handler);
     
 }

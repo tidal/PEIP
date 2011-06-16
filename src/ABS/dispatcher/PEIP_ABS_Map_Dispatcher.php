@@ -35,11 +35,12 @@ abstract class  PEIP_ABS_Map_Dispatcher
      * 
      * @access public
      * @param string $name name of the event 
-     * @param $listener listener to connect
+     * @param Callable|PEIP_INF_Handler $listener listener to connect
      * @return 
      */
-    public function connect($name, PEIP_INF_Handler $listener){
-	    if (!isset($this->listeners[$name])){
+    public function connect($name, $listener){
+	    PEIP_Test::ensureHandler($listener);
+        if (!isset($this->listeners[$name])){
 	      $this->listeners[$name] = array();
 	    }
 	    $this->listeners[$name][] = $listener;
@@ -50,10 +51,10 @@ abstract class  PEIP_ABS_Map_Dispatcher
      * 
      * @access public
      * @param string $name name of the event 
-     * @param $listener listener to connect
+     * @param Callable|PEIP_INF_Handler $listener listener to connect
      * @return 
      */
-    public function disconnect($name, PEIP_INF_Handler $listener){
+    public function disconnect($name, $listener){
     	if (!isset($this->listeners[$name])){
       		return false;
     	}
