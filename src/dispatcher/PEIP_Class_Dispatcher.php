@@ -1,22 +1,32 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 
-/**
- * Description of PEIP_Class_Dispatcher
- *
- * @author timo
- */
 class PEIP_Class_Dispatcher
 	extends PEIP_ABS_Map_Dispatcher {
+
+
+
+    /**
+     * Connects a listener to a given event-name
+     *
+     * @access public
+     * @param string $name name of the class
+     * @param Callable|PEIP_INF_Handler $listener listener to connect
+     * @return
+     */
+    public function connect($name, $listener){
+        $name = is_object($name) ? get_class($name) : (string)$name;
+	    if(PEIP_Test::assertClassOrInterfaceExists($name)){
+            parent::connect($name, $listener);
+        }else{
+            throw new InvalidArgumentException($name." is not an Class nor Interface");
+        }
+    }
 
     /**
      * notifies all listeners on a event on a subject
      *
      * @access public
-     * @param string $name name of the event
+     * @param string $name name of the class
      * @param mixed $subject the subject
      * @return
      */
@@ -24,12 +34,33 @@ class PEIP_Class_Dispatcher
     	$res = false;
         foreach(PEIP_Reflection::getImplementedClassesAndInterfaces($name) as $cls){
             if(parent::hasListeners($cls)){
-                $res = self::doNotify($this->getListeners($cls), $subject);
+                self::doNotify($this->getListeners($cls), $subject);
+                $res = true;
             }
         }
         
         return $res;
     }
+
+
+    /**
+     * notifies all listeners on a event on a subject until one returns a boolean true value
+     *
+     * @access public
+     * @param string $name name of the event
+     * @param mixed $subject the subject
+     * @return PEIP_INF_Handler listener which returned a boolean true value
+     */
+    public function notifyUntil($name, $subject){
+        $res = NULL;
+        foreach(PEIP_Reflection::getImplementedClassesAndInterfaces($name) as $cls){
+            if(!$res && parent::hasListeners($cls)){
+                $res = self::doNotifyUntil($this->getListeners($cls), $subject);
+            }
+        }
+
+        return $res;
+  	}
 
     /**
      * notifies all listeners on a event on a subject

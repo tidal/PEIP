@@ -29,6 +29,9 @@ class PEIP_Test {
             ->isInstance($object);
     }
 
+    public static function assertClassOrInterfaceExists($className){
+        return (boolean) class_exists($className) || interface_exists($className);
+    }
 
     public static function assertImplements($className, $interfaceName){
         $className = is_object($className) ? get_class($className) : $className;

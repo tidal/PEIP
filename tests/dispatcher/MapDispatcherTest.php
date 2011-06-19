@@ -104,7 +104,10 @@ class MapDispatcherTest
             $handlers[$x] = function(){};
             $this->dispatcher->connect($eventName, $handlers[$x]);
         }
-        $test->assertEquals($handlers, $this->dispatcher->getListeners($eventName));
+        $test->assertEquals(
+            array_values($handlers),
+            array_values($this->dispatcher->getListeners($eventName))
+        );
 
     }
 
