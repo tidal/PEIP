@@ -31,8 +31,9 @@ class PEIP_Test {
 
 
     public static function assertImplements($className, $interfaceName){
+        $className = is_object($className) ? get_class($className) : $className;
         $res = false;
-        try { //$className = new $className;
+        try { 
             class_exists($className);
             $res =  PEIP_Reflection_Pool::getInstance($className)
                 ->implementsInterface($interfaceName);            

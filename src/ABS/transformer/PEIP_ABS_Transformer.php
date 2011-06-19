@@ -46,7 +46,7 @@ abstract class PEIP_ABS_Transformer
      * @return 
      */
     public function doReply(PEIP_INF_Message $message){     
-	$this->replyMessage($this->transform($message));     
+        $this->replyMessage($this->transform($message));
     }
   
     /**

@@ -70,7 +70,7 @@ class StringMessageTest extends GenericMessageTest {
        
 	
 	protected function build($parameter){
-		return call_user_func(array('PEIP_String_Message', build), $parameter);
+		return call_user_func(array('PEIP_String_Message', 'build'), $parameter);
 	}
 	
 }

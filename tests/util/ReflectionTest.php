@@ -7,20 +7,10 @@ PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/ReflectionTe
 
 class ReflectionTest extends PHPUnit_Framework_TestCase  {
 
-    protected static $testInterfacesAndClasses = array(
-        'ReflectionTestInterface1',
-        'ReflectionTestInterface2',
-        'ReflectionTestClass1',
-        'ReflectionTestClass2',
-        'ReflectionTestClass3',
-        'ReflectionTestClass4'
-    );
-
-
     public function testReferenceClass(){
-        $instance = new ReflectionTestClass4;
+        $instance = new ReflectionTestClass4('foo');
 
-        foreach(self::$testInterfacesAndClasses as $i){
+        foreach(ReflectionTestClassUtils::$testInterfacesAndClasses as $i){
             $this->assertTrue(($instance instanceof $i));
         }
 
@@ -28,10 +18,9 @@ class ReflectionTest extends PHPUnit_Framework_TestCase  {
 
     public function testGetImplementedClassesAndInterfaces(){
         $clsAndInfs = PEIP_Reflection::getImplementedClassesAndInterfaces('ReflectionTestClass4');
-        print_r($clsAndInfs);
-        $this->assertSame(count(self::$testInterfacesAndClasses), count($clsAndInfs));
+        $this->assertSame(count(ReflectionTestClassUtils::$testInterfacesAndClasses), count($clsAndInfs));
         $this->assertSame(
-            sort(self::$testInterfacesAndClasses),
+            sort(ReflectionTestClassUtils::$testInterfacesAndClasses),
             sort($clsAndInfs)
         );
 
@@ -39,9 +28,9 @@ class ReflectionTest extends PHPUnit_Framework_TestCase  {
 
     public function testGetImplementedClassesAndInterfacesNotCached(){
         $clsAndInfs = PEIP_Reflection::getImplementedClassesAndInterfaces('ReflectionTestClass4', false);
-        $this->assertSame(count(self::$testInterfacesAndClasses), count($clsAndInfs));
+        $this->assertSame(count(ReflectionTestClassUtils::$testInterfacesAndClasses), count($clsAndInfs));
         $this->assertSame(
-            sort(self::$testInterfacesAndClasses),
+            sort(ReflectionTestClassUtils::$testInterfacesAndClasses),
             sort($clsAndInfs)
         );
 

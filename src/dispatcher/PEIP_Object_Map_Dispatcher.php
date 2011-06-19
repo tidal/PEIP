@@ -39,14 +39,15 @@ class PEIP_Object_Map_Dispatcher
     public function connect($name, $object, $listener){
         PEIP_Test::ensureHandler($listener);
 	    $listners = $this->doGetListeners();
-	    if (!$listners->contains($object)){
-		$listners->attach($object, new ArrayObject);
+	    if (!$this->listeners->contains($object)){
+            $this->listeners->attach($object, new ArrayObject);
 	    }
 	    if (!array_key_exists($name, $listners[$object])){ 
-	      	$listners[$object][$name] = array();
+	      	$this->listeners[$object][$name] = array();
 	    }
-            $hash = spl_object_hash($listener);
-            $this->listeners[$object][$name][$hash] = $listener;
+        $hash = $this->getListenerHash($listener);
+        $this->listeners[$object][$name][$hash] = $listener;
+        
 	    return true; 
   	}
 
@@ -65,7 +66,7 @@ class PEIP_Object_Map_Dispatcher
 	      	return false;
 	    }
 	    $eventListeners = $listners[$object][$name];
-            $hash = spl_object_hash($listener);
+        $hash = $this->getListenerHash($listener);
 	    if(isset($eventListeners[$hash])){
 	    	unset($eventListeners[$hash]); 
 
@@ -78,14 +79,10 @@ class PEIP_Object_Map_Dispatcher
     public function disconnectAll($name, $object){
         if(is_object($object)){
             $listners = $this->doGetListeners();
-
-            
-            if($listners){
-                $listners[$object][$name] = array(); 
-            }
-            
+            if($listners && $this->hadListeners($name, $object)){
+                    $listners[$object][$name] = array();
+            }        
         }
-
   	}
 
     /**
@@ -179,12 +176,8 @@ class PEIP_Object_Map_Dispatcher
 	    if (!$this->hadListeners($name, $object)){
 	      	return array();
 	    }
-            $listeners = $this->listeners[$object];
-            if($listeners instanceof ArrayObject){
-                $ar = $listeners->getArrayCopy();
-                return array_values($ar[$name]);
-            }
-            return array();
+        $listeners = $this->listeners[$object]->getArrayCopy();
+        return array_values($listeners[$name]);
   	}
     
     /**
@@ -237,6 +230,15 @@ class PEIP_Object_Map_Dispatcher
             }
         }
         return $res;
-    } 
+    }
+
+    protected function getListenerHash($listener){
+        if(!is_object($listener)){
+            $o = new stdClass();
+            $o->listener = $listener;
+            $listener = $o;
+        }
+        return spl_object_hash($listener);
+    }
 }
 

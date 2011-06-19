@@ -87,7 +87,16 @@ abstract class PEIP_ABS_Interceptable_Message_Channel
     public function disconnect($name, $listener){
         return $this->getEventDispatcher()->disconnect($name, $this, $listener);
     }   
-    
+
+    /**
+     * @access public
+     * @param string $name
+     * @return
+     */
+    public function disconnectAll($name){
+        return $this->getEventDispatcher()->disconnectAll($name, $this);
+    }
+
     /**
      * @access public
      * @param string $name 

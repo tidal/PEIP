@@ -52,7 +52,7 @@ class EventTest
     
 	public function testGetHeaders(){
         $headers = $this->getHeaders();
-        $message = new $this->testClass($payload, 'foo', $headers);
+        $message = new $this->testClass('bar', 'foo', $headers);
 		foreach($headers as $name=>$header){
     		$this->assertEquals($headers[$name], $message->getHeader($name));		
     	} 		
@@ -60,7 +60,7 @@ class EventTest
     
 	public function testHasHeaders(){
         $headers = $this->getHeaders();
-        $message = new $this->testClass($payload, 'foo', $headers);
+        $message = new $this->testClass('bar', 'foo', $headers);
 		foreach($headers as $name=>$header){
     		$this->assertTrue($message->hasHeader($name));		
     	} 		
@@ -88,7 +88,7 @@ class EventTest
 	
 	public function testFailWrongHeader(){
         try {
-			new $this->testClass($this->payload, 'foo', 123); 
+			new $this->testClass($this->payloads['string'], 'foo', 123);
         }
         catch(InvalidArgumentException $e){
         	return ;

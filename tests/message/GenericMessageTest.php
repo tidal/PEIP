@@ -71,7 +71,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     
 	public function testGetHeaders(){
         $headers = $this->getHeaders();
-        $message = new $this->testClass($payload, $headers);
+        $message = new $this->testClass($this->payloads['string'], $headers);
 		foreach($headers as $name=>$header){
     		$this->assertEquals($headers[$name], $message->getHeader($name));		
     	} 		
@@ -79,7 +79,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     
 	public function testHasHeaders(){
         $headers = $this->getHeaders();
-        $message = new $this->testClass($payload, $headers);
+        $message = new $this->testClass($this->payloads['string'], $headers);
 		foreach($headers as $name=>$header){
     		$this->assertTrue($message->hasHeader($name));		
     	} 		
@@ -100,7 +100,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
      */	
 	public function testFailWrongHeaderInt(){
         try{
-            new $this->testClass($this->payload, 123);
+            new $this->testClass($this->payloads['string'], 123);
         }
         catch(InvalidArgumentException $e){
             return;
@@ -115,7 +115,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
      */	
 	public function testFailWrongHeaderFloat(){
         try{
-            new $this->testClass($this->payload, 123.123);
+            new $this->testClass($this->payloads['string'], 123.123);
         }
         catch(InvalidArgumentException $e){
             return;
@@ -130,7 +130,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
      */	
 	public function testFailWrongHeaderString(){
         try{
-            new $this->testClass($this->payload, 'Test');
+            new $this->testClass($this->payloads['string'], 'Test');
         }
         catch(InvalidArgumentException $e){
             return;
@@ -146,7 +146,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
 	public function testFailWrongHeaderObject(){
         $object = new stdClass;
         try{
-            new $this->testClass($this->payload, $object);
+            new $this->testClass($this->payloads['string'], $object);
         }
         catch(InvalidArgumentException $e){
             return;  
@@ -226,7 +226,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
 	}    
 
 	protected function build($parameter){
-		return call_user_func(array('PEIP_Generic_Message', build), $parameter);
+		return call_user_func(array('PEIP_Generic_Message', 'build'), $parameter);
 	}
 	
 	

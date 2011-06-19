@@ -59,6 +59,7 @@ abstract class PEIP_ABS_Dispatcher {
             return $listener;
           }
         }
+        return NULL;
     } 
 
 }

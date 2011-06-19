@@ -40,10 +40,11 @@ abstract class  PEIP_ABS_Map_Dispatcher
      */
     public function connect($name, $listener){
 	    PEIP_Test::ensureHandler($listener);
-        if (!isset($this->listeners[$name])){
+        if (!$this->hasListeners($name)){
 	      $this->listeners[$name] = array();
 	    }
 	    $this->listeners[$name][] = $listener;
+        return true;
     }
 
     /**
@@ -55,14 +56,33 @@ abstract class  PEIP_ABS_Map_Dispatcher
      * @return 
      */
     public function disconnect($name, $listener){
-    	if (!isset($this->listeners[$name])){
+    	if (!$this->hasListeners($name)){
       		return false;
     	}
+        $res = false;
 	    foreach ($this->listeners[$name] as $i => $callable){
 	      if ($listener === $callable){
 	        unset($this->listeners[$name][$i]);
+            $res = true;
 	      }
 	    }
+        return $res;
+  	}
+
+    /**
+     * Disconnects a listener from a given event-name
+     *
+     * @access public
+     * @param string $name name of the event
+     * @param Callable|PEIP_INF_Handler $listener listener to connect
+     * @return
+     */
+    public function disconnectAll($name){
+    	if (!isset($this->listeners[$name])){
+      		return false;
+    	}
+        $this->listeners[$name] = array();
+        return true;
   	}
 
     /**
@@ -74,7 +94,7 @@ abstract class  PEIP_ABS_Map_Dispatcher
      */
     public function hasListeners($name){
     	if (!isset($this->listeners[$name])){
-      		$this->listeners[$name] = array();
+      		return false;
     	}
     	return (boolean) count($this->listeners[$name]);
   	}
@@ -85,12 +105,14 @@ abstract class  PEIP_ABS_Map_Dispatcher
      * @access public
      * @param string $name name of the event 
      * @param mixed $subject the subject 
-     * @return 
+     * @return boolean success
      */
     public function notify($name, $subject){
         if($this->hasListeners($name)){
-            return self::doNotify($this->getListeners($name), $subject);    
-        }         
+            self::doNotify($this->getListeners($name), $subject);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -105,6 +127,7 @@ abstract class  PEIP_ABS_Map_Dispatcher
         if($this->hasListeners($name)){
             return self::doNotifyUntil($this->getListeners($name), $subject);   
         }
+        return NULL;
   	}
   
     /**

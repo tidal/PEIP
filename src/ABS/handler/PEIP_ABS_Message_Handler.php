@@ -88,7 +88,7 @@ abstract class PEIP_ABS_Message_Handler
             $object = $content->receive();
         }
         if (!($object instanceof PEIP_INF_Message)) {
-            throw new Exception('Could not retrieve Message from Message-Argument'.print_r($objec, 1));
+            throw new Exception('Could not retrieve Message from Message-Argument'.print_r($object, 1));
         }
         return $object;
     }

@@ -73,20 +73,20 @@ abstract class PEIP_ABS_Connectable_Channel
     /**
      * @access public
      * @param string $name
-     * @param PEIP_INF_Handler $listener
+     * @param $listener
      * @return
      */
-    public function connect($name, PEIP_INF_Handler $listener){
+    public function connect($name, $listener){
         return $this->getEventDispatcher()->connect($name, $this, $listener);
     }
 
     /**
      * @access public
      * @param string $name
-     * @param PEIP_INF_Handler $listener
+     * @param $listener
      * @return
      */
-    public function disconnect($name, PEIP_INF_Handler $listener){
+    public function disconnect($name, $listener){
         return $this->getEventDispatcher()->disconnect($name, $this, $listener);
     }
 

@@ -126,7 +126,22 @@ class PEIP_Generic_Message
      * @return string  content/payload of the message
      */
     public function __toString(){
-        return (string)$this->getContent();
+        $res = false;
+        try {
+            $res = (string)$this->getContent();
+        }
+        catch(Exception $e){           
+            try {
+                $res = get_class($this->getContent());
+            }
+            catch(Exception $e){
+
+            }
+        }
+
+
+
+        
     }
 
     /**

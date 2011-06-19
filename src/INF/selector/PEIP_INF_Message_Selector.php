@@ -21,6 +21,6 @@
 
 interface PEIP_INF_Message_Selector {
 
-    public function accept(PEIP_INF_Message $message);
+    public function acceptMessage(PEIP_INF_Message $message);
     
 }

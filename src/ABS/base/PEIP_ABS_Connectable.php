@@ -13,7 +13,7 @@ class PEIP_ABS_Connectable  implements PEIP_INF_Connectable{
 
     const
         DEFAULT_CLASS_MESSAGE_DISPATCHER = 'PEIP_Dispatcher',
-        DEFAULT_CLASS_EVENT_DISPATCHER = 'PEIP_Class_Event_Dispatcher',
+        DEFAULT_CLASS_EVENT_DISPATCHER = 'PEIP_Object_Event_Dispatcher',
         DEFAULT_EVENT_CLASS = 'PEIP_Event',
         EVENT_CONNECT = 'connect',
         EVENT_DISCONNECT = 'disconnect',
@@ -24,6 +24,10 @@ class PEIP_ABS_Connectable  implements PEIP_INF_Connectable{
     
     protected static
         $sharedEventDispatcher;
+
+    protected
+        $eventDispatcher;
+    
     /**
      * @access public
      * @param $name
@@ -33,7 +37,12 @@ class PEIP_ABS_Connectable  implements PEIP_INF_Connectable{
     public function connect($name, $listener){
         PEIP_Test::ensureHandler($listener);
         $this->getEventDispatcher()->connect($name, $this, $listener);
-        $this->doFireEvent(self::EVENT_CONNECT, array(self::HEADER_EVENT=>$name, self::HEADER_LISTENER=>$handler));
+        $this->doFireEvent(
+            self::EVENT_CONNECT,
+            array(
+                self::HEADER_EVENT=>$name,
+                self::HEADER_LISTENER=>$listener)
+            );
     }
 
 
@@ -84,22 +93,8 @@ class PEIP_ABS_Connectable  implements PEIP_INF_Connectable{
      * @param $callable
      * @return
      */
-    public function connectCall($eventName, $callable){
-        $this->connect($eventName, new PEIP_Callable_Handler($callable));
-    }
-
-    /**
-     * @access public
-     * @param $eventName
-     * @param $callable
-     * @return
-     */
-    public function disconnectCall($eventName, $callable){
-        foreach($this->getEventDispatcher()->getListeners() as $handler){
-            if($handler instanceof PEIP_Callable_Handler && $handler->getCallable() == $callable){
-                $this->disconnect($eventName, $this, $handler);
-            }
-        }
+    public function disconnectAll($name){
+        $this->getEventDispatcher()->disconnectAll($name, $this);
     }
 
     /**

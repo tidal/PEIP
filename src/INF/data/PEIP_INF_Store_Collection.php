@@ -34,7 +34,7 @@ interface PEIP_INF_Store_Collection {
 
   public function deleteValue($namespace, $name);
 
-  public function setStore($namespace, PEIP_Store_Interface $store); 
+  public function setStore($namespace, PEIP_INF_Store $store);
 
   public function getStore($namespace);
 

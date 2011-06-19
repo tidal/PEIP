@@ -22,7 +22,7 @@ class CommandTest extends PHPUnit_Framework_TestCase {
 		$inst = new CallableMock;
 		$callable = array($inst, 'repeat');
 		$command = new PEIP_Command($callable, array('Test'));
-		$this->assertEquals(CallableMock::repeat('Test'), $command->execute());	
+		$this->assertEquals($inst->repeat('Test'), $command->execute());
 	}		
 	
 	public function testExecuteFunction(){

@@ -29,7 +29,21 @@ class ObjectMapDispatcherTest
 		$this->dispatcher->disconnect('foo', $object, $handler);
 		$this->assertFalse($this->dispatcher->hasListeners('foo', $object)); 
 		$this->assertFalse($this->dispatcher->disconnect('foo', $object, $handler));
-	}	
+	}
+
+
+	public function testDisconnectAll(){
+        $object = new stdClass;
+        $key = 'foo';
+        for($x = 1; $x <= 3; $x++){
+            $object =
+            $handler = function()use($x){return $x;};
+            $this->dispatcher->connect($key, $object, $handler);
+        }
+        $this->dispatcher->disconnectAll($key, $object);
+
+		$this->assertFalse($this->dispatcher->hasListeners($key, $object));
+	}
 
 	public function testHadListener(){
 		$object = new stdClass;
@@ -55,17 +69,21 @@ class ObjectMapDispatcherTest
 	public function testGetListeners(){
         
 		$object = new stdClass;
-		$this->dispatcher->disconnectAll('foo', $object);
-        //$this->assertEquals(array(), $this->dispatcher->getListeners('foo', $object));
+		$this->dispatcher
+                ->disconnectAll(
+                        'foo',
+                        $object);
+
+        $this->assertEquals(array(), $this->dispatcher->getListeners('foo', $object));
 		$listeners = array(
 			new PEIP_Callable_Handler('TestClass', 'TestMethod'),
 			new PEIP_Callable_Handler('TestClass', 'TestMethod'),
 			new PEIP_Callable_Handler('TestClass', 'TestMethod')			
 		);
 		foreach($listeners as $listener){
-			//$this->dispatcher->connect('foo', $object, $listener);
+			$this->dispatcher->connect('foo', $object, $listener);
 		}
-		//$this->assertEquals($listeners, $this->dispatcher->getListeners('foo', $object));
+		$this->assertEquals($listeners, $this->dispatcher->getListeners('foo', $object));
 	}
 
 	public function testNotify(){

@@ -71,6 +71,7 @@ class PEIP_Dispatcher
      * @return void
      */
     public function notify($subject){
+        $res = NULL;
         if($this->hasListeners()){
             $res = self::doNotify($this->getListeners(), $subject); 
         }   

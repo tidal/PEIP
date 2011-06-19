@@ -22,6 +22,8 @@ interface PEIP_INF_Connectable {
     public function connect($name, $listener);
     
     public function disconnect($name, $listener);
+
+    public function disconnectAll($name);
     
     public function hasListeners($name);
     
