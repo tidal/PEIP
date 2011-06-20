@@ -105,9 +105,9 @@ class PEIP_ABS_Connectable  implements PEIP_INF_Connectable{
      */
     public function setEventDispatcher(PEIP_Object_Event_Dispatcher $dispatcher, $transferListners = true){
         if($transferListners){
-            foreach($this->eventDispatcher->getEventNames($this) as $name){
-                if($this->eventDispatcher->hasListeners($name, $this)){
-                    foreach($this->eventDispatcher->getListeners($name, $this) as $listener){
+            foreach($this->getEventDispatcher()->getEventNames($this) as $name){
+                if($this->getEventDispatcher()->hasListeners($name, $this)){
+                    foreach($this->getEventDispatcher()->getListeners($name, $this) as $listener){
                         $dispatcher->connect($name, $this, $listener);
                     }
                 }

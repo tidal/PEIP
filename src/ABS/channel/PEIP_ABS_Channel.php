@@ -17,6 +17,8 @@
  */
 
 abstract class PEIP_ABS_Channel
+    extends PEIP_ABS_Connectable
+
     implements
         PEIP_INF_Channel,
         PEIP_INF_Connectable {
@@ -66,98 +68,4 @@ abstract class PEIP_ABS_Channel
      */
     abstract protected function doSend(PEIP_INF_Message $message);
 
-
-    /**
-     * @access public
-     * @param string $name
-     * @param Callable|PEIP_INF_Handler $listener
-     * @return
-     */
-    public function connect($name, $listener){
-        return $this->getEventDispatcher()->connect($name, $this, $listener);
-    }
-
-    /**
-     * @access public
-     * @param string $name
-     * @param Callable|PEIP_INF_Handler $listener
-     * @return
-     */
-    public function disconnect($name, $listener){
-        return $this->getEventDispatcher()->disconnect($name, $this, $listener);
-    }
-
-    /**
-     * @access public
-     * @param string $name
-     * @return
-     */
-    public function disconnectAll($name){
-        return $this->getEventDispatcher()->disconnectAll($name, $this);
-    }
-
-    /**
-     * @access public
-     * @param string $name
-     * @return
-     */
-    public function hasListeners($name){
-        return $this->getEventDispatcher()->hasListeners($name, $this);
-    }
-
-    /**
-     * @access public
-     * @param string $name
-     * @return
-     */
-    public function getListeners($name){
-        return $this->getEventDispatcher()->getListeners($name, $this);
-    }
-
-    /**
-     * @access public
-     * @param PEIP_Object_Event_Dispatcher $dispatcher
-     * @param boolean $transferListners wether to transfer given Listeners to new dispatcher
-     * @return
-     */
-    public function setEventDispatcher(PEIP_Object_Event_Dispatcher $dispatcher, $transferListners = true){
-        if($transferListners && $this->eventDispatcher){
-            foreach($this->eventDispatcher->getEventNames($this) as $name){
-                if($this->eventDispatcher->hasListeners($name, $this)){
-                    foreach($this->eventDispatcher->getListeners($name, $this) as $listener){
-                        $dispatcher->connect($name, $this, $listener);
-                    }
-                }
-            }
-        }
-        $this->eventDispatcher = $dispatcher;
-    }
-
-    /**
-     * @access public
-     * @return PEIP_Object_Event_Dispatcher
-     */
-    public function getEventDispatcher(){
-        return $this->eventDispatcher ? $this->eventDispatcher : $this->eventDispatcher = self::getSharedEventDispatcher();
-    }
-
-    /**
-     * @access protected
-     * @static
-     * @return PEIP_Object_Event_Dispatcher
-     */
-    protected static function getSharedEventDispatcher(){
-        return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new PEIP_Object_Event_Dispatcher;
-    }
-
-    /**
-     * @access protected
-     * @param $name
-     * @param $headers
-     * @param $eventClass
-     * @return
-     */
-    protected function doFireEvent($name, array $headers = array(), $eventClass = false){
-        return $this->getEventDispatcher()->buildAndNotify($name, $this, $headers, 'PEIP_Event');
-    }
 }
