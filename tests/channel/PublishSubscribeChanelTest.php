@@ -1,13 +1,13 @@
 <?php
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
-require_once dirname(__FILE__).'/InterceptableMessageChannelTest.php';
+require_once dirname(__FILE__).'/ChannelTest.php';
 require_once dirname(__FILE__).'/../_files/PublishSubscribeHandler.php';
 require_once dirname(__FILE__).'/../_files/PublishSubscribeHandlerFail.php';
 require_once dirname(__FILE__).'/../_files/PublishSubscribeHandlerEvent.php';
 
 class PublishSubscribeChanelTest
-	extends InterceptableMessageChannelTest {
+	extends ChannelTest {
 
 	public function setUp(){
             $this->channel = new PEIP_Publish_Subscribe_Channel('TestChannel');

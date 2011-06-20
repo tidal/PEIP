@@ -15,7 +15,7 @@
  * @package PEIP 
  * @subpackage channel 
  * @extends PEIP_Queue_Channel
- * @implements PEIP_INF_Connectable, PEIP_INF_Interceptable, PEIP_INF_Channel, PEIP_INF_Pollable_Channel
+ * @implements PEIP_INF_Connectable, PEIP_INF_Channel, PEIP_INF_Pollable_Channel
  */
 
 

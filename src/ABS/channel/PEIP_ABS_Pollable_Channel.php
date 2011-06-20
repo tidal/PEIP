@@ -14,13 +14,13 @@
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
  * @subpackage channel 
- * @extends PEIP_ABS_Interceptable_Message_Channel
- * @implements PEIP_INF_Connectable, PEIP_INF_Interceptable, PEIP_INF_Channel, PEIP_INF_Pollable_Channel
+ * @extends PEIP_ABS_Channel
+ * @implements PEIP_INF_Connectable, PEIP_INF_Channel, PEIP_INF_Pollable_Channel
  */
 
 
 class PEIP_ABS_Pollable_Channel     
-    extends PEIP_ABS_Interceptable_Message_Channel 
+    extends PEIP_ABS_Channel
     implements PEIP_INF_Pollable_Channel {
 
     protected 
@@ -43,7 +43,6 @@ class PEIP_ABS_Pollable_Channel
      * @return 
      */
     public function receive($timeout = -1){
-        $this->getInterceptorDispatcher()->notify('preReceive', array($this));
         $message = NULL;
         if($timeout == 0){
             $message = $this->getMessage(); 
@@ -57,7 +56,6 @@ class PEIP_ABS_Pollable_Channel
                 
             }       
         }
-        $this->getInterceptorDispatcher()->notify('preReceive', array($this));
         return $message;
     }
 
