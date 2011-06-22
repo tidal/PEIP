@@ -24,12 +24,7 @@ abstract class PEIP_ABS_Channel
         PEIP_INF_Connectable {
 
     protected
-        $eventDispatcher,
         $name;
-
-    protected static
-        $sharedEventDispatcher;
-
 
     /**
      * @access public
@@ -57,7 +52,11 @@ abstract class PEIP_ABS_Channel
     public function send(PEIP_INF_Message $message, $timeout = -1){
         $this->doFireEvent('preSend', array('MESSAGE'=>$message));
         $sent = $this->doSend($message);
-       // $this->doFireEvent('postSend', array('MESSAGE'=>$message, 'SENT' => $sent));
+        $this->doFireEvent('postSend', array(
+            'MESSAGE'=>$message,
+            'SENT' => $sent,
+            'TIMEOUT' => $timeout
+        ));
     }
 
 
