@@ -39,21 +39,36 @@ class IteratingDispatcherTest extends PHPUnit_Framework_TestCase {
     }
 
     public function testNotify(){
-        return;
-        $interceptor1 = new MessageChannelInterceptor ;
-        $interceptor2 = new MessageChannelInterceptor ;
-        $handler1 = new PEIP_Callable_Handler(array($interceptor1,'callback'));
-        $handler2 = new PEIP_Callable_Handler(array($interceptor2,'callback'));
-        $this->dispatcher->connect($handler1);
-        $this->dispatcher->connect($handler2);
-        $this->dispatcher->notify('foo');
-        $this->assertEquals('foo', $interceptor1->message);
-        $this->assertNotEquals('foo', $interceptor2->message);
-        $this->dispatcher->notify('bar');
-        $this->assertEquals('bar', $interceptor2->message);
-        $this->assertNotEquals('bar', $interceptor1->message);
+
+        $test = $this;
+        $this->handlersCalled = array_fill(0, 3, false);
+        foreach($this->handlersCalled as $key=>$value){
+            $this->dispatcher->connect(function($subject)use($test, $key){
+
+                $test->assertEquals($key, $subject);
+                $test->handlersCalled[$key] = true;
+
+            });         
+        }
+
+        foreach($this->handlersCalled as $key=>$value){
+            $this->dispatcher->notify($key);
+            $this->assertTrue($test->handlersCalled[$key]);
+
+        }
+
     }
 
+    public function testDisconnectAll(){
+        $this->assertFalse($this->dispatcher->hasListeners());
+        $handler = new PEIP_Callable_Handler(array('TestClass','TestMethod'));
+        for($x = 1; $x <= 3; $x++){
+            $this->dispatcher->connect($handler);
+        }
+        $this->assertTrue($this->dispatcher->hasListeners());
+        $this->dispatcher->disconnectAll();
+        $this->assertFalse($this->dispatcher->hasListeners());
+    }
 }
 
 

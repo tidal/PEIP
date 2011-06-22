@@ -19,30 +19,41 @@
  * @implements PEIP_INF_Dispatcher
  */
 
-class PEIP_Iterating_Dispatcher  
-    implements PEIP_INF_Dispatcher {
+class PEIP_Iterating_Dispatcher
+    extends PEIP_ABS_Dispatcher
+    implements 
+        PEIP_INF_Dispatcher,
+        PEIP_INF_Plugable {
 
-    protected $listeners;
+    protected 
+        $listeners;
     
     /**
      * constructor
      * 
      * @access public
-     * @param ArrayIterator $listenerIterator an instance of ArrayIterator to iterate over listeners
+     * @param mixed array|ArrayAccess array with values to iterate over
      * @return 
      */
-    public function __construct(ArrayIterator $listenerIterator = NULL){
-        $this->listeners = $listenerIterator ? $listenerIterator : new ArrayIterator;
+    public function __construct($array = array()){
+        $this->init($array);
     }
-  
+
+    protected function init($array = array()){
+        $array = PEIP_Test::assertArrayAccess($array)
+            ? $array
+            : array();
+        $this->listeners = new ArrayIterator($array);
+    }
+
     /**
      * Registers a listener.
      * 
      * @access public
-     * @param PEIP_INF_Handler $listener the listener to register
+     * @param mixed $listener the listener to register
      * @return 
      */
-    public function connect(PEIP_INF_Handler $listener){
+    public function connect($listener){
     	$this->listeners[] = $listener;
   	}
 
@@ -50,17 +61,28 @@ class PEIP_Iterating_Dispatcher
      * Unregisters a listener.
      * 
      * @access public
-     * @param PEIP_INF_Handler $listener the listener to unregister 
+     * @param mixed $listener the listener to unregister
      * @return 
      */
-    public function disconnect(PEIP_INF_Handler $listener){
+    public function disconnect($listener){
         foreach ($this->listeners as $i => $callable){
             if ($listener === $callable){
                 unset($this->listeners[$i]);
             }
         }
     }
-  
+
+
+    /**
+     * Unregisters all listeners.
+     *
+     * @access public
+     * @return
+     */
+    public function disconnectAll(){
+        $this->init();
+    }
+
     /**
      * Check wether any listener is registered
      * 
@@ -81,13 +103,15 @@ class PEIP_Iterating_Dispatcher
      * @return 
      */
     public function notify($subject){
+        $res = NULL;
         if($this->hasListeners()){
             if(!$this->listeners->valid()){
-                $this->listeners->rewind(); 
+                $this->listeners->rewind();
             }
-            $this->listeners->current()->handle($subject);
-            $this->listeners->next();           
-        }         
+            $res = self::doNotifyOne($this->listeners->current(), $subject);
+            $this->listeners->next();
+        }
+        return $res;
     }
   
     /**

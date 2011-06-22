@@ -21,7 +21,9 @@
 
 class PEIP_Dispatcher 
     extends PEIP_ABS_Dispatcher 
-    implements PEIP_INF_Dispatcher {
+    implements 
+        PEIP_INF_Dispatcher,
+        PEIP_INF_Plugable {
 
     protected $listeners = array();
      
@@ -52,7 +54,18 @@ class PEIP_Dispatcher
       		}
     	}
   	}
-  
+   
+    /**
+     * Disconnects all listeners.
+     * 
+     * @access public
+     * @param Callable|PEIP_INF_Handler $listener
+     * @return void
+     */
+    public function disconnectAll(){
+        $this->listeners = array();
+  	}
+
     /**
      * returns wether any listeners are registered
      * 
