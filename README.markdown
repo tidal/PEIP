@@ -1,4 +1,4 @@
-<h1>PEIP - PHP Event Integration Patterns</h1>
+<h1>PEIP - PHP Event Integration Project</h1>
 <small><em>pronounced: pipe</em></small><br><br>
 <em>The first Event Driven Messaging Framework (for PHP)</em>
 <h2>PREFACE</h2>
@@ -9,7 +9,7 @@ Let your Mobile talk with your Blog<br><br>
 
 Let your Mailserver twitter to Facebook<br>
 Update your Offline-App on connect<br>
-Free your Controller from making choices<br>
+Free your Controller from making choices<br> 
 Let your Dependencies off the Hook<br><br>
 
 Let your CRM talk to Twitter<br>
@@ -23,24 +23,22 @@ On Demand build your Index and Caches<br>
 And if you want to, Change all of that!<br><br>
 
 <h2>WHERE?</h2>
-Interim Homepage can be found <a href="http://tidal.github.com/PEIP/">here</a><br>
-Downloads can be found <a href="http://github.com/tidal/PEIP/downloads">here</a><br>
-PEAR packages can be found <a href="http://pear.peip.org/">here</a><br>
-API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a><br>
-Examples can be found in the <a href="http://github.com/tidal/PEIP/tree/master/examples/">source</a>.<br>
-Issue/Bug Tracker can be found <a href="http://tidal.lighthouseapp.com/projects/50364-peip/tickets">here</a><br>
-ohloh metrics can be found <a href="http://www.ohloh.net/p/peip">here</a><br><br>
-See also:<br>
-<a href="http://github.com/tidal/PEIP_Gearman">PEIP Gearman Extension</a><br>
-<a href="http://github.com/tidal/PEIP-Editor">Proof Of Concept: Visual Web-Editor for PEIP</a><br>
+You can find PEIP큦 <a href="http://www.peip.org">(interim) Homepage here</a><br>
+You can find PEIP큦 <a href="http://github.com/tidal/PEIP">GitHub-Page here</a><br>
+You can find PEIP큦 <a href="http://github.com/tidal/PEIP/downloads">downloads here</a><br>
+You can find PEIP큦 <a href="http://pear.peip.org/">PEAR packages here</a><br>
+You can find PEIP큦 <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">API docs here</a><br>
+You can find PEIP큦 <a href="http://github.com/tidal/PEIP/tree/master/examples/">Examples in the Source</a>.<br>
+You can find PEIP큦 <a href="http://tidal.lighthouseapp.com/projects/50364-peip/tickets">Issue/Bug Tracker here</a><br>
+You can find PEIP큦 <a href="http://www.ohloh.net/p/peip">ohloh metrics  here</a><br>
 
 <h2>WHAT?</h2>
 
-PEIP is a pure PHP Middleware Framework to easily create Messaging- and Work-Flows.<br>
+PEIP is a pure PHP Middleware Framework to easily create and connect Messaging- and Work-Flows.<br>
 One of PEIP's goals is to provide implementations of <a href="http://www.eaipatterns.com/eaipatterns.html">Enterprise Integration Patterns</a> for PHP (but with a bit different approach then usually).<br>
 PEIP can be used by scripting or configuration (recommended).<br>
 PEIP is noninvasive - it plays nicely and integrates with your favorite MVC, Library, Services or PHP Applications.<br> 
-PEIP itself (contrary to any other Messaging Framework) is Event Driven. This allows for easily combining it's components without a need for coupling.<br> 
+PEIP is Event Driven. This allows for easily combining it's components without a need for coupling.<br> 
 PEIP's Event Objects are first class Messages and can travel through the same components as Generic Messages.<br> 
 PEIP can be easily extended and integrated (by using its interfaces).<br>
 PEIP's configuration (ability) can be easily augmented by simple plugins.<br><br>
@@ -60,7 +58,7 @@ Basically there are two types of Channels:<br>
 <em>(Note, that in implementation there is also a difference in how the Messages are received - that is publishing vs. polling)</em>
 <h4>Point-to-Point Channels</h4>
 A Point-to-Point Channel (for example a PollableChannel) let exactly one Consumer receive a certain Message<br>
-<h4>Publish-Subscribe Channels</h4> 
+<h4>Publish-Subscribe Channels</h4>
 A Publish-Subscribe Channel broadcasts any Message to all of its subscribers.  
 <h3>Pipes</h3>
 Pipes are PEIP's most powerfull components.<br>
@@ -85,12 +83,13 @@ Gateways can be designed to mimick the API of your existing application, framewo
 
 <h2>WHY?</h2>
 
-soon to follow as a blog-post.
+soon to follow<br>
 
 <h2>HOW?</h2>
 
 soon to follow<br>
-API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a>
+API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a><br>
+See also exmple section in source code
 
 <h2>REQUIREMENTs:</h2>
 PEIP needs PHP5.3 to run.<br>
@@ -109,12 +108,8 @@ For example the PEIP Gearman extension (PEIP_Gearman) has a dependency on PHP's 
 <h2>INSTALLATION:</h2>    
 <h3>PEAR Install</h3>
 run:<br>
-pear channel-discover pear.peip.org<br>
-pear install peip/PEIP
-(depending of your PEAR-configuration you may [as for now] have to set
-the preferred package stability before:
-pear config-set preferred_state alpha )
-
+pear channel-discover pear.peip-project.de<br>
+pear install peip/peip
 <h3>Install From Download</h3>
 Download source from Downloads <a href="http://github.com/tidal/PEIP/downloads">http://github.com/tidal/PEIP/downloads</a><br>
 Extract file to your include directory.
@@ -123,6 +118,11 @@ Change to one of your include directories.<br>
 run:<br>
 git clone git://github.com/tidal/PEIP.git 
 
+<h2>See also:</h2> 
+<br>
+<a href="http://github.com/tidal/PEIP_Gearman">PEIP Gearman Extension</a><br> 
+<a href="http://github.com/tidal/PEIP-Editor">Proof Of Concept: Visual Web-Editor for PEIP</a><br>
+<br><br><br><br>
 
 
 
