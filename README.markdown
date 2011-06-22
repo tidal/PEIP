@@ -25,7 +25,7 @@ And if you want to, Change all of that!<br><br>
 <h2>WHERE?</h2>
 Interim Homepage can be found <a href="http://tidal.github.com/PEIP/">here</a><br>
 Downloads can be found <a href="http://github.com/tidal/PEIP/downloads">here</a><br>
-PEAR packages can be found <a href="http://pear.peip-project.de/">here</a><br>
+PEAR packages can be found <a href="http://pear.peip.org/">here</a><br>
 API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a><br>
 Examples can be found in the <a href="http://github.com/tidal/PEIP/tree/master/examples/">source</a>.<br>
 Issue/Bug Tracker can be found <a href="http://tidal.lighthouseapp.com/projects/50364-peip/tickets">here</a><br>
@@ -60,7 +60,7 @@ Basically there are two types of Channels:<br>
 <em>(Note, that in implementation there is also a difference in how the Messages are received - that is publishing vs. polling)</em>
 <h4>Point-to-Point Channels</h4>
 A Point-to-Point Channel (for example a PollableChannel) let exactly one Consumer receive a certain Message<br>
-<h4>Publish-Subscribe Channels</h4>
+<h4>Publish-Subscribe Channels</h4> 
 A Publish-Subscribe Channel broadcasts any Message to all of its subscribers.  
 <h3>Pipes</h3>
 Pipes are PEIP's most powerfull components.<br>
@@ -109,8 +109,12 @@ For example the PEIP Gearman extension (PEIP_Gearman) has a dependency on PHP's 
 <h2>INSTALLATION:</h2>    
 <h3>PEAR Install</h3>
 run:<br>
-pear channel-discover pear.peip-project.de<br>
-pear install peip/peip
+pear channel-discover pear.peip.org<br>
+pear install peip/PEIP
+(depending of your PEAR-configuration you may [as for now] have to set
+the preferred package stability before:
+pear config-set preferred_state alpha )
+
 <h3>Install From Download</h3>
 Download source from Downloads <a href="http://github.com/tidal/PEIP/downloads">http://github.com/tidal/PEIP/downloads</a><br>
 Extract file to your include directory.
@@ -118,17 +122,7 @@ Extract file to your include directory.
 Change to one of your include directories.<br>
 run:<br>
 git clone git://github.com/tidal/PEIP.git 
-<h2>TODOs:</h2>
-<ul>
-<li>write readme</li>
-<li>setting up the website</li>
-<li>Add proper comments/doctags to every class/method</li>
-<li>add unit-tests for every class (code-coverage can be found <a href="http://tidal.github.com/PEIP/docs/tests/coverage/">here</a>)</li>
-<li>writing documentation</li>
-<li>cleanup/write more examples</li>
-<li>setting up proper build and CI system</li>
-<li>write/publish extensions</li>
-</ul>
+
 
 
 
