@@ -17,20 +17,20 @@ Make your Config Context aware<br>
 Route your Custom-Events through the Pipeline<br>
 Make your Messages easy to share<br><br>
 
-Transform your Documents to any Format<br>
+Transform your Documents to any Format<br>  
 Forgett about Coupling and Vendor-Locks<br>
 On Demand build your Index and Caches<br>
 And if you want to, Change all of that!<br><br>
 
 <h2>WHERE?</h2>
-You can find PEIP큦 <a href="http://www.peip.org">(interim) Homepage here</a><br>
-You can find PEIP큦 <a href="http://github.com/tidal/PEIP">GitHub-Page here</a><br>
-You can find PEIP큦 <a href="http://github.com/tidal/PEIP/downloads">downloads here</a><br>
-You can find PEIP큦 <a href="http://pear.peip.org/">PEAR packages here</a><br>
-You can find PEIP큦 <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">API docs here</a><br>
-You can find PEIP큦 <a href="http://github.com/tidal/PEIP/tree/master/examples/">Examples in the Source</a>.<br>
-You can find PEIP큦 <a href="http://tidal.lighthouseapp.com/projects/50364-peip/tickets">Issue/Bug Tracker here</a><br>
-You can find PEIP큦 <a href="http://www.ohloh.net/p/peip">ohloh metrics  here</a><br>
+You can find PEIP's <a href="http://www.peip.org">(interim) Homepage here</a><br>
+You can find PEIP's <a href="http://github.com/tidal/PEIP">GitHub-Page here</a><br>
+You can find PEIP's <a href="http://github.com/tidal/PEIP/downloads">downloads here</a><br>
+You can find PEIP's <a href="http://pear.peip.org/">PEAR packages here</a><br>
+You can find PEIP's <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">API docs here</a><br>
+You can find PEIP's <a href="http://github.com/tidal/PEIP/tree/master/examples/">Examples in the Source</a>.<br>
+You can find PEIP's <a href="http://tidal.lighthouseapp.com/projects/50364-peip/tickets">Issue/Bug Tracker here</a><br>
+You can find PEIP's <a href="http://www.ohloh.net/p/peip">ohloh metrics  here</a><br>
 
 <h2>WHAT?</h2>
 
