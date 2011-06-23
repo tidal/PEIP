@@ -9,7 +9,8 @@
  *
  * @author timo
  */
-class PEIP_Event_Class_Dispatcher {
+class PEIP_Event_Class_Dispatcher
+    extends PEIP_Object_Map_Dispatcher {
 
     /**
      * Notifies all listeners of a given event-object.
