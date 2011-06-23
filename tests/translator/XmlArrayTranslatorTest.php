@@ -3,7 +3,7 @@
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 require_once dirname(__FILE__).'/../../src/translator/PEIP_XML_Array_Translator.php';
 
-class XmlArrayTranslatorTest extends ServiceContainerTest  {
+class XmlArrayTranslatorTest extends PHPUnit_Framework_TestCase  {
 
     public function testTranslateAttributes(){
         $xml = '<context id="foo" name="bar"/>';
