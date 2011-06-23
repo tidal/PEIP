@@ -55,7 +55,7 @@ abstract class PEIP_ABS_Channel
         $this->doFireEvent('postSend', array(
             'MESSAGE'=>$message,
             'SENT' => $sent,
-            'TIMEOUT' => $timeout
+            'TIMEOUT' => $timeout 
         ));
     }
 
