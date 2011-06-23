@@ -17,31 +17,14 @@
  */
 
 
-class PEIP_INF_Header_Enricher {
-
-    protected $headers;
-    
-    
+interface PEIP_INF_Header_Enricher {
+   
     /**
      * @access public
-     * @param $headers 
+     * @param PEIP_INF_Message $message
      * @return 
      */
-    public function __construct(array $headers = array()){
-        $this->headers = $headers;  
-    }
-
-
-    
-    /**
-     * @access public
-     * @param $message 
-     * @return 
-     */
-    public function enrich(PEIP_INF_Message $message){
-        
-    }
-
+    public function enrich(PEIP_INF_Message $message);
 
 }
 
