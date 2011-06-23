@@ -181,7 +181,7 @@ class ServiceProviderTest extends ServiceContainerTest  {
             PEIP_Service_Provider::HEADER_KEY => $key,
             PEIP_Service_Provider::HEADER_SERVICE => self::buildHelloService()
         ));
-        $provider->registerNodeBuilder($nodeName, array(ServiceProviderTest, 'buildHelloService'));
+        $provider->registerNodeBuilder($nodeName, array('ServiceProviderTest', 'buildHelloService'));
         $provider->addConfig($config);
         $service = $provider->provideService($key);
 
@@ -217,7 +217,7 @@ class ServiceProviderTest extends ServiceContainerTest  {
         $provider->addConfig($config);
         $service = $provider->provideService($key);
        
-        $provider->registerNodeBuilder($nodeName, array(ServiceProviderTest, 'buildHelloService'));
+        $provider->registerNodeBuilder($nodeName, array('ServiceProviderTest', 'buildHelloService'));
 
         $this->assertEventThrown();  
     }
@@ -235,7 +235,7 @@ class ServiceProviderTest extends ServiceContainerTest  {
             PEIP_Service_Provider::HEADER_NODE_CONFIG => $config,
             PEIP_Service_Provider::HEADER_NODE_NAME => $nodeName
         ));
-        $provider->registerNodeBuilder($nodeName, array(ServiceProviderTest, 'buildHelloService'));
+        $provider->registerNodeBuilder($nodeName, array('ServiceProviderTest', 'buildHelloService'));
         $provider->addConfig($config);
         $service = $provider->provideService($key);
 
@@ -256,7 +256,7 @@ class ServiceProviderTest extends ServiceContainerTest  {
             PEIP_Service_Provider::HEADER_NODE_NAME     => $nodeName,
             PEIP_Service_Provider::HEADER_NODE          => self::buildHelloService()
         ));
-        $provider->registerNodeBuilder($nodeName, array(ServiceProviderTest, 'buildHelloService'));
+        $provider->registerNodeBuilder($nodeName, array('ServiceProviderTest', 'buildHelloService'));
         $provider->addConfig($config);
         $service = $provider->provideService($key);
 
