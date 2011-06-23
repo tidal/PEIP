@@ -48,7 +48,7 @@ class PEIP_XML_Array_Translator {
         foreach($node->children() as $nr=>$child){
             $name = $child->getName();
             $res = self::doTranslate($child);
-            if(!issset($array[$name]) && !is_array($array[$name])){
+            if(!isset($array[$name]) && !is_array($array[$name])){
                 if(is_string($array[$name])){
                     $array[$name] = array(
                         array(
