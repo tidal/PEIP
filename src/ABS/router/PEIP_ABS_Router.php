@@ -68,8 +68,7 @@ abstract class PEIP_ABS_Router
      * @return 
      */
     protected function doReply(PEIP_INF_Message $message){  
-        $ch = $this->selectChannels($message);
-        $channels = is_array($ch) ? $ch : array($ch);
+        $channels = (array)$this->selectChannels($message);
         foreach($channels as $channel){
             $this->setOutputChannel($this->resolveChannel($channel));
             $this->replyMessage($message); 
