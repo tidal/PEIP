@@ -1,13 +1,18 @@
 <?php
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+/*
+ * This file is part of the PEIP package.
+ * (c) 2010 Timo Michna <timomichna/yahoo.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
- * Description of PEIP_Connectable
+ * PEIP_ABS_Connectable
  *
- * @author timo
+ * @author Timo Michna <timomichna/yahoo.de>
+ * @package PEIP
+ * @subpackage base 
  */
 class PEIP_ABS_Connectable  implements PEIP_INF_Connectable{
 
@@ -41,8 +46,9 @@ class PEIP_ABS_Connectable  implements PEIP_INF_Connectable{
             self::EVENT_CONNECT,
             array(
                 self::HEADER_EVENT=>$name,
-                self::HEADER_LISTENER=>$listener)
-            );
+                self::HEADER_LISTENER=>$listener
+            )
+        );
     }
 
 
