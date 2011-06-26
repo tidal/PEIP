@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Pipe;
+
+namespace PEIP\Pipe;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -24,8 +28,6 @@ use PEIP\Dispatcher\Dispatcher;
 use PEIP\Event\Event;
 use PEIP\Util\Test;
 
-namespace PEIP\Pipe;
-
 class Pipe 
     extends \PEIP\ABS\Handler\ReplyProducingMessageHandler 
     implements 
@@ -34,8 +36,8 @@ class Pipe
         \PEIP\INF\Event\Connectable {
 
     const 
-        DEFAULT_CLASS_MESSAGE_DISPATCHER = 'Dispatcher',
-        DEFAULT_EVENT_CLASS = 'Event',
+        DEFAULT_CLASS_MESSAGE_DISPATCHER = 'PEIP\Dispatcher\Dispatcher',
+        DEFAULT_EVENT_CLASS = 'PEIP\Event\Event',
         EVENT_PRE_PUBLISH = 'prePublish',
         EVENT_POST_PUBLISH = 'postPublish',
         EVENT_SUBSCRIBE = 'subscribe',
@@ -104,13 +106,14 @@ class Pipe
      * @param $content 
      * @return 
      */
-    protected function replyMessage($content){
-        $message = $this->ensureMessage($content);
-        if($this->getOutputChannel()){
-            $this->getOutputChannel()->send($message);  
-        }else{
-            $this->doSend($message);            
-        }           
+    protected function replyMessage($message){
+        if(\PEIP\Util\Test::assertMessage($message)){
+            if($this->getOutputChannel()){
+                $this->getOutputChannel()->send($message);
+            }else{
+                $this->doSend($message);
+            }
+        }
     }
     
     

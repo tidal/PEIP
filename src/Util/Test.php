@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Util;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,8 +11,6 @@
  *
  * @author timo
  */
-
-namespace PEIP\Util;
 
 class Test {
 
@@ -43,18 +43,22 @@ class Test {
             class_exists($className);
             $res =  ReflectionPool::getInstance($className)
                 ->implementsInterface($interfaceName);            
-        }  catch (Exception $e){
+        }  catch (\Exception $e){
             $res = false; 
         }
         return $res;;
     }
 
+    public static function assertMessage($message){
+        return self::assertImplements($message, '\PEIP\INF\Message\Message');
+    }
+
     public static function assertEvent($event){
-        return self::assertImplements($event, 'PEIP\INF\Event\Event');
+        return self::assertImplements($event, '\PEIP\INF\Event\Event');
     }
 
     public static function assertEventSubject($event){
-        return self::assertImplements($event, 'PEIP\INF\Event\Event')
+        return self::assertImplements($event, '\PEIP\INF\Event\Event')
             && $event->getSubject();
     }
 
@@ -63,7 +67,7 @@ class Test {
             && is_object($event->getSubject());
     }
     public static function assertArrayAccess($var){
-        return (boolean) is_array($var) || $var instanceof  ArrayAccess;
+        return (boolean) is_array($var) || $var instanceof \ArrayAccess;
     }
 
     public static function assertHandler($var){
@@ -97,7 +101,7 @@ class Test {
 
     public static function ensureArrayAccess($var){
         if(!Test::assertArrayAccess($var)){
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 'Value is not an array nor an instance of ArrayAccess'
             );
         }
@@ -107,7 +111,7 @@ class Test {
 
     public static function ensureHandler($var){
         if(!Test::assertHandler($var)){
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 'Value is not an callable nor an instance of \PEIP\INF\Handler\Handler'
             );
         }
@@ -116,7 +120,7 @@ class Test {
 
     public static function ensureImplements($className, $interfaceName){
         if(!Test::assertImplements($className, $interfaceName)){
-            throw new InvalidArgumentException(
+            throw new \InvalidArgumentException(
                 'Class "'.$className.'" is not an instanceof "'.$interfaceName.'"'
             );
         }

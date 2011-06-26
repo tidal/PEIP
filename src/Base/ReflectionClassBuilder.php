@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Base;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
  */
 
 
-namespace PEIP\Base;
-
 class ReflectionClassBuilder implements \PEIP\INF\Base\SingletonMap {
 
     protected static $reflectionClasses = array();
@@ -35,7 +35,7 @@ class ReflectionClassBuilder implements \PEIP\INF\Base\SingletonMap {
     protected static function getReflectionClass($className){
         return array_key_exists($className, self::$reflectionClasses) 
             ? self::$reflectionClasses[$className] 
-            : (self::$reflectionClasses[$className] = new ReflectionClass($className)); 
+            : (self::$reflectionClasses[$className] = new \ReflectionClass($className)); 
     }   
     
     /**

@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Event;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -17,11 +19,9 @@
  * @subpackage event 
  */
 
-
-use PEIP\Util\Test;
 use PEIP\Dispatcher\ObjectEventDispatcher;
 
-namespace PEIP\Event;
+
 
 class EventBuilder {
 
@@ -37,7 +37,7 @@ class EventBuilder {
      * @param string $eventClass the event-class the builder shall create instances for 
      * @param array $defaultHeaders default headers for the created events 
      */
-    public function __construct($eventClass = 'Event', array $defaultHeaders = array()){
+    public function __construct($eventClass = '\PEIP\Event\Event', array $defaultHeaders = array()){
         $this->eventClass = $eventClass;
         $this->defaultParameters = $defaultHeaders;
     }
@@ -49,12 +49,12 @@ class EventBuilder {
      * @param string $eventClass the event-class the builder shall create instances for 
      * @return EventBuilder the instance of EventBuilder for the given event-class 
      */    
-    public static function getInstance($eventClass = 'Event'){
+    public static function getInstance($eventClass = '\PEIP\Event\Event'){ 
 
         return isset(self::$instances[$eventClass]) 
             ? self::$instances[$eventClass] 
             : self::$instances[$eventClass] = new EventBuilder(
-                Test::ensureImplements($eventClass, 'PEIP\INF\Event\Event')
+                \PEIP\Util\Test::ensureImplements($eventClass, '\PEIP\INF\Event\Event')
         );
     }
       

@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Dispatcher;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -25,8 +27,6 @@
 
 use PEIP\Event\EventBuilder;
 
-namespace PEIP\Dispatcher;
-
 class ObjectEventDispatcher 
     extends \PEIP\Dispatcher\ObjectMapDispatcher {
 
@@ -47,10 +47,10 @@ class ObjectEventDispatcher
                     return self::doNotify($this->getListeners($name, $object->getContent()), $object);  
                 }                   
             }else{
-                throw new InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
+                throw new \InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
             }   
         }else{
-            throw new InvalidArgumentException('object must be instance of \PEIP\INF\Event\Event');
+            throw new \InvalidArgumentException('object must be instance of \PEIP\INF\Event\Event');
         }  
     }   
         

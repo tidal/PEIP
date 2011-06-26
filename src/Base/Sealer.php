@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Base;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -25,8 +27,6 @@
 // PHP5.3
 
 
-namespace PEIP\Base;
-
 class Sealer implements \PEIP\INF\Base\Sealer, \PEIP\INF\Base\Unsealer{
 
     protected $store;
@@ -38,7 +38,7 @@ class Sealer implements \PEIP\INF\Base\Sealer, \PEIP\INF\Base\Unsealer{
      * @param ObjectStorage $store an instane of ObjectStorage to act as the internal object-store
      * @return 
      */
-    public function __construct(SplObjectStorage $store = NULL){
+    public function __construct(\SplObjectStorage $store = NULL){
         $this->store = (bool)$store ? $store : new ObjectStorage;    
     }   
       
@@ -54,7 +54,7 @@ class Sealer implements \PEIP\INF\Base\Sealer, \PEIP\INF\Base\Unsealer{
      * @return object the 'box' for the sealed value
      */
     public function seal($value, $box = false){
-        $box = (bool)$box ? $box : new stdClass;
+        $box = (bool)$box ? $box : new \stdClass;
         $this->store[$box] = $value;        
         return $box;
     }

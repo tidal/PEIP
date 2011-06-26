@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Autoload;
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -16,8 +18,6 @@
  * @subpackage autoload 
  */
 
-
-namespace PEIP\Autoload;
 
 class SimpleAutoload {
 
@@ -47,7 +47,7 @@ class SimpleAutoload {
         $this->baseDir = self::getBaseDirectory();
         ini_set('unserialize_callback_func', 'spl_autoload_call');
         if (false === spl_autoload_register(array($this, 'autoload'))){
-            throw new RuntimeException(sprintf('Unable to register %s::autoload as an autoloading method.', get_class($this)));
+            throw new \RuntimeException(sprintf('Unable to register %s::autoload as an autoloading method.', get_class($this)));
         }   
     }
 

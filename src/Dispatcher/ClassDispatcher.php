@@ -1,9 +1,9 @@
 <?php
 
+namespace PEIP\Dispatcher;
+
 use PEIP\Util\Test;
 use PEIP\Util\Reflection;
-
-namespace PEIP\Dispatcher;
 
 class ClassDispatcher
     extends \PEIP\ABS\Dispatcher\MapDispatcher {
@@ -23,7 +23,7 @@ class ClassDispatcher
         if(Test::assertClassOrInterfaceExists($name)){
             parent::connect($name, $listener);
         }else{
-            throw new InvalidArgumentException($name." is not an Class nor Interface");
+            throw new \InvalidArgumentException($name." is not an Class nor Interface");
         }
     }
 

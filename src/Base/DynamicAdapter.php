@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Base;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +23,6 @@
 
 
 
-namespace PEIP\Base;
-
 class DynamicAdapter {
 
     protected $methodMap;
@@ -36,7 +36,7 @@ class DynamicAdapter {
      * @param $subject 
      * @return 
      */
-    public function __construct(ArrayAccess $methodMap, $subject){      
+    public function __construct(\ArrayAccess $methodMap, $subject){
         $this->methodMap = $methodMap;
         $this->subject = $subject;      
     }

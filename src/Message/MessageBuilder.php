@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Message;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +22,6 @@
 use PEIP\Factory\DedicatedFactory;
 use PEIP\Base\GenericBuilder;
 
-namespace PEIP\Message;
-
 class MessageBuilder 
     implements 
         \PEIP\INF\Message\MessageBuilder,
@@ -39,7 +39,7 @@ class MessageBuilder
      * @access public
      * @param string $messageClass the message-class to build instances for 
      */
-    public function __construct($messageClass = 'GenericMessage'){
+    public function __construct($messageClass = '\PEIP\Message\GenericMessage'){
         $this->messageClass = $messageClass;
         $this->factory = DedicatedFactory::getfromCallable(array($messageClass, 'build'));    
     }
@@ -125,7 +125,7 @@ class MessageBuilder
     public function build(array $headers = array()){
         $this->copyHeaders($headers);
         return GenericBuilder::getInstance($this->messageClass)
-            ->build(array($this->payload, new ArrayObject($this->headers)));        
+            ->build(array($this->payload, new \ArrayObject($this->headers)));        
     }
        
     /**
@@ -148,7 +148,7 @@ class MessageBuilder
      * @param string $messageClass the message class to build from the builder 
      * @return MessageBuilder new instance of MessageBuilder 
      */    
-    public static function getInstance($messageClass = 'GenericMessage'){
+    public static function getInstance($messageClass = '\PEIP\Message\GenericMessage'){
         return new  MessageBuilder($messageClass);
     }
   

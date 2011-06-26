@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\INF\Event;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
 
 
 
-
-namespace PEIP\INF\Event;
 
 interface EventPublisher 
     extends \PEIP\INF\Event\Connectable {

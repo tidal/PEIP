@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\ABS\Router;
+
+namespace PEIP\ABS\Router;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +25,6 @@
 
 
 use \PEIP\Pipe\Pipe;
-
-namespace PEIP\ABS\Router;
 
 abstract class Router 
     extends \PEIP\Pipe\Pipe {
@@ -95,7 +97,7 @@ abstract class Router
             $channel = $this->channelResolver->resolveChannelName($channelName);
             if(!$channel){
                 $this->doFireEvent(self::EVENT_ERR_RESOLVE, array(self::HEADER_CHANNEL_NAME=>$channelName));
-                throw new RuntimeException('Could not resolve Channel : '.$channelName);
+                throw new \RuntimeException('Could not resolve Channel : '.$channelName);
             }
         }
         $this->doFireEvent(self::EVENT_POST_RESOLVE, array(self::HEADER_CHANNEL=>$channel));

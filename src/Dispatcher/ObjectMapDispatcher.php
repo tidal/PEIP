@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Dispatcher;
+
+namespace PEIP\Dispatcher;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -23,8 +27,6 @@
 use PEIP\Util\Test;
 use PEIP\Base\ObjectStorage;
 
-namespace PEIP\Dispatcher;
-
 class ObjectMapDispatcher
     implements \PEIP\INF\Dispatcher\ObjectMapDispatcher {
 
@@ -45,7 +47,7 @@ class ObjectMapDispatcher
         Test::ensureHandler($listener);
         $listners = $this->doGetListeners();
         if (!$this->listeners->contains($object)){
-            $this->listeners->attach($object, new ArrayObject);
+            $this->listeners->attach($object, new \ArrayObject);
         }
         if (!array_key_exists($name, $listners[$object])){ 
             $this->listeners[$object][$name] = array();
@@ -239,7 +241,7 @@ class ObjectMapDispatcher
 
     protected function getListenerHash($listener){
         if(!is_object($listener)){
-            $o = new stdClass();
+            $o = new \stdClass();
             $o->listener = $listener;
             $listener = $o;
         }

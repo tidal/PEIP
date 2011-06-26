@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Data;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
  * @implements \PEIP\INF\Data\StoreCollection
  */
 
-
-namespace PEIP\Data;
 
 class StoreCollection 
     extends \PEIP\Data\InternalStoreAbstract 
@@ -55,7 +55,7 @@ class StoreCollection
             if($store instanceof \PEIP\INF\Data\Store){
                 $this->setPrivateValue($namespace, $store);
             }else{
-                throw new Exception('Could not build Instance of \PEIP\INF\Data\Store from factory.');
+                throw new \Exception('Could not build Instance of \PEIP\INF\Data\Store from factory.');
             }
         }
         return $this->getPrivateValue($namespace);

@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Channel;
+
+namespace PEIP\Channel;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +25,6 @@
 
 
 use PEIP\Dispatcher\IteratingDispatcher;
-
-namespace PEIP\Channel;
 
 class DirectChannel 
     extends \PEIP\ABS\Channel\SubscribableChannel {

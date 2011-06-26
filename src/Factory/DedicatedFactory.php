@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Factory;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -22,8 +24,6 @@
 
 use \PEIP\Data\ParameterHolder;
 use PEIP\Base\GenericBuilder;
-
-namespace PEIP\Factory;
 
 class DedicatedFactory 
     extends \PEIP\Data\ParameterHolder 

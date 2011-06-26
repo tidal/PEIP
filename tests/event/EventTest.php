@@ -1,7 +1,6 @@
 <?php 
 
 
-use \PEIP\Event\Event as PEIP_Event;
 use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
 use \PEIP\INF\Message\Message as PEIP_INF_Message;
 use \PEIP\INF\Event\Event as PEIP_INF_Event;
@@ -12,7 +11,7 @@ require_once dirname(__FILE__).'/../message/GenericMessageTest.php';
 class EventTest 
 	extends PHPUnit_Framework_TestCase {
 
-	protected $testClass = 'PEIP_Event';	
+	protected $testClass = '\PEIP\Event\Event';
 
 
 	public function setUp()
@@ -43,13 +42,13 @@ class EventTest
     }
     
 	public function testReturnValue(){
-    	$event = new PEIP_Event($this->payloadObject, 'foo');
+    	$event = new \PEIP\Event\Event($this->payloadObject, 'foo');
     	$event->setReturnValue(321);	
     	$this->assertEquals(321, $event->getReturnValue());
     }
 
 	public function testProcessed(){
-    	$event = new PEIP_Event($this->payloadObject, 'foo');
+    	$event = new \PEIP\Event\Event($this->payloadObject, 'foo');
     	$event->setProcessed(false);	
     	$this->assertFalse($event->isProcessed());
     	$event->setProcessed(true);	

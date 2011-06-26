@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\ABS\Base;
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -14,19 +16,13 @@
  * @package PEIP
  * @subpackage base 
  */
-use PEIP\Dispatcher\Dispatcher;
-use PEIP\Dispatcher\ObjectEventDispatcher;
-use PEIP\Event\Event;
-use PEIP\Util\Test;
-
-namespace PEIP\ABS\Base;
 
 abstract class Connectable  implements \PEIP\INF\Event\Connectable{
 
     const
-        DEFAULT_CLASS_MESSAGE_DISPATCHER = 'Dispatcher',
-        DEFAULT_CLASS_EVENT_DISPATCHER = 'ObjectEventDispatcher',
-        DEFAULT_EVENT_CLASS = 'Event',
+        DEFAULT_CLASS_MESSAGE_DISPATCHER = '\PEIP\Dispatcher\Dispatcher',
+        DEFAULT_CLASS_EVENT_DISPATCHER = '\PEIP\Dispatcher\ObjectEventDispatcher',
+        DEFAULT_EVENT_CLASS = '\PEIP\Event\Event', 
         EVENT_CONNECT = 'connect',
         EVENT_DISCONNECT = 'disconnect',
         EVENT_SET_EVENT_DISPATCHER = 'setEventDispatcher',
@@ -47,7 +43,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @return
      */
     public function connect($name, $listener){
-        Test::ensureHandler($listener);
+        \PEIP\Util\Test::ensureHandler($listener);
         $this->getEventDispatcher()->connect($name, $this, $listener);
         $this->doFireEvent(
             self::EVENT_CONNECT,
@@ -66,7 +62,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @return
      */
     public function disconnect($name, $listener){
-        Test::ensureHandler($listener);
+        \PEIP\Util\Test::ensureHandler($listener);
         $this->getEventDispatcher()->disconnect($name, $this, $listener);
         $this->doFireEvent(
             self::EVENT_DISCONNECT,
@@ -116,7 +112,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @param $transferListners
      * @return
      */
-    public function setEventDispatcher(ObjectEventDispatcher $dispatcher, $transferListners = true){
+    public function setEventDispatcher(\PEIP\Dispatcher\ObjectEventDispatcher $dispatcher, $transferListners = true){
         if($transferListners){
             foreach($this->getEventDispatcher()->getEventNames($this) as $name){
                 if($this->getEventDispatcher()->hasListeners($name, $this)){

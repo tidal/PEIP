@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Message;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +23,6 @@
 
 
 
-namespace PEIP\Message;
-
 class CommandMessage 
     extends \PEIP\Message\GenericMessage 
     implements \PEIP\INF\Command\Command {
@@ -37,7 +37,7 @@ class CommandMessage
      */
     public function __construct($content, ArrayAccess $headers = NULL){
         if(!($content instanceof \PEIP\INF\Command\Command) && !is_callable($content)){
-            throw new BadArgumentException('Argument 1 for CommandMessage::__construct must be callable or implment \PEIP\INF\Command\Command');
+            throw new \BadArgumentException('Argument 1 for CommandMessage::__construct must be callable or implment \PEIP\INF\Command\Command');
         }
         
         

@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\ABS\Context;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +22,6 @@
 
 use PEIP\Context\XMLContext;
 use PEIP\Factory\ServiceFactory;
-
-namespace PEIP\ABS\Context;
 
 abstract class ContextPlugin 
     implements \PEIP\INF\Context\ContextPlugin {

@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Handler;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -18,8 +20,6 @@
  * @implements \PEIP\INF\Handler\Handler
  */
 
-
-namespace PEIP\Handler;
 
 class CallableHandler 
     implements \PEIP\INF\Handler\Handler {

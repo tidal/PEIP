@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Event;
+
+namespace PEIP\Event;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -23,8 +27,6 @@
 
 use \PEIP\Message\GenericMessage;
 use PEIP\Util\Test;
-
-namespace PEIP\Event;
 
 class Event 
     extends 

@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Pipe;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
  * @implements \PEIP\INF\Message\MessageBuilder, \PEIP\INF\Handler\Handler, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\SubscribableChannel, \PEIP\INF\Event\Connectable, \PEIP\INF\Event\Listener
  */
 
-
-namespace PEIP\Pipe;
 
 class EventPipe 
     extends \PEIP\ABS\Pipe\EventPipe 

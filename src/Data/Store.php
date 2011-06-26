@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Data;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
  * @implements ArrayAccess, \PEIP\INF\Data\Store
  */
 
-
-namespace PEIP\Data;
 
 class Store 
     extends \PEIP\Data\ArrayAccess 

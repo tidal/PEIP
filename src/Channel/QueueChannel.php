@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Channel;
+
+namespace PEIP\Channel;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +23,6 @@
  */
 
 
-
-namespace PEIP\Channel;
 
 class QueueChannel 
     extends \PEIP\ABS\Channel\PollableChannel {
@@ -78,7 +80,7 @@ class QueueChannel
         if($this->capacity < 1 || $this->getMessageCount() <= $this->getCapacity()){
             $this->queue->enqueque($message);
         }else{
-            throw new Exception('Not implemented yet.');
+            throw new \Exception('Not implemented yet.');
         }            
     }       
 } 

@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\INF\Handler;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -16,8 +18,6 @@
  * @subpackage handler 
  */
 
-
-namespace PEIP\INF\Handler;
 
 interface Handler {
 

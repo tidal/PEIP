@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\INF\Data;
+
+namespace PEIP\INF\Data;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -18,8 +22,6 @@
 
 
 
-
-namespace PEIP\INF\Data;
 
 interface StoreCollection {
 

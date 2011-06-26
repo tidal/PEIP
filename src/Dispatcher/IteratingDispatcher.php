@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Dispatcher;
+
+namespace PEIP\Dispatcher;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +24,6 @@
  */
 
 use PEIP\Util\Test;
-
-namespace PEIP\Dispatcher;
 
 class IteratingDispatcher
     extends \PEIP\ABS\Dispatcher\Dispatcher
@@ -47,7 +49,7 @@ class IteratingDispatcher
         $array = Test::assertArrayAccess($array)
             ? $array
             : array();
-        $this->listeners = new ArrayIterator($array);
+        $this->listeners = new \ArrayIterator($array);
     }
 
     /**

@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Message;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +22,6 @@
 
 
 use PEIP\Base\GenericBuilder;
-
-namespace PEIP\Message;
 
 class TextMessage extends \PEIP\Message\StringMessage {
 

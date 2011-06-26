@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Selector;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -18,8 +20,6 @@
  */
 
 
-
-namespace PEIP\Selector;
 
 class ContentTypeSelector
     implements \PEIP\INF\Selector\MessageSelector {

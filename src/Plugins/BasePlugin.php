@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Plugins;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -15,8 +17,6 @@ use PEIP\Channel\PublishSubscribeChannel;
 use PEIP\Gateway\SimpleMessagingGateway;
 use PEIP\Listener\Wiretap;
 use PEIP\Service\ServiceActivator;
-
-namespace PEIP\Plugins;
 
 class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
 
@@ -225,7 +225,7 @@ class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
             $this->doGetChannel('output', $config)
         );
         if($args[0] == NULL){
-            throw new RuntimeException('Could not receive input channel.');
+            throw new \RuntimeException('Could not receive input channel.');
         }
         return $args;
     }

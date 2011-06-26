@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Autoload;
+
+namespace PEIP\Autoload;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -87,8 +91,6 @@ use PEIP\Context\XMLContextReader;
 use PEIP\Context\XMLContext;
 use PEIP\Plugins\BasePlugin;
 use PEIP\Listener\Wiretap;
-
-namespace PEIP\Autoload;
 
 class AutoloadPaths {
 

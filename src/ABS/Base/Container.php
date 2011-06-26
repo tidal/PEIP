@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\ABS\Base;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -18,8 +20,6 @@
  * @implements \PEIP\INF\Base\Container
  */
 
-
-namespace PEIP\ABS\Base;
 
 abstract class Container 
     implements \PEIP\INF\Base\Container{

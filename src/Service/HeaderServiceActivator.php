@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Service;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,8 +11,6 @@
  *
  * @author timo
  */
-
-namespace PEIP\Service;
 
 class HeaderServiceActivator extends \PEIP\Service\ServiceActivator{
    

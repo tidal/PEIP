@@ -1,7 +1,6 @@
 <?php 
 
 
-use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
 use \PEIP\INF\Message\Message as PEIP_INF_Message;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
@@ -20,7 +19,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
 
 	protected $payloads = array();
 	
-	protected $testClass = 'PEIP_Generic_Message';
+	protected $testClass = '\PEIP\Message\GenericMessage'; 
 	
 	public function MessageTest(){
 	
@@ -43,7 +42,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     	);
  
     	foreach($this->payloads as $type=>$payload){
-    		$this->messages[$type] = new $this->testClass($payload);	
+    		$this->messages[$type] = new \PEIP\Message\GenericMessage($payload);
     	}
 		$this->assertEquals(count($this->messages), count($this->payloads));
     
@@ -75,7 +74,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     
 	public function testGetHeaders(){
         $headers = $this->getHeaders();
-        $message = new $this->testClass($this->payloads['string'], $headers);
+        $message = new \PEIP\Message\GenericMessage($this->payloads['string'], $headers);
 		foreach($headers as $name=>$header){
     		$this->assertEquals($headers[$name], $message->getHeader($name));		
     	} 		
@@ -83,7 +82,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     
 	public function testHasHeaders(){
         $headers = $this->getHeaders();
-        $message = new $this->testClass($this->payloads['string'], $headers);
+        $message = new \PEIP\Message\GenericMessage($this->payloads['string'], $headers);
 		foreach($headers as $name=>$header){
     		$this->assertTrue($message->hasHeader($name));		
     	} 		
@@ -91,7 +90,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
 	public function testHeaders(){
         $headers = $this->getHeaders();
 		foreach($this->payloads as $type=>$payload){
-        	$message = new $this->testClass($payload, $headers);
+        	$message = new \PEIP\Message\GenericMessage($payload, $headers);
         	$this->assertMessage($message);
     		$this->assertPayloads($message, $type);
     		$this->assertEquals($headers, $message->getHeaders());		
@@ -104,7 +103,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
      */	
 	public function testFailWrongHeaderInt(){
         try{
-            new $this->testClass($this->payloads['string'], 123);
+            new \PEIP\Message\GenericMessage($this->payloads['string'], 123);
         }
         catch(InvalidArgumentException $e){
             return;
@@ -119,7 +118,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
      */	
 	public function testFailWrongHeaderFloat(){
         try{
-            new $this->testClass($this->payloads['string'], 123.123);
+            new \PEIP\Message\GenericMessage($this->payloads['string'], 123.123);
         }
         catch(InvalidArgumentException $e){
             return;
@@ -134,7 +133,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
      */	
 	public function testFailWrongHeaderString(){
         try{
-            new $this->testClass($this->payloads['string'], 'Test');
+            new \PEIP\Message\GenericMessage($this->payloads['string'], 'Test');
         }
         catch(InvalidArgumentException $e){
             return;
@@ -150,7 +149,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
 	public function testFailWrongHeaderObject(){
         $object = new stdClass;
         try{
-            new $this->testClass($this->payloads['string'], $object);
+            new \PEIP\Message\GenericMessage($this->payloads['string'], $object);
         }
         catch(InvalidArgumentException $e){
             return;  
@@ -192,28 +191,28 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
      *  
      */	
 	public function testFailBuildWrongHeaderInt(){
-       // new $this->testClass($this->payload, 123);
+       // new \PEIP\Message\GenericMessage($this->payload, 123);
 	}
 	
     /**
      * 
      */	
 	public function testFailBuildWrongHeaderFloat(){
-       // new $this->testClass($this->payload, 123.321);
+       // new \PEIP\Message\GenericMessage($this->payload, 123.321);
 	}
 	
     /**
      * 
      */	
 	public function testFailBuildWrongHeaderString(){
-      //  new $this->testClass($this->payload, 'Test');
+      //  new \PEIP\Message\GenericMessage($this->payload, 'Test');
 	}
 
     /**
      * 
      */	
 	public function testFailBuildWrongHeaderObject(){
-     //   new $this->testClass($this->payload, new stdClass);
+     //   new \PEIP\Message\GenericMessage($this->payload, new stdClass);
 	}    
    
     
@@ -221,8 +220,8 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     
     protected function assertMessage($message){
         $this->assertTrue(is_object($message));
-    	$this->assertTrue($message instanceof PEIP_Generic_Message);
-    	$this->assertTrue($message instanceof PEIP_INF_Message);    
+    	$this->assertTrue($message instanceof PEIP\INF\Message\Message);
+        $this->assertTrue($message instanceof PEIP\Message\GenericMessage);
     }
     
 	protected function assertPayloads($message, $type){
@@ -230,7 +229,7 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
 	}    
 
 	protected function build($parameter){
-		return call_user_func(array('PEIP_Generic_Message', 'build'), $parameter);
+		return call_user_func(array('PEIP\Message\GenericMessage', 'build'), $parameter);
 	}
 	
 	

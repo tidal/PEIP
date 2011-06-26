@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Util;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,8 +11,6 @@
  *
  * @author timo
  */
-
-namespace PEIP\Util;
 
 class Reflection {
 
@@ -35,7 +35,7 @@ class Reflection {
         if(isset(self::$classInfo[$class])){
             return self::$classInfo[$class];
         }
-        $cls = Reflection_Pool::getInstance($class);
+        $cls = ReflectionPool::getInstance($class);
         // get the names of implemented interfaces
         $classInfo = (array)$cls->getInterfaceNames();
         $classInfo[] = $cls->getName();

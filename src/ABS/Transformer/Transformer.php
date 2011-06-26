@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\ABS\Transformer;
+
+namespace PEIP\ABS\Transformer;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +25,6 @@
 
 
 use \PEIP\Pipe\Pipe;
-
-namespace PEIP\ABS\Transformer;
 
 abstract class Transformer 
     extends \PEIP\Pipe\Pipe {

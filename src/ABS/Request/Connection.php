@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\ABS\Request;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +22,6 @@
 
 
 
-
-namespace PEIP\ABS\Request;
 
 abstract class Connection 
     implements \PEIP\INF\Request\Connection {

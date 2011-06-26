@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Gateway;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +22,6 @@
 
 use PEIP\Message\GenericMessage;
 use PEIP\Message\MessageBuilder;
-
-namespace PEIP\Gateway;
 
 class SimpleMessagingGateway 
     implements 
@@ -72,7 +72,7 @@ class SimpleMessagingGateway
      */
     public function setReplyChannel(\PEIP\INF\Channel\Channel $replyChannel){
         if(!($replyChannel instanceof \PEIP\INF\Channel\PollableChannel)){
-            throw new InvalidArgumentException('reply channel must be instance of \PEIP\INF\Channel\PollableChannel.');
+            throw new \InvalidArgumentException('reply channel must be instance of \PEIP\INF\Channel\PollableChannel.');
         }       
         $this->replyChannel = $replyChannel;
     }
@@ -96,7 +96,7 @@ class SimpleMessagingGateway
      */
     public function receive(){
         if(!isset($this->replyChannel)){
-            throw new LogicException('No replyChannel set.');
+            throw new \LogicException('No replyChannel set.');
         }       
         $message = $this->replyChannel->receive();
         if($message){
@@ -117,7 +117,7 @@ class SimpleMessagingGateway
         try {
             $res = $this->receive();
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             return NULL;
         }
         return $res;

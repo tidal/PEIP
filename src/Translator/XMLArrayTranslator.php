@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Translator;
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -18,8 +20,6 @@
  * @implements \PEIP\INF\Transformer\Transformer, \PEIP\INF\Event\Connectable, \PEIP\INF\Channel\SubscribableChannel, \PEIP\INF\Channel\Channel, \PEIP\INF\Handler\Handler, \PEIP\INF\Message\MessageBuilder
  */
 
-namespace PEIP\Translator;
-
 class XMLArrayTranslator {
 
     public static function translate($content){
@@ -27,14 +27,14 @@ class XMLArrayTranslator {
         try {
             $node = simplexml_load_string($content);
         }
-        catch(Exception $e){
+        catch(\Exception $e){
             return false;
         }     
         
         return self::doTranslate($node);
     }
 
-    protected static function doTranslate(SimpleXMLElement $node){
+    protected static function doTranslate(\SimpleXMLElement $node){
         
         $array = array();
         $array['type'] = $node['type']

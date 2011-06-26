@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Message;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +23,6 @@
 
 
 
-namespace PEIP\Message;
-
 class ErrorMessage extends \PEIP\Message\GenericMessage implements \PEIP\INF\Message\Message {
 
     protected $payload;
@@ -36,7 +36,7 @@ class ErrorMessage extends \PEIP\Message\GenericMessage implements \PEIP\INF\Mes
      * @param $headers 
      * @return 
      */
-    public function __construct(Exception $payload, array $headers = array()){
+    public function __construct(\Exception $payload, array $headers = array()){
         $this->payload = $payload;
         $this->headers = $headers;
     }

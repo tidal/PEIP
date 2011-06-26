@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Service;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
  */
 
 
-
-namespace PEIP\Service;
 
 class ServiceActivator
     extends \PEIP\ABS\Service\ServiceActivator {

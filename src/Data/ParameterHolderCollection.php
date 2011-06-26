@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Data;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
 
 
 
-
-namespace PEIP\Data;
 
 class ParameterHolderCollection 
     implements \PEIP\INF\Data\ParameterHolderCollection {
@@ -51,7 +51,7 @@ class ParameterHolderCollection
             if($store instanceof \PEIP\INF\Data\ParameterHolder){
                 $this->stores[$namespace] = $store;
             }else{
-                throw new Exception('Could not build Instance of \PEIP\INF\Data\ParameterHolder from factory.');
+                throw new \Exception('Could not build Instance of \PEIP\INF\Data\ParameterHolder from factory.');
             }
         }
         return $this->stores[$namespace];

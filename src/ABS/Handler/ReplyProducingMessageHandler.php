@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\ABS\Handler;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -22,8 +24,6 @@
 
 use PEIP\Message\GenericMessage;
 use PEIP\Message\MessageBuilder;
-
-namespace PEIP\ABS\Handler;
 
 abstract class ReplyProducingMessageHandler
     extends \PEIP\ABS\Handler\MessageHandler

@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\ABS\Channel;
+
+namespace PEIP\ABS\Channel;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -22,8 +26,6 @@
 
 use PEIP\Util\Test;
 use PEIP\Dispatcher\Dispatcher;
-
-namespace PEIP\ABS\Channel;
 
 abstract class SubscribableChannel 
     extends \PEIP\ABS\Channel\Channel

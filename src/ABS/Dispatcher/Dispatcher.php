@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\ABS\Dispatcher;
+
+namespace PEIP\ABS\Dispatcher;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -17,8 +21,6 @@
  * @subpackage dispatcher 
  */
 
-
-namespace PEIP\ABS\Dispatcher;
 
 abstract class Dispatcher {
     

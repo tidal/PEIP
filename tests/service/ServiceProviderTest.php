@@ -1,8 +1,5 @@
 <?php 
 
-
-use \PEIP\Service\ServiceProvider as PEIP_Service_Provider;
-
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
 PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/ServiceContainerTest.php');
@@ -14,21 +11,21 @@ class ServiceProviderTest extends ServiceContainerTest  {
 
 
     public function testConstruct(){
-        $provider = new PEIP_Service_Provider();
+        $provider = new PEIP\Service\ServiceProvider();
 
-        $this->assertEquals(get_class($provider), 'PEIP_Service_Provider');
+        $this->assertEquals(get_class($provider), 'PEIP\Service\ServiceProvider');
     }
 
     public function testConstructEmptyConfigArray(){
-        $provider = new PEIP_Service_Provider(array());
+        $provider = new PEIP\Service\ServiceProvider(array());
 
-        $this->assertEquals(get_class($provider), 'PEIP_Service_Provider');
+        $this->assertEquals(get_class($provider), 'PEIP\Service\ServiceProvider');
     }
 
     public function testConstructEmptyConfigArrayOfArray(){
-        $provider = new PEIP_Service_Provider(array(array(), array()));
+        $provider = new PEIP\Service\ServiceProvider(array(array(), array()));
 
-        $this->assertEquals(get_class($provider), 'PEIP_Service_Provider');
+        $this->assertEquals(get_class($provider), 'PEIP\Service\ServiceProvider');
     }
 
     public function testGetServices(){
@@ -37,7 +34,7 @@ class ServiceProviderTest extends ServiceContainerTest  {
             's2' => new HelloService,
             's3' => new HelloService
         );
-        $provider = new PEIP_Service_Provider(array());
+        $provider = new \PEIP\Service\ServiceProvider(array());
         foreach($services as $key=>$service){
             $provider->setService($key, $service);
         }
@@ -46,14 +43,14 @@ class ServiceProviderTest extends ServiceContainerTest  {
     }
 
     public function testAddConfig(){
-        $provider = new PEIP_Service_Provider();
+        $provider = new PEIP\Service\ServiceProvider();
 
         $provider->addConfig(array('id'=>'123'));
-        $this->assertEquals(get_class($provider), 'PEIP_Service_Provider');
+        $this->assertEquals(get_class($provider), 'PEIP\Service\ServiceProvider');
     }
     
     public function testgetServiceConfig(){
-        $provider = new PEIP_Service_Provider();
+        $provider = new \PEIP\Service\ServiceProvider();
         $id = 'id123';
         $config = array('id'=>$id);
         $provider->addConfig($config);
@@ -61,7 +58,7 @@ class ServiceProviderTest extends ServiceContainerTest  {
     }
 
     public function testgetServiceConfigDifferentIdAttribute(){
-        $provider = new PEIP_Service_Provider(array(), 'name');
+        $provider = new \PEIP\Service\ServiceProvider(array(), 'name');
         $id = 'id123';
         $name = 'name123';
         $config = array('id'=>$id, 'name'=>$name);
@@ -71,7 +68,7 @@ class ServiceProviderTest extends ServiceContainerTest  {
     }
 
     public function testProvideService(){
-        $provider = new PEIP_Service_Provider();
+        $provider = new \PEIP\Service\ServiceProvider();
         $provider->setService('bar', new HelloService);
         $service = $provider->provideService('bar');
         $this->assertTrue(is_object($service));
@@ -85,7 +82,7 @@ class ServiceProviderTest extends ServiceContainerTest  {
             'type' => 'foo',
             'id'   => 'bar'
         );
-        $provider = new PEIP_Service_Provider();
+        $provider = new \PEIP\Service\ServiceProvider();
         $test = $this;
         $provider->registerNodeBuilder('foo', function($conf)use($test, $config){
             $test->assertSame($conf, $config);
@@ -103,10 +100,10 @@ class ServiceProviderTest extends ServiceContainerTest  {
 
     public function testEventBeforeAddConfig(){
         $config = array('id'=>'foo');
-        $eventName = PEIP_Service_Provider::EVENT_BEFORE_ADD_CONFIG;
-        $provider = new PEIP_Service_Provider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_BEFORE_ADD_CONFIG;
+        $provider = new \PEIP\Service\ServiceProvider();
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_NODE_CONFIG => $config
+            \PEIP\Service\ServiceProvider::HEADER_NODE_CONFIG => $config
         ));
 
         $provider->addConfig($config);
@@ -116,10 +113,10 @@ class ServiceProviderTest extends ServiceContainerTest  {
 
     public function testEventAfterAddConfig(){
         $config = array('id'=>'foo');
-        $eventName = PEIP_Service_Provider::EVENT_AFTER_ADD_CONFIG;
-        $provider = new PEIP_Service_Provider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_AFTER_ADD_CONFIG;
+        $provider = new \PEIP\Service\ServiceProvider();
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_NODE_CONFIG => $config
+            \PEIP\Service\ServiceProvider::HEADER_NODE_CONFIG => $config
         ));
 
         $provider->addConfig($config);
@@ -129,10 +126,10 @@ class ServiceProviderTest extends ServiceContainerTest  {
 
     public function testEventBeforeProvideService(){
         $key = 'bar';
-        $eventName = PEIP_Service_Provider::EVENT_BEFORE_PROVIDE_SERVICE;
-        $provider = new PEIP_Service_Provider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_BEFORE_PROVIDE_SERVICE;
+        $provider = new \PEIP\Service\ServiceProvider();
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_KEY => $key
+            \PEIP\Service\ServiceProvider::HEADER_KEY => $key
         ));
 
         $provider->setService('bar', new HelloService);
@@ -145,11 +142,11 @@ class ServiceProviderTest extends ServiceContainerTest  {
     public function testEventAfterProvideService(){
         $key = 'bar';
         $service = new HelloService;
-        $eventName = PEIP_Service_Provider::EVENT_AFTER_PROVIDE_SERVICE;
-        $provider = new PEIP_Service_Provider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_AFTER_PROVIDE_SERVICE;
+        $provider = new \PEIP\Service\ServiceProvider();
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_KEY => $key,
-            PEIP_Service_Provider::HEADER_SERVICE => $service
+            \PEIP\Service\ServiceProvider::HEADER_KEY => $key,
+            \PEIP\Service\ServiceProvider::HEADER_SERVICE => $service
         ));
         $provider->setService($key, $service);
         $provider->provideService($key);
@@ -160,10 +157,10 @@ class ServiceProviderTest extends ServiceContainerTest  {
  
     public function testEventBeforeCreateService(){ 
         $key = 'bar';
-        $provider = new PEIP_Service_Provider();
-        $eventName = PEIP_Service_Provider::EVENT_BEFORE_CREATE_SERVICE;
+        $provider = new \PEIP\Service\ServiceProvider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_BEFORE_CREATE_SERVICE;
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_KEY => $key
+            \PEIP\Service\ServiceProvider::HEADER_KEY => $key
         ));
         
         $service = $provider->provideService('bar');
@@ -178,11 +175,11 @@ class ServiceProviderTest extends ServiceContainerTest  {
             'type' => $nodeName,
             'id'   => $key
         );       
-        $provider = new PEIP_Service_Provider();
-        $eventName = PEIP_Service_Provider::EVENT_CREATE_SERVICE_SUCCESS;
+        $provider = new \PEIP\Service\ServiceProvider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_CREATE_SERVICE_SUCCESS;
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_KEY => $key,
-            PEIP_Service_Provider::HEADER_SERVICE => self::buildHelloService()
+            \PEIP\Service\ServiceProvider::HEADER_KEY => $key,
+            \PEIP\Service\ServiceProvider::HEADER_SERVICE => self::buildHelloService()
         ));
         $provider->registerNodeBuilder($nodeName, array('ServiceProviderTest', 'buildHelloService'));
         $provider->addConfig($config);
@@ -194,10 +191,10 @@ class ServiceProviderTest extends ServiceContainerTest  {
     public function testEventCreateServiceErrorMissingConfig(){
 
         $key = 'bar';
-        $provider = new PEIP_Service_Provider();
-        $eventName = PEIP_Service_Provider::EVENT_CREATE_SERVICE_ERROR;
+        $provider = new \PEIP\Service\ServiceProvider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_CREATE_SERVICE_ERROR;
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_KEY => $key
+            \PEIP\Service\ServiceProvider::HEADER_KEY => $key
         ));
         $service = $provider->provideService($key);
 
@@ -212,10 +209,10 @@ class ServiceProviderTest extends ServiceContainerTest  {
             'type' => 'foo',
             'id'   => $key
         );
-        $provider = new PEIP_Service_Provider();
-        $eventName = PEIP_Service_Provider::EVENT_CREATE_SERVICE_ERROR;
+        $provider = new \PEIP\Service\ServiceProvider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_CREATE_SERVICE_ERROR;
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_KEY => $key
+            \PEIP\Service\ServiceProvider::HEADER_KEY => $key
         ));
         $provider->addConfig($config);
         $service = $provider->provideService($key);
@@ -232,11 +229,11 @@ class ServiceProviderTest extends ServiceContainerTest  {
             'type' => $nodeName,
             'id'   => $key
         );
-        $provider = new PEIP_Service_Provider();
-        $eventName = PEIP_Service_Provider::EVENT_BEFORE_BUILD_NODE;
+        $provider = new \PEIP\Service\ServiceProvider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_BEFORE_BUILD_NODE;
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_NODE_CONFIG => $config,
-            PEIP_Service_Provider::HEADER_NODE_NAME => $nodeName
+            \PEIP\Service\ServiceProvider::HEADER_NODE_CONFIG => $config,
+            \PEIP\Service\ServiceProvider::HEADER_NODE_NAME => $nodeName
         ));
         $provider->registerNodeBuilder($nodeName, array('ServiceProviderTest', 'buildHelloService'));
         $provider->addConfig($config);
@@ -252,12 +249,12 @@ class ServiceProviderTest extends ServiceContainerTest  {
             'type' => $nodeName,
             'id'   => $key
         );
-        $provider = new PEIP_Service_Provider();
-        $eventName = PEIP_Service_Provider::EVENT_BUILD_NODE_SUCCESS;
+        $provider = new \PEIP\Service\ServiceProvider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_BUILD_NODE_SUCCESS;
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_NODE_CONFIG   => $config,
-            PEIP_Service_Provider::HEADER_NODE_NAME     => $nodeName,
-            PEIP_Service_Provider::HEADER_NODE          => self::buildHelloService()
+            \PEIP\Service\ServiceProvider::HEADER_NODE_CONFIG   => $config,
+            \PEIP\Service\ServiceProvider::HEADER_NODE_NAME     => $nodeName,
+            \PEIP\Service\ServiceProvider::HEADER_NODE          => self::buildHelloService()
         ));
         $provider->registerNodeBuilder($nodeName, array('ServiceProviderTest', 'buildHelloService'));
         $provider->addConfig($config);
@@ -273,11 +270,11 @@ class ServiceProviderTest extends ServiceContainerTest  {
             'type' => $nodeName,
             'id'   => $key
         );
-        $provider = new PEIP_Service_Provider();
-        $eventName = PEIP_Service_Provider::EVENT_BUILD_NODE_ERROR;
+        $provider = new \PEIP\Service\ServiceProvider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_BUILD_NODE_ERROR;
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_NODE_CONFIG   => $config,
-            PEIP_Service_Provider::HEADER_NODE_NAME     => $nodeName
+            \PEIP\Service\ServiceProvider::HEADER_NODE_CONFIG   => $config,
+            \PEIP\Service\ServiceProvider::HEADER_NODE_NAME     => $nodeName
         ));
         $provider->addConfig($config);
         $service = $provider->provideService($key);
@@ -292,11 +289,11 @@ class ServiceProviderTest extends ServiceContainerTest  {
             'type' => $nodeName,
             'id'   => $key
         );
-        $provider = new PEIP_Service_Provider();
-        $eventName = PEIP_Service_Provider::EVENT_BUILD_NODE_ERROR;
+        $provider = new \PEIP\Service\ServiceProvider();
+        $eventName = \PEIP\Service\ServiceProvider::EVENT_BUILD_NODE_ERROR;
         $this->setupEventTest($provider, $eventName, array(
-            PEIP_Service_Provider::HEADER_NODE_CONFIG   => $config,
-            PEIP_Service_Provider::HEADER_NODE_NAME     => $nodeName
+            \PEIP\Service\ServiceProvider::HEADER_NODE_CONFIG   => $config,
+            \PEIP\Service\ServiceProvider::HEADER_NODE_NAME     => $nodeName
         ));
         $provider->registerNodeBuilder($nodeName, function(){return false;});
         $provider->addConfig($config);

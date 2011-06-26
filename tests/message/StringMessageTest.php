@@ -1,7 +1,5 @@
 <?php 
 
-
-use \PEIP\Message\StringMessage as PEIP_String_Message;
 use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
 use \PEIP\INF\Message\Message as PEIP_INF_Message;
 
@@ -12,7 +10,7 @@ PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/PayloadMock.
 
 class StringMessageTest extends GenericMessageTest { 
 
-	protected $testClass  = 'PEIP_String_Message';
+	protected $testClass  = '\PEIP\Message\StringMessage'; 
 
 	
 	protected function setUp()
@@ -30,7 +28,7 @@ class StringMessageTest extends GenericMessageTest {
     	);
  
     	foreach($this->payloads as $type=>$payload){
-    		$this->messages[$type] = new $this->testClass($payload);	
+    		$this->messages[$type] = new \PEIP\Message\StringMessage($payload);
     	}
 		$this->assertEquals(count($this->messages), count($this->payloads));
     
@@ -47,7 +45,7 @@ class StringMessageTest extends GenericMessageTest {
 	public function testHeaders(){
         $headers = $this->getHeaders();
 		foreach($this->payloads as $type=>$payload){
-        	$message = new $this->testClass($payload, $headers);
+        	$message = new \PEIP\Message\StringMessage($payload, $headers);
         	$this->assertMessage($message);
     		$this->assertPayloads($message, $type);
     		$this->assertEquals($headers, $message->getHeaders());		
@@ -56,16 +54,36 @@ class StringMessageTest extends GenericMessageTest {
 
     public function testToString(){
     	$text = 'foo';
-    	$message = new PEIP_String_Message($text);
+    	$message = new \PEIP\Message\StringMessage($text);
     	$this->assertEquals($text, (string)$message);  
     }
 	
-	
+    
+    public function testBuild(){
+        foreach($this->payloads as $type=>$payload){
+        	$message = $this->build(array($payload));
+        	$this->assertMessage($message);
+    		$this->assertPayloads($message, $type);	
+    	}    	    		   
+    }   
+
+    public function testBuildHeader(){
+        $headers = $this->getHeaders();
+    	foreach($this->payloads as $type=>$payload){
+        	$message = $this->build(array($payload, $headers));
+        	$this->assertMessage($message);
+    		$this->assertPayloads($message, $type);
+    		$this->assertEquals($headers, $message->getHeaders());	
+    	}    	    		   
+    } 
+    
+
+
 	protected function assertMessage($message){
         $this->assertTrue(is_object($message));
-    	$this->assertTrue($message instanceof PEIP_Generic_Message, 'message (with class:"'.get_class($message).'")not instanceof PEIP_Generic_Message');
-    	$this->assertTrue($message instanceof PEIP_String_Message, 'message (with class:"'.get_class($message).'")not instanceof PEIP_String_Message');
-    	$this->assertTrue($message instanceof PEIP_INF_Message, 'message (with class:"'.get_class($message).'")not instanceof PEIP_Message_Interface');    
+    	$this->assertTrue($message instanceof \PEIP\Message\GenericMessage, 'message (with class:"'.get_class($message).'")not instanceof PEIP_Generic_Message');
+    	$this->assertTrue($message instanceof \PEIP\Message\StringMessage, 'message (with class:"'.get_class($message).'")not instanceof PEIP_String_Message');
+    	$this->assertTrue($message instanceof \PEIP\INF\Message\Message, 'message (with class:"'.get_class($message).'")not instanceof PEIP_Message_Interface');
     }
     
 	protected function assertPayloads($message, $type){
@@ -74,8 +92,8 @@ class StringMessageTest extends GenericMessageTest {
   
        
 	
-	protected function build($parameter){
-		return call_user_func(array('PEIP_String_Message', 'build'), $parameter);
+	protected function build($parameter){ 
+		return call_user_func(array('\PEIP\Message\StringMessage', 'build'), $parameter);
 	}
 	
 }

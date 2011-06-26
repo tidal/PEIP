@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Service;
+
+namespace PEIP\Service;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +23,6 @@
  */
 
 
-
-namespace PEIP\Service;
 
 class ServiceContainer
     extends \PEIP\ABS\Base\Connectable

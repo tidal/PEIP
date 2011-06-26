@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Listener;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +22,6 @@
 
 
 use \PEIP\Pipe\FixedEventPipe;
-
-namespace PEIP\Listener;
 
 class Wiretap 
     extends \PEIP\Pipe\FixedEventPipe {

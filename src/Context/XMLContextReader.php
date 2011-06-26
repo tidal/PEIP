@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Context;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -10,8 +12,6 @@
  * @author timo
  */
 use PEIP\Translator\XMLArrayTranslator;
-
-namespace PEIP\Context;
 
 class XMLContextReader extends \PEIP\ABS\Base\Connectable {
     //put your code here
@@ -31,7 +31,7 @@ class XMLContextReader extends \PEIP\ABS\Base\Connectable {
         $this->config = array();
     }
 
-    public static function convertXmlToArray(SimpleXMLElement $node, array $array = array()){
+    public static function convertXmlToArray(\SimpleXMLElement $node, array $array = array()){
         $node->type = $node->type ? $node->type : $node->getName();
 
         foreach($node->attributes() as $name=>$value){

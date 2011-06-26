@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\ABS\Splitter;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +23,6 @@
 
 
 use \PEIP\Pipe\Pipe;
-
-namespace PEIP\ABS\Splitter;
 
 abstract class MessageSplitter 
     extends \PEIP\Pipe\Pipe {

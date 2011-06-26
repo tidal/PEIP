@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\ABS\Dispatcher;
+
+namespace PEIP\ABS\Dispatcher;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +25,6 @@
  */
 
 use PEIP\Util\Test;
-
-namespace PEIP\ABS\Dispatcher;
 
 abstract class MapDispatcher
     extends 

@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Channel;
+
+namespace PEIP\Channel;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +24,6 @@
  */
 
 
-
-namespace PEIP\Channel;
 
 class PublishSubscribeChannel 
     extends \PEIP\ABS\Channel\SubscribableChannel {

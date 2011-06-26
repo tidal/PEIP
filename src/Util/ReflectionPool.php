@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Util;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -9,8 +11,6 @@
  *
  * @author timo
  */
-
-namespace PEIP\Util;
 
 class ReflectionPool {
 
@@ -29,7 +29,7 @@ class ReflectionPool {
             : (string) $argument;
         return isset(self::$instances[$className])
             ? self::$instances[$className]
-            : self::$instances[$className] = new ReflectionClass($className);
+            : self::$instances[$className] = new \ReflectionClass($className);
 
     }
 

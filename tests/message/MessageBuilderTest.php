@@ -1,7 +1,5 @@
 <?php 
 
-
-use \PEIP\Message\MessageBuilder as PEIP_Message_Builder;
 use \PEIP\INF\Message\Message as PEIP_INF_Message;
 use \PEIP\Message\StringMessage as PEIP_String_Message;
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
@@ -12,7 +10,7 @@ class MessageBuilderTest
 	protected $builder;
 
 	public function setup(){
-		$this->builder = new PEIP_Message_Builder;
+		$this->builder = new PEIP\Message\MessageBuilder;
 	}
 
 	public function testCopyHeaders(){
@@ -76,8 +74,8 @@ class MessageBuilderTest
 	}
 	
 	public function testSetMessageClass(){
-		$this->builder->setMessageClass('PEIP_String_Message');
-		$this->assertTrue($this->builder->build() instanceof PEIP_String_Message);
+		$this->builder->setMessageClass('\PEIP\Message\StringMessage');
+		$this->assertTrue($this->builder->build() instanceof \PEIP\Message\StringMessage);
 	}
 
 	public function testGetMessageClass(){
@@ -86,12 +84,12 @@ class MessageBuilderTest
 	}
 
 	public function testGetInstance(){
-		$this->assertTrue(PEIP_Message_Builder::getInstance() instanceof PEIP_Message_Builder);	
+		$this->assertTrue(PEIP\Message\MessageBuilder::getInstance() instanceof PEIP\Message\MessageBuilder);
 	}
 	
 	public function testGetInstanceFromMessage(){
-		$message = new PEIP_String_Message('test');
-		$builder = PEIP_Message_Builder::getInstanceFromMessage($message);
-		$this->assertEquals('PEIP_String_Message', $builder->getMessageClass());	
+		$message = new PEIP\Message\StringMessage('test');
+		$builder = PEIP\Message\MessageBuilder::getInstanceFromMessage($message);
+		$this->assertEquals('PEIP\Message\StringMessage', $builder->getMessageClass());
 	}	
 } 

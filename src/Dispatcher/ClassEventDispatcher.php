@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Dispatcher;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -12,8 +14,6 @@
 use PEIP\Util\Reflection;
 use PEIP\Util\ReflectionPool;
 use PEIP\Event\EventBuilder;
-
-namespace PEIP\Dispatcher;
 
 class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
 
@@ -71,10 +71,10 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
                      $object
                  );
             }else{
-                throw new InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
+                throw new \InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
             }
         }else{
-            throw new InvalidArgumentException('object must be instance of \PEIP\INF\Event\Event');
+            throw new \InvalidArgumentException('object must be instance of \PEIP\INF\Event\Event');
         }
     }       //put your code here
 

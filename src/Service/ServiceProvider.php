@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Service;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,8 +13,6 @@
  */
 use PEIP\Context\XMLContext;
 use PEIP\Plugins\BasePlugin;
-
-namespace PEIP\Service;
 
 class ServiceProvider extends \PEIP\Service\ServiceContainer  {
 

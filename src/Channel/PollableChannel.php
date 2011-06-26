@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Channel;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
  * @implements \PEIP\INF\Event\Connectable, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\PollableChannel
  */
 
-
-namespace PEIP\Channel;
 
 class PollableChannel  
     extends \PEIP\ABS\Channel\Channel

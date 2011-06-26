@@ -1,9 +1,5 @@
 <?php 
 
-
-use \PEIP\INF\Event\Connectable as PEIP_INF_Connectable;
-use \PEIP\INF\Event\Event as PEIP_INF_Event;
-
 class BaseConnetableTest extends PHPUnit_Framework_TestCase   {
 
     protected 
@@ -12,7 +8,7 @@ class BaseConnetableTest extends PHPUnit_Framework_TestCase   {
         $connectable = NULL,
         $headers = array();
 
-    protected function setupEventTest(PEIP_INF_Connectable $connectable, $eventName, $headers = array()){
+    protected function setupEventTest(\PEIP\INF\Event\Connectable $connectable, $eventName, $headers = array()){
         $this->eventName = $eventName;
         $this->eventThrown = false;
         $this->connectable = $connectable;
@@ -22,9 +18,9 @@ class BaseConnetableTest extends PHPUnit_Framework_TestCase   {
 
     }
 
-    public function eventCallback(PEIP_INF_Event $event){
-        $this->assertTrue($event instanceof PEIP_INF_Event);
-        $this->assertTrue($event->getContent() instanceof PEIP_INF_Connectable);
+    public function eventCallback(\PEIP\INF\Event\Event $event){
+        $this->assertTrue($event instanceof \PEIP\INF\Event\Event);
+        $this->assertTrue($event->getContent() instanceof \PEIP\INF\Event\Connectable);
         foreach($this->headers as $name=>$value){
             $this->assertTrue(
                 $event->getHeader($name) !== NULL,

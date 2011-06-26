@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Autoload;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +22,6 @@
  * @extends \PEIP\Autoload\SimpleAutoload
  */
 
-
-namespace PEIP\Autoload;
 
 require_once(dirname(__FILE__).'/SimpleAutoload.php');
 

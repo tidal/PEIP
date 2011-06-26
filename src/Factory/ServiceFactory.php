@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Factory;
 /* 
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -12,8 +14,6 @@
 use PEIP\Util\Test;
 use PEIP\Base\GenericBuilder;
 use PEIP\Context\XMLContext;
-
-namespace PEIP\Factory;
 
 class ServiceFactory {
      /**
@@ -54,14 +54,14 @@ class ServiceFactory {
         }else{
             $service = self::build($cls, $arguments);
         }
-            }catch(Exception $e){
-                throw new RuntimeException('Could not create Service "'.$cls.'" -> '.$e->getMessage());
+            }catch(\Exception $e){
+                throw new \RuntimeException('Could not create Service "'.$cls.'" -> '.$e->getMessage());
             }
         }
         if(is_object($service)){
             return $service;
         }
-        throw new RuntimeException('Could not create Service "'.$cls.'". Class does not exist.');
+        throw new \RuntimeException('Could not create Service "'.$cls.'". Class does not exist.');
     }
 
 
@@ -130,7 +130,7 @@ class ServiceFactory {
         if("" != (string)$config["class"]  || $defaultClass){
              $service = ServiceFactory::doBuild($config, $arguments, $defaultClass);
         }else{
-            throw new RuntimeException('Could not create Service. no class or reference given.');
+            throw new \RuntimeException('Could not create Service. no class or reference given.');
         }
         if($config["ref_property"]){
             $service = $service->{(string)$config["ref_property"]};
@@ -144,7 +144,7 @@ class ServiceFactory {
             $service = call_user_func_array(array($service, (string)$config["ref_method"]), $args);
         }
         if(!is_object($service)){
-            throw new RuntimeException('Could not create Service.');
+            throw new \RuntimeException('Could not create Service.');
         }
         $service = self::modifyService($service, $config);
         $id = trim((string)$config['id']);

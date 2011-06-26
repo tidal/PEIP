@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Base;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -22,8 +24,6 @@
 use PEIP\Util\Test;
 use PEIP\Util\ReflectionPool;
 
-namespace PEIP\Base;
-
 class GenericBuilder 
     implements 
         \PEIP\INF\Base\SingletonMap {
@@ -43,11 +43,11 @@ class GenericBuilder
      * @param boolean $storeRef wether to store a reference for new instance. default: true 
      * @return 
      */
-    public function __construct($className, ReflectionClass $reflectionClass = NULL, $storeRef = true){      
+    public function __construct($className, \ReflectionClass $reflectionClass = NULL, $storeRef = true){
         if($reflectionClass ){
             
             if($reflectionClass->getName() != $className){
-                throw new Exception(
+                throw new \Exception(
                     'Constructing GenericBuilder with wrong ReflectionClass'
                 );
             }
@@ -85,7 +85,7 @@ class GenericBuilder
     public function build(array $arguments = array()){      
         if(Test::assertClassHasConstructor($this->className)){
             if(!Test::assertRequiredConstructorParameters($this->className, $arguments)){
-                throw new Exception('Missing Argument '.(count($arguments) + 1).' for '.$this->className.'::__construct');
+                throw new \Exception('Missing Argument '.(count($arguments) + 1).' for '.$this->className.'::__construct');
             }
             return $this->getReflectionClass()->newInstanceArgs($arguments);
         }

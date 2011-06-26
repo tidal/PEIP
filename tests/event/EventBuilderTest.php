@@ -1,9 +1,5 @@
 <?php 
 
-
-use \PEIP\Event\EventBuilder as PEIP_Event_Builder;
-use \PEIP\INF\Event\Event as PEIP_INF_Event;
-use \PEIP\Dispatcher\ObjectEventDispatcher as PEIP_Object_Event_Dispatcher;
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 require_once dirname(__FILE__).'/../_files/PublishSubscribeHandlerEvent.php';
 require_once dirname(__FILE__).'/../_files/CallableObject.php';
@@ -12,18 +8,18 @@ class EventBuilderTest
 	extends PHPUnit_Framework_TestCase {
 		
 	public function testGetInstance(){
-            $builder = PEIP_Event_Builder::getInstance();
-            $this->assertSame($builder, PEIP_Event_Builder::getInstance());
+            $builder = \PEIP\Event\EventBuilder::getInstance();
+            $this->assertSame($builder, \PEIP\Event\EventBuilder::getInstance());
 	} 
 
 	public function testBuild(){
-            $builder = new PEIP_Event_Builder;
-            $this->assertTrue($builder->build(321, 'foo') instanceof PEIP_INF_Event);
+            $builder = new \PEIP\Event\EventBuilder;
+            $this->assertTrue($builder->build(321, 'foo') instanceof \PEIP\INF\Event\Event);
 	}	
 	
 	public function testBuildAndDispatch(){
-            $builder = new PEIP_Event_Builder;
-            $dispatcher = new PEIP_Object_Event_Dispatcher();
+            $builder = new \PEIP\Event\EventBuilder;
+            $dispatcher = new \PEIP\Dispatcher\ObjectEventDispatcher();
             $callable = new CallableObject($this);
             $callable->setObject($builder);
             $dispatcher->connect('foo', $builder, new PublishSubscribeHandlerEvent($this));

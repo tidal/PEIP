@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Message;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -20,8 +22,6 @@
 
 use PEIP\Util\Test;
 use PEIP\Base\GenericBuilder;
-
-namespace PEIP\Message;
 
 class GenericMessage 
     implements 
@@ -70,7 +70,7 @@ class GenericMessage
     protected function doSetHeaders($headers){
         $headers = Test::ensureArrayAccess($headers);
         if(is_array($headers)){
-            $headers = new ArrayObject($headers);
+            $headers = new \ArrayObject($headers);
         }
         $this->headers = $headers;
     }
@@ -135,11 +135,11 @@ class GenericMessage
         try {
             $res = (string)$this->getContent();
         }
-        catch(Exception $e){           
+        catch(\Exception $e){           
             try {
                 $res = get_class($this->getContent());
             }
-            catch(Exception $e){
+            catch(\Exception $e){
 
             }
         }
@@ -160,6 +160,6 @@ class GenericMessage
      * @return GenericMessage new class instance
      */    
     public static function build(array $arguments = array()){
-        return GenericBuilder::getInstance('GenericMessage')->build($arguments);    
+        return GenericBuilder::getInstance(__CLASS__)->build($arguments);
     }     
 } 

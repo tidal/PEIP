@@ -55,7 +55,7 @@ class TestTest extends PHPUnit_Framework_TestCase  {
      public function testAssertEvent(){
 
          $this->assertFalse(PEIP_Test::assertEvent(123));
-         $this->assertTrue(PEIP_Test::assertEvent('PEIP_Event'));
+         $this->assertTrue(PEIP_Test::assertEvent('PEIP\Event\Event'));
          $this->assertTrue(PEIP_Test::assertEvent(new PEIP_Event('foo', 'bar')));
 
      }

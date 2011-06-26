@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\ABS\Channel;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -16,8 +18,6 @@
  * @implements \PEIP\INF\Channel\Channel, \PEIP\INF\Event\Connectable
  */
 
-
-namespace PEIP\ABS\Channel;
 
 abstract class Channel
     extends \PEIP\ABS\Base\Connectable

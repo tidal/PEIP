@@ -1,4 +1,6 @@
 <?php
+
+namespace PEIP\Service;
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
  * @implements \PEIP\INF\Message\MessageBuilder, \PEIP\INF\Handler\Handler, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\SubscribableChannel, \PEIP\INF\Event\Connectable
  */
 
-
-namespace PEIP\Service;
 
 class SplittingServiceActivator
     extends \PEIP\Service\ServiceActivator {

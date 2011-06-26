@@ -1,8 +1,8 @@
 <?php
 
-
-
 namespace PEIP\Channel;
+
+
 
 class ChannelAdapter {
 
@@ -25,7 +25,7 @@ class ChannelAdapter {
     public function handle($object){
         $message = $this->getMessage($object);
                 if(!is_object($message)){ 
-                    throw new Exception('Could not get Message from Channel');
+                    throw new \Exception('Could not get Message from Channel');
                 }               
                 $this->handler->handle($message);
     } 

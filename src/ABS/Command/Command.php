@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\ABS\Command;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,8 +23,6 @@
 
 
 use \PEIP\Data\ParameterHolder;
-
-namespace PEIP\ABS\Command;
 
 abstract class Command 
     extends \PEIP\Data\ParameterHolder 

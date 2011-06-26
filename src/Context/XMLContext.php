@@ -1,5 +1,9 @@
 <?php
 
+namespace PEIP\Context;
+
+namespace PEIP\Context;
+
 /*
  * This file is part of the PEIP package.oBuild
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -30,8 +34,6 @@ use PEIP\Channel\PublishSubscribeChannel;
 use PEIP\Gateway\SimpleMessagingGateway;
 use PEIP\Listener\Wiretap;
 use PEIP\Service\ServiceActivator;
-
-namespace PEIP\Context;
 
 class XMLContext 
     implements 
@@ -100,7 +102,7 @@ class XMLContext
         if(file_exists($file)){
             return self::createFromString(file_get_contents($file));
         }else{
-            throw new RuntimeException('Cannot open file  "'.$file.'".');
+            throw new \RuntimeException('Cannot open file  "'.$file.'".');
         }
     }
            
@@ -337,7 +339,7 @@ class XMLContext
     protected function requestService($id){
         $service = $this->getService($id);
         if($service === NULL){
-            throw new RuntimeException('Service "'.$id.'" not found.');
+            throw new \RuntimeException('Service "'.$id.'" not found.');
         } 
         return $service;
     }
@@ -699,7 +701,7 @@ class XMLContext
             $this->doGetChannel('output', $config)
         );
         if($args[0] == NULL){
-            throw new RuntimeException('Could not receive input channel.');
+            throw new \RuntimeException('Could not receive input channel.');
         }
         return $args;
     }
@@ -771,7 +773,7 @@ class XMLContext
         }elseif($config["ref"]){
             $service = $this->getService((string)$config['ref']);
         }else{
-            throw new RuntimeException('Could not create Service. no class or reference given.');
+            throw new \RuntimeException('Could not create Service. no class or reference given.');
         }
         if($config["ref_property"]){
             $service = $service->{(string)$config["ref_property"]}; 
@@ -785,7 +787,7 @@ class XMLContext
             $service = call_user_func_array(array($service, (string)$config["ref_method"]), $args);
         }       
         if(!is_object($service)){
-            throw new RuntimeException('Could not create Service.'); 
+            throw new \RuntimeException('Could not create Service.'); 
         }
         $service = $this->modifyService($service, $config);
         $id = trim((string)$config['id']);
@@ -815,14 +817,14 @@ class XMLContext
         }else{
             $service = self::build($cls, $arguments); 
         }        
-            }catch(Exception $e){
-                throw new RuntimeException('Could not create Service "'.$cls.'" -> '.$e->getMessage());
+            }catch(\Exception $e){
+                throw new \RuntimeException('Could not create Service "'.$cls.'" -> '.$e->getMessage());
             }           
         }
         if(is_object($service)){
             return $service;
         }       
-        throw new RuntimeException('Could not create Service "'.$cls.'". Class does not exist.');           
+        throw new \RuntimeException('Could not create Service "'.$cls.'". Class does not exist.');           
     }   
 
     /**

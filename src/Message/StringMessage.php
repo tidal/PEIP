@@ -1,5 +1,7 @@
 <?php
 
+namespace PEIP\Message;
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -19,8 +21,6 @@
  */
 
 use PEIP\Base\GenericBuilder;
-
-namespace PEIP\Message;
 
 class StringMessage 
     extends \PEIP\Message\GenericMessage {
@@ -46,6 +46,6 @@ class StringMessage
      * @return boolean wether the header is set
      */     
     public static function build(array $arguments = array()){
-        return GenericBuilder::getInstance('StringMessage')->build($arguments); 
+        return GenericBuilder::getInstance(__CLASS__)->build($arguments);
     }
 }
