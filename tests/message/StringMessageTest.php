@@ -1,4 +1,9 @@
-<?php
+<?php 
+
+
+use \PEIP\Message\StringMessage as PEIP_String_Message;
+use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
+use \PEIP\INF\Message\Message as PEIP_INF_Message;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

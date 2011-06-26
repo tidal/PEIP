@@ -1,4 +1,9 @@
-<?php
+<?php 
+
+
+use \PEIP\Dispatcher\ObjectEventDispatcher as PEIP_Object_Event_Dispatcher;
+use \PEIP\Event\Event as PEIP_Event;
+use \PEIP\Handler\CallableHandler as PEIP_Callable_Handler;
 
 require_once dirname(__FILE__).'/ObjectMapDispatcherTest.php';
 

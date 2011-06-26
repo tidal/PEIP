@@ -1,4 +1,10 @@
-<?php
+<?php 
+
+
+use \PEIP\Channel\PublishSubscribeChannel as PEIP_Publish_Subscribe_Channel;
+use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
+use \PEIP\Dispatcher\Dispatcher as PEIP_Dispatcher;
+use \PEIP\Pipe\Pipe as PEIP_Pipe;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 require_once dirname(__FILE__).'/ChannelTest.php';

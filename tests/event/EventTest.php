@@ -1,4 +1,10 @@
-<?php
+<?php 
+
+
+use \PEIP\Event\Event as PEIP_Event;
+use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
+use \PEIP\INF\Message\Message as PEIP_INF_Message;
+use \PEIP\INF\Event\Event as PEIP_INF_Event;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 require_once dirname(__FILE__).'/../message/GenericMessageTest.php';

@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Base\GenericBuilder as PEIP_Generic_Builder;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

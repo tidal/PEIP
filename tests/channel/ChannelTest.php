@@ -1,4 +1,10 @@
-<?php
+<?php 
+
+
+use \PEIP\Dispatcher\ObjectEventDispatcher as PEIP_Object_Event_Dispatcher;
+use \PEIP\Handler\CallableHandler as PEIP_Callable_Handler;
+use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
+use \PEIP\INF\Event\Event as PEIP_INF_Event;
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
 require_once dirname(__FILE__).'/../_files/Channel.php';

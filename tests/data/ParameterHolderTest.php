@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Data\ParameterHolder as PEIP_Parameter_Holder;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

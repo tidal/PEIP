@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Base\Sealer as PEIP_Sealer;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

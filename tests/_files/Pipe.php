@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Pipe\Pipe as PEIP_Pipe;
 
 class DefaultPipe extends PEIP_Pipe {
 

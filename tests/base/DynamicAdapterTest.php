@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Base\DynamicAdapter as PEIP_Dynamic_Adapter;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/DynamicAdapterMock.php');

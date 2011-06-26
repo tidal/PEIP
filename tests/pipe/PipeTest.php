@@ -1,4 +1,9 @@
-<?php
+<?php 
+
+
+use \PEIP\Channel\PollableChannel as PEIP_Pollable_Channel;
+use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
+use \PEIP\Handler\CallableHandler as PEIP_Callable_Handler;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

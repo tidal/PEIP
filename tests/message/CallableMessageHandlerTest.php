@@ -1,4 +1,8 @@
-<?php
+<?php 
+
+
+use \PEIP\Message\CallableMessageHandler as PEIP_Callable_Message_Handler;
+use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

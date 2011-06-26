@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Dispatcher\ClassDispatcher as PEIP_Class_Dispatcher;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 require_once dirname(__FILE__).'/MapDispatcherTest.php';

@@ -1,4 +1,8 @@
-<?php
+<?php 
+
+
+use \PEIP\Util\Test as PEIP_Test;
+use \PEIP\Event\Event as PEIP_Event;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/ReflectionTestResources.php');

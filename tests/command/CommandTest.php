@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Command\Command as PEIP_Command;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

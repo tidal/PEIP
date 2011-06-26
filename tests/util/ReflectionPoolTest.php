@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Util\ReflectionPool as PEIP_Reflection_Pool;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/ReflectionTestResources.php');

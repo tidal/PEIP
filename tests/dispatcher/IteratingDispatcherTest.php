@@ -1,4 +1,8 @@
-<?php
+<?php 
+
+
+use \PEIP\Dispatcher\IteratingDispatcher as PEIP_Iterating_Dispatcher;
+use \PEIP\Handler\CallableHandler as PEIP_Callable_Handler;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

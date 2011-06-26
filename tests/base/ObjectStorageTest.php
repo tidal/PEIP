@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Base\ObjectStorage as PEIP_Object_Storage;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

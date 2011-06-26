@@ -1,4 +1,12 @@
-<?php
+<?php 
+
+
+use \PEIP\Channel\PollableChannel as PEIP_Pollable_Channel;
+use \PEIP\Service\ServiceActivator as PEIP_Service_Activator;
+use \PEIP\Service\StringServiceActivator as PEIP_String_Service_Activator;
+use \PEIP\Channel\PublishSubscribeChannel as PEIP_Publish_Subscribe_Channel;
+use \PEIP\Message\StringMessage as PEIP_String_Message;
+use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 

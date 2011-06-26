@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Base\ReflectionClassBuilder as PEIP_Reflection_Class_Builder;
 
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';

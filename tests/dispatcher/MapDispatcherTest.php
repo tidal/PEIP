@@ -1,4 +1,8 @@
-<?php
+<?php 
+
+
+use \PEIP\Dispatcher\MapDispatcher as PEIP_Map_Dispatcher;
+use \PEIP\Handler\CallableHandler as PEIP_Callable_Handler;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 require_once dirname(__FILE__).'/../_files/CallableObject.php';

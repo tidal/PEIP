@@ -1,4 +1,9 @@
-<?php
+<?php 
+
+
+use \PEIP\Event\EventBuilder as PEIP_Event_Builder;
+use \PEIP\INF\Event\Event as PEIP_INF_Event;
+use \PEIP\Dispatcher\ObjectEventDispatcher as PEIP_Object_Event_Dispatcher;
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 require_once dirname(__FILE__).'/../_files/PublishSubscribeHandlerEvent.php';
 require_once dirname(__FILE__).'/../_files/CallableObject.php';

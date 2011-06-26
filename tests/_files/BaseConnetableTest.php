@@ -1,4 +1,8 @@
-<?php
+<?php 
+
+
+use \PEIP\INF\Event\Connectable as PEIP_INF_Connectable;
+use \PEIP\INF\Event\Event as PEIP_INF_Event;
 
 class BaseConnetableTest extends PHPUnit_Framework_TestCase   {
 

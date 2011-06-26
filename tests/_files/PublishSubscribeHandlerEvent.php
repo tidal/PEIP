@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\INF\Handler\Handler as PEIP_INF_Handler;
 
 class PublishSubscribeHandlerEvent implements PEIP_INF_Handler {
 

@@ -1,4 +1,9 @@
-<?php
+<?php 
+
+
+use \PEIP\Message\MessageBuilder as PEIP_Message_Builder;
+use \PEIP\INF\Message\Message as PEIP_INF_Message;
+use \PEIP\Message\StringMessage as PEIP_String_Message;
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
 class MessageBuilderTest 

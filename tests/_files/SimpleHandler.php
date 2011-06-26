@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\INF\Handler\Handler as PEIP_INF_Handler;
 
 class SimpleHandler implements PEIP_INF_Handler {
 

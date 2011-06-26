@@ -1,4 +1,7 @@
-<?php
+<?php 
+
+
+use \PEIP\Service\ServiceProvider as PEIP_Service_Provider;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
