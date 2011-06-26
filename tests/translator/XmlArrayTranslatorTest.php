@@ -1,10 +1,6 @@
-<?php 
+<?php
 
-
-use \PEIP\Translator\XMLArrayTranslator as PEIP_XML_Array_Translator;
-
-require_once dirname(__FILE__).'/../../misc/bootstrap.php';
-require_once dirname(__FILE__).'/../../src/translator/PEIP_XML_Array_Translator.php';
+require_once dirname(__FILE__).'/../../misc/bootstrap.php'; 
 
 class XmlArrayTranslatorTest extends PHPUnit_Framework_TestCase  {
 
