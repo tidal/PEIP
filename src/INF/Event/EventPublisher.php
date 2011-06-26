@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -6,13 +7,24 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
 /**
- * PEIP 
- * PEIP package loader
- * 
+ * \PEIP\INF\Event\EventPublisher 
+ *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
+ * @subpackage event 
+ * @implements \PEIP\INF\Event\Connectable
  */
-require_once(dirname(__FILE__).'/Autoload/Autoload.php');
-Autoload::getInstance();  
 
+
+
+
+namespace PEIP\INF\Event;
+
+interface EventPublisher 
+    extends \PEIP\INF\Event\Connectable {
+    
+    public function fireEvent(\PEIP\INF\Event\Event $event);
+        
+}
