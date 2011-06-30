@@ -103,7 +103,7 @@ class ObjectMapDispatcherTest
 	public function testNotifyUntil(){
 		$object = new stdClass;
 		$callable = new CallableObject($this);
-                $callable->setObject($object);
+        $callable->setObject($object);
 		$listeners = array();
 		$listener1 = new PEIP_Callable_Handler(array($callable, 'callNotify'));	
 		$this->dispatcher->connect('foo', $object, $listener1);
@@ -114,7 +114,7 @@ class ObjectMapDispatcherTest
 		$listener3 = new PEIP_Callable_Handler(array($callable, 'callNoMore'));	
 		$this->dispatcher->connect('foo', $object, $listener3);
 		$breaker = $this->dispatcher->notifyUntil('foo', $object); 
-		$this->assertSame($listener2, $breaker);	
+		$this->assertSame($object, $breaker);
 		// test to get full code-coverage
 		
 		

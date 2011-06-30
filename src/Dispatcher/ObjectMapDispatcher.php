@@ -228,12 +228,14 @@ class ObjectMapDispatcher
      */     
     protected static function doNotifyUntil(array $listeners, $subject){  
         $res = NULL; 
-        foreach ($listeners as $listener){ 
+        foreach ($listeners as $listener){
             if($listener instanceof \PEIP\INF\Handler\Handler){
                 $res = $listener->handle($subject);
-                if ($res){ 
-                    return $listener;
-                }
+            }elseif(is_callable($listener)){
+                $res = call_user_func($listener, $subject);
+            }
+            if ($res){
+                return $res;
             }
         }
         return $res;
