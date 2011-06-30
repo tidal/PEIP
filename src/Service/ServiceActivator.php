@@ -40,7 +40,7 @@ class ServiceActivator
         }
         if(is_object($outputChannel)){
             $this->setOutputChannel($outputChannel);    
-        }   
+        }  
     }       
 
 
