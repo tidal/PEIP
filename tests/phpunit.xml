@@ -14,7 +14,14 @@
          syntaxCheck="false"
          testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader"
          strict="false"
-         verbose="false"> 
+         verbose="false">
+
+<php>
+  <ini name="display_errors" value="on"/>
+</php>
+
+
+</testsuites>
 <filter>
   <whitelist>
     <directory suffix=".php">../src</directory>
