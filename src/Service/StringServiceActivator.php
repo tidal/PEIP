@@ -20,13 +20,9 @@ namespace PEIP\Service;
  * @implements \PEIP\INF\Message\MessageBuilder, \PEIP\INF\Handler\Handler, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\SubscribableChannel, \PEIP\INF\Event\Connectable
  */
 
-
-use PEIP\Message\StringMessage;
-
 class StringServiceActivator
     extends \PEIP\Service\ServiceActivator {
             
-    protected 
-        $messageClass = 'StringMessage';       
+    const MESSAGE_CLASS = '\PEIP\Message\StringMessage';
     
 }
