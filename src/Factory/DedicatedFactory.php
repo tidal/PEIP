@@ -23,7 +23,7 @@ namespace PEIP\Factory;
 
 
 use \PEIP\Data\ParameterHolder;
-use PEIP\Base\GenericBuilder;
+use \PEIP\Base\GenericBuilder;
 
 class DedicatedFactory 
     extends \PEIP\Data\ParameterHolder 
@@ -62,17 +62,10 @@ class DedicatedFactory
         return (is_array($this->callable) && $this->callable[1] == '__construct') 
             ? GenericBuilder::GetInstance($this->callable[0])->build($arguments) 
             : call_user_func_array($this->callable, $arguments);
+    } 
+
+    public function getCallable(){
+        return $this->callable;
     }
 
-    
-    /**
-     * @access public
-     * @param $method 
-     * @return 
-     */
-    public function setConstructor($method){
-        $this->constructor = (string)$method;
-        return $this;
-    }   
-    
 }
