@@ -1,13 +1,19 @@
 <?php
-require_once dirname(__FILE__).'/ServiceContainerTest.php';
-require_once dirname(__FILE__).'/ServiceActivatorTest.php';
-require_once dirname(__FILE__).'/ServiceProviderTest.php';
+
  class Service_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){
-		$suite = new PHPUnit_Framework_TestSuite('service');
-        $suite->addTestSuite('ServiceContainerTest');
-		$suite->addTestSuite('ServiceActivatorTest');
-        $suite->addTestSuite('ServiceProviderTest');
+        $suite = new PHPUnit_Framework_TestSuite('service');
+        $iterator = new DirectoryIterator(__DIR__);
+        $iterator->rewind();
+        while($iterator->valid()){
+            $file = $iterator->current();
+            if($iterator->isFile() && $file != 'AllTests.php'){
+                require_once __DIR__.'/'.$file;
+                $suiteName = str_replace('.php', '', $file);
+                $suite->addTestSuite(str_replace('.php', '', $file));
+            }
+            $iterator->next();
+        }
 		return $suite;
 	}
 }
