@@ -17,19 +17,12 @@ namespace PEIP\ABS\Base;
  * @subpackage base 
  */
 
-abstract class Connectable  implements \PEIP\INF\Event\Connectable{
+use \PEIP\Constant\Header;
+use \PEIP\Constant\Event;
+use \PEIP\Constant\Fallback;
 
-    const
-        DEFAULT_CLASS_MESSAGE_DISPATCHER = '\PEIP\Dispatcher\Dispatcher',
-        DEFAULT_CLASS_EVENT_DISPATCHER = '\PEIP\Dispatcher\ObjectEventDispatcher',
-        DEFAULT_EVENT_CLASS = '\PEIP\Event\Event', 
-        EVENT_CONNECT = 'connect',
-        EVENT_DISCONNECT = 'disconnect',
-        EVENT_SET_EVENT_DISPATCHER = 'setEventDispatcher',
-        HEADER_DISPATCHER = 'DISPATCHER',
-        HEADER_LISTENER = 'LISTENER',
-        HEADER_EVENT = 'EVENT';
-    
+abstract class Connectable  implements \PEIP\INF\Event\Connectable{
+  
     protected static
         $sharedEventDispatcher;
 
@@ -46,10 +39,10 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
         \PEIP\Util\Test::ensureHandler($listener);
         $this->getEventDispatcher()->connect($name, $this, $listener);
         $this->doFireEvent(
-            self::EVENT_CONNECT,
+            Event::CONNECT,
             array(
-                self::HEADER_EVENT=>$name,
-                self::HEADER_LISTENER=>$listener
+                HEADER::EVENT=>$name,
+                HEADER::LISTENER=>$listener
             )
         );
     }
@@ -65,10 +58,10 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
         \PEIP\Util\Test::ensureHandler($listener);
         $this->getEventDispatcher()->disconnect($name, $this, $listener);
         $this->doFireEvent(
-            self::EVENT_DISCONNECT,
+            Event::DISCONNECT,
             array(
-                self::HEADER_EVENT=>$name,
-                self::HEADER_LISTENER=>$listener
+                HEADER::EVENT=>$name,
+                HEADER::LISTENER=>$listener
             ),
             false,
             ''
@@ -123,7 +116,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
             }
         }
         $this->eventDispatcher = $dispatcher;
-        $this->doFireEvent(self::EVENT_SET_EVENT_DISPATCHER, array(self::HEADER_DISPATCHER=>$dispatcher));
+        $this->doFireEvent(Event::SET_EVENT_DISPATCHER, array(HEADER::DISPATCHER=>$dispatcher));
     }
 
 
@@ -136,7 +129,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
     }
 
     protected static function getSharedEventDispatcher(){
-        $defaultDispatcher = self::DEFAULT_CLASS_EVENT_DISPATCHER;
+        $defaultDispatcher = Fallback::CLASS_EVENT_DISPATCHER;
         return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new $defaultDispatcher;
     }
 
@@ -149,12 +142,11 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @return
      */
     protected function doFireEvent($name, array $headers = array(), $eventClass = '', $type = false){
-        $eventClass = trim($eventClass) == '' ? static::DEFAULT_EVENT_CLASS : $eventClass;
+        $eventClass = trim($eventClass) == '' ? Fallback::EVENT_CLASS : $eventClass;
+        $headers['TIME'] = \microtime(true);
         return $this->getEventDispatcher()->buildAndNotify($name, $this, $headers, $eventClass, $type);
     }
 
-    protected static function getDefaultEventClass(){
-        return self::DEFAULT_EVENT_CLASS;
-    }
+
 }
 
