@@ -49,6 +49,24 @@ class Test {
         return $res;;
     }
 
+    public static function assertPublicMethod($className, $methodName){
+        $className = is_object($className) ? get_class($className) : $className;
+        $reflection = ReflectionPool::getInstance($className);
+        if($reflection->hasMethod($methodName) && $reflection->getMethod($methodName)->isPublic()){
+                return true;
+        }
+        return false;
+    }
+
+    public static function assertPublicProperty($className, $propertyName){
+        $className = is_object($className) ? get_class($className) : $className;
+        $reflection = ReflectionPool::getInstance($className);
+        if($reflection->hasProperty($propertyName) && $reflection->getProperty($propertyName)->isPublic()){
+                return true;
+        }
+        return false;
+    }
+
     public static function assertMessage($message){
         return self::assertImplements($message, '\PEIP\INF\Message\Message');
     }
