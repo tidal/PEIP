@@ -22,17 +22,21 @@ namespace PEIP\ABS\Handler;
  * @implements \PEIP\INF\Handler\Handler, \PEIP\INF\Message\MessageBuilder
  */
 
-use PEIP\Message\GenericMessage;
-use PEIP\Message\MessageBuilder;
+use 
+    \PEIP\Constant\Header,
+    \PEIP\Message\GenericMessage,
+    \PEIP\Message\MessageBuilder;
 
 abstract class ReplyProducingMessageHandler
     extends \PEIP\ABS\Handler\MessageHandler
     implements \PEIP\INF\Message\MessageBuilder {
+
+    const MESSAGE_CLASS = '\PEIP\Message\GenericMessage';
     
     protected 
         $outputChannel,
-        $messageClass = 'GenericMessage',
-        $replyChannelHeaders = array('REPLY_CHANNEL');
+        $messageClass,
+        $replyChannelHeaders = array(Header::REPLY_CHANNEL);
   
     /**
      * Sets the output-channel for the message handler.
@@ -154,7 +158,7 @@ abstract class ReplyProducingMessageHandler
     protected function getMessageBuilder(){
         return isset($this->messageBuilder) && ($this->messageBuilder->getMessageClass() == $this->getMessageClass())
             ? $this->messageBuilder
-            : $this->messageBuilder = MessageBuilder::getInstance($this->messageClass);
+            : $this->messageBuilder = MessageBuilder::getInstance($this->getMessageClass());
     }
       
     /**
@@ -176,7 +180,9 @@ abstract class ReplyProducingMessageHandler
      * @return string name of the message-class to create reply-messages from. 
      */
     public function getMessageClass(){
-        return $this->messageClass;
+        return isset($this->messageClass)
+            ? $this->messageClass
+            : $this->messageClass = static::MESSAGE_CLASS;
     }       
 
     /**
