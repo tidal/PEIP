@@ -18,11 +18,8 @@ namespace PEIP\INF\Base;
  * @subpackage base 
  */
 
-
-
-
 interface SingletonArgs {
 
-    public function getInstance($arguments);
+    public function getInstance(array $arguments);
 
 }
