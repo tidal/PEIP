@@ -2,7 +2,6 @@
 
 namespace PEIP\Channel;
 
-namespace PEIP\Channel;
 
 /*
  * This file is part of the PEIP package.
@@ -23,7 +22,9 @@ namespace PEIP\Channel;
  * @implements \PEIP\INF\Channel\SubscribableChannel, \PEIP\INF\Channel\Channel, \PEIP\INF\Event\Connectable
  */
 
-
+use
+    \PEIP\Constant\Event,
+    \PEIP\Constant\Header;
 
 class PublishSubscribeChannel 
     extends \PEIP\ABS\Channel\SubscribableChannel {
@@ -38,9 +39,9 @@ class PublishSubscribeChannel
      * @return 
      */
     protected function doSend(\PEIP\INF\Message\Message $message){
-        $this->doFireEvent('prePublish', array('MESSAGE'=>$message));
+        $this->doFireEvent(Event::PRE_PUBLISH, array(Header::MESSAGE=>$message));
         $this->getMessageDispatcher()->notify($message);
-        $this->doFireEvent('postPublish', array('MESSAGE'=>$message));
+        $this->doFireEvent(Event::POST_PUBLISH, array(Header::MESSAGE=>$message));
         return true;
     }
 
