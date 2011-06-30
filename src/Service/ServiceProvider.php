@@ -11,32 +11,14 @@ namespace PEIP\Service;
  *
  * @author timo
  */
-use PEIP\Context\XMLContext;
-use PEIP\Plugins\BasePlugin;
+use
+    \PEIP\Constant\Event,
+    \PEIP\Constant\Header,
+    \PEIP\Plugins\BasePlugin;
 
-class ServiceProvider extends \PEIP\Service\ServiceContainer  {
-
-    const
-        /* Headers */
-        HEADER_KEY                      = 'KEY',
-        HEADER_SERVICE                  = 'SERVICE',
-        HEADER_MESSAGE                  = 'MESSAGE',
-        HEADER_NODE                     = 'NODE',
-        HEADER_NODE_CONFIG              = 'NODE_CONFIG',
-        HEADER_NODE_NAME                = 'NODE_NAME',
-        HEADER_NODE_ID                  = 'NODE_ID',
-        HEADER_COUNT_CONFIG             = 'COUNT_CONFIG',
-        /* Events */
-        EVENT_BEFORE_BUILD_NODE         = 'before_build_node',
-        EVENT_BUILD_NODE_SUCCESS        = 'success_build_node',
-        EVENT_BUILD_NODE_ERROR          = 'error_build_node',
-        EVENT_BEFORE_ADD_CONFIG         = 'before_add_config',
-        EVENT_AFTER_ADD_CONFIG          = 'after_add_config',
-        EVENT_BEFORE_PROVIDE_SERVICE    = 'before_provide_service',
-        EVENT_AFTER_PROVIDE_SERVICE     = 'after_provide_service',
-        EVENT_BEFORE_CREATE_SERVICE     = 'before_create_service',
-        EVENT_CREATE_SERVICE_SUCCESS    = 'success_create_service',
-        EVENT_CREATE_SERVICE_ERROR      = 'error_create_service';
+class ServiceProvider 
+    extends \PEIP\Service\ServiceContainer
+    implements \PEIP\INF\Service\ServiceProvider {
 
     protected
         $config = array(),
@@ -95,81 +77,83 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer  {
 
     public function addConfig($config){ 
         $this->doFireEvent(
-            self::EVENT_BEFORE_ADD_CONFIG,
+            Event::BEFORE_ADD_CONFIG,
             array(
-                self::HEADER_NODE_CONFIG=>$config
+                Header::NODE_CONFIG=>$config
             )
         );
         $countConfig    = $this->doAddConfig($config);
         $id             = $this->doRegisterConfig($config);
         $this->doFireEvent(
-            self::EVENT_AFTER_ADD_CONFIG,
+            Event::AFTER_ADD_CONFIG,
             array(
-                self::HEADER_NODE_CONFIG=>$config,
-                self::HEADER_NODE_ID=>$id,
-                self::HEADER_COUNT_CONFIG=>$countConfig
+                Header::NODE_CONFIG=>  $config,
+                Header::NODE_ID=>      $id,
+                Header::COUNT_CONFIG=> $countConfig
             )
         );
+        return $id;
+
     }
 
-    public function provideService($key){
-        $this->doFireEvent(self::EVENT_BEFORE_PROVIDE_SERVICE, array(
-            self::HEADER_KEY=>$key)
+    public function provideService($id){
+        $this->doFireEvent(Event::BEFORE_PROVIDE_SERVICE, array(
+            Header::KEY=>$id)
         );
 
-        if($this->hasService($key)){
-            $service =  $this->getService($key);
+        if($this->hasService($id)){ 
+            $service =  $this->getService($id);
         }else{
-            $service =  $this->createService($key);
+            $service =  $this->createService($id);
         }
 
-        $this->doFireEvent(self::EVENT_AFTER_PROVIDE_SERVICE, array(
-            self::HEADER_KEY=>$key,
-            self::HEADER_SERVICE=>$service)
+        $this->doFireEvent(Event::AFTER_PROVIDE_SERVICE, array(
+            Header::KEY=>$id,
+            Header::SERVICE=>$service)
         );
 
         return $service;
     }
 
-    protected function createService($key){
-        $this->doFireEvent(self::EVENT_BEFORE_CREATE_SERVICE, array(
-            self::HEADER_KEY=>$key)
+    protected function createService($id){
+        $this->doFireEvent(Event::BEFORE_CREATE_SERVICE, array(
+            Header::KEY=>$id)
         );
         $errorMessage = '';
-        $config = $this->getServiceConfig($key);
+        $config = $this->getServiceConfig($id);
 
         if($config){
             $node = $this->buildNode($config);
             if($node){
                 $this->setService(
-                    $key,
+                    $id,
                     $node
                 );
-                $this->doFireEvent(self::EVENT_CREATE_SERVICE_SUCCESS, array(
-                    self::HEADER_KEY=>$key,
-                    self::HEADER_SERVICE=>$node
+                $this->doFireEvent(Event::CREATE_SERVICE_SUCCESS, array(
+                    Header::KEY=>$id,
+                    Header::SERVICE=>$node
                 ));
 
                 return $node;                
             }else{
-                $errorMessage = 'COULD NOT BUILD NODE FOR KEY: '.$key;
+                $errorMessage = 'COULD NOT BUILD NODE FOR KEY: '.$id;
             }
 
         }else{
-            $errorMessage = 'NO CONFIG FOR KEY: '.$key;
+            $errorMessage = 'NO CONFIG FOR KEY: '.$id;
         }
-        $this->doFireEvent(self::EVENT_CREATE_SERVICE_ERROR, array(
-            self::HEADER_KEY=>$key,
-            self::HEADER_MESSAGE=>$errorMessage)
+        $this->doFireEvent(Event::CREATE_SERVICE_ERROR, array(
+            Header::KEY=>$id,
+            Header::MESSAGE=>$errorMessage)
         );
         return NULL;
     }
 
-    public function getServiceConfig($key){
-        if(!isset($this->ids[$key])){
+    public function getServiceConfig($id){
+        if(!isset($this->ids[$id])){
             return false;
         }
-        return $this->config[$this->ids[$key]];
+        return $this->config[$this->ids[$id]];
     }
 
 
@@ -184,32 +168,37 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer  {
     protected function buildNode($config){
         $nodeName = (string)$config['type'];
 
-        $this->doFireEvent(self::EVENT_BEFORE_BUILD_NODE, array(
-            self::HEADER_NODE_CONFIG=>$config,
-            self::HEADER_NODE_NAME=> $nodeName
+        $this->doFireEvent(Event::BEFORE_BUILD_NODE, array(
+            Header::NODE_CONFIG=>$config,
+            Header::NODE_NAME=> $nodeName
         ));
+
         // call the builder method registered for the node.
         if(array_key_exists($nodeName, $this->nodeBuilders)){
-
             $nodeInstance = call_user_func($this->nodeBuilders[$nodeName], $config);
+        }else{
+            $factory = new \PEIP\Factory\ServiceFactory($this);
+            $nodeInstance = $factory->createService($config);
+        }
+
+
+            //$nodeInstance = call_user_func($this->nodeBuilders[$nodeName], $config);
             if(is_object($nodeInstance)){
-                $this->doFireEvent(self::EVENT_BUILD_NODE_SUCCESS, array(
-                    self::HEADER_NODE_CONFIG=>$config,
-                    self::HEADER_NODE_NAME=> $nodeName,
-                    self::HEADER_NODE => $nodeInstance
+                $this->doFireEvent(Event::BUILD_NODE_SUCCESS, array(
+                    Header::NODE_CONFIG=>$config,
+                    Header::NODE_NAME=> $nodeName,
+                    Header::NODE => $nodeInstance
                 ));
                 return $nodeInstance;
             }else{
                 $errorMessage = 'BUILDER RETURNED NO OBJECT FOR NODE-TYPE: '.$nodeName;
             }
-        }else{
-            $errorMessage = 'NO BUILDER FOUND FOR NODE-TYPE: '.$nodeName;
-        }
+        
 
-        $this->doFireEvent(self::EVENT_BUILD_NODE_ERROR, array(
-            self::HEADER_NODE_CONFIG=>$config,
-            self::HEADER_NODE_NAME=>$nodeName,
-            self::HEADER_MESSAGE=>'COULD NOT BUILD NODE'
+        $this->doFireEvent(Event::BUILD_NODE_ERROR, array(
+            Header::NODE_CONFIG=>$config,
+            Header::NODE_NAME=>$nodeName,
+            Header::MESSAGE=>$errorMessage
         ));
     }
 
