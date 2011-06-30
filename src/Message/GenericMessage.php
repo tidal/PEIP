@@ -131,22 +131,15 @@ class GenericMessage
      * @return string  content/payload of the message
      */
     public function __toString(){
-        $res = false;
-        try {
-            $res = (string)$this->getContent();
+        $res = '';
+        $content = $this->getContent();
+        if(is_string($content) || (\is_object($content) && \method_exists($content, '__toString'))){
+            $res = (string)$content;
+        }elseif(is_object($content)){
+            $res = get_class($content);
         }
-        catch(\Exception $e){           
-            try {
-                $res = get_class($this->getContent());
-            }
-            catch(\Exception $e){
-
-            }
-        }
-
-
-
         
+        return $res;        
     }
 
     /**

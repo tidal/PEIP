@@ -1,13 +1,9 @@
 <?php 
 
-
-use \PEIP\INF\Message\Message as PEIP_INF_Message;
-
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
 PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/PayloadMock.php');
- 
-
+PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/HelloService.php');
 
 class GenericMessageTest extends PHPUnit_Framework_TestCase {
 
@@ -87,6 +83,29 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
     		$this->assertTrue($message->hasHeader($name));		
     	} 		
 	}
+
+	public function testAddHeader(){
+        $headers = $this->getHeaders();
+        $message = new \PEIP\Message\GenericMessage($this->payloads['string']);
+		foreach($headers as $name=>$header){
+            $this->assertTrue($message->addHeader($name, $header));
+    	}
+        $this->assertEquals($message->getHeaders(), $headers);
+	}
+
+
+	public function testAddHeaderNotOverwriting(){
+        $headers = $this->getHeaders();
+        $message = new \PEIP\Message\GenericMessage($this->payloads['string'], $headers);
+		foreach($headers as $name=>$header){
+            $headers[$name] = 'FOO_'.$headers[$name];
+            $this->assertFalse($message->addHeader($name, $headers[$name]));
+    	}
+        $this->assertNotEquals($message->getHeaders(), $headers);
+        $this->assertEquals($message->getHeaders(), $this->getHeaders());
+	}
+
+
 	public function testHeaders(){
         $headers = $this->getHeaders();
 		foreach($this->payloads as $type=>$payload){
@@ -187,34 +206,23 @@ class GenericMessageTest extends PHPUnit_Framework_TestCase {
         $this->fail('An expected exception has not been raised.'); 	    		   
     }     
 
-    /**
-     *  
-     */	
-	public function testFailBuildWrongHeaderInt(){
-       // new \PEIP\Message\GenericMessage($this->payload, 123);
-	}
-	
-    /**
-     * 
-     */	
-	public function testFailBuildWrongHeaderFloat(){
-       // new \PEIP\Message\GenericMessage($this->payload, 123.321);
-	}
-	
-    /**
-     * 
-     */	
-	public function testFailBuildWrongHeaderString(){
-      //  new \PEIP\Message\GenericMessage($this->payload, 'Test');
-	}
+    public function testToStringStringMessage(){
+        $string = 'Foo';
+        $message = $this->build(array($string));
+        $this->assertEquals($string, (string)$message);
+    }
 
-    /**
-     * 
-     */	
-	public function testFailBuildWrongHeaderObject(){
-     //   new \PEIP\Message\GenericMessage($this->payload, new stdClass);
-	}    
-   
+    public function testToStringToStringObject(){
+        $message = $this->build(array($this->payloadObject));
+        $this->assertEquals((string)$this->payloadObject, (string)$message);
+    }
+
+    public function testToStringClassName(){
+        $className = 'HelloService';
+        $message = $this->build(array(new $className));
+        $this->assertEquals($className, (string)$message);
+    }
+
     
    // helper methods 
     
