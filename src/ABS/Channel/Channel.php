@@ -16,8 +16,11 @@ namespace PEIP\ABS\Channel;
  * @package PEIP 
  * @subpackage channel 
  * @implements \PEIP\INF\Channel\Channel, \PEIP\INF\Event\Connectable
- */
+ */ 
 
+use
+    \PEIP\Constant\Event,
+    \PEIP\Constant\Header;
 
 abstract class Channel
     extends \PEIP\ABS\Base\Connectable
@@ -53,12 +56,14 @@ abstract class Channel
      * @return
      */
     public function send(\PEIP\INF\Message\Message $message, $timeout = -1){
-        $this->doFireEvent('preSend', array('MESSAGE'=>$message));
+        $this->doFireEvent(Event::PRE_SEND, array(
+            Header::MESSAGE=>$message)
+        );
         $sent = $this->doSend($message);
-        $this->doFireEvent('postSend', array(
-            'MESSAGE'=>$message,
-            'SENT' => $sent,
-            'TIMEOUT' => $timeout 
+        $this->doFireEvent(Event::POST_SEND, array(
+            Header::MESSAGE =>$message,
+            Header::SENT    => $sent,
+            Header::TIMEOUT => $timeout
         ));
     }
 
