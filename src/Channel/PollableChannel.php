@@ -21,15 +21,16 @@ namespace PEIP\Channel;
  * @implements \PEIP\INF\Event\Connectable, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\PollableChannel
  */
 
+use 
+    \PEIP\Constant\Event,
+    \PEIP\Constant\Header;
 
 class PollableChannel  
     extends \PEIP\ABS\Channel\Channel
     implements \PEIP\INF\Channel\PollableChannel {
 
-    const       
-        EVENT_PRE_RECEIVE = 'pre_receive',
-        EVENT_POST_RECEIVE = 'post_receive',
-        HEADER_MESSAGE = 'MESSAGE';
+    const
+        WAIT_TIMEOUT = 10000;
     
     protected 
         $messages = array();
@@ -56,23 +57,23 @@ class PollableChannel
      * @return 
      */
     public function receive($timeout = 0){
-        $this->doFireEvent(self::EVENT_PRE_RECEIVE);
+        $this->doFireEvent(Event::PRE_RECEIVE);
         $message = NULL;
         if($timeout == 0){
             $message = $this->getMessage(); 
         }elseif($timeout < 0){
             while(!$message = $this->getMessage()){
-                                
+                \usleep(self::WAIT_TIMEOUT);
             }
         }else{
             $time = time() + $timeout;
             while(($time > time()) && !$message = $this->getMessage()){
-                
+                \usleep(self::WAIT_TIMEOUT); echo '<br/>'.microtime(1);
             }       
         }
         $this->doFireEvent(
-            self::EVENT_PRE_RECEIVE, array(
-                self::HEADER_MESSAGE=>$message
+            Event::PRE_RECEIVE, array(
+                Header::MESSAGE=>$message
             )
         );
         return $message;
