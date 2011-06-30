@@ -30,8 +30,6 @@ use PEIP\Event\EventBuilder;
 class ObjectEventDispatcher 
     extends \PEIP\Dispatcher\ObjectMapDispatcher {
 
-
-
     /**
      * Notifies all listeners of a given event-object.
      * 
@@ -76,8 +74,8 @@ class ObjectEventDispatcher
             $headers
         );
         $this->notify(
-                $name,
-                $event
+            $name,
+            $event
         );
         return $event;
     }      
