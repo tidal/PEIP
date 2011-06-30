@@ -2,8 +2,6 @@
 
 namespace PEIP\Event;
 
-namespace PEIP\Event;
-
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -21,9 +19,6 @@ namespace PEIP\Event;
  * @extends \PEIP\Message\GenericMessage
  * @implements \PEIP\INF\Base\Buildable, \PEIP\INF\Message\Message, \PEIP\INF\Base\Container, \PEIP\INF\Event\Event
  */
-
-
-
 
 use \PEIP\Message\GenericMessage;
 use PEIP\Util\Test;
