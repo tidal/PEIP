@@ -2,8 +2,6 @@
 
 namespace PEIP\ABS\Channel;
 
-namespace PEIP\ABS\Channel;
-
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
@@ -23,9 +21,11 @@ namespace PEIP\ABS\Channel;
  * @implements \PEIP\INF\Event\Connectable, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\SubscribableChannel
  */
 
-
-use PEIP\Util\Test;
-use PEIP\Dispatcher\Dispatcher;
+use
+    \PEIP\Constant\Event,
+    \PEIP\Constant\Header,
+    \PEIP\Util\Test,
+    \PEIP\Dispatcher\Dispatcher;
 
 abstract class SubscribableChannel 
     extends \PEIP\ABS\Channel\Channel
@@ -44,7 +44,7 @@ abstract class SubscribableChannel
     public function subscribe($handler){ 
         Test::ensureHandler($handler);
         $this->getMessageDispatcher()->connect($handler);
-        $this->doFireEvent('subscribe', array('SUBSCRIBER'=>$handler));
+        $this->doFireEvent(Event::SUBSCRIBE, array(Header::SUBSCRIBER=>$handler));
     }
       
     /**
@@ -58,7 +58,7 @@ abstract class SubscribableChannel
     public function unsubscribe($handler){
         Test::ensureHandler($handler);
         $this->getMessageDispatcher()->disconnect($handler);
-        $this->doFireEvent('unsubscribe', array('SUBSCRIBER'=>$handler));       
+        $this->doFireEvent(Event::SUBSCRIBE, array(Header::SUBSCRIBER=>$handler));
     }
       
     /**
@@ -83,7 +83,7 @@ abstract class SubscribableChannel
      * Returns the message dispatcher resposible for notifying all subscribers about new messages.
      * 
      * @access public
-     * @return 
+     * @return \PEIP\INF\Dispatcher\Dispatcher
      */
     public function getMessageDispatcher(){
         return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new Dispatcher;
