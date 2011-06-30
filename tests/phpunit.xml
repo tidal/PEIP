@@ -20,8 +20,6 @@
   <ini name="display_errors" value="on"/>
 </php>
 
-
-</testsuites>
 <filter>
   <whitelist>
     <directory suffix=".php">../src</directory>
