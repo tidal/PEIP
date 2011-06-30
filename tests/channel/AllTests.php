@@ -1,15 +1,19 @@
 <?php
 
-
-require_once dirname(__FILE__).'/PublishSubscribeChanelTest.php';
-require_once dirname(__FILE__).'/ChannelTest.php';
-
  class Channel_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){
-		$suite = new PHPUnit_Framework_TestSuite('channel');
-
-        $suite->addTestSuite('PublishSubscribeChanelTest');
-        $suite->addTestSuite('ChannelTest');
+        $suite = new PHPUnit_Framework_TestSuite('channel');
+        $iterator = new DirectoryIterator(__DIR__);
+        $iterator->rewind();
+        while($iterator->valid()){
+            $file = $iterator->current();
+            if($iterator->isFile() && $file != 'AllTests.php'){
+                require_once __DIR__.'/'.$file;
+                $suiteName = str_replace('.php', '', $file);
+                $suite->addTestSuite(str_replace('.php', '', $file));
+            }
+            $iterator->next();
+        }
 		return $suite;
 	}
 }
