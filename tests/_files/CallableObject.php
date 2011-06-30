@@ -16,14 +16,14 @@ class CallableObject {
 
 	public function callNotify($subject){
 		if(isset($this->object)){ 
-			$this->testCase->assertSame($this->object, $subject);
+			$this->testCase->assertEquals($this->object, $subject);
 		}else{
 			throw new RuntimeException('Asserted Object must be set first');
 		}
 	}
 
 	public function callUntil(){ 
-		return true;
+		return $this->object;
 	}
 
 	public function callNoMore(){
