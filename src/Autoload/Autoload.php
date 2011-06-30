@@ -23,6 +23,9 @@ namespace PEIP\Autoload;
 
 class Autoload {
 
+    protected
+        $baseDir;
+
     static protected
         $instance;
     
@@ -43,8 +46,8 @@ class Autoload {
      * @static
      * @return Autoload
      */
-    static public function getInstance(){
-        if (!isset(self::$instance)){
+    static public function getInstance($new = false){
+        if (!isset(self::$instance) || $new){
             self::$instance = new Autoload();
         }
         return self::$instance;
@@ -60,7 +63,9 @@ class Autoload {
         $this->baseDir = self::getBaseDirectory();
         ini_set('unserialize_callback_func', 'spl_autoload_call');
         if (false === spl_autoload_register(array($this, 'autoload'))){
+            // @codeCoverageIgnoreStart
             throw new \RuntimeException(sprintf('Unable to register %s::autoload as an autoloading method.', get_class($this)));
+            // @codeCoverageIgnoreEnd
         }
     }
 
@@ -82,17 +87,20 @@ class Autoload {
      * @param string $class the class to load
      * @return path to the class-file 
      */     
-    public function autoload($class){ 
-        $path = str_replace('PEIP\\', '', $class);
-        $path = $this->baseDir.DIRECTORY_SEPARATOR
-            .str_replace('\\', DIRECTORY_SEPARATOR, $path).'.php';
-        if (is_file($path)){
-            require $path;
+    public function autoload($class){
+        $res = false;
+        if(!class_exists($class, false)){
+            $path = str_replace('PEIP\\', '', $class);
+            $path = $this->baseDir.DIRECTORY_SEPARATOR
+                .str_replace('\\', DIRECTORY_SEPARATOR, $path).'.php';
+            if (is_file($path)){
+                require $path;
                 if(class_exists($class) || interface_exists($class)){
-                    return true;
+                    $res = true;
                 }
             }
-        return false;
+        }
+        return $res;
     }   
 
 }
