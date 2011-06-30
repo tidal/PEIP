@@ -1,19 +1,19 @@
 <?php
 
-require_once dirname(__FILE__).'/DynamicAdapterTest.php';
-require_once dirname(__FILE__).'/GenericBuilderTest.php';
-require_once dirname(__FILE__).'/ReflectionClassBuilderTest.php';
-require_once dirname(__FILE__).'/SealerTest.php';
-require_once dirname(__FILE__).'/ObjectStorageTest.php';
-
  class Base_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){
-		$suite = new PHPUnit_Framework_TestSuite('base');
-		$suite->addTestSuite('DynamicAdapterTest');
-		$suite->addTestSuite('GenericBuilderTest');
-		$suite->addTestSuite('ReflectionClassBuilderTest');
-		$suite->addTestSuite('SealerTest');
-                $suite->addTestSuite('ObjectStorageTest');
+        $suite = new PHPUnit_Framework_TestSuite('base');
+        $iterator = new DirectoryIterator(__DIR__);
+        $iterator->rewind();
+        while($iterator->valid()){
+            $file = $iterator->current();
+            if($iterator->isFile() && $file != 'AllTests.php'){
+                require_once __DIR__.'/'.$file;
+                $suiteName = str_replace('.php', '', $file);
+                $suite->addTestSuite(str_replace('.php', '', $file));
+            }
+            $iterator->next();
+        }
 		return $suite;
 	}
 }
