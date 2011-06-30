@@ -76,7 +76,11 @@ class StringMessageTest extends GenericMessageTest {
     		$this->assertEquals($headers, $message->getHeaders());	
     	}    	    		   
     } 
-    
+
+    // overwrite parent method
+    public function testToStringClassName(){
+        return;
+    }
 
 
 	protected function assertMessage($message){
