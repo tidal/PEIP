@@ -18,10 +18,6 @@ namespace PEIP\Base;
  * @subpackage base 
  */
 
-
-
-
-
 class FlyAdapter {
 
     
@@ -30,7 +26,7 @@ class FlyAdapter {
      * @param $methodMap 
      * @return 
      */
-    public function __construct(ArrayAccess $methodMap){        
+    public function __construct(array $methodMap){
         $this->methodMap = $methodMap;  
     }
     
@@ -54,8 +50,12 @@ class FlyAdapter {
      */
     public function __call($method, $arguments){
         if(array_key_exists($method, $this->methodMap)){
-            return call_user_func_array(array($this->subject, $this->methodMap[$method]), $arguments);
+            return call_user_func_array(
+                array($this->subject, $this->methodMap[$method]),
+                $arguments
+            );
         }
+        return false;
     }
 }
 
