@@ -48,7 +48,11 @@ class ContentTypeSelector
      * @return 
      */
     public function __construct($type){
-        $this->type = $type;
+        if(isset(self::$types[$type])){
+            $this->type = $type;
+        }else{
+            throw new \InvalidArgumentException('Type is not supported');
+        }
     }       
             
     
