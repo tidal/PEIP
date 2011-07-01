@@ -1,16 +1,25 @@
 <?php
 
 namespace PEIP\Plugins;
-/* 
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+
+/*
+ * This file is part of the PEIP package.
+ * (c) 2009-2011 Timo Michna <timomichna/yahoo.de>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
- * Description of BasePlugin
+ * BasePlugin
+ * Plugin for Core Components
  *
- * @author timo
+ * @author Timo Michna <timomichna/yahoo.de>
+ * @package PEIP
+ * @subpackage plugin
+ * @extends \PEIP\ABS\Context\ContextPlugin
  */
+
 use PEIP\Context\XMLContext;
 use PEIP\Channel\PollableChannel;
 use PEIP\Channel\PublishSubscribeChannel;
