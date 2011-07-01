@@ -44,7 +44,7 @@ class ContentClassSelector
      * @return 
      */
     public function acceptMessage(\PEIP\INF\Message\Message $message){
-        return $message->getContent() instanceof $className;
+        return $message->getContent() instanceof $this->className;
     }           
     
 }
