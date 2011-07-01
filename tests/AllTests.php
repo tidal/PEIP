@@ -18,6 +18,7 @@ require_once dirname(__FILE__).'/pipe/AllTests.php';
 require_once dirname(__FILE__).'/util/AllTests.php';
 require_once dirname(__FILE__).'/translator/AllTests.php';
 require_once dirname(__FILE__).'/functional/AllTests.php';
+require_once dirname(__FILE__).'/listener/AllTests.php';
 
  class AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){
