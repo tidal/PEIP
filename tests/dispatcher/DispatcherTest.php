@@ -60,5 +60,16 @@ class DispatcherTest
 		$breaker = $this->dispatcher->notifyUntil($object); 
 		$this->assertSame($listener2, $breaker);		
 	}	
-	
+
+    public function testDisconnectAll(){
+		$listener = new PEIP_Callable_Handler(array('TestClass','TestMethod'));
+		$this->dispatcher->connect($listener);
+		$this->assertTrue($this->dispatcher->hasListeners());
+        $this->dispatcher->disconnectAll();
+        $this->assertFalse($this->dispatcher->hasListeners());
+
+    }
+
+
+
 }
