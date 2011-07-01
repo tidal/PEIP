@@ -32,6 +32,7 @@ require_once dirname(__FILE__).'/functional/AllTests.php';
 		$suite->addTestSuite('Event_AllTests');
         $suite->addTestSuite('Factory_AllTests');
 		$suite->addTestSuite('Handler_AllTests');
+        $suite->addTestSuite('Listener_AllTests');
 		$suite->addTestSuite('Message_AllTests');
 		$suite->addTestSuite('Service_AllTests');
         $suite->addTestSuite('Pipe_AllTests');
