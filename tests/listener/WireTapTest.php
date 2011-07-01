@@ -19,6 +19,12 @@ class WireTapTest
         $this->assertSame($this->output, $this->wiretap->getOutputChannel());
     }
 
+    public function testSend(){
+        $message = new \PEIP\Message\GenericMessage('foo');
+        $this->input->send($message);
+        $this->assertSame($message, $this->output->receive());
+
+    }
 
 
 

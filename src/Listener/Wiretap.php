@@ -20,8 +20,7 @@ namespace PEIP\Listener;
  * @implements \PEIP\INF\Message\MessageBuilder, \PEIP\INF\Handler\Handler, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\SubscribableChannel, \PEIP\INF\Event\Connectable, \PEIP\INF\Event\Listener
  */
 
-
-use \PEIP\Pipe\FixedEventPipe;
+use \PEIP\Constant\Event;
 
 class Wiretap 
     extends \PEIP\Pipe\FixedEventPipe {
@@ -34,8 +33,9 @@ class Wiretap
      * @return 
      */
     public function __construct(\PEIP\INF\Channel\Channel $inputChannel, \PEIP\INF\Channel\Channel $outputChannel = NULL){
-        $this->setEventName('preSend');
+        
         $this->setInputChannel($inputChannel);
+        $this->setEventName(Event::PRE_SEND);
         if(is_object($outputChannel)){
             $this->setOutputChannel($outputChannel);
         }           
