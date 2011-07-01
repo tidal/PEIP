@@ -2,7 +2,6 @@
 
 namespace PEIP\Dispatcher;
 
-namespace PEIP\Dispatcher;
 
 /*
  * This file is part of the PEIP package.
