@@ -14,7 +14,8 @@ namespace PEIP\ABS\Channel;
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
- * @subpackage channel 
+ * @subpackage channel
+ * @extends \PEIP\ABS\Base\Connectable
  * @implements \PEIP\INF\Channel\Channel, \PEIP\INF\Event\Connectable
  */ 
 
