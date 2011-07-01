@@ -1,8 +1,6 @@
 <?php 
 
 
-use \PEIP\Base\GenericBuilder as PEIP_Generic_Builder;
-
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
 PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/BuilderObjectMock.php');
@@ -15,15 +13,15 @@ class GenericBuilderTest  extends PHPUnit_Framework_TestCase {
 
 	public function testConstruction(){
 		$reflection = new ReflectionClass('BuilderObjectMock');	
-		$builder = new PEIP_Generic_Builder('BuilderObjectMock', $reflection);
+		$builder = new \PEIP\Base\GenericBuilder('BuilderObjectMock', $reflection);
 		$this->assertTrue(is_object($builder));	
-		$this->assertTrue($builder instanceof PEIP_Generic_Builder);
+		$this->assertTrue($builder instanceof \PEIP\Base\GenericBuilder);
 	}
 
 	public function testConstructionException(){
         try{
-			$reflection = new ReflectionClass('PEIP_Generic_Builder');	
-			$builder = new PEIP_Generic_Builder('BuilderObjectMock', $reflection);
+			$reflection = new ReflectionClass('\PEIP\Base\GenericBuilder');
+			$builder = new \PEIP\Base\GenericBuilder('BuilderObjectMock', $reflection);
         }
     	catch (Exception $expected) {
             return;
@@ -33,22 +31,22 @@ class GenericBuilderTest  extends PHPUnit_Framework_TestCase {
 
 	public function testGetInstance(){
 		$reflection = new ReflectionClass('BuilderObjectMock');	
-		$builder = new PEIP_Generic_Builder('BuilderObjectMock', $reflection);	
-		$builder2 = PEIP_Generic_Builder::getInstance('BuilderObjectMock');
+		$builder = new \PEIP\Base\GenericBuilder('BuilderObjectMock', $reflection);
+		$builder2 = \PEIP\Base\GenericBuilder::getInstance('BuilderObjectMock');
 		$this->assertSame($builder, $builder2);
-		$builder3 = PEIP_Generic_Builder::getInstance('BuilderObjectMock');
+		$builder3 = \PEIP\Base\GenericBuilder::getInstance('BuilderObjectMock');
 		$this->assertSame($builder2, $builder3);			
 	}	
 
 	public function testStoreRefFalse(){
 		$reflection = new ReflectionClass('BuilderObjectMock');	
-		$builder = new PEIP_Generic_Builder('BuilderObjectMock', $reflection, false);
-		$builder2 = PEIP_Generic_Builder::getInstance('BuilderObjectMock');
+		$builder = new \PEIP\Base\GenericBuilder('BuilderObjectMock', $reflection, false);
+		$builder2 = \PEIP\Base\GenericBuilder::getInstance('BuilderObjectMock');
 		$this->assertNotSame($builder, $builder2);
 	}
 	
 	public function testBuild(){
-		$builder = PEIP_Generic_Builder::getInstance('BuilderObjectMock');	
+		$builder = \PEIP\Base\GenericBuilder::getInstance('BuilderObjectMock');
 		$object = $builder->build();
 		$this->assertTrue(is_object($object));	
 		$this->assertTrue($object instanceof BuilderObjectMock);				
@@ -62,7 +60,7 @@ class GenericBuilderTest  extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testBuildConstructor(){
-		$builder = PEIP_Generic_Builder::getInstance('BuilderObjectMockConstructor');	
+		$builder = \PEIP\Base\GenericBuilder::getInstance('BuilderObjectMockConstructor');
 		$object = $builder->build(array(1, 2, 3));
 		$this->assertTrue(is_object($object));	
 		$this->assertTrue($object instanceof BuilderObjectMockConstructor);
@@ -77,12 +75,12 @@ class GenericBuilderTest  extends PHPUnit_Framework_TestCase {
      * @expectedException PHPUnit_Framework_Error
      */		
 	public function testBuildFailWrongArgs(){
-		PEIP_Generic_Builder::getInstance('BuilderObjectMockConstructor')->build(1, 2, 3);				
+		\PEIP\Base\GenericBuilder::getInstance('BuilderObjectMockConstructor')->build(1, 2, 3);
 	}
 	
 	public function testBuildException(){					
         try{
-			PEIP_Generic_Builder::getInstance('BuilderObjectMockConstructor')->build();
+			\PEIP\Base\GenericBuilder::getInstance('BuilderObjectMockConstructor')->build();
         }
     	catch (Exception $expected) {
             return;
