@@ -68,7 +68,7 @@ class PollableChannel
         }else{
             $time = time() + $timeout;
             while(($time > time()) && !$message = $this->getMessage()){
-                \usleep(self::WAIT_TIMEOUT); echo '<br/>'.microtime(1);
+                \usleep(self::WAIT_TIMEOUT);
             }       
         }
         $this->doFireEvent(
