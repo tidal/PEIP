@@ -207,11 +207,7 @@ class ObjectMapDispatcher
      */    
     protected static function doNotify(array $listeners, $subject){
         foreach($listeners as $listener){ 
-             if($listener instanceof \PEIP\INF\Handler\Handler){
-                $listener->handle($subject);
-             }elseif(is_callable($listener)){
-                 call_user_func($listener, $subject);
-             }
+             self::doNotifyOne($listener, $subject);
         }   
     }  
 
@@ -227,11 +223,7 @@ class ObjectMapDispatcher
     protected static function doNotifyUntil(array $listeners, $subject){  
         $res = NULL; 
         foreach ($listeners as $listener){
-            if($listener instanceof \PEIP\INF\Handler\Handler){
-                $res = $listener->handle($subject);
-            }elseif(is_callable($listener)){
-                $res = call_user_func($listener, $subject);
-            }
+            $res = self::doNotifyOne($listener, $subject);
             if ($res){
                 return $res;
             }
@@ -246,6 +238,16 @@ class ObjectMapDispatcher
             $listener = $o;
         }
         return spl_object_hash($listener);
+    }
+
+
+    protected static function doNotifyOne($listener, $subject){
+        if(is_callable($listener)){
+            $res = call_user_func($listener, $subject);
+        }else{
+            $res = $listener->handle($subject);
+        }
+        return $res;
     }
 }
 
