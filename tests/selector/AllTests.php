@@ -1,6 +1,6 @@
 <?php
 
- class Pipe_AllTests extends PHPUnit_Framework_TestSuite {
+ class Selector_AllTests extends PHPUnit_Framework_TestSuite {
 	 public static function suite(){
         $suite = new PHPUnit_Framework_TestSuite('selector');
         $iterator = new DirectoryIterator(__DIR__);
