@@ -66,7 +66,7 @@ class PollableChannel
                 \usleep(self::WAIT_TIMEOUT);
             }
         }else{
-            $time = time() + $timeout;
+            $time = microtime(true) + $timeout;
             while(($time > time()) && !$message = $this->getMessage()){
                 \usleep(self::WAIT_TIMEOUT);
             }       
