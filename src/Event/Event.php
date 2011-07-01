@@ -70,7 +70,7 @@ class Event
      * @return string the type of the event
      */
     public function getType(){
-        return $this->name;
+        return $this->type;
     }
   
     /**

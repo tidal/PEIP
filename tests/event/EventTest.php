@@ -3,7 +3,6 @@
 
 use \PEIP\Message\GenericMessage as PEIP_Generic_Message;
 use \PEIP\INF\Message\Message as PEIP_INF_Message;
-use \PEIP\INF\Event\Event as PEIP_INF_Event;
 
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 require_once dirname(__FILE__).'/../message/GenericMessageTest.php';
@@ -40,7 +39,19 @@ class EventTest
     		$this->assertEquals($type, $event->getName());
     	}
     }
-    
+
+    public function testGetType(){
+        $type = 'foo';
+    	$event = new $this->testClass(' ', 'bar', array(), $type);
+        $this->assertEquals($type, $event->getType());
+    }
+
+    public function testGetTypeClassName(){
+        $type = 'foo';
+    	$event = new $this->testClass(' ', 'bar');
+        $this->assertEquals(get_class($event), $event->getType());
+    }
+
 	public function testReturnValue(){
     	$event = new \PEIP\Event\Event($this->payloadObject, 'foo');
     	$event->setReturnValue(321);	
@@ -110,7 +121,7 @@ class EventTest
         $this->assertTrue(is_object($message));
     	$this->assertTrue($message instanceof PEIP_Generic_Message);
     	$this->assertTrue($message instanceof PEIP_INF_Message); 
-    	$this->assertTrue($message instanceof PEIP_INF_Event);    
+    	$this->assertTrue($message instanceof \PEIP\INF\Event\Event);
     }	
 
 	protected function getHeaders(){
