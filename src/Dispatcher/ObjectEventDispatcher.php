@@ -45,7 +45,7 @@ class ObjectEventDispatcher
                     return self::doNotify($this->getListeners($name, $object->getContent()), $object);  
                 }                   
             }else{
-                throw new \InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
+                throw new \InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain object');
             }   
         }else{
             throw new \InvalidArgumentException('object must be instance of \PEIP\INF\Event\Event');
