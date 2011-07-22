@@ -37,9 +37,11 @@ class QueueChannel
      * @param $capacity 
      * @return 
      */
-    public function __construct($capacity = -1){
+    public function __construct($capacity = -1, PEIP\INF\Queue\Queue $queue = NULL){
         $this->setCapacity((int)$capacity);
-        $this->queue = new SplQueue();  
+        $this->queue = $queue
+            ? $queue
+            : new \PEIP\Queue\Queue;
     }   
         
     
