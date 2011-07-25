@@ -14,5 +14,5 @@
  * @package PEIP 
  */
 require_once(dirname(__FILE__).'/Autoload/Autoload.php');
-Autoload::getInstance();  
+\PEIP\Autoload\Autoload::getInstance();  
 
