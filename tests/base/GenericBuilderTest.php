@@ -73,16 +73,16 @@ class GenericBuilderTest  extends PHPUnit_Framework_TestCase {
 		$this->assertNotSame($object, $object2);				
 	}	
 
-    /**
-     * @expectedException PHPUnit_Framework_Error
-     */		
-	public function testBuildFailWrongArgs(){
-		PEIP_Generic_Builder::getInstance('BuilderObjectMockConstructor')->build(1, 2, 3);				
-	}
+        /**
+         * @expectedException \Exception
+         */		
+        public function testBuildFailWrongArgs(){
+                PEIP_Generic_Builder::getInstance('BuilderObjectMockConstructor')->build([1, 2]);				
+        }
 	
 	public function testBuildException(){					
         try{
-			PEIP_Generic_Builder::getInstance('BuilderObjectMockConstructor')->build();
+            PEIP_Generic_Builder::getInstance('BuilderObjectMockConstructor')->build();
         }
     	catch (Exception $expected) {
             return;
