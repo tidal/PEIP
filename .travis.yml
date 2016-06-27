@@ -8,4 +8,4 @@ php:
   - hhvm 
 
 script:
-  - phpunit
+  - phpunit ./tests
