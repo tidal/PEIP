@@ -133,6 +133,11 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
     }
 
     public function testAddAll(){
+        if (defined('HHVM_VERSION')) {
+            $this->markTestSkipped(
+                'HHVM seems to have a bug in SplObjectStorage.addAll'
+            );    
+        }
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
