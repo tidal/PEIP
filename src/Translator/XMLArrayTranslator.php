@@ -26,6 +26,11 @@ class XMLArrayTranslator {
         $array = array();
         try {
             $node = simplexml_load_string($content);
+            // fix for hhvm
+            if(!is_a($node, 'SimpleXMLElement')){
+                throw new Exception('loading XML failed'); 
+            }
+            
         }
         catch(\Exception $e){
             return false;
