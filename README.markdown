@@ -1,4 +1,4 @@
-
+[![Build Status](https://travis-ci.org/tidal/PEIP.svg?branch=v1.ns)](https://travis-ci.org/tidal/PEIP)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tidal/PEIP/badges/quality-score.png?b=v1.ns)](https://scrutinizer-ci.com/g/tidal/PEIP/?branch=v1.ns)
 <h1>PEIP - PHP Event Integration Patterns</h1>
 <small><em>pronounced: pipe</em></small><br><br>
