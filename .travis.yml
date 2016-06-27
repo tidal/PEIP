@@ -8,4 +8,4 @@ php:
   - hhvm 
 
 script:
-  - phpunit --coverage-clover=coverage.clover 
+  - phpunit
