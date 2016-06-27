@@ -9,22 +9,21 @@ class ParameterHolderTest  extends PHPUnit_Framework_TestCase {
 
     public function setup(){
     	//test provider
-    	$holder = self::provider();
-    	$this->assertTrue($holder instanceof PEIP_Parameter_Holder);
+    	$this->holder = $this->provider();
     
     }
 
-	public static function provider()
+    public function provider()
     {
         return new PEIP_Parameter_Holder();
     }
 	
 	
     /**
-     * @dataProvider provider
+     * 
      */
-    public function testAccessors($holder = NULL){
-    	$holder = $holder ? $holder : self::provider();
+    public function testAccessors(){
+    	$holder = $this->holder;
     	$holder->setParameter('foo', 'bar');
         $this->assertEquals('bar', $holder->getParameter('foo'));
         $parameters = array(
@@ -36,19 +35,17 @@ class ParameterHolderTest  extends PHPUnit_Framework_TestCase {
     }	
 	
     /**
-     * @dataProvider provider
      */
     public function testHas($holder = NULL){
-    	$holder = $holder ? $holder : self::provider();
+    	$holder = $this->holder;
     	$holder->setParameter('foo', 'bar');
         $this->assertTrue($holder->hasParameter('foo')); 
     }	
 	
     /**
-     * @dataProvider provider
      */
     public function testDelete($holder = NULL){
-    	$holder = $holder ? $holder : self::provider();
+    	$holder = $this->holder;
     	$holder->setParameter('foo', 'bar');
         $this->assertTrue($holder->hasParameter('foo'));
         $holder->deleteParameter('foo');
@@ -57,9 +54,9 @@ class ParameterHolderTest  extends PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @dataProvider provider
      */
     public function testAdd($holder = NULL){
+    	$holder = $this->holder;
         $parameters = array(
         	'foo' => 'bar',
         	'test' => 'text'
