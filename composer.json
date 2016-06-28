@@ -1,0 +1,17 @@
+{
+    "name": "tidal/peip",
+    "description": "PEIP is a pure PHP Middleware Framework to easily create Messaging- and Work-Flows.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Timo Michna",
+            "email": "timomichna@yahoo.de"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "4.*",
+        "friendsofphp/php-cs-fixer": "*",
+        "squizlabs/php_codesniffer": "1.*"
+    }
+}
