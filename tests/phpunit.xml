@@ -16,7 +16,7 @@
          strict="false"
          verbose="false"> 
 <filter>
-  <whitelist>
+  <whitelist  addUncoveredFilesFromWhitelist="true">
     <directory suffix=".php">../src</directory>
     <exclude>
       <file>../src/PEIP.php</file>
@@ -24,4 +24,7 @@
     </exclude>
   </whitelist>
 </filter>
+<logging>
+    <log type="coverage-clover" target="../clover.xml"/>
+</logging>
 </phpunit>
