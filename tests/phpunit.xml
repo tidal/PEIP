@@ -21,6 +21,7 @@
     <exclude>
       <file>../src/PEIP.php</file>
       <directory suffix=".php">../src/INF</directory>
+      <directory suffix=".php">./_files</directory>
     </exclude>
   </whitelist>
 </filter>
