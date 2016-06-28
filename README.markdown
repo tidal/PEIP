@@ -26,9 +26,7 @@ And if you want to, Change all of that!<br><br>
 
 <h2>WHERE?</h2>
 Interim Homepage can be found <a href="http://tidal.github.com/PEIP/">here</a><br>
-Downloads can be found <a href="http://github.com/tidal/PEIP/downloads">here</a><br>
-PEAR packages can be found <a href="http://pear.peip-project.de/">here</a><br>
-API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a><br>
+<s>API docs can be found <a href="http://tidal.github.com/PEIP/docs/api/latest/classes.html">here</a><br></s>
 Examples can be found in the <a href="http://github.com/tidal/PEIP/tree/master/examples/">source</a>.<br>
 Issue/Bug Tracker can be found <a href="http://tidal.lighthouseapp.com/projects/50364-peip/tickets">here</a><br>
 ohloh metrics can be found <a href="http://www.ohloh.net/p/peip">here</a><br><br>
