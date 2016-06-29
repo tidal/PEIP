@@ -1,6 +1,8 @@
 <?php
 
-class CafeGateway extends PEIP_Simple_Messaging_Gateway {
+use PEIP\Gateway\SimpleMessagingGateway;
+
+class CafeGateway extends SimpleMessagingGateway {
 
 	public function placeOrder(Order $order){
 		echo "\nCafe: place order #".$order->getOrderNumber();

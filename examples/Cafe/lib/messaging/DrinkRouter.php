@@ -1,9 +1,12 @@
 <?php
 
+use PEIP\ABS\Router\Router;
+use PEIP\INF\Message\Message;
+
 class DrinkRouter 
-	extends PEIP_ABS_Router {
+	extends Router {
 	
-	protected function selectChannels(PEIP_INF_Message $message){
+	protected function selectChannels(Message $message){
 		$order = $message->getContent();
 		$channelName = $order['iced']  ? 'coldDrinks' : 'hotDrinks';
 		echo PEIP_LINE_SEPARATOR."DrinkRouter: routed to channel: $channelName";

@@ -19,14 +19,22 @@ class XMLContextReader extends \PEIP\ABS\Base\Connectable {
     protected $config;
 
 
-    public function __construct($config){
-        $this->config = (array)simplexml_load_string($config);
+    public function __construct($config){ //print_r((array)simplexml_load_string($config));
+        $this->config = ($config);       
     }
 
-    public function read(){
-        foreach($this->config as $xmlNode){
-            $arrayNode = XMLArrayTranslator::translate($xmlNode);
-            $this->doFireEvent('read_node', array('NODE'=>$arrayNode));
+    public function read(){      
+        $iterator = new \SimpleXMLIterator($this->config);
+        $iterator->rewind();
+        while($iterator->valid()){
+            
+            $arrayNode = XMLArrayTranslator::translate($iterator->current()->asXML()); 
+            $this->doFireEvent('read_node', array('NODE'=>$arrayNode));            
+            $iterator->next();
+        }
+        
+        foreach($iterator as $xmlNode){  
+
         }
         $this->config = array();
     }

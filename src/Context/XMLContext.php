@@ -34,6 +34,7 @@ use PEIP\Channel\PublishSubscribeChannel;
 use PEIP\Gateway\SimpleMessagingGateway;
 use PEIP\Listener\Wiretap;
 use PEIP\Service\ServiceActivator;
+use PEIP\Context\XMLContextReader;
 
 class XMLContext 
     implements 
@@ -57,10 +58,8 @@ class XMLContext
      */
     public function __construct($string){
         $this->initNodeBuilders();
-        $reader = new XMLContext_Reader($string);
-        $provider = $this->getServiceProvider();
-
-        $handler =  new CallableHandler($callable);
+        $reader = new XMLContextReader($string);
+ 
 
         $serviceActivator = new HeaderServiceActivator(array($this, 'addConfig'), 'NODE');
 
@@ -70,7 +69,7 @@ class XMLContext
        
     }
 
-    public function addConfig($config){
+    public function addConfig($config){ 
         return $this->getServiceProvider()->addConfig($config);
     }
 
@@ -144,7 +143,7 @@ class XMLContext
      * @access public
      * @param \PEIP\INF\Context\Context_Plugin $plugin a plugin instance
      */
-    public function addPlugin(\PEIP\INF\Context\Context_Plugin $plugin){ 
+    public function addPlugin(\PEIP\INF\Context\ContextPlugin $plugin){ 
         $plugin->init($this);   
     }
   
@@ -434,8 +433,8 @@ class XMLContext
      * @param mixed $id the id ofthe gateway 
      * @return object the gateway instance
      */
-    public function getGateway($id){
-        return $this->services[$id];
+    public function getGateway($id){ print_r($this->services);
+        return $this->getServiceProvider()->provideService($id); 
     }   
   
     /**

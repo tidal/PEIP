@@ -32,7 +32,7 @@ abstract class ServiceActivator
     /**
      * Handles the reply logic.
      * Delegates calling of service to method 'callService'.
-     * Replies on message´s reply-channel or registered output-channel if set.
+     * Replies on messageï¿½s reply-channel or registered output-channel if set.
      * 
      * @access protected
      * @param \PEIP\INF\Message\Message $message message to handle/reply for
@@ -53,7 +53,7 @@ abstract class ServiceActivator
      * content/payload of given message as argument.
      * 
      * @access protected
-     * @param \PEIP\INF\Message\Message $message message to call the service with it´s content/payload
+     * @param \PEIP\INF\Message\Message $message message to call the service with itï¿½s content/payload
      * @return mixed result of calling the registered service callable with message content/payload
      */
     protected function callService(\PEIP\INF\Message\Message $message){

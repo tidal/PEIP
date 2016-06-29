@@ -31,7 +31,7 @@ class SimpleMessagingGateway
     protected 
         $requestChannel,
         $replyChannel,
-        $messageClass = 'GenericMessage',
+        $messageClass = '\PEIP\Message\GenericMessage',
         $defaultHeaders,
         $messageBuilder; 
   

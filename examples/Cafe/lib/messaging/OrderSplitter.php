@@ -1,8 +1,11 @@
 <?php
 
-class OrderSplitter extends PEIP_ABS_Message_Splitter {
+use PEIP\ABS\Splitter\MessageSplitter;
+use PEIP\INF\Message\Message;
 
-	public function split(PEIP_INF_Message $message){
+class OrderSplitter extends MessageSplitter {
+
+	public function split(Message $message){
 		$order = $message->getContent();
 		$orderItems = $order->getItems();
 		$items = array();

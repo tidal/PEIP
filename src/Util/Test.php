@@ -38,14 +38,14 @@ class Test {
 
     public static function assertImplements($className, $interfaceName){
         $className = is_object($className) ? get_class($className) : $className;
-        $res = false;
-        try { 
-            class_exists($className);
+        $res = false;//throw new \Exception();
+        try {  
+            class_exists($className); 
             $res =  ReflectionPool::getInstance($className)
-                ->implementsInterface($interfaceName);            
+                ->implementsInterface($interfaceName);             
         }  catch (\Exception $e){
             $res = false; 
-        }
+        } 
         return $res;;
     }
 

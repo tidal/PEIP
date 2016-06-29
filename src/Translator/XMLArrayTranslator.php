@@ -27,7 +27,7 @@ class XMLArrayTranslator {
         try {
             $node = simplexml_load_string($content);
             // fix for hhvm
-            if(!is_a($node, 'SimpleXMLElement')){
+            if(!($node instanceof \SimpleXMLElement)){
                 throw new \Exception('loading XML failed');  
             }
             

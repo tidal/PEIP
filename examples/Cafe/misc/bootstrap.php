@@ -1,6 +1,12 @@
 <?php
 
 require_once(dirname(__FILE__).'/../../../misc/bootstrap.php');
-echo "\nAUTOLOAD +++.".realpath(dirname(__FILE__).'/../lib/');
-$autoloader = PEIP_Autoload::getInstance();
-$autoloader->scanDirectory(realpath(dirname(__FILE__).'/../lib/'));
+
+foreach (glob(realpath(dirname(__FILE__)."/../lib/model/")."/*.php") as $filename){
+    require_once $filename;
+}
+
+foreach (glob(realpath(dirname(__FILE__)."/../lib/messaging/")."/*.php") as $filename){
+    require_once $filename;
+}
+

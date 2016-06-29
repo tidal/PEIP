@@ -18,7 +18,9 @@ use PEIP\Gateway\SimpleMessagingGateway;
 use PEIP\Listener\Wiretap;
 use PEIP\Service\ServiceActivator;
 
-class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
+class BasePlugin 
+    extends \PEIP\ABS\Context\ContextPlugin
+    implements \PEIP\INF\Context\ContextPlugin { 
 
     
 
@@ -47,7 +49,7 @@ class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
      * @return \PEIP\INF\Channel\Channel the created pollable channel instance
      */
     public function createChannel($config){
-        return $this->doCreateChannel($config, 'PollableChannel');
+        return $this->doCreateChannel($config, '\PEIP\Channel\PollableChannel');
     }
 
     /**
@@ -59,7 +61,7 @@ class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
      * @return \PEIP\INF\Channel\Channel the created subscribable channel instance
      */
     public function createSubscribableChannel($config){
-        return $this->doCreateChannel($config, 'PublishSubscribeChannel');
+        return $this->doCreateChannel($config, '\PEIP\Channel\PublishSubscribeChannel');
     }
 
     /**
@@ -96,7 +98,7 @@ class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
             $this->getRequestChannel($config),
             $this->getReplyChannel($config)
         );
-        $defaultClass = $defaultClass ? $defaultClass : 'SimpleMessagingGateway';
+        $defaultClass = $defaultClass ? $defaultClass : '\PEIP\Gateway\SimpleMessagingGateway';
         $gateway = $this->buildAndModify($config, $args, $defaultClass);
         $id = (string)$config["id"];
         $this->gateways[$id] = $gateway;
@@ -172,7 +174,7 @@ class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
      * @return object the wiretap instance
      */
     public function createWiretap($config){
-        return $this->createReplyMessageHandler($config, 'Wiretap');
+        return $this->createReplyMessageHandler($config, '\PEIP\Listener\Wiretap');
     }
 
     /**
@@ -206,7 +208,7 @@ class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
                 $service,
                 $method
             ));
-            $defaultClass = $defaultClass ? $defaultClass : 'ServiceActivator';
+            $defaultClass = $defaultClass ? $defaultClass : '\PEIP\Service\ServiceActivator';
             return $this->buildAndModify($config, $args, $defaultClass);
         }
     }
@@ -266,7 +268,7 @@ class BasePlugin extends \PEIP\ABS\Context\ContextPlugin {
      * @return \PEIP\INF\Channel\Channel reply-channel
      */
     public function doGetChannel($type, $config){
-        $channelName = $config[$type."_channel"]
+        $channelName = isset($config[$type."_channel"])
             ? $config[$type."_channel"]
             : $config["default_".$type."_channel"];
         return $this->context->getServiceProvider()->provideService(trim((string)$channelName));

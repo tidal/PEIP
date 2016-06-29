@@ -1,12 +1,15 @@
 <?php
 
+use PEIP\INF\Channel\Channel;
+use PEIP\INF\Message\Message;
+
 class DrinkAggregator 
-	extends PEIP_Pipe {
+	extends \PEIP\Pipe\Pipe {
 
 	protected $orders = array();
 	protected $preparedDrinks = array();
 	
-	public function __construct(PEIP_INF_Channel $inputChannel, PEIP_INF_Channel $outputChannel = NULL){
+	public function __construct(Channel $inputChannel, Channel $outputChannel = NULL){
 		$this->setInputChannel($inputChannel);
 		if(is_object($outputChannel)){
 			$this->setOutputChannel($outputChannel);	
@@ -14,7 +17,7 @@ class DrinkAggregator
 		$this->registerCommand('ADD_ORDER', array($this, 'receiveOrder'));
 	}
 
-	protected function doReply(PEIP_INF_Message $message){
+	protected function doReply(Message $message){
 		$drink = $message->getContent();
 		$nr = $drink->getOrderNumber();
 		if(!isset($this->preparedDrinks[$nr])){

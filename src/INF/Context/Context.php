@@ -26,7 +26,7 @@ interface Context {
     
     public function getService($id);
     
-    public function addPlugin(\PEIP\INF\Context\Context_Plugin $plugin);
+    public function addPlugin(\PEIP\INF\Context\ContextPlugin $plugin);
     
     public function buildAndModify($config, $arguments, $defaultClass = false);
 

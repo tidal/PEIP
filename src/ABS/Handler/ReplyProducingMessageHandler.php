@@ -26,12 +26,11 @@ use PEIP\Message\GenericMessage;
 use PEIP\Message\MessageBuilder;
 
 abstract class ReplyProducingMessageHandler
-    extends \PEIP\ABS\Handler\MessageHandler
-    implements \PEIP\INF\Message\MessageBuilder {
+    extends \PEIP\ABS\Handler\MessageHandler {
     
     protected 
         $outputChannel,
-        $messageClass = 'GenericMessage',
+        $messageClass = '\PEIP\Message\GenericMessage',
         $replyChannelHeaders = array('REPLY_CHANNEL');
   
     /**

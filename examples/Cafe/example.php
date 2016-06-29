@@ -3,7 +3,7 @@
 // please, change "<br>" to "\n" in the follwing line, when you run this file in the CLI
 define('PEIP_LINE_SEPARATOR', "\n");
 
-// This is PEIP´s (basic) way of the famous starbucks example from
+// This is PEIPï¿½s (basic) way of the famous starbucks example from
 // Gregor Hohpe http://www.eaipatterns.com/ramblings/18_starbucks.html 
 
 // Note since this example works in a single threaded environment it 
@@ -16,7 +16,7 @@ define('PEIP_LINE_SEPARATOR', "\n");
 require_once(dirname(__FILE__).'/misc/bootstrap.php');
 
 
-$context = PEIP_XML_Context::createFromFile(dirname(__FILE__).'/config/config.xml'); 
+$context = PEIP\Context\XMLContext::createFromFile(dirname(__FILE__).'/config/config.xml'); 
 $cafe = $context->getGateway('CafeGateway');
 
 // this would be the same done by scripting.
@@ -54,6 +54,7 @@ if($cafe){
         	$cafe->placeOrder($order);
         	// receive drinks
 		$drinks = $cafe->receiveDelivery();
+                var_dump($drinks);
     	}	
 
 }else{
