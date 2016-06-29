@@ -61,12 +61,6 @@ if($cafe){
 	throw new RuntimeException('Could not get CafeGateway');
 }
 
-function convert($size)
- {
-    $unit=array('b','kb','mb','gb','tb','pb');
-    return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
- }
 
-echo PHP_EOL.PHP_EOL.'memory usage: '.convert(memory_get_usage(true)).PHP_EOL.PHP_EOL; 
 
 
