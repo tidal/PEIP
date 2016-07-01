@@ -266,12 +266,6 @@ class BasePlugin
             ? $config[$type."_channel"]
             : $config["default_".$type."_channel"];
         return $this->context->getServiceProvider()->provideService(trim((string)$channelName));
-        $channel =  $this->services[trim((string)$channelName)];
-        if($channel instanceof \PEIP\INF\Channel\Channel){
-            return $channel;
-        }else{
-            return NULL;
-        }
     }
 
     
