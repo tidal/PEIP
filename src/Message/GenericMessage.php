@@ -140,13 +140,11 @@ class GenericMessage
                 $res = get_class($this->getContent());
             }
             catch(\Exception $e){
-
+                return "";
             }
-        }
-
-
-
+        }     
         
+        return $res;     
     }
 
     /**
