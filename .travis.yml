@@ -7,7 +7,7 @@ php:
   - hhvm 
 
 script:
-  - composer update 
+  - composer update --dev --prefer-source --no-interaction $PREFER_LOWEST 
   - phpunit --coverage-clover=coverage.xml ./tests/AllTests.php
 after_success:
   - bash <(curl -s https://codecov.io/bash)
