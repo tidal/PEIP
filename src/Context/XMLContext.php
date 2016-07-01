@@ -433,7 +433,7 @@ class XMLContext
      * @param mixed $id the id ofthe gateway 
      * @return object the gateway instance
      */
-    public function getGateway($id){ print_r($this->services);
+    public function getGateway($id){ 
         return $this->getServiceProvider()->provideService($id); 
     }   
   
