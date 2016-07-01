@@ -245,7 +245,7 @@ class XMLContext
                 
         );
         $plugin = new BasePlugin();
-        $this->addPlugin($plugin); return;
+        $this->addPlugin($plugin); 
         foreach($builders as $nodeName => $method){
             $this->registerNodeBuilder($nodeName, array($this, $method));   
         }       
