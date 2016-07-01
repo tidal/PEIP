@@ -22,9 +22,6 @@ namespace PEIP\Pipe;
  * @implements \PEIP\INF\Message\MessageBuilder, \PEIP\INF\Handler\Handler, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\SubscribableChannel, \PEIP\INF\Event\Connectable
  */
 
-
-use PEIP\Dispatcher\Dispatcher;
-use PEIP\Event\Event;
 use PEIP\Util\Test;
 
 class Pipe 
