@@ -20,7 +20,6 @@ namespace PEIP\Gateway;
  * @implements \PEIP\INF\Gateway\MessagingGateway, \PEIP\INF\Message\MessageBuilder
  */
 
-use PEIP\Message\GenericMessage;
 use PEIP\Message\MessageBuilder;
 
 class SimpleMessagingGateway 
