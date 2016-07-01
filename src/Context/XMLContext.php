@@ -151,10 +151,10 @@ class XMLContext
      * Creates a registers a context-plugin instance from a config object.
      * 
      * @access public
-     * @param object $config configuration object for the plugin 
+     * @param array $config configuration for the plugin 
      * @return 
      */
-    public function createPlugin($config){
+    public function createPlugin(array $config){
         $plugin = $this->createService($config);    
         $this->addPlugin($plugin);
     }
@@ -365,7 +365,7 @@ class XMLContext
      * @param $config 
      * @return object the initialized service instance
      */
-    public function createService($config){
+    public function createService(array $config){
         return ServiceFactory::createService($config);      
     }
  

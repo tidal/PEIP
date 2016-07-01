@@ -20,14 +20,14 @@ class ServiceFactory {
      * Creates and initializes service instance from a given configuration.
      *
      * @access public
-     * @param $config
+     * @param $config configuration of the service
      * @return object the initialized service instance
      */
-    public static function createService($config){
+    public static function createService(array $config){
         $args = array();
         //build arguments for constructor
-        if($config->constructor_arg){
-            foreach($config->constructor_arg as $arg){
+        if(isset($config['constructor_arg'])){
+            foreach($config['constructor_arg'] as $arg){
                 $args[] = self::buildArg($arg);
             }
         }
@@ -121,12 +121,12 @@ class ServiceFactory {
      * @see PEIP\Factory\ServiceFactory::modifyService
      * @implements \PEIP\INF\Context\Context
      * @access public
-     * @param object $config configuration object to build a service instance from.
+     * @param object $config configuration array to build a service instance from.
      * @param array $arguments arguments for the service constructor
      * @param string $defaultClass class to create instance for if none is set in config
      * @return object build and modified srvice instance
      */
-    public static function buildAndModify($config, $arguments, $defaultClass = ""){
+    public static function buildAndModify(array $config, $arguments, $defaultClass = ""){
         if((isset($config["class"]) && "" != (string)$config["class"])  || $defaultClass !== ""){
              $service = ServiceFactory::doBuild($config, $arguments, $defaultClass);
         }else{
