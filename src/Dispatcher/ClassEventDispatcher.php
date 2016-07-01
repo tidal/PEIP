@@ -117,7 +117,7 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
     public function hasListeners($name, $object){
         return parent::hasListeners(
             $name,
-            Reflection_Pool::getInstance($object)
+            ReflectionPool::getInstance($object)
         );
     }
 }
