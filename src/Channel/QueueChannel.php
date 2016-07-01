@@ -2,8 +2,6 @@
 
 namespace PEIP\Channel;
 
-namespace PEIP\Channel;
-
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2016 Timo Michna <timomichna/yahoo.de>
