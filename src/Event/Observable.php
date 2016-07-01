@@ -36,12 +36,19 @@ class Observable implements \PEIP\INF\Event\Observable {
      * @param $observedObject 
      * @return 
      */
-    public function __construct(object $observedObject){
-        $this->observedObject = $observedObject;
+    public function __construct($observedObject){
+        $this->setObserved($observedObject);
     }
 
-    
-    /**
+    protected function setObserved($observedObject){
+        if(!is_object($observedObject)){
+            throw new \InvalidArgumentException("$observedObject must be an object. ".gettype($var)." given.");
+        }
+        
+        $this->observedObject = $observedObject;      
+    }
+
+        /**
      * @access public
      * @param $observer 
      * @return 
