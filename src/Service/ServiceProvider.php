@@ -83,7 +83,7 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer  {
      * @see XMLContext::includeContext
      * @access protected
      */
-    protected function initNodeBuilders(){ return;
+    protected function initNodeBuilders(){
         $builders = array(
             'service' => 'initService'
         );
