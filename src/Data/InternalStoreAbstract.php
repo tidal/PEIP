@@ -53,7 +53,7 @@ abstract class InternalStoreAbstract {
      * @return 
      */
     protected function deleteInternalValue($key){
-        unset($this->internalValues[$offset]);
+        unset($this->internalValues[$key]);
     }   
 
     
