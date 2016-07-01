@@ -1,13 +1,11 @@
 language: php
 php:
-  - 5.4
-  - 5.5 
   - 5.6
   - 7
   - hhvm 
 
 script:
   - composer update --dev --prefer-source --no-interaction $PREFER_LOWEST 
-  - phpunit --coverage-clover=coverage.xml ./tests/AllTests.php
+  - ./vendor/phpunit/phpunit/phpunit --coverage-clover=coverage.xml ./tests/AllTests.php
 after_success:
   - bash <(curl -s https://codecov.io/bash)
