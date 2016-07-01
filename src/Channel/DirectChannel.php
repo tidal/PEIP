@@ -34,12 +34,10 @@ class DirectChannel
      * @access public
      * @param $message 
      * @param $timeout 
-     * @return 
+     * @return boolean wether message was sent successfully
      */
     public function send(\PEIP\INF\Message\Message $message, $timeout = -1){
-
-        $sent = $this->doSend($message);
-
+        return $this->doSend($message);
     }       
         
         
