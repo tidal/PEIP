@@ -86,7 +86,7 @@ class ServiceFactory {
      * @param object $config configuration object to create argument from.
      * @return mixed build argument
      */
-    protected static function buildArg($config){
+    protected function buildArg($config){
         if(trim((string)$config['value']) != ''){
             $arg = (string)$config['value'];
         }elseif($config->getName() == 'value'){
@@ -107,9 +107,9 @@ class ServiceFactory {
         }elseif($config->getName() == 'service'){
             $arg = self::provideService($config);
         }elseif($config->list){
-            $arg = self::buildArg($config->list);
+            $arg = $this->buildArg($config->list);
         }elseif($config->service){
-            $arg = self::buildArg($config->service);
+            $arg = $this->buildArg($config->service);
         }
         return $arg;
     }
@@ -172,7 +172,7 @@ class ServiceFactory {
         // set instance properties
         if(isset($config->property)){
             foreach($config->property as $property){
-                $arg = self::buildArg($property);
+                $arg = $this->buildArg($property);
                 if($arg){
                     $setter = self::getSetter($property);
                     if($setter &&  self::hasPublicProperty($service, 'Method', $setter)){
