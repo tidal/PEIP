@@ -22,7 +22,6 @@ namespace PEIP\ABS\Handler;
  * @implements \PEIP\INF\Handler\Handler, \PEIP\INF\Message\MessageBuilder
  */
 
-use PEIP\Message\GenericMessage;
 use PEIP\Message\MessageBuilder;
 
 abstract class ReplyProducingMessageHandler
