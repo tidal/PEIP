@@ -22,7 +22,7 @@ namespace PEIP\Channel;
  * @implements \PEIP\INF\Event\Connectable, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\PollableChannel
  */
 
-
+use \SplPriorityQueue;
 
 
 class PriorityChannel 
