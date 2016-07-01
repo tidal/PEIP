@@ -86,7 +86,7 @@ class ServiceFactory {
      * @param object $config configuration object to create argument from.
      * @return mixed build argument
      */
-    protected function buildArg($config){
+    protected static function buildArg($config){
         if(trim((string)$config['value']) != ''){
             $arg = (string)$config['value'];
         }elseif($config->getName() == 'value'){
@@ -107,9 +107,9 @@ class ServiceFactory {
         }elseif($config->getName() == 'service'){
             $arg = self::provideService($config);
         }elseif($config->list){
-            $arg = $this->buildArg($config->list);
+            $arg = self::buildArg($config->list);
         }elseif($config->service){
-            $arg = $this->buildArg($config->service);
+            $arg = self::buildArg($config->service);
         }
         return $arg;
     }
@@ -138,7 +138,7 @@ class ServiceFactory {
                 $args = array();
             if(isset($config['argument'])){
                         foreach($config['argument'] as $arg){
-                            $args[] = $this->buildArg($arg);
+                            $args[] = self::buildArg($arg);
                         }
                 }
             $service = call_user_func_array(array($service, (string)$config["ref_method"]), $args);
@@ -170,7 +170,7 @@ class ServiceFactory {
         // set instance properties
         if(isset($config->property)){
             foreach($config->property as $property){
-                $arg = $this->buildArg($property);
+                $arg = self::buildArg($property);
                 if($arg){
                     $setter = self::getSetter($property);
                     if($setter &&  self::hasPublicProperty($service, 'Method', $setter)){
@@ -188,7 +188,7 @@ class ServiceFactory {
                 if($method && self::hasPublicProperty($service, 'Method', $method)){
                     $args = array();
                     foreach($action->children() as $argument){
-                        $args[] = $this->buildArg($argument);
+                        $args[] = self::buildArg($argument);
                     }
                     call_user_func_array(array($service, (string)$action['method']), $args);
                 }
