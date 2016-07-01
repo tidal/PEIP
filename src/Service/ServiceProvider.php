@@ -87,7 +87,6 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer  {
         $builders = array(
             'service' => 'initService'
         );
-        $plugin = new BasePlugin();
         foreach($builders as $nodeName => $method){
            $this->registerNodeBuilder($nodeName, array($this, $method));
         }
