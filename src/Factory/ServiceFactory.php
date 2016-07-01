@@ -167,7 +167,6 @@ class ServiceFactory {
      */
     protected function modifyService($service, $config){        
         $config = is_array($config) ? new \ArrayObject($config) : $config;
-        $reflection = GenericBuilder::getInstance(get_class($service))->getReflectionClass();
         // set instance properties
         if(isset($config->property)){
             foreach($config->property as $property){
