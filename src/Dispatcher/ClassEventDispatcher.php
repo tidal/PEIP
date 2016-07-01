@@ -40,7 +40,7 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
         $class = is_object($object) ? get_class($object) : (string)$object;
         $res = true;
         foreach(Reflection::getImplementedClassesAndInterfaces($object) as $cls){
-            $reflection = Reflection_Pool::getInstance($class);
+            $reflection = \PEIP\Util\ReflectionPool::getInstance($class);
             $r = parent::disconnect($name, $reflection, $listener);
             if(!$r){
                 $res = false;
