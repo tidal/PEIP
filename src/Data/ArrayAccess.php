@@ -12,7 +12,7 @@ namespace PEIP\Data;
 
 /**
  * ArrayAccess 
- * Simple implementation of the PHP´s native ArrayAccess interface
+ * Simple implementation of the PHPï¿½s native ArrayAccess interface
  *
  * @author Timo Michna <timomichna/yahoo.de>
  * @package PEIP 
@@ -35,7 +35,7 @@ class ArrayAccess implements \ArrayAccess {
     public function offsetExists($offset){
         return array_key_exists($name, $this->values);
     }   
-      
+       
     /**
      * returns the value for agiven offset
      * 

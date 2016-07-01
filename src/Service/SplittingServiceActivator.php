@@ -1,5 +1,5 @@
 <?php
-
+ 
 namespace PEIP\Service;
 /*
  * This file is part of the PEIP package.
@@ -30,7 +30,7 @@ class SplittingServiceActivator
      * content/payload (array) of given message as arguments.
      * 
      * @access protected
-     * @param \PEIP\INF\Message\Message $message message to call the service with it´s content/payload
+     * @param \PEIP\INF\Message\Message $message message to call the service with itï¿½s content/payload
      * @return mixed result of calling the registered service callable with message content/payload
      */
     public function callService(\PEIP\INF\Message\Message $message){
