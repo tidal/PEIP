@@ -54,7 +54,7 @@ if($cafe){
         	$cafe->placeOrder($order);
         	// receive drinks
 		$drinks = $cafe->receiveDelivery();
-                var_dump($drinks);
+                
     	}	
 
 }else{

@@ -1,0 +1,15 @@
+{
+    "cafe.orders" : {
+        "type" : "publish_subscribe_channel" 
+    },
+    "publish.subscribe.channel" : {
+        "id" : "orders"
+    },
+    "service.activator" : {
+        "id" : "orders",
+        "input_channel" : "peip:://output@hotDrinks",
+        "output_channel" : "preparedDrinks", 
+        "ref" : "barista"
+    }
+    	
+}
