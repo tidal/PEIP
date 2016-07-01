@@ -151,10 +151,10 @@ class XMLContext
      * Creates a registers a context-plugin instance from a config object.
      * 
      * @access public
-     * @param array $config configuration for the plugin 
+     * @param object $config configuration object for the plugin 
      * @return 
      */
-    public function createPlugin(array $config){
+    public function createPlugin($config){
         $plugin = $this->createService($config);    
         $this->addPlugin($plugin);
     }
@@ -365,10 +365,64 @@ class XMLContext
      * @param $config 
      * @return object the initialized service instance
      */
-    public function createService(array $config){
+    public function createService($config){
         return ServiceFactory::createService($config);      
     }
  
+    /**
+     * Modifies a service instance from configuration.
+     *  - Sets properties on the instance.
+     *  -- Calls a public setter method if exists.
+     *  -- Else sets a public property if exists.
+     *  - Calls methods on the instance.
+     *  - Registers listeners to events on the instance
+     * 
+     * @access protected
+     * @param object $service the service instance to modify 
+     * @param object $config configuration to get the modification instructions from. 
+     * @return object the modificated service
+     */
+    protected function modifyService($service, $config){ 
+        $reflection = GenericBuilder::getInstance(get_class($service))->getReflectionClass();
+        // set instance properties
+        if($config->property){          
+            foreach($config->property as $property){                          
+                $arg = $this->buildArg($property);
+                if($arg){
+                    $setter = self::getSetter($property);               
+                    if($setter &&  self::hasPublicProperty($service, 'Method', $setter)){
+                        $service->{$setter}($arg);  
+                    }elseif(in_array($property, self::hasPublicProperty($service, 'Property', $setter))){
+                        $service->$setter = $arg;
+                    }                   
+                }
+            }
+        }   
+        // call instance methods
+        if($config->action){            
+            foreach($config->action as $action){
+                $method = (string)$action['method'] != '' ? (string)$action['method'] : NULL;
+                if($method && self::hasPublicProperty($service, 'Method', $method)){
+                    $args = array(); 
+                    foreach($action->children() as $argument){
+                        $args[] = $this->buildArg($argument);
+                    } 
+                    call_user_func_array(array($service, (string)$action['method']), $args);
+                }
+            }
+        }       
+        // register instance listeners
+        if($service instanceof \PEIP\INF\Event\Connectable){
+            if($config->listener){
+                foreach($config->listener as $listenerConf){
+                    $event = (string)$listenerConf['event'];
+                    $listener = $this->provideService($listenerConf);  
+                    $service->connect($event, $listener);   
+                }
+            }
+        }
+        return $service;
+    }   
       
     /**
      * returns gateway instance forgiven id.
@@ -420,7 +474,7 @@ class XMLContext
         $id = (string)$config['id'];
         if($id != ''){ 
             array_unshift($additionalArguments, $id);
-            $channel = ServiceFactory::buildAndModify($config, $additionalArguments, $defaultChannelClass);
+            $channel = $this->buildAndModify($config, $additionalArguments, $defaultChannelClass);
             $this->channelRegistry->register($channel);
             return $channel;
         }
@@ -441,7 +495,7 @@ class XMLContext
             $this->getReplyChannel($config)
         );
         $defaultClass = $defaultClass ? $defaultClass : 'SimpleMessagingGateway';
-        $gateway = ServiceFactory::buildAndModify($config, $args, $defaultClass);
+        $gateway = $this->buildAndModify($config, $args, $defaultClass);
         $id = (string)$config["id"];
         $this->gateways[$id] = $gateway;
         return $gateway;    
@@ -461,7 +515,7 @@ class XMLContext
      */
     public function createRouter($config, $defaultClass = false){
         $resolver = $config['channel_resolver'] ? (string)$config['channel_resolver'] : $this->channelRegistry;
-        return ServiceFactory::buildAndModify($config, array(
+        return $this->buildAndModify($config, array(
             $resolver,
             $this->doGetChannel('input', $config)
         ), $defaultClass);
@@ -529,7 +583,7 @@ class XMLContext
      * @return object the reply-message-handler instance
      */ 
     public function createReplyMessageHandler($config, $defaultClass = false){
-        return ServiceFactory::buildAndModify($config, $this->getReplyHandlerArguments($config), $defaultClass); 
+        return $this->buildAndModify($config, $this->getReplyHandlerArguments($config), $defaultClass); 
     }
     
     /**
@@ -551,7 +605,7 @@ class XMLContext
                 $method             
             )); 
             $defaultClass = $defaultClass ? $defaultClass : 'ServiceActivator';
-            return ServiceFactory::buildAndModify($config, $args, $defaultClass);                
+            return $this->buildAndModify($config, $args, $defaultClass);                
         }
     }   
     
@@ -699,7 +753,22 @@ class XMLContext
         }       
     }
 
-
+    
+    /**
+     * Builds and modifies an arbitrary service/object instance from a config-obect.
+     * 
+     * @see XMLContext::doBuild
+     * @see XMLContext::modifyService
+     * @implements \PEIP\INF\Context\Context
+     * @access public
+     * @param object $config configuration object to build a service instance from. 
+     * @param array $arguments arguments for the service constructor 
+     * @param string $defaultClass class to create instance for if none is set in config 
+     * @return object build and modified srvice instance
+     */
+    public function buildAndModify($config, $arguments, $defaultClass = false){   
+        return ServiceFactory::buildAndModify($config, $arguments, $defaultClass);
+    }
 
     /**
      * Builds an arbitrary service/object instance from a config-obect.
