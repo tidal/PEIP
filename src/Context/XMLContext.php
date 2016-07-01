@@ -737,13 +737,7 @@ class XMLContext
         $channelName = $config[$type."_channel"] 
             ? $config[$type."_channel"] 
             : $config["default_".$type."_channel"];
-        return $this->serviceProvider->provideService(trim((string)$channelName));
-        $channel =  $this->services[trim((string)$channelName)];
-        if($channel instanceof \PEIP\INF\Channel\Channel){
-            return $channel;    
-        }else{
-            return NULL;
-        }       
+        return $this->serviceProvider->provideService(trim((string)$channelName));     
     }
 
     
