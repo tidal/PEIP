@@ -8,6 +8,6 @@ php:
 
 script:
   - composer update 
-  - phpunit --coverage-clover=coverage.xml ./tests/AllTests.php
+  - phpunit --coverage-clover=coverage.xml --colors=auto ./tests/AllTests.php
 after_success:
   - bash <(curl -s https://codecov.io/bash)
