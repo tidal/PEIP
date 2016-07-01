@@ -19,7 +19,7 @@ class XMLContextReader extends \PEIP\ABS\Base\Connectable {
     protected $config;
 
 
-    public function __construct($config){ //print_r((array)simplexml_load_string($config));
+    public function __construct($config){ 
         $this->config = ($config);       
     }
 
