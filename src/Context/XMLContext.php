@@ -28,11 +28,6 @@ use PEIP\Service\ServiceProvider;
 use PEIP\Plugins\BasePlugin;
 use PEIP\Factory\ServiceFactory;
 use PEIP\Base\GenericBuilder;
-use PEIP\Channel\PollableChannel;
-use PEIP\Channel\PublishSubscribeChannel;
-use PEIP\Gateway\SimpleMessagingGateway;
-use PEIP\Listener\Wiretap;
-use PEIP\Service\ServiceActivator;
 use PEIP\Context\XMLContextReader;
 
 class XMLContext 
