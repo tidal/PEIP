@@ -118,7 +118,7 @@ class ServiceFactory {
      * Builds and modifies an arbitrary service/object instance from a config-obect.
      *
      * @see XMLContext::doBuild
-     * @see XMLContext::modifyService
+     * @see PEIP\Factory\ServiceFactory::modifyService
      * @implements \PEIP\INF\Context\Context
      * @access public
      * @param object $config configuration object to build a service instance from.
