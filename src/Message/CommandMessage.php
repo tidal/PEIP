@@ -10,6 +10,8 @@ namespace PEIP\Message;
  * file that was distributed with this source code.
  */
 
+use PEIP\Data\ArrayAccess;
+
 /**
  * CommandMessage 
  *
