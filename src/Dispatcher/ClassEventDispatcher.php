@@ -12,7 +12,6 @@ namespace PEIP\Dispatcher;
  * @author timo
  */
 use PEIP\Util\Reflection;
-use PEIP\Util\ReflectionPool;
 use PEIP\Event\EventBuilder;
 
 class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
@@ -117,7 +116,7 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
     public function hasListeners($name, $object){
         return parent::hasListeners(
             $name,
-            ReflectionPool::getInstance($object)
+            \PEIP\Util\ReflectionPool::getInstance($object)
         );
     }
 }
