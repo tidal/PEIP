@@ -29,7 +29,7 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
     public function connect($name, $object, $listener){ 
         $class = is_object($object) ? get_class($object) : (string)$object;
         foreach(Reflection::getImplementedClassesAndInterfaces($object) as $cls){
-            $reflection = Reflection_Pool::getInstance($class);
+            $reflection = \PEIP\Util\ReflectionPool::getInstance($class);
             parent::connect($name, $reflection, $listener);
         }
         
@@ -63,7 +63,7 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
                 return self::doNotify(
                     $this->getListeners(
                         $name,
-                        Reflection_Pool::getInstance(
+                        \PEIP\Util\ReflectionPool::getInstance(
                             $object->getContent()
                         )
                      ),
