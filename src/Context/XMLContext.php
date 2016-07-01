@@ -22,7 +22,6 @@ namespace PEIP\Context;
  */
 
 
-use PEIP\Handler\CallableHandler;
 use PEIP\Service\HeaderServiceActivator;
 use PEIP\Channel\ChannelRegistry;
 use PEIP\Service\ServiceProvider;
