@@ -208,7 +208,7 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer  {
         $this->doFireEvent(self::EVENT_BUILD_NODE_ERROR, array(
             self::HEADER_NODE_CONFIG=>$config,
             self::HEADER_NODE_NAME=>$nodeName,
-            self::HEADER_MESSAGE=>'COULD NOT BUILD NODE'
+            self::HEADER_MESSAGE=>'COULD NOT BUILD NODE: '.$errorMessage
         ));
     }
 
