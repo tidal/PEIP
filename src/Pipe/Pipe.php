@@ -20,7 +20,6 @@ namespace PEIP\Pipe;
  * @subpackage pipe 
  * @extends \PEIP\ABS\Handler\ReplyProducingMessageHandler
  * @implements \PEIP\INF\Message\MessageBuilder, \PEIP\INF\Handler\Handler, \PEIP\INF\Channel\Channel, \PEIP\INF\Channel\SubscribableChannel, \PEIP\INF\Event\Connectable
- * @todo full test-coverage, factor out constants to framework-wide constants
  */
 
 
