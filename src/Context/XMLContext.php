@@ -377,7 +377,6 @@ class XMLContext
      * @return object the modificated service
      */
     protected function modifyService($service, $config){ 
-        $reflection = GenericBuilder::getInstance(get_class($service))->getReflectionClass();
         // set instance properties
         if($config->property){          
             foreach($config->property as $property){                          
