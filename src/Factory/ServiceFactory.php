@@ -147,7 +147,6 @@ class ServiceFactory {
             throw new \RuntimeException('Could not create Service.');
         }
         $service = self::modifyService($service, $config);
-        $id = trim((string)$config['id']);
         
         return $service;
     }
