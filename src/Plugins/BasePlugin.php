@@ -11,12 +11,6 @@ namespace PEIP\Plugins;
  *
  * @author timo
  */
-use PEIP\Context\XMLContext;
-use PEIP\Channel\PollableChannel;
-use PEIP\Channel\PublishSubscribeChannel;
-use PEIP\Gateway\SimpleMessagingGateway;
-use PEIP\Listener\Wiretap;
-use PEIP\Service\ServiceActivator;
 
 class BasePlugin 
     extends \PEIP\ABS\Context\ContextPlugin
