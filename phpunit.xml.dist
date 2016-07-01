@@ -1,0 +1,27 @@
+<phpunit backupGlobals="true"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         forceCoversAnnotation="false"
+         processIsolation="false"
+         stopOnError="false"
+         stopOnFailure="false"
+         stopOnIncomplete="false"
+         stopOnSkipped="false"
+         syntaxCheck="false"> 
+<filter>
+  <whitelist  addUncoveredFilesFromWhitelist="true">
+    <directory suffix=".php">../src</directory>
+    <exclude>
+      <file>../src/PEIP.php</file>
+      <directory suffix=".php">../src/INF</directory>
+      <directory suffix=".php">./_files</directory>
+    </exclude>
+  </whitelist>
+</filter>
+<logging>
+    <log type="coverage-clover" target="../clover.xml"/>
+</logging>
+</phpunit>
