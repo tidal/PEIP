@@ -23,7 +23,6 @@ namespace PEIP\Translator;
 class XMLArrayTranslator {
 
     public static function translate($content){
-        $array = array();
         try {
             $node = simplexml_load_string($content);
             // fix for hhvm
