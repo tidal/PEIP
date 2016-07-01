@@ -13,5 +13,10 @@
         "phpunit/phpunit": "4.*",
         "friendsofphp/php-cs-fixer": "*",
         "squizlabs/php_codesniffer": "1.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "PEIP\\": "src/"
+        }
     }
 }
