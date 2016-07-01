@@ -19,7 +19,7 @@ namespace PEIP\Base;
  */
 
 
-
+use PEIP\Data\ArrayAccess;
 
 
 class FlyAdapter {
