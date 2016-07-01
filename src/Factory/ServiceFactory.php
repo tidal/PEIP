@@ -136,8 +136,8 @@ class ServiceFactory {
             $service = $service->{(string)$config["ref_property"]};
         }elseif(isset($config["ref_method"])){
                 $args = array();
-            if($config->argument){
-                        foreach($config->argument as $arg){
+            if(isset($config['argument'])){
+                        foreach($config['argument'] as $arg){
                             $args[] = $this->buildArg($arg);
                         }
                 }
