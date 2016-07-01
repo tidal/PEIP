@@ -39,25 +39,5 @@ class XMLContextReader extends \PEIP\ABS\Base\Connectable {
         $this->config = array();
     }
 
-    public static function convertXmlToArray(\SimpleXMLElement $node, array $array = array()){
-        $node->type = $node->type ? $node->type : $node->getName();
-
-        foreach($node->attributes() as $name=>$value){
-            $array[$name] = (string)$value;
-        }
-        foreach($node->children() as $child){
-                $a = $b->getName();
-                if(!$b->children()){
-                        $arr[$a] = trim($b[0]);
-                }
-                else{
-                        $arr[$a][$iter] = array();
-                        $arr[$a][$iter] = xml2phpArray($b,$arr[$a][$iter]);
-                }
-        $iter++;
-        }
-
-    }
-
 }
 
