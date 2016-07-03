@@ -24,7 +24,7 @@ namespace PEIP\Data;
 
 class StoreCollection 
     extends \PEIP\Data\InternalStoreAbstract 
-    implements \PEIP\INF\Data\StoreCollection{
+    implements \PEIP\INF\Data\StoreCollection {
 
     protected 
         $factory,
@@ -37,7 +37,7 @@ class StoreCollection
      * @param \PEIP\INF\Factory\DedicatedFactory $factory a factory instance to create new stores
      * @return 
      */
-    public function __construct(\PEIP\INF\Factory\DedicatedFactory $factory){
+    public function __construct(\PEIP\INF\Factory\DedicatedFactory $factory) {
         $this->factory = $factory;
     }
  
@@ -49,12 +49,12 @@ class StoreCollection
      * @param string $namespace the namespace to get the store for
      * @return \PEIP\INF\Data\Store a store for given namespace
      */
-    protected function getStoreOrCreate($namespace){
-        if(!$this->hasPrivateValue($namespace)){
+    protected function getStoreOrCreate($namespace) {
+        if (!$this->hasPrivateValue($namespace)) {
             $store = $this->factory->build();
-            if($store instanceof \PEIP\INF\Data\Store){
+            if ($store instanceof \PEIP\INF\Data\Store) {
                 $this->setPrivateValue($namespace, $store);
-            }else{
+            }else {
                 throw new \Exception('Could not build Instance of \PEIP\INF\Data\Store from factory.');
             }
         }
@@ -69,7 +69,7 @@ class StoreCollection
      * @param array $values key/value pairs to store
      * @return 
      */
-    public function setValues($namespace, array $values){
+    public function setValues($namespace, array $values) {
         $this->getStoreOrCreate($namespace)->setValues($values);
     }
   
@@ -82,7 +82,7 @@ class StoreCollection
      * @param $values 
      * @return 
      */
-    public function addValues($namespace, array $values){
+    public function addValues($namespace, array $values) {
         $this->getStoreOrCreate($namespace)->addValues($values);
     }
     
@@ -93,7 +93,7 @@ class StoreCollection
      * @param string $namespace the namspace to return values for  
      * @return array stored key/value pairs
      */
-    public function getValues($namespace){
+    public function getValues($namespace) {
         $this->getStoreOrCreate($namespace)->getValues();
     }
   
@@ -105,7 +105,7 @@ class StoreCollection
      * @param string $key the key to return value for 
      * @return mixed value for the given key on the given namespace
      */
-    public function getValue($namespace, $key){
+    public function getValue($namespace, $key) {
         $this->getStoreOrCreate($namespace)->getValue($key);
     }
    
@@ -118,7 +118,7 @@ class StoreCollection
      * @param mixed $value the value to store 
      * @return 
      */
-    public function setValue($namespace, $key, $value){
+    public function setValue($namespace, $key, $value) {
         $this->getStoreOrCreate($namespace)->setValues($values);
     }
   
@@ -130,7 +130,7 @@ class StoreCollection
      * @param string $key the key to look for a value 
      * @return 
      */
-    public function hasValue($namespace, $key){
+    public function hasValue($namespace, $key) {
         $this->getStoreOrCreate($namespace)->hasValue($key);
     }
 
@@ -142,7 +142,7 @@ class StoreCollection
      * @param string $key the key to remove the value from
      * @return 
      */
-    public function deleteValue($namespace, $key){
+    public function deleteValue($namespace, $key) {
         $this->getStoreOrCreate($namespace)->setValues($values);
     }
 
@@ -154,7 +154,7 @@ class StoreCollection
      * @param \PEIP\INF\Data\Store $store the store instance to register for the namespace
      * @return 
      */
-    public function setStore($namespace, \PEIP\INF\Data\Store $store){
+    public function setStore($namespace, \PEIP\INF\Data\Store $store) {
         $this->setInternalValue($namespace, $store);    
     } 
 
@@ -165,7 +165,7 @@ class StoreCollection
      * @param string $namespace the namespace to return the store for 
      * @return \PEIP\INF\Data\Store store instance for given namespace (if set)
      */
-    public function getStore($namespace){
+    public function getStore($namespace) {
         $this->getInternalValue($namespace);
     }
  
@@ -176,7 +176,7 @@ class StoreCollection
      * @param string $namespace the namespace to check for a store instance 
      * @return boolean wether a store has been registered for the given namespace
      */
-    public function hasStore($namespace){
+    public function hasStore($namespace) {
         return $this->hasInternalValue($namespace);
     }
  
@@ -187,7 +187,7 @@ class StoreCollection
      * @param string $namespace the namespace to ungegister the store for 
      * @return 
      */
-    public function deleteStore($namespace){
+    public function deleteStore($namespace) {
         return $this->deleteInternalValue($namespace);
     }    
 

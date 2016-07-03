@@ -32,7 +32,7 @@ abstract class MutableContainer
      * @access public
      * @return mixed content
      */
-    public function getContent(){
+    public function getContent() {
         return parent::getContent();
     } 
 }

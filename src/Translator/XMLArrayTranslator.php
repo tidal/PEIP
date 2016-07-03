@@ -22,42 +22,42 @@ namespace PEIP\Translator;
 
 class XMLArrayTranslator {
 
-    public static function translate($content){
+    public static function translate($content) {
         try {
             $node = simplexml_load_string($content);
             // fix for hhvm
-            if(!($node instanceof \SimpleXMLElement)){
+            if (!($node instanceof \SimpleXMLElement)) {
                 throw new \Exception('loading XML failed');  
             }
             
         }
-        catch(\Exception $e){
+        catch (\Exception $e) {
             return false;
         }     
         
         return self::doTranslate($node);
     }
 
-    protected static function doTranslate(\SimpleXMLElement $node){
+    protected static function doTranslate(\SimpleXMLElement $node) {
         
         $array = array();
         $array['type'] = $node['type']
             ? (string)$node['type']
             : (string)$node->getName();
         $value = (string)$node;
-        if($value != ''){
+        if ($value != '') {
             $array['value'] = $value;
         }
 
-        foreach($node->attributes() as $name=>$value){
+        foreach ($node->attributes() as $name=>$value) {
             $array[$name] = (string)$value;
         }
-        foreach($node->children() as $nr=>$child){
+        foreach ($node->children() as $nr=>$child) {
             $name = $child->getName();
             $res = self::doTranslate($child);
 
-            if(isset($array[$name])){
-                if(is_string($array[$name])){
+            if (isset($array[$name])) {
+                if (is_string($array[$name])) {
                     $array[$name] = array(
                         array(
                             'type'=>$name,
@@ -65,7 +65,7 @@ class XMLArrayTranslator {
                         )
                     );
                 }
-            }else{
+            }else {
                 $array[$name] = array();
             }
             $array[$name][] = $res;

@@ -27,16 +27,16 @@ namespace PEIP\Service;
 class ServiceContainer
     extends \PEIP\ABS\Base\Connectable
     implements 
-        \PEIP\INF\Service\ServiceContainer{
+        \PEIP\INF\Service\ServiceContainer {
 
     protected $services = array();
     
     
-  /**
-   * Constructor.
-   *
-   * @param array $parameters An array of parameters
-   */
+    /**
+     * Constructor.
+     *
+     * @param array $parameters An array of parameters
+     */
     
     
     /**
@@ -45,7 +45,7 @@ class ServiceContainer
      * @param $service 
      * @return 
      */
-    public function setService($key, $service){
+    public function setService($key, $service) {
         $this->services[$key] = $service;
     }
     
@@ -55,7 +55,7 @@ class ServiceContainer
      * @param $key 
      * @return 
      */
-    public function getService($key){
+    public function getService($key) {
         return $this->services[$key];
     }
     
@@ -65,7 +65,7 @@ class ServiceContainer
      * @param $key 
      * @return 
      */
-    public function hasService($key){
+    public function hasService($key) {
         return array_key_exists($key, $this->services); 
     }   
 
@@ -75,7 +75,7 @@ class ServiceContainer
      * @param $key 
      * @return 
      */
-    public function deleteService($key){
+    public function deleteService($key) {
         unset($this->services[$key]);
     }
     

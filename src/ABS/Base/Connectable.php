@@ -17,7 +17,7 @@ namespace PEIP\ABS\Base;
  * @subpackage base 
  */
 
-abstract class Connectable  implements \PEIP\INF\Event\Connectable{
+abstract class Connectable  implements \PEIP\INF\Event\Connectable {
 
     const
         DEFAULT_CLASS_MESSAGE_DISPATCHER = '\PEIP\Dispatcher\Dispatcher',
@@ -38,11 +38,11 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
     
     /**
      * @access public
-     * @param $name
+     * @param string $name
      * @param Callable|PEIP\INF\Handler\Handler $listener
      * @return
      */
-    public function connect($name, $listener){
+    public function connect($name, $listener) {
         \PEIP\Util\Test::ensureHandler($listener);
         $this->getEventDispatcher()->connect($name, $this, $listener);
         $this->doFireEvent(
@@ -61,7 +61,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @param Callable|PEIP\INF\Handler\Handler $listener
      * @return
      */
-    public function disconnect($name, $listener){
+    public function disconnect($name, $listener) {
         \PEIP\Util\Test::ensureHandler($listener);
         $this->getEventDispatcher()->disconnect($name, $this, $listener);
         $this->doFireEvent(
@@ -82,7 +82,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @param $name
      * @return
      */
-    public function hasListeners($name){
+    public function hasListeners($name) {
         return $this->getEventDispatcher()->hasListeners($name, $this);
     }
 
@@ -92,7 +92,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @param $name
      * @return
      */
-    public function getListeners($name){
+    public function getListeners($name) {
         return $this->getEventDispatcher()->getListeners($name, $this);
     }
 
@@ -102,7 +102,7 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @param $callable
      * @return
      */
-    public function disconnectAll($name){
+    public function disconnectAll($name) {
         $this->getEventDispatcher()->disconnectAll($name, $this);
     }
 
@@ -112,11 +112,11 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @param $transferListners
      * @return
      */
-    public function setEventDispatcher(\PEIP\Dispatcher\ObjectEventDispatcher $dispatcher, $transferListners = true){
-        if($transferListners){
-            foreach($this->getEventDispatcher()->getEventNames($this) as $name){
-                if($this->getEventDispatcher()->hasListeners($name, $this)){
-                    foreach($this->getEventDispatcher()->getListeners($name, $this) as $listener){
+    public function setEventDispatcher(\PEIP\Dispatcher\ObjectEventDispatcher $dispatcher, $transferListners = true) {
+        if ($transferListners) {
+            foreach ($this->getEventDispatcher()->getEventNames($this) as $name) {
+                if ($this->getEventDispatcher()->hasListeners($name, $this)) {
+                    foreach ($this->getEventDispatcher()->getListeners($name, $this) as $listener) {
                         $dispatcher->connect($name, $this, $listener);
                     }
                 }
@@ -131,11 +131,11 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @access public
      * @return
      */
-    public function getEventDispatcher(){
+    public function getEventDispatcher() {
         return $this->eventDispatcher ? $this->eventDispatcher : $this->eventDispatcher = self::getSharedEventDispatcher();
     }
 
-    protected static function getSharedEventDispatcher(){
+    protected static function getSharedEventDispatcher() {
         $defaultDispatcher = self::DEFAULT_CLASS_EVENT_DISPATCHER;
         return self::$sharedEventDispatcher ? self::$sharedEventDispatcher : self::$sharedEventDispatcher = new $defaultDispatcher;
     }
@@ -148,12 +148,12 @@ abstract class Connectable  implements \PEIP\INF\Event\Connectable{
      * @param $eventClass
      * @return
      */
-    protected function doFireEvent($name, array $headers = array(), $eventClass = '', $type = false){
+    protected function doFireEvent($name, array $headers = array(), $eventClass = '', $type = false) {
         $eventClass = trim($eventClass) == '' ? static::DEFAULT_EVENT_CLASS : $eventClass;
         return $this->getEventDispatcher()->buildAndNotify($name, $this, $headers, $eventClass, $type);
     }
 
-    protected static function getDefaultEventClass(){
+    protected static function getDefaultEventClass() {
         return self::DEFAULT_EVENT_CLASS;
     }
 }

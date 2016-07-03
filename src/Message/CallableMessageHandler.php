@@ -35,7 +35,7 @@ class CallableMessageHandler
      * @param $callable 
      * @return 
      */
-    public function __construct($callable){
+    public function __construct($callable) {
         $this->callable = $callable;    
         $this->examineCallabe();
     }
@@ -45,22 +45,22 @@ class CallableMessageHandler
      * @access protected
      * @return 
      */
-    protected function examineCallabe(){
-        if(is_callable($this->callable)){        
-            if(is_array($this->callable)){
-                list($class, $method) =  $this->callable;
+    protected function examineCallabe() {
+        if (is_callable($this->callable)) {        
+            if (is_array($this->callable)) {
+                list($class, $method) = $this->callable;
                 $static = !is_object($class);
                 $class = is_object($class) ? get_class($class) : (string)$class;
                 $reflectionClass = new \ReflectionClass($class);
                 $reflectionFunc = $reflectionClass->getMethod($method);
-                if($static && !$reflectionFunc->isStatic()){
+                if ($static && !$reflectionFunc->isStatic()) {
                     throw new \InvalidArgumentException('Argument 1 passed to CallableMessageHandler::__construct is not an Callable: Method "'.$method.'" of class '.$class.' is not static.');                  
                 }
-            }else{
+            }else {
                 $reflectionFunc = new \ReflectionFunction($this->callable);  
             }
             $this->requiredParameters = $reflectionFunc->getNumberOfRequiredParameters();
-        }else{
+        }else {
             throw new \InvalidArgumentException('Argument 1 passed to CallableMessageHandler::__construct is not a Callable');
         }   
     }   
@@ -73,14 +73,14 @@ class CallableMessageHandler
      * @param $sent 
      * @return 
      */
-    public function handle($message, $channel = false, $sent = false){
-        if(!is_object($message)){
+    public function handle($message, $channel = false, $sent = false) {
+        if (!is_object($message)) {
             throw new \InvalidArgumentException('Argument 1 passed to CallableMessageHandler::handle is not a Object');       
         }   
         try {
             return call_user_func_array($this->callable, array($message, $channel, $sent));
         }
-        catch(\Exception $e){
+        catch (\Exception $e) {
             throw new \RuntimeException('Unable to call Callable: '.$e->getMessage());
         }   
     }   

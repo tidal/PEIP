@@ -33,7 +33,7 @@ class CallableHandler
      * @param callable $callable the callable to wrap with the handler 
      * @return 
      */
-    public function __construct($callable){
+    public function __construct($callable) {
         $this->callable = $callable;    
     }
         
@@ -45,7 +45,7 @@ class CallableHandler
      * @param mixed $subject the subject to handle
      * @return mixed result of calling the registered callable with given subject
      */
-    public function handle($subject){
+    public function handle($subject) {
         return call_user_func($this->callable, $subject);
     }
     
@@ -58,7 +58,7 @@ class CallableHandler
      * @return mixed result of calling the registered callable with given subject
      * @see CallableHandler::handle 
      */
-    public function __invoke($subject){
+    public function __invoke($subject) {
         return $this->handle($subject); 
     }
     
@@ -68,7 +68,7 @@ class CallableHandler
      * @access public
      * @return callable callable wrapped by the handler
      */
-    public function getCallable(){
+    public function getCallable() {
         return $this->callable;
     }
     

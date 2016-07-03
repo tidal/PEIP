@@ -32,7 +32,7 @@ class ReflectionClassBuilder implements \PEIP\INF\Base\SingletonMap {
      * @param string $className name of the class to return ReflectionClass for 
      * @return ReflectionClass the ReflectionClass instance for given class
      */    
-    protected static function getReflectionClass($className){
+    protected static function getReflectionClass($className) {
         return array_key_exists($className, self::$reflectionClasses) 
             ? self::$reflectionClasses[$className] 
             : (self::$reflectionClasses[$className] = new \ReflectionClass($className)); 
@@ -47,7 +47,7 @@ class ReflectionClassBuilder implements \PEIP\INF\Base\SingletonMap {
      * @param string $className name of the class to return ReflectionClass for 
      * @return ReflectionClass the ReflectionClass instance for given class
      */     
-    public static function getInstance($className){
+    public static function getInstance($className) {
         return self::getReflectionClass($className);
     }
 

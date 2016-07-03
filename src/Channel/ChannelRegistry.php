@@ -33,7 +33,7 @@ class ChannelRegistry
      * @param $name 
      * @return 
      */
-    public static function getInstance(){
+    public static function getInstance() {
         return self::$instance ? self::$instance : self::$instance = new ChannelRegistry;
     }
     
@@ -43,7 +43,7 @@ class ChannelRegistry
      * @param $channel 
      * @return 
      */
-    public function register($channel){
+    public function register($channel) {
         $this->channels[$channel->getName()] = $channel;
     }
 
@@ -55,7 +55,7 @@ class ChannelRegistry
      * @param $name 
      * @return 
      */
-    public function get($name){
+    public function get($name) {
         return $this->channels[$name];
     }
 
@@ -65,7 +65,7 @@ class ChannelRegistry
      * @param $channelName 
      * @return 
      */
-    public function resolveChannelName($channelName){
+    public function resolveChannelName($channelName) {
         return $this->get($channelName);
     }   
     

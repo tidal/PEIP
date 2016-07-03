@@ -34,7 +34,7 @@ class Command
      * @param $params 
      * @return 
      */
-    public function __construct($callable, array $params = array()){
+    public function __construct($callable, array $params = array()) {
         $this->callable = $callable;
         $this->setParameters($params);
     }

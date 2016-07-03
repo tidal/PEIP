@@ -37,8 +37,8 @@ class CommandMessage
      * @param $headers 
      * @return 
      */
-    public function __construct($content, ArrayAccess $headers = NULL){
-        if(!($content instanceof \PEIP\INF\Command\Command) && !is_callable($content)){
+    public function __construct($content, ArrayAccess $headers = NULL) {
+        if (!($content instanceof \PEIP\INF\Command\Command) && !is_callable($content)) {
             throw new \BadArgumentException('Argument 1 for CommandMessage::__construct must be callable or implment \PEIP\INF\Command\Command');
         }
         
@@ -51,10 +51,10 @@ class CommandMessage
      * @access public
      * @return 
      */
-    public function execute(){
-        if(is_callable($this->getContent())){
+    public function execute() {
+        if (is_callable($this->getContent())) {
             return call_user_func($this->getContent());
-        }else{
+        }else {
             return $this->getContent()->execute();
         }
     }

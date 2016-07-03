@@ -30,7 +30,7 @@ class FlyAdapter {
      * @param $methodMap 
      * @return 
      */
-    public function __construct(ArrayAccess $methodMap){        
+    public function __construct(ArrayAccess $methodMap) {        
         $this->methodMap = $methodMap;  
     }
     
@@ -40,7 +40,7 @@ class FlyAdapter {
      * @param $subject 
      * @return 
      */
-    public function setSubject($subject){
+    public function setSubject($subject) {
         $this->subject = $subject;
         return $this;
     }
@@ -52,8 +52,8 @@ class FlyAdapter {
      * @param $arguments 
      * @return 
      */
-    public function __call($method, $arguments){
-        if(array_key_exists($method, $this->methodMap)){
+    public function __call($method, $arguments) {
+        if (array_key_exists($method, $this->methodMap)) {
             return call_user_func_array(array($this->subject, $this->methodMap[$method]), $arguments);
         }
     }

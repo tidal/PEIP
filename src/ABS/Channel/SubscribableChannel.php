@@ -29,7 +29,7 @@ use PEIP\Dispatcher\Dispatcher;
 
 abstract class SubscribableChannel 
     extends \PEIP\ABS\Channel\Channel
-    implements \PEIP\INF\Channel\SubscribableChannel{
+    implements \PEIP\INF\Channel\SubscribableChannel {
 
     protected $messageDispatcher;   
        
@@ -41,7 +41,7 @@ abstract class SubscribableChannel
      * @param Callable|PEIP\INF\Handler\Handler  $handler the listener to subscribe
      * @return 
      */
-    public function subscribe($handler){ 
+    public function subscribe($handler) { 
         Test::ensureHandler($handler);
         $this->getMessageDispatcher()->connect($handler);
         $this->doFireEvent('subscribe', array('SUBSCRIBER'=>$handler));
@@ -55,7 +55,7 @@ abstract class SubscribableChannel
      * @param Callable|PEIP\INF\Handler\Handler  $handler the listener to unsubscribe
      * @return 
      */
-    public function unsubscribe($handler){
+    public function unsubscribe($handler) {
         Test::ensureHandler($handler);
         $this->getMessageDispatcher()->disconnect($handler);
         $this->doFireEvent('unsubscribe', array('SUBSCRIBER'=>$handler));       
@@ -69,9 +69,9 @@ abstract class SubscribableChannel
      * @param boolean $transferListeners wether to transfer listeners of old dispatcher (if set) to new one. default: true 
      * @return 
      */
-    public function setMessageDispatcher(\PEIP\INF\Dispatcher\Dispatcher $dispatcher, $transferListeners = true){
-        if(isset($this->dispatcher) && $transferListeners){
-            foreach($this->dispatcher->getListeners() as $listener){
+    public function setMessageDispatcher(\PEIP\INF\Dispatcher\Dispatcher $dispatcher, $transferListeners = true) {
+        if (isset($this->dispatcher) && $transferListeners) {
+            foreach ($this->dispatcher->getListeners() as $listener) {
                 $dispatcher->connect($listener);
                 $this->dispatcher->disconnect($listener);       
             }   
@@ -85,7 +85,7 @@ abstract class SubscribableChannel
      * @access public
      * @return 
      */
-    public function getMessageDispatcher(){
+    public function getMessageDispatcher() {
         return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new Dispatcher;
     }   
     

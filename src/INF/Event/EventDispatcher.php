@@ -25,11 +25,11 @@ namespace PEIP\INF\Event;
 interface EventDispatcher 
     extends \PEIP\INF\Event\Connectable {
 
-  public function notify($subject);
+    public function notify($subject);
 
-  public function notifyUntil($subject);
+    public function notifyUntil($subject);
 
-  public function filter($subject);
+    public function filter($subject);
 
     
 }

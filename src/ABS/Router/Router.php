@@ -34,7 +34,7 @@ abstract class Router
         EVENT_PRE_RESOLVE = 'pre_resolve',
         EVENT_POST_RESOLVE = 'post_resolve',
         EVENT_ERR_RESOLVE = 'err_resolve',
-        HEADER_CHANNEL  = 'CHANNEL',
+        HEADER_CHANNEL = 'CHANNEL',
         HEADER_CHANNEL_NAME = 'CHANNEL_NAME',
         HEADER_CHANNEL_RESOLVER = 'HEADER_CHANNEL_RESOLVER';
 
@@ -48,7 +48,7 @@ abstract class Router
      * @param \PEIP\INF\Channel\Channel $inputChannel the input channel for the router 
      * @return 
      */
-    public function __construct(\PEIP\INF\Channel\Channel_Resolver $channelResolver, \PEIP\INF\Channel\Channel $inputChannel){
+    public function __construct(\PEIP\INF\Channel\Channel_Resolver $channelResolver, \PEIP\INF\Channel\Channel $inputChannel) {
         $this->channelResolver = $channelResolver;
         $this->setInputChannel($inputChannel);  
     }               
@@ -60,7 +60,7 @@ abstract class Router
      * @param \PEIP\INF\Channel\Channel_Resolver $channelResolver the channel resolver for the router
      * @return 
      */
-    public function setChannelResolver(\PEIP\INF\Channel\Channel_Resolver $channelResolver){
+    public function setChannelResolver(\PEIP\INF\Channel\Channel_Resolver $channelResolver) {
         $this->doFireEvent(self::EVENT_CHANNEL_RESOLVER_SET, array(self::HEADER_CHANNEL_RESOLVER=>$channelResolver));
         $this->channelResolver = $channelResolver;
         $this->doFireEvent(self::EVENT_CHANNEL_RESOLVER_SET, array(self::HEADER_CHANNEL_RESOLVER=>$channelResolver));
@@ -73,9 +73,9 @@ abstract class Router
      * @param \PEIP\INF\Message\Message $message the message to reply with
      * @return 
      */
-    protected function doReply(\PEIP\INF\Message\Message $message){  
+    protected function doReply(\PEIP\INF\Message\Message $message) {  
         $channels = (array)$this->selectChannels($message);
-        foreach($channels as $channel){
+        foreach ($channels as $channel) {
             $this->setOutputChannel($this->resolveChannel($channel));
             $this->replyMessage($message); 
         }
@@ -90,12 +90,12 @@ abstract class Router
      * @param mixed $channel channel-name or instance of \PEIP\INF\Channel\Channel 
      * @return 
      */
-    protected function resolveChannel($channel){
+    protected function resolveChannel($channel) {
         $this->doFireEvent(self::EVENT_PRE_RESOLVE, array(self::HEADER_CHANNEL=>$channel));
-        if(!($channel instanceof \PEIP\INF\Channel\Channel)){
+        if (!($channel instanceof \PEIP\INF\Channel\Channel)) {
             $channelName = $channel;
             $channel = $this->channelResolver->resolveChannelName($channelName);
-            if(!$channel){
+            if (!$channel) {
                 $this->doFireEvent(self::EVENT_ERR_RESOLVE, array(self::HEADER_CHANNEL_NAME=>$channelName));
                 throw new \RuntimeException('Could not resolve Channel : '.$channelName);
             }

@@ -60,7 +60,7 @@ class Pipe
      * @param $name 
      * @return 
      */
-    public function setName($name){
+    public function setName($name) {
         $this->name = $name;
     }
     
@@ -69,7 +69,7 @@ class Pipe
      * @access public
      * @return 
      */
-    public function getName(){
+    public function getName() {
         return $this->name;
     }
 
@@ -80,7 +80,7 @@ class Pipe
      * @param $timeout 
      * @return 
      */
-    public function send(\PEIP\INF\Message\Message $message, $timeout = -1){
+    public function send(\PEIP\INF\Message\Message $message, $timeout = -1) {
         return $this->handle($message);
     }
 
@@ -90,7 +90,7 @@ class Pipe
      * @param $message 
      * @return 
      */
-    protected function doSend(\PEIP\INF\Message\Message $message){
+    protected function doSend(\PEIP\INF\Message\Message $message) {
         $this->doFireEvent(self::EVENT_PRE_PUBLISH, array(self::HEADER_MESSAGE=>$message));
         $this->getMessageDispatcher()->notify($message);
         $this->doFireEvent(self::EVENT_POST_PUBLISH, array(self::HEADER_MESSAGE=>$message));
@@ -103,12 +103,12 @@ class Pipe
      * @param $content 
      * @return 
      */
-    protected function replyMessage($message){ 
+    protected function replyMessage($message) { 
         $message = $this->ensureMessage($message);
         //if(\PEIP\Util\Test::assertMessage($message)){
-            if($this->getOutputChannel()){ 
+            if ($this->getOutputChannel()) { 
                 $this->getOutputChannel()->send($message);
-            }else{ 
+            }else { 
                 $this->doSend($message);
             }
         //}
@@ -120,7 +120,7 @@ class Pipe
      * @param $message 
      * @return 
      */
-    protected function doReply(\PEIP\INF\Message\Message $message){
+    protected function doReply(\PEIP\INF\Message\Message $message) {
         $this->replyMessage($message);
     }
 
@@ -130,7 +130,7 @@ class Pipe
      * @param $handler 
      * @return 
      */
-    public function subscribe($handler){
+    public function subscribe($handler) {
         Test::ensureHandler($handler);
         $this->getMessageDispatcher()->connect($handler);
         $this->doFireEvent(self::EVENT_SUBSCRIBE, array(self::HEADER_SUBSCRIBER=>$handler));
@@ -142,7 +142,7 @@ class Pipe
      * @param $handler e
      * @return 
      */
-    public function unsubscribe($handler){
+    public function unsubscribe($handler) {
         Test::ensureHandler($handler);
         $this->getMessageDispatcher()->disconnect($handler);
         $this->doFireEvent(
@@ -160,9 +160,9 @@ class Pipe
      * @param $transferListeners 
      * @return 
      */
-    public function setMessageDispatcher(\PEIP\INF\Dispatcher\Dispatcher $dispatcher, $transferListeners = true){
-        if(isset($this->dispatcher) && $transferListeners){
-            foreach($this->dispatcher->getListeners() as $listener){
+    public function setMessageDispatcher(\PEIP\INF\Dispatcher\Dispatcher $dispatcher, $transferListeners = true) {
+        if (isset($this->dispatcher) && $transferListeners) {
+            foreach ($this->dispatcher->getListeners() as $listener) {
                 $dispatcher->connect($listener);
                 $this->dispatcher->disconnect($listener);       
             }   
@@ -176,7 +176,7 @@ class Pipe
      * @access public
      * @return 
      */
-    public function getMessageDispatcher(){
+    public function getMessageDispatcher() {
         $defaultDispatcher = self::DEFAULT_CLASS_MESSAGE_DISPATCHER;
         return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new $defaultDispatcher;
     }   
@@ -184,11 +184,11 @@ class Pipe
     
     /**
      * @access protected
-     * @param $commandName 
+     * @param string $commandName 
      * @param $callable 
      * @return 
      */
-    protected function registerCommand($commandName, $callable){
+    protected function registerCommand($commandName, $callable) {
         $this->commands[$commandName] = $callable;  
     }
     
@@ -198,10 +198,10 @@ class Pipe
      * @param $cmdMessage 
      * @return 
      */
-    public function command(\PEIP\INF\Message\Message $cmdMessage){
+    public function command(\PEIP\INF\Message\Message $cmdMessage) {
         $this->doFireEvent(self::EVENT_PRE_COMMAND, array(self::HEADER_MESSAGE=>$cmdMessage));
         $commandName = trim((string)$cmdMessage->getHeader('COMMAND'));
-        if($commandName != '' && array_key_exists($commandName, $this->commands)){
+        if ($commandName != '' && array_key_exists($commandName, $this->commands)) {
             call_user_func($this->commands[$commandName], $cmdMessage->getContent());   
         }
         $this->doFireEvent(self::EVENT_POST_COMMAND, array(self::HEADER_MESSAGE=>$cmdMessage));

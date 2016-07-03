@@ -37,7 +37,7 @@ abstract class Request
      * @param $connection 
      * @return 
      */
-    public function setConnection($connection){
+    public function setConnection($connection) {
         $this->connection = $connection;
     }
     
@@ -47,7 +47,7 @@ abstract class Request
      * @access public
      * @return 
      */
-    public function execute(){
+    public function execute() {
         return $this->send();   
     }
 
@@ -56,7 +56,7 @@ abstract class Request
      * @access public
      * @return 
      */
-    public function send(){
+    public function send() {
         return $this->connection->sendRequest($this);
     }
     
@@ -65,7 +65,7 @@ abstract class Request
      * @access public
      * @return 
      */
-    public function getRequestData(){
+    public function getRequestData() {
         return $this->doGetRequestData();   
     }
     

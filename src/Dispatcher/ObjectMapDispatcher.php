@@ -43,13 +43,13 @@ class ObjectMapDispatcher
      * @param Callable|PEIP\INF\Handler\Handler $listener event-handler
      * @return boolean
      */
-    public function connect($name, $object, $listener){
+    public function connect($name, $object, $listener) {
         Test::ensureHandler($listener);
         $listners = $this->doGetListeners();
-        if (!$this->listeners->contains($object)){
+        if (!$this->listeners->contains($object)) {
             $this->listeners->attach($object, new \ArrayObject);
         }
-        if (!array_key_exists($name, $listners[$object])){ 
+        if (!array_key_exists($name, $listners[$object])) { 
             $this->listeners[$object][$name] = array();
         }
         $hash = $this->getListenerHash($listener);
@@ -67,14 +67,14 @@ class ObjectMapDispatcher
      * @param \PEIP\INF\Handler\Handler $listener event-handler
      * @return boolean
      */
-    public function disconnect($name, $object, $listener){
+    public function disconnect($name, $object, $listener) {
         $listners = $this->doGetListeners();
-        if (!$listners->contains($object) || !isset($listners[$object][$name])){
+        if (!$listners->contains($object) || !isset($listners[$object][$name])) {
             return false;
         }
         $eventListeners = $listners[$object][$name];
         $hash = $this->getListenerHash($listener);
-        if(isset($eventListeners[$hash])){
+        if (isset($eventListeners[$hash])) {
             unset($eventListeners[$hash]); 
 
             $listners[$object][$name] = $eventListeners;
@@ -83,10 +83,10 @@ class ObjectMapDispatcher
         return false;
     }
 
-    public function disconnectAll($name, $object){
-        if(is_object($object)){
+    public function disconnectAll($name, $object) {
+        if (is_object($object)) {
             $listners = $this->doGetListeners();
-            if($listners && $this->hadListeners($name, $object)){
+            if ($listners && $this->hadListeners($name, $object)) {
                     $listners[$object][$name] = array();
             }        
         }
@@ -100,13 +100,13 @@ class ObjectMapDispatcher
      * @param object $object object to check for listeners
      * @return boolean
      */
-    public function hasListeners($name, $object){
+    public function hasListeners($name, $object) {
         $listners = $this->doGetListeners();
-        if (!$this->hadListeners($name, $object)){
+        if (!$this->hadListeners($name, $object)) {
             $res = false;
-        }else{
+        }else {
             $listners = $this->doGetListeners();
-            $res = (boolean) count($listners[$object][$name]);
+            $res = (boolean)count($listners[$object][$name]);
         }
         return $res;
     }
@@ -119,7 +119,7 @@ class ObjectMapDispatcher
      * @param object $object object to check for listeners
      * @return boolean
      */
-    public function hadListeners($name, $object){
+    public function hadListeners($name, $object) {
         $listners = $this->doGetListeners();
         return ($listners->contains($object) && isset($listners[$object][$name])) ? true : false;
     }
@@ -131,9 +131,9 @@ class ObjectMapDispatcher
      * @param object $object object to get event-names for
      * @return string[] array of event-names
      */
-    public function getEventNames($object){
+    public function getEventNames($object) {
         $listeners = $this->doGetListeners();
-        if (!$listeners->contains($object)){
+        if (!$listeners->contains($object)) {
             return array();
         }
         return array_keys($listeners[$object]->getArrayCopy());
@@ -147,8 +147,8 @@ class ObjectMapDispatcher
      * @param $object 
      * @return boolean
      */
-    public function notify($name, $object){
-        if($this->hasListeners($name, $object)){
+    public function notify($name, $object) {
+        if ($this->hasListeners($name, $object)) {
             $listners = $this->doGetListeners();
             self::doNotify($listners[$object][$name], $object);
         }
@@ -162,10 +162,10 @@ class ObjectMapDispatcher
      * @access public
      * @param $name 
      * @param $subject 
-     * @return mixed
+     * @return \PEIP\INF\Handler\Handler
      */
-    public function notifyUntil($name, $subject){
-        if($this->hasListeners($name, $subject)){       
+    public function notifyUntil($name, $subject) {
+        if ($this->hasListeners($name, $subject)) {       
             $res = self::doNotifyUntil($this->getListeners($name, $subject), $subject);   
         }
         return $res;
@@ -179,8 +179,8 @@ class ObjectMapDispatcher
      * @param object $object object to check for listeners
      * @return array array of listeners
      */
-    public function getListeners($name, $object){
-        if (!$this->hadListeners($name, $object)){
+    public function getListeners($name, $object) {
+        if (!$this->hadListeners($name, $object)) {
             return array();
         }
         $listeners = $this->listeners[$object]->getArrayCopy();
@@ -194,7 +194,7 @@ class ObjectMapDispatcher
      * @access protected
      * @return ObjectStorage
      */
-    protected function doGetListeners(){
+    protected function doGetListeners() {
         return isset($this->listeners) ? $this->listeners : $this->listeners = new ObjectStorage();
     }
    
@@ -205,15 +205,15 @@ class ObjectMapDispatcher
      * @access protected
      * @param $name 
      * @param $object 
-     * @return boolean
+     * @return boolean|null
      */    
     protected static function doNotify(array $listeners, $subject){
         foreach($listeners as $listener){ 
-             if($listener instanceof \PEIP\INF\Handler\Handler){
+                if($listener instanceof \PEIP\INF\Handler\Handler){
                 $listener->handle($subject);
-             }elseif(is_callable($listener)){
-                 call_user_func($listener, $subject);
-             }
+                }elseif(is_callable($listener)){
+                    call_user_func($listener, $subject);
+                }
         }   
     }  
 
@@ -226,12 +226,12 @@ class ObjectMapDispatcher
      * @param $object 
      * @return \PEIP\INF\Handler\Handler the listener which returned a boolean true value
      */     
-    protected static function doNotifyUntil(array $listeners, $subject){  
+    protected static function doNotifyUntil(array $listeners, $subject) {  
         $res = NULL; 
-        foreach ($listeners as $listener){ 
-            if($listener instanceof \PEIP\INF\Handler\Handler){
+        foreach ($listeners as $listener) { 
+            if ($listener instanceof \PEIP\INF\Handler\Handler) {
                 $res = $listener->handle($subject);
-                if ($res){ 
+                if ($res) { 
                     return $listener;
                 }
             }
@@ -239,8 +239,8 @@ class ObjectMapDispatcher
         return $res;
     }
 
-    protected function getListenerHash($listener){
-        if(!is_object($listener)){
+    protected function getListenerHash($listener) {
+        if (!is_object($listener)) {
             $o = new \stdClass();
             $o->listener = $listener;
             $listener = $o;

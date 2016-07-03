@@ -31,10 +31,10 @@ class FixedEventPipe
      * @param $inputChannel 
      * @return 
      */
-    public function setInputChannel(\PEIP\INF\Channel\Channel $inputChannel){        
-        if(isset($this->eventName)){
+    public function setInputChannel(\PEIP\INF\Channel\Channel $inputChannel) {        
+        if (isset($this->eventName)) {
             $this->connectChannel($inputChannel);   
-        }else{
+        }else {
             $this->inputChannel = $inputChannel;    
         }               
     }       
@@ -42,13 +42,13 @@ class FixedEventPipe
     
     /**
      * @access public
-     * @param $eventName 
+     * @param string $eventName 
      * @return 
      */
-    public function setEventName($eventName){
-        if(!isset($this->eventName)){
+    public function setEventName($eventName) {
+        if (!isset($this->eventName)) {
             $this->eventName = $eventName;
-            if($this->inputChannel){
+            if ($this->inputChannel) {
                 $this->inputChannel->connect($this->eventName, $this);
             }   
         }

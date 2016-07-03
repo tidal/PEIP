@@ -33,7 +33,7 @@ abstract class DiscardingMessageHandler
      * @param $discardChannel 
      * @return 
      */
-    public function setDiscardChannel(\PEIP\INF\Channel\Channel $discardChannel){
+    public function setDiscardChannel(\PEIP\INF\Channel\Channel $discardChannel) {
         $this->discardChannel = $discardChannel;    
     }   
 
@@ -42,7 +42,7 @@ abstract class DiscardingMessageHandler
      * @access public
      * @return 
      */
-    public function getDiscardChannel(){
+    public function getDiscardChannel() {
         return $this->discardChannel;   
     }   
 
@@ -52,8 +52,8 @@ abstract class DiscardingMessageHandler
      * @param $message 
      * @return 
      */
-    protected function discardMessage(\PEIP\INF\Message\Message $message){
-        if(isset($this->discardChannel)){
+    protected function discardMessage(\PEIP\INF\Message\Message $message) {
+        if (isset($this->discardChannel)) {
             $this->discardChannel->send($message);
         }
     }

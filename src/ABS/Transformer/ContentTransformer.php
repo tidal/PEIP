@@ -34,7 +34,7 @@ abstract class ContentTransformer
      * @param \PEIP\INF\Message\Message $message 
      * @return mixed result of transforming the message payload/content 
      */
-    protected function doTransform(\PEIP\INF\Message\Message $message){
+    protected function doTransform(\PEIP\INF\Message\Message $message) {
         return $this->transformContent($message->getContent());    
     }
 

@@ -50,24 +50,24 @@ class XMLContext
      * @param string $string the configuration string 
      * @return 
      */
-    public function __construct($string){
+    public function __construct($string) {
         $this->initNodeBuilders();
         $reader = new XMLContextReader($string);
  
 
         $serviceActivator = new HeaderServiceActivator(array($this, 'addConfig'), 'NODE');
 
-        $reader->connect('read_node',  $serviceActivator);
+        $reader->connect('read_node', $serviceActivator);
         $reader->read();
 
        
     }
 
-    public function addConfig($config){ 
+    public function addConfig($config) { 
         return $this->getServiceProvider()->addConfig($config);
     }
 
-    public function handleReadConfig(\PEIP\INF\Event\Event $event){
+    public function handleReadConfig(\PEIP\INF\Event\Event $event) {
         $this->addConfig($event->getHeader('NODE'));
     }
 
@@ -79,7 +79,7 @@ class XMLContext
      * @return XMLContext the context instance
      * @throws RuntimeException 
      */      
-    public static function createFromString($string){
+    public static function createFromString($string) {
         return new XMLContext($string);
     }
 
@@ -91,10 +91,10 @@ class XMLContext
      * @return XMLContext the context instance
      * @throws RuntimeException 
      */    
-    public static function createFromFile($file){
-        if(file_exists($file)){
+    public static function createFromFile($file) {
+        if (file_exists($file)) {
             return self::createFromString(file_get_contents($file));
-        }else{
+        }else {
             throw new \RuntimeException('Cannot open file  "'.$file.'".');
         }
     }
@@ -105,15 +105,15 @@ class XMLContext
      * @access protected
      * @return void
      */
-    protected function init(){
+    protected function init() {
         $xml = $this->simpleXML;
         $this->channelRegistry = ChannelRegistry::getInstance();
         // register this context as a service if id is set.
-        if($xml['id']){
+        if ($xml['id']) {
             $this->services[(string)$xml['id']] = $this;    
         }
         // build services
-        foreach($xml->children() as $entry){
+        foreach ($xml->children() as $entry) {
             $this->buildNode($entry);
         }
     }    
@@ -127,7 +127,7 @@ class XMLContext
      * @param callable $callable a callable which creates instances for node-name 
      */
     public function registerNodeBuilder($nodeName, $callable){
-       return  $this->getServiceProvider()->registerNodeBuilder($nodeName, $callable);
+        return  $this->getServiceProvider()->registerNodeBuilder($nodeName, $callable);
     }
    
     /**
@@ -135,9 +135,9 @@ class XMLContext
      * 
      * @implements \PEIP\INF\Context\Context
      * @access public
-     * @param \PEIP\INF\Context\Context_Plugin $plugin a plugin instance
+     * @param \PEIP\INF\Context\ContextPlugin $plugin a plugin instance
      */
-    public function addPlugin(\PEIP\INF\Context\ContextPlugin $plugin){ 
+    public function addPlugin(\PEIP\INF\Context\ContextPlugin $plugin) { 
         $plugin->init($this);   
     }
   
@@ -148,7 +148,7 @@ class XMLContext
      * @param object $config configuration object for the plugin 
      * @return 
      */
-    public function createPlugin($config){
+    public function createPlugin($config) {
         $plugin = $this->createService($config);    
         $this->addPlugin($plugin);
     }
@@ -167,9 +167,8 @@ class XMLContext
      * </config>     
      * 
      * @access public
-     * @param XMLContext $config the config to include
      */    
-    public function includeContext(XMLContext $context){
+    public function includeContext(XMLContext $context) {
         $this->services = array_merge($this->services, $context->getServices());
     }
 
@@ -178,10 +177,10 @@ class XMLContext
      * 
      * @see XMLContext::includeContext
      * @access public
-     * @param XMLContext $context the config to include
+     * @param string $filePath
      */    
-    public function includeContextFromFile($filePath){
-        if(file_exists($filePath)){
+    public function includeContextFromFile($filePath) {
+        if (file_exists($filePath)) {
             $this->includeContextFromString(file_get_contents($filePath));
         }           
     }
@@ -193,7 +192,7 @@ class XMLContext
      * @access public
      * @param string $configString the config to include
      */    
-    public function includeContextFromString($configString){
+    public function includeContextFromString($configString) {
         $context = new XMLContext($configString);
         $this->includeContext($context);            
     }   
@@ -205,14 +204,14 @@ class XMLContext
      * @access protected
      * @param object $config the configuration for the context
      */    
-    protected function createContext($config){
-        if((string)$config['file'] != ''){
+    protected function createContext($config) {
+        if ((string)$config['file'] != '') {
             $this->includeContextFromFile((string)$config['file']);
         }           
     }   
      
 
-    public function getServiceProvider(){
+    public function getServiceProvider() {
         return isset($this->serviceProvider)
             ? $this->serviceProvider
             : $this->serviceProvider = new ServiceProvider();
@@ -228,7 +227,7 @@ class XMLContext
      * @see XMLContext::includeContext
      * @access protected
      */     
-    protected function initNodeBuilders(){
+    protected function initNodeBuilders() {
         $builders = array(
             'include' => 'createContext',
             'plugin' => 'createPlugin',
@@ -246,7 +245,7 @@ class XMLContext
         );
         $plugin = new BasePlugin();
         $this->addPlugin($plugin); 
-        foreach($builders as $nodeName => $method){
+        foreach ($builders as $nodeName => $method) {
             $this->registerNodeBuilder($nodeName, array($this, $method));   
         }       
     }
@@ -260,10 +259,10 @@ class XMLContext
      * @param object $node configuration-node
      * @return void
      */
-    protected function buildNode($node){
+    protected function buildNode($node) {
         $nodeName = $node->getName();
         // call the builder method registered for the node.
-        if(array_key_exists($nodeName, $this->nodeBuilders)){
+        if (array_key_exists($nodeName, $this->nodeBuilders)) {
             call_user_func($this->nodeBuilders[$nodeName], $node);
         }           
     }
@@ -282,7 +281,7 @@ class XMLContext
      * @param string $channelName the name/id of the channel to return 
      * @return \PEIP\INF\Channel\Channel
      */
-    public function resolveChannelName($channelName){
+    public function resolveChannelName($channelName) {
         return $this->channelRegistry->get($channelName);
     }   
      
@@ -294,7 +293,7 @@ class XMLContext
      * @param mixed $id the id for the service
      * @return object the service instance if found
      */
-    public function getService($id){     
+    public function getService($id) {     
         return $this->getServiceProvider()->provideService($id);
     }
              
@@ -304,7 +303,7 @@ class XMLContext
      * @access public
      * @return array registered services
      */
-    public function getServices(){    
+    public function getServices() {    
         return $this->getServiceProvider()->getServices();
     }  
     
@@ -315,7 +314,7 @@ class XMLContext
      * @param mixed $id the id for the service 
      * @return boolean wether service is registered
      */
-    public function hasService($id){
+    public function hasService($id) {
         return isset($this->services[$id]);
     }
       
@@ -329,9 +328,9 @@ class XMLContext
      * @return object the service instance if found
      * 
      */
-    protected function requestService($id){
+    protected function requestService($id) {
         $service = $this->getService($id);
-        if($service === NULL){
+        if ($service === NULL) {
             throw new \RuntimeException('Service "'.$id.'" not found.');
         } 
         return $service;
@@ -345,9 +344,9 @@ class XMLContext
      * @param object $config 
      * @return object the initialized service instance
      */
-    protected function initService($config){
+    protected function initService($config) {
         $id = trim((string)$config['id']);
-        if($id != ''){
+        if ($id != '') {
             return $this->services[$id] = $this->createService($config);    
         }   
     }
@@ -357,9 +356,9 @@ class XMLContext
      * 
      * @access public
      * @param $config 
-     * @return object the initialized service instance
+     * @return \PEIP\INF\Context\ContextPlugin the initialized service instance
      */
-    public function createService($config){
+    public function createService($config) {
         return ServiceFactory::createService($config);      
     }
  
@@ -376,28 +375,28 @@ class XMLContext
      * @param object $config configuration to get the modification instructions from. 
      * @return object the modificated service
      */
-    protected function modifyService($service, $config){ 
+    protected function modifyService($service, $config) { 
         // set instance properties
-        if($config->property){          
-            foreach($config->property as $property){                          
+        if ($config->property) {          
+            foreach ($config->property as $property) {                          
                 $arg = $this->buildArg($property);
-                if($arg){
+                if ($arg) {
                     $setter = self::getSetter($property);               
-                    if($setter &&  self::hasPublicProperty($service, 'Method', $setter)){
+                    if ($setter && self::hasPublicProperty($service, 'Method', $setter)) {
                         $service->{$setter}($arg);  
-                    }elseif(in_array($property, self::hasPublicProperty($service, 'Property', $setter))){
+                    }elseif (in_array($property, self::hasPublicProperty($service, 'Property', $setter))) {
                         $service->$setter = $arg;
                     }                   
                 }
             }
         }   
         // call instance methods
-        if($config->action){            
-            foreach($config->action as $action){
+        if ($config->action) {            
+            foreach ($config->action as $action) {
                 $method = (string)$action['method'] != '' ? (string)$action['method'] : NULL;
-                if($method && self::hasPublicProperty($service, 'Method', $method)){
+                if ($method && self::hasPublicProperty($service, 'Method', $method)) {
                     $args = array(); 
-                    foreach($action->children() as $argument){
+                    foreach ($action->children() as $argument) {
                         $args[] = $this->buildArg($argument);
                     } 
                     call_user_func_array(array($service, (string)$action['method']), $args);
@@ -405,9 +404,9 @@ class XMLContext
             }
         }       
         // register instance listeners
-        if($service instanceof \PEIP\INF\Event\Connectable){
-            if($config->listener){
-                foreach($config->listener as $listenerConf){
+        if ($service instanceof \PEIP\INF\Event\Connectable) {
+            if ($config->listener) {
+                foreach ($config->listener as $listenerConf) {
                     $event = (string)$listenerConf['event'];
                     $listener = $this->provideService($listenerConf);  
                     $service->connect($event, $listener);   
@@ -426,7 +425,7 @@ class XMLContext
      * @param mixed $id the id ofthe gateway 
      * @return object the gateway instance
      */
-    public function getGateway($id){ 
+    public function getGateway($id) { 
         return $this->getServiceProvider()->provideService($id); 
     }   
   
@@ -438,7 +437,7 @@ class XMLContext
      * @param object $config configuration object for the pollable channel. 
      * @return \PEIP\INF\Channel\Channel the created pollable channel instance
      */
-    public function createChannel($config){
+    public function createChannel($config) {
         return $this->doCreateChannel($config, 'PollableChannel');        
     }
   
@@ -450,7 +449,7 @@ class XMLContext
      * @param object $config configuration object for the subscribable channel. 
      * @return \PEIP\INF\Channel\Channel the created subscribable channel instance
      */
-    public function createSubscribableChannel($config){
+    public function createSubscribableChannel($config) {
         return $this->doCreateChannel($config, 'PublishSubscribeChannel');       
     }   
    
@@ -463,9 +462,9 @@ class XMLContext
      * @param $additionalArguments additional arguments for the channel constructor (without first arg = id)
      * @return \PEIP\INF\Channel\Channel the created channel instance
      */
-    public function doCreateChannel($config, $defaultChannelClass, array $additionalArguments = array()){
+    public function doCreateChannel($config, $defaultChannelClass, array $additionalArguments = array()) {
         $id = (string)$config['id'];
-        if($id != ''){ 
+        if ($id != '') { 
             array_unshift($additionalArguments, $id);
             $channel = $this->buildAndModify($config, $additionalArguments, $defaultChannelClass);
             $this->channelRegistry->register($channel);
@@ -482,7 +481,7 @@ class XMLContext
      * @param string $defaultClass the class to use if none is set in config. 
      * @return object the gateway instance
      */
-    public function createGateway($config, $defaultClass = false){
+    public function createGateway($config, $defaultClass = false) {
         $args = array(
             $this->getRequestChannel($config), 
             $this->getReplyChannel($config)
@@ -506,7 +505,7 @@ class XMLContext
      * @param string $defaultClass the class to use if none is set in config. 
      * @return object the router instance
      */
-    public function createRouter($config, $defaultClass = false){
+    public function createRouter($config, $defaultClass = false) {
         $resolver = $config['channel_resolver'] ? (string)$config['channel_resolver'] : $this->channelRegistry;
         return $this->buildAndModify($config, array(
             $resolver,
@@ -523,7 +522,7 @@ class XMLContext
      * @param object $config configuration object for the splitter. 
      * @return object the splitter instance
      */    
-    public function createSplitter($config){
+    public function createSplitter($config) {
         return $this->createReplyMessageHandler($config);           
     }   
  
@@ -536,7 +535,7 @@ class XMLContext
      * @param object $config configuration object for the transformer. 
      * @return object the transformer instance
      */    
-    public function createTransformer($config){
+    public function createTransformer($config) {
         return $this->createReplyMessageHandler($config);           
     } 
       
@@ -549,7 +548,7 @@ class XMLContext
      * @param object $config configuration object for the aggregator. 
      * @return object the aggregator instance
      */  
-    public function createAggregator($config){
+    public function createAggregator($config) {
         return $this->createReplyMessageHandler($config);       
     }
   
@@ -562,7 +561,7 @@ class XMLContext
      * @param object $config configuration object for the wiretap. 
      * @return object the wiretap instance
      */ 
-    public function createWiretap($config){
+    public function createWiretap($config) {
         return $this->createReplyMessageHandler($config, 'Wiretap');       
     }
   
@@ -575,7 +574,7 @@ class XMLContext
      * @param string $defaultClass the class to use if none is set in config.
      * @return object the reply-message-handler instance
      */ 
-    public function createReplyMessageHandler($config, $defaultClass = false){
+    public function createReplyMessageHandler($config, $defaultClass = false) {
         return $this->buildAndModify($config, $this->getReplyHandlerArguments($config), $defaultClass); 
     }
     
@@ -588,12 +587,12 @@ class XMLContext
      * @param string $defaultClass the class to use if none is set in config. 
      * @return object the service-activator instance
      */
-    public function createServiceActivator($config, $defaultClass = false){
+    public function createServiceActivator($config, $defaultClass = false) {
         $method = (string)$config['method'];
         $service = $this->getService((string)$config['ref']);
-        if($method && $service){        
+        if ($method && $service) {        
             $args = $this->getReplyHandlerArguments($config);
-            array_unshift($args,array(
+            array_unshift($args, array(
                 $service,
                 $method             
             )); 
@@ -614,11 +613,11 @@ class XMLContext
      * @param object $config configuration object for the service. 
      * @return 
      */
-    protected function provideService($config){
+    protected function provideService($config) {
         $ref = trim((string)$config['ref']);
-        if($ref != ''){
+        if ($ref != '') {
             $service = $this->getService($ref); 
-        }else{
+        }else {
             $service = $this->createService($config);
         }
         return $service;
@@ -635,10 +634,10 @@ class XMLContext
      * @param object $config configuration object for the setter-method. 
      * @return string camel-cased 
      */    
-    protected static function getSetter($config){
-        if($config['setter']){
+    protected static function getSetter($config) {
+        if ($config['setter']) {
             $setter = (string)$config['setter'];
-        }elseif($config['name']){
+        }elseif ($config['name']) {
             $setter = 'set'.ucfirst((string)$config['name']);   
         }
         return $setter;     
@@ -651,29 +650,29 @@ class XMLContext
      * @param object $config configuration object to create argument from.  
      * @return mixed build argument 
      */
-    protected function buildArg($config){ 
-        if(trim((string)$config['value']) != ''){
+    protected function buildArg($config) { 
+        if (trim((string)$config['value']) != '') {
             $arg = (string)$config['value'];
-        }elseif($config->getName() == 'value'){
+        }elseif ($config->getName() == 'value') {
             $arg = (string)$config;
-        }elseif($config->getName() == 'list'){
+        }elseif ($config->getName() == 'list') {
             $arg = array();
-            foreach($config->children() as $entry){ 
-                if($entry->getName() == 'value'){
-                    if($entry['key']){
+            foreach ($config->children() as $entry) { 
+                if ($entry->getName() == 'value') {
+                    if ($entry['key']) {
                         $arg[(string)$entry['key']] = (string)$entry;   
-                    }else{
+                    }else {
                         $arg[] = (string)$entry;
                     }
-                }elseif($entry->getName() == 'service'){
+                }elseif ($entry->getName() == 'service') {
                     $arg[] = $this->provideService($entry);
                 }
             }
-        }elseif($config->getName() == 'service'){
+        }elseif ($config->getName() == 'service') {
             $arg = $this->provideService($config);
-        }elseif($config->list){
+        }elseif ($config->list) {
             $arg = $this->buildArg($config->list);
-        }elseif($config->service){
+        }elseif ($config->service) {
             $arg = $this->buildArg($config->service);
         } 
         return $arg; 
@@ -685,14 +684,14 @@ class XMLContext
      * 
      * @access protected
      * @param object $config configuration object to create arguments from.  
-     * @return mixed build arguments 
+     * @return \PEIP\INF\Channel\Channel[] build arguments 
      */
-    protected function getReplyHandlerArguments($config){
+    protected function getReplyHandlerArguments($config) {
         $args = array(
             $this->doGetChannel('input', $config),
             $this->doGetChannel('output', $config)
         );
-        if($args[0] == NULL){
+        if ($args[0] == NULL) {
             throw new \RuntimeException('Could not receive input channel.');
         }
         return $args;
@@ -707,7 +706,7 @@ class XMLContext
      * @param object $config configuration object to return request-channel from. 
      * @return \PEIP\INF\Channel\Channel request-channel
      */
-    protected function getRequestChannel($config){
+    protected function getRequestChannel($config) {
         return $this->doGetChannel('request', $config); 
     }
     
@@ -720,7 +719,7 @@ class XMLContext
      * @param object $config configuration object to return reply-channel from. 
      * @return \PEIP\INF\Channel\Channel reply-channel
      */
-    protected function getReplyChannel($config){
+    protected function getReplyChannel($config) {
         return $this->doGetChannel('reply', $config);   
     }
     
@@ -730,10 +729,11 @@ class XMLContext
      * 
      * @access protected
      * @param string the configuration type ofthe channel (e.g.: 'reply', 'request')
-     * @param object $config configuration object to return channel from. 
+     * @param object $config configuration object to return channel from.
+     * @param string $type 
      * @return \PEIP\INF\Channel\Channel reply-channel
      */
-    public function doGetChannel($type, $config){
+    public function doGetChannel($type, $config) {
         $channelName = $config[$type."_channel"] 
             ? $config[$type."_channel"] 
             : $config["default_".$type."_channel"];
@@ -753,7 +753,7 @@ class XMLContext
      * @param string $defaultClass class to create instance for if none is set in config 
      * @return object build and modified srvice instance
      */
-    public function buildAndModify($config, $arguments, $defaultClass = false){   
+    public function buildAndModify($config, $arguments, $defaultClass = false) {   
         return ServiceFactory::buildAndModify($config, $arguments, $defaultClass);
     }
 
@@ -767,21 +767,21 @@ class XMLContext
      * @param string $defaultClass class to create instance for if none is set in config 
      * @return object build and modified srvice instance
      */    
-    protected static function doBuild($config, $arguments, $defaultClass = false){
+    protected static function doBuild($config, $arguments, $defaultClass = false) {
         $cls = $config["class"] ? trim((string)$config["class"]) : (string)$defaultClass;
-        if($cls != ''){
+        if ($cls != '') {
             try {
                 $constructor = (string)$config["constructor"];
-        if($constructor != ''){
+        if ($constructor != '') {
             $service = call_user_func_array(array($cls, $constructor), $arguments); 
-        }else{
+        }else {
             $service = self::build($cls, $arguments); 
         }        
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 throw new \RuntimeException('Could not create Service "'.$cls.'" -> '.$e->getMessage());
             }           
         }
-        if(is_object($service)){
+        if (is_object($service)) {
             return $service;
         }       
         throw new \RuntimeException('Could not create Service "'.$cls.'". Class does not exist.');           
@@ -793,7 +793,7 @@ class XMLContext
      * @see GenericBuilder
      * @static
      * @access protected
-     * @param object $className name of class to build instance for. 
+     * @param string $className name of class to build instance for. 
      * @param array $arguments arguments for the constructor 
      * @return object build and modified srvice instance
      */     
@@ -801,6 +801,10 @@ class XMLContext
         return GenericBuilder::getInstance($className)->build($arguments);
     }
 
+    /**
+     * @param string $type
+     * @param string $name
+     */
     protected static function hasPublicProperty($service, $type, $name){
         $reflection = GenericBuilder::getInstance(get_class($service))->getReflectionClass();
         if($reflection->{'has'.$type}($name) && $reflection->{'get'.$type}($name)->isPublic()){

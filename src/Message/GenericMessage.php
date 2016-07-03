@@ -41,7 +41,7 @@ class GenericMessage
      * @param mixed $content The content/payload of the message 
      * @param array|ArrayAccess $headers headers as key/value pairs
      */
-    public function __construct($content, $headers = array()){
+    public function __construct($content, $headers = array()) {
         $this->doSetContent($content);
         $this->doSetHeaders($headers);          
     }
@@ -53,7 +53,7 @@ class GenericMessage
      * @access public
      * @return
      */
-    public function getContent(){
+    public function getContent() {
         return $this->content;
     }
 
@@ -63,24 +63,24 @@ class GenericMessage
      * @access protected
      * @param mixed $content The content/payload of the message 
      */
-    protected function doSetContent($content){
+    protected function doSetContent($content) {
         $this->content = Test::castType($content, self::CONTENT_CAST_TYPE);
     }
 
-    protected function doSetHeaders($headers){
+    protected function doSetHeaders($headers) {
         $headers = Test::ensureArrayAccess($headers);
-        if(is_array($headers)){
+        if (is_array($headers)) {
             $headers = new \ArrayObject($headers);
         }
         $this->headers = $headers;
     }
 
         /**
-     * returns all headers of the message
-     * 
-     * @access public
-     * @return ArrayAccess ArrayAccess object of headers
-     */
+         * returns all headers of the message
+         * 
+         * @access public
+         * @return ArrayAccess ArrayAccess object of headers
+         */
     public function getHeaders(){
         return (array) $this->headers;
     }
@@ -92,7 +92,7 @@ class GenericMessage
      * @param string $name the name of the header  
      * @return mixed the value of the header
      */
-    public function getHeader($name){
+    public function getHeader($name) {
         $name = (string)$name;
         return isset($this->headers[$name]) ? $this->headers[$name] : NULL;
     }
@@ -105,8 +105,8 @@ class GenericMessage
      * @param string $name the name of the header
      * @return boolean wether the header has been successfully  set
      */
-    public function addHeader($name, $value){
-        if(!$this->hasHeader($name)){
+    public function addHeader($name, $value) {
+        if (!$this->hasHeader($name)) {
             $this->headers[$name] = $value;
             return true;
         }
@@ -120,7 +120,7 @@ class GenericMessage
      * @param string $name the name of the header
      * @return boolean wether the header is set
      */
-    public function hasHeader($name){
+    public function hasHeader($name) {
         return isset($this->headers[$name]);
     }
 
@@ -130,16 +130,16 @@ class GenericMessage
      * @access public
      * @return string  content/payload of the message
      */
-    public function __toString(){
+    public function __toString() {
         $res = false;
         try {
             $res = (string)$this->getContent();
         }
-        catch(\Exception $e){           
+        catch (\Exception $e) {           
             try {
                 $res = get_class($this->getContent());
             }
-            catch(\Exception $e){
+            catch (\Exception $e) {
                 return "";
             }
         }     
@@ -157,7 +157,7 @@ class GenericMessage
      * @param array $arguments argumends for the constructor
      * @return GenericMessage new class instance
      */    
-    public static function build(array $arguments = array()){
+    public static function build(array $arguments = array()) {
         return GenericBuilder::getInstance(__CLASS__)->build($arguments);
     }     
 } 

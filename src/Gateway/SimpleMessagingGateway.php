@@ -42,9 +42,9 @@ class SimpleMessagingGateway
      * @param \PEIP\INF\Channel\PollableChannel $replyChannel The default channel to receive requests from the gateway
      * @param array $defaultHeaders The default headers to apply to request messages 
      */
-    public function __construct(\PEIP\INF\Channel\Channel $requestChannel, \PEIP\INF\Channel\Channel $replyChannel = NULL, array $defaultHeaders = array()){
+    public function __construct(\PEIP\INF\Channel\Channel $requestChannel, \PEIP\INF\Channel\Channel $replyChannel = NULL, array $defaultHeaders = array()) {
         $this->setRequestChannel($requestChannel);
-        if($replyChannel){
+        if ($replyChannel) {
             $this->setReplyChannel($replyChannel);
         }     
         $this->defaultHeaders = $defaultHeaders;
@@ -55,10 +55,9 @@ class SimpleMessagingGateway
      * sets the channel to send requests from the gateway
      * 
      * @access public
-     * @param \PEIP\INF\Channel\Channel $replyChannel The default channel to receive requests from the gateway
      * @return 
      */
-    public function setRequestChannel(\PEIP\INF\Channel\Channel $requestChannel){
+    public function setRequestChannel(\PEIP\INF\Channel\Channel $requestChannel) {
         $this->requestChannel = $requestChannel;
     }
   
@@ -69,8 +68,8 @@ class SimpleMessagingGateway
      * @param \PEIP\INF\Channel\PollableChannel $replyChannel The default channel to receive requests from the gateway
      * @return 
      */
-    public function setReplyChannel(\PEIP\INF\Channel\Channel $replyChannel){
-        if(!($replyChannel instanceof \PEIP\INF\Channel\PollableChannel)){
+    public function setReplyChannel(\PEIP\INF\Channel\Channel $replyChannel) {
+        if (!($replyChannel instanceof \PEIP\INF\Channel\PollableChannel)) {
             throw new \InvalidArgumentException('reply channel must be instance of \PEIP\INF\Channel\PollableChannel.');
         }       
         $this->replyChannel = $replyChannel;
@@ -83,7 +82,7 @@ class SimpleMessagingGateway
      * @param mixed $content the content/payload for the message to send 
      * @return 
      */
-    public function send($content){
+    public function send($content) {
         return $this->requestChannel->send($this->buildMessage($content));
     }
    
@@ -93,12 +92,12 @@ class SimpleMessagingGateway
      * @access public
      * @return mixed content/payload of the received message
      */
-    public function receive(){
-        if(!isset($this->replyChannel)){
+    public function receive() {
+        if (!isset($this->replyChannel)) {
             throw new \LogicException('No replyChannel set.');
         }       
         $message = $this->replyChannel->receive();
-        if($message){
+        if ($message) {
             return $message->getContent();
         }
         return NULL;
@@ -108,15 +107,15 @@ class SimpleMessagingGateway
      * sends and receives a request/message through the gateway
      * 
      * @access public
-     * @param mixed $content the content/payload for the message to send 
+     * @param \Order $content the content/payload for the message to send 
      * @return mixed content/payload of the received message
      */
-    public function sendAndReceive($content){
+    public function sendAndReceive($content) {
         $this->send($content);
         try {
             $res = $this->receive();
         }
-        catch(\Exception $e){
+        catch (\Exception $e) {
             return NULL;
         }
         return $res;
@@ -129,7 +128,7 @@ class SimpleMessagingGateway
      * @param mixed $content the content/payload for the message to send 
      * @return \PEIP\INF\Message\Message the built message
      */
-    protected function buildMessage($content){
+    protected function buildMessage($content) {
         return $this->getMessageBuilder()->setContent($content)->build();   
     }   
       
@@ -139,7 +138,7 @@ class SimpleMessagingGateway
      * @access protected
      * @return MessageBuilder message builder instance for the registerd message class
      */
-    protected function getMessageBuilder(){
+    protected function getMessageBuilder() {
         return isset($this->messageBuilder) && ($this->messageBuilder->getMessageClass() == $this->getMessageClass())
             ? $this->messageBuilder
             : $this->messageBuilder = MessageBuilder::getInstance($this->messageClass)->setHeaders($this->defaultHeaders);
@@ -152,7 +151,7 @@ class SimpleMessagingGateway
      * @param   string $messageClass message class to create instances from
      * @return 
      */
-    public function setMessageClass($messageClass){
+    public function setMessageClass($messageClass) {
         $this->messageClass = $messageClass;
     }
     
@@ -162,7 +161,7 @@ class SimpleMessagingGateway
      * @access public
      * @return string message class to create instances from
      */
-    public function getMessageClass(){
+    public function getMessageClass() {
         return $this->messageClass;
     }   
 

@@ -25,26 +25,26 @@ namespace PEIP\INF\Data;
 
 interface StoreCollection {
 
-  public function setValues($namespace, array $parameters);
+    public function setValues($namespace, array $parameters);
   
-  public function addValues($namespace, array $parameters);
+    public function addValues($namespace, array $parameters);
   
-  public function getValues($namespace);
+    public function getValues($namespace);
   
-  public function getValue($namespace, $name);
+    public function getValue($namespace, $name);
   
-  public function setValue($namespace, $name, $value);
+    public function setValue($namespace, $name, $value);
   
-  public function hasValue($namespace, $name);
+    public function hasValue($namespace, $name);
 
-  public function deleteValue($namespace, $name);
+    public function deleteValue($namespace, $name);
 
-  public function setStore($namespace, \PEIP\INF\Data\Store $store);
+    public function setStore($namespace, \PEIP\INF\Data\Store $store);
 
-  public function getStore($namespace);
+    public function getStore($namespace);
 
-  public function hasStore($namespace);
+    public function hasStore($namespace);
 
-  public function deleteStore($namespace);
+    public function deleteStore($namespace);
 
 }

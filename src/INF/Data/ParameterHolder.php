@@ -22,18 +22,18 @@ namespace PEIP\INF\Data;
 
 interface ParameterHolder {
 
-  public function setParameters(array $parameters);
+    public function setParameters(array $parameters);
   
-  public function addParameters(array $parameters);
+    public function addParameters(array $parameters);
   
-  public function getParameters();
+    public function getParameters();
   
-  public function getParameter($name);
+    public function getParameter($name);
   
-  public function setParameter($name, $value);
+    public function setParameter($name, $value);
   
-  public function hasParameter($name);
+    public function hasParameter($name);
 
-  public function deleteParameter($name);   
+    public function deleteParameter($name);   
 
 }

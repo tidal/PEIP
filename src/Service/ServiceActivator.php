@@ -33,12 +33,12 @@ class ServiceActivator
      * @param $outputChannel 
      * @return 
      */
-    public function __construct($serviceCallable, \PEIP\INF\Channel\Channel $inputChannel = NULL, \PEIP\INF\Channel\Channel $outputChannel = NULL){
+    public function __construct($serviceCallable, \PEIP\INF\Channel\Channel $inputChannel = NULL, \PEIP\INF\Channel\Channel $outputChannel = NULL) {
         $this->serviceCallable = $serviceCallable;
-        if(is_object($inputChannel)){
+        if (is_object($inputChannel)) {
             $this->setInputChannel($inputChannel);
         }
-        if(is_object($outputChannel)){
+        if (is_object($outputChannel)) {
             $this->setOutputChannel($outputChannel);    
         }   
     }       

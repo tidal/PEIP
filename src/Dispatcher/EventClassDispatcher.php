@@ -23,18 +23,18 @@ class EventClassDispatcher
      * @access public
      * @param string $name name of the event
      * @param \PEIP\INF\Event\Event $object an event object
-     * @return boolean
+     * @return boolean|null
      */
-    public function notify($name, $object){ 
-        if($object instanceof \PEIP\INF\Event\Event){
-            if(is_object($object->getContent())){
+    public function notify($name, $object) { 
+        if ($object instanceof \PEIP\INF\Event\Event) {
+            if (is_object($object->getContent())) {
                 return self::doNotify(
                     $this->getListeners(
                         $name,
                         $object
-                     ),
-                     $object->getContent()
-                 );
+                        ),
+                        $object->getContent()
+                    );
             }else{
                 throw new \InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
             }
@@ -53,10 +53,10 @@ class EventClassDispatcher
      * @param array $headers headers of the event-object as key/value pairs
      * @param string $eventClass event-class to create instances from
      * @return
-     * @see EventBuilder
+     boolean|null @see EventBuilder
      */
-    public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false, $type = false){
-        if(!$this->hasListeners($name, ($object))){
+    public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false, $type = false) {
+        if (!$this->hasListeners($name, ($object))) {
             return false;
         }
 
@@ -79,7 +79,7 @@ class EventClassDispatcher
      * @param object $object object to check for listeners
      * @return boolean
      */
-    public function hasListeners($name, $object){
+    public function hasListeners($name, $object) {
         return parent::hasListeners(
             $name,
             ReflectionPool::getInstance($object)

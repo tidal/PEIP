@@ -18,11 +18,11 @@ class ClassDispatcher
      * @param Callable|PEIP\INF\Handler\Handler $listener listener to connect
      * @return
      */
-    public function connect($name, $listener){
+    public function connect($name, $listener) {
         $name = is_object($name) ? get_class($name) : (string)$name;
-        if(Test::assertClassOrInterfaceExists($name)){
+        if (Test::assertClassOrInterfaceExists($name)) {
             parent::connect($name, $listener);
-        }else{
+        }else {
             throw new \InvalidArgumentException($name." is not an Class nor Interface");
         }
     }
@@ -35,10 +35,10 @@ class ClassDispatcher
      * @param mixed $subject the subject
      * @return
      */
-    public function notify($name, $subject){
+    public function notify($name, $subject) {
         $res = false;
-        foreach(Reflection::getImplementedClassesAndInterfaces($name) as $cls){
-            if(parent::hasListeners($cls)){
+        foreach (Reflection::getImplementedClassesAndInterfaces($name) as $cls) {
+            if (parent::hasListeners($cls)) {
                 self::doNotify($this->getListeners($cls), $subject);
                 $res = true;
             }
@@ -56,10 +56,10 @@ class ClassDispatcher
      * @param mixed $subject the subject
      * @return \PEIP\INF\Handler\Handler listener which returned a boolean true value
      */
-    public function notifyUntil($name, $subject){
+    public function notifyUntil($name, $subject) {
         $res = NULL;
-        foreach(Reflection::getImplementedClassesAndInterfaces($name) as $cls){
-            if(!$res && parent::hasListeners($cls)){
+        foreach (Reflection::getImplementedClassesAndInterfaces($name) as $cls) {
+            if (!$res && parent::hasListeners($cls)) {
                 $res = self::doNotifyUntil($this->getListeners($cls), $subject);
             }
         }
@@ -71,11 +71,10 @@ class ClassDispatcher
      * notifies all listeners on a event on a subject
      *
      * @access public
-     * @param string $name name of the event
      * @param mixed $subject the subject
      * @return
      */
-    public function notifyOfInstance($subject){
+    public function notifyOfInstance($subject) {
 
         return $this->notify(get_class($subject), $subject);
     }
@@ -86,9 +85,9 @@ class ClassDispatcher
      * @param string $name name of the event
      * @return boolean wether any listener is registered for event-name
      */
-    public function hasListeners($name){
-        foreach(Reflection::getImplementedClassesAndInterfaces($name) as $cls){
-            if(parent::hasListeners($cls)){
+    public function hasListeners($name) {
+        foreach (Reflection::getImplementedClassesAndInterfaces($name) as $cls) {
+            if (parent::hasListeners($cls)) {
                 return true;
             }
         }

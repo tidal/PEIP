@@ -40,25 +40,25 @@ abstract class ContextPlugin
      * @param \PEIP\INF\Context\Context $context context instance to register the plugin with
      * @return 
      */
-    public function init(\PEIP\INF\Context\Context $context){
+    public function init(\PEIP\INF\Context\Context $context) {
         $this->context = $context;
-        foreach($this->builders as $node=>$method){
+        foreach ($this->builders as $node=>$method) {
             $context->registerNodeBuilder($node, array($this, $method));        
         }   
     }
 
-     /**
-     * Builds and modifies an arbitrary service/object instance from a config-obect.
-     *
-     * @see XMLContext::doBuild
-     * @see XMLContext::modifyService
-     * @implements \PEIP\INF\Context\Context
-     * @access public
-     * @param object $config configuration object to build a service instance from.
-     * @param array $arguments arguments for the service constructor
-     * @param string $defaultClass class to create instance for if none is set in config
-     * @return object build and modified srvice instance
-     */
+        /**
+         * Builds and modifies an arbitrary service/object instance from a config-obect.
+         *
+         * @see XMLContext::doBuild
+         * @see XMLContext::modifyService
+         * @implements \PEIP\INF\Context\Context
+         * @access public
+         * @param object $config configuration object to build a service instance from.
+         * @param array $arguments arguments for the service constructor
+         * @param string $defaultClass class to create instance for if none is set in config
+         * @return object build and modified srvice instance
+         */
     public function buildAndModify($config, $arguments, $defaultClass = false){
         return ServiceFactory::buildAndModify($config, $arguments, $defaultClass);
     }

@@ -29,7 +29,7 @@ class EventPipe
     protected 
         $eventName; 
        
-    public function connectChannel(\PEIP\INF\Channel\Channel $inputChannel){
+    public function connectChannel(\PEIP\INF\Channel\Channel $inputChannel) {
         $this->inputChannel = $inputChannel;
         
     }
@@ -44,7 +44,7 @@ class EventPipe
      * @param \PEIP\INF\Channel\Channel $inputChannel the input-channel to listen for events. 
      * @return 
      */
-    public function setInputChannel(\PEIP\INF\Channel\Channel $inputChannel){        
+    public function setInputChannel(\PEIP\INF\Channel\Channel $inputChannel) {        
         $this->connectChannel($inputChannel);            
     }     
   
@@ -60,9 +60,9 @@ class EventPipe
      * @access protected
      * @param \PEIP\INF\Message\Message $message the message to reply with
      */
-    protected function doReply(\PEIP\INF\Message\Message $message){
+    protected function doReply(\PEIP\INF\Message\Message $message) {
         $headerMessage = $message->getHeader('MESSAGE');
-        if($headerMessage instanceof \PEIP\INF\Message\Message){
+        if ($headerMessage instanceof \PEIP\INF\Message\Message) {
             return $this->replyMessage($headerMessage);
         }
     }
@@ -75,7 +75,7 @@ class EventPipe
      * @param \PEIP\INF\Event\Connectable $connectable the connectable to listen to
      * @return 
      */
-    public function listen(\PEIP\INF\Event\Connectable $connectable){
+    public function listen(\PEIP\INF\Event\Connectable $connectable) {
         return $this->doListen($this->eventName, $connectable);     
     }
        
@@ -87,7 +87,7 @@ class EventPipe
      * @param \PEIP\INF\Event\Connectable $connectable the connectable to unlisten  
      * @return 
      */
-    public function unlisten(\PEIP\INF\Event\Connectable $connectable){
+    public function unlisten(\PEIP\INF\Event\Connectable $connectable) {
         return $this->doUnlisten($this->eventName, $connectable);       
     }
      
@@ -97,7 +97,7 @@ class EventPipe
      * @access public
      * @return array array of \PEIP\INF\Event\Connectable instances
      */
-    public function getConnected(){
+    public function getConnected() {
         return $this->doGetConnected();
     }
        
@@ -108,7 +108,7 @@ class EventPipe
      * @param \PEIP\INF\Channel\Channel $channel \PEIP\INF\Channel\Channel instance to disconnect from
      * @return 
      */
-    public function disconnectChannel(\PEIP\INF\Channel\Channel $channel){
+    public function disconnectChannel(\PEIP\INF\Channel\Channel $channel) {
         $this->disconnectInputChannel();        
         $this->inputChannel = $channel;         
         $this->connectInputChannel();       
@@ -121,8 +121,8 @@ class EventPipe
      * @access protected
      * @return 
      */
-    protected function connectInputChannel(){
-        if($this->inputChannel && $this->eventName){
+    protected function connectInputChannel() {
+        if ($this->inputChannel && $this->eventName) {
             $this->inputChannel->connect($this->eventName, $this);
         }   
     }
@@ -134,8 +134,8 @@ class EventPipe
      * @access protected
      * @return 
      */
-    protected function disconnectInputChannel(){
-        if($this->inputChannel && $this->eventName){
+    protected function disconnectInputChannel() {
+        if ($this->inputChannel && $this->eventName) {
             $this->inputChannel->disconnect($this->eventName, $this);
         }       
     }
@@ -147,7 +147,7 @@ class EventPipe
      * @param $eventName 
      * @return 
      */
-    public function setEventName($eventName){
+    public function setEventName($eventName) {
         $this->disconnectInputChannel();
         $this->eventName = $eventName;
         $this->connectInputChannel();

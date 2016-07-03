@@ -35,7 +35,7 @@ class PublishSubscribeChannel
      * @param $message 
      * @return 
      */
-    protected function doSend(\PEIP\INF\Message\Message $message){
+    protected function doSend(\PEIP\INF\Message\Message $message) {
         $this->doFireEvent('prePublish', array('MESSAGE'=>$message));
         $this->getMessageDispatcher()->notify($message);
         $this->doFireEvent('postPublish', array('MESSAGE'=>$message));

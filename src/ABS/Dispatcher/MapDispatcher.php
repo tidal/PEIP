@@ -47,7 +47,7 @@ abstract class MapDispatcher
     public function connect($name, $listener){
         Test::ensureHandler($listener);
         if (!$this->hasListeners($name)){
-          $this->listeners[$name] = array();
+            $this->listeners[$name] = array();
         }
         $this->listeners[$name][] = $listener;
         return true;
@@ -67,10 +67,10 @@ abstract class MapDispatcher
         }
         $res = false;
         foreach ($this->listeners[$name] as $i => $callable){
-          if ($listener === $callable){
+            if ($listener === $callable){
             unset($this->listeners[$name][$i]);
             $res = true;
-          }
+            }
         }
         return $res;
     }
@@ -80,11 +80,10 @@ abstract class MapDispatcher
      *
      * @access public
      * @param string $name name of the event
-     * @param Callable|PEIP\INF\Handler\Handler $listener listener to connect
      * @return
      */
-    public function disconnectAll($name){
-        if (!isset($this->listeners[$name])){
+    public function disconnectAll($name) {
+        if (!isset($this->listeners[$name])) {
             return false;
         }
         $this->listeners[$name] = array();
@@ -98,11 +97,11 @@ abstract class MapDispatcher
      * @param string $name name of the event 
      * @return boolean wether any listener is registered for event-name
      */
-    public function hasListeners($name){
-        if (!isset($this->listeners[$name])){
+    public function hasListeners($name) {
+        if (!isset($this->listeners[$name])) {
             return false;
         }
-        return (boolean) count($this->listeners[$name]);
+        return (boolean)count($this->listeners[$name]);
     }
     
     /**
@@ -113,8 +112,8 @@ abstract class MapDispatcher
      * @param mixed $subject the subject 
      * @return boolean success
      */
-    public function notify($name, $subject){
-        if($this->hasListeners($name)){
+    public function notify($name, $subject) {
+        if ($this->hasListeners($name)) {
             self::doNotify($this->getListeners($name), $subject);
             return true;
         }
@@ -129,8 +128,8 @@ abstract class MapDispatcher
      * @param mixed $subject the subject 
      * @return \PEIP\INF\Handler\Handler listener which returned a boolean true value
      */
-    public function notifyUntil($name, $subject){
-        if($this->hasListeners($name)){
+    public function notifyUntil($name, $subject) {
+        if ($this->hasListeners($name)) {
             return self::doNotifyUntil($this->getListeners($name), $subject);   
         }
         return NULL;
@@ -143,8 +142,8 @@ abstract class MapDispatcher
      * @param $name 
      * @return array array of \PEIP\INF\Handler\Handler instances
      */
-    public function getListeners($name){
-        if (!isset($this->listeners[$name])){
+    public function getListeners($name) {
+        if (!isset($this->listeners[$name])) {
         return array();
         }
         return $this->listeners[$name];

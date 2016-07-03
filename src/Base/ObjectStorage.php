@@ -20,4 +20,4 @@ namespace PEIP\Base;
 
 
 class ObjectStorage
-    extends \SplObjectStorage{}
+    extends \SplObjectStorage {}

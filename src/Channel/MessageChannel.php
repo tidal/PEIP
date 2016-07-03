@@ -28,7 +28,7 @@ class MessageChannel implements \PEIP\INF\Channel\Channel {
      * @access public
      * @return 
      */
-    public function getName(){
+    public function getName() {
     
     }
 
@@ -40,7 +40,7 @@ class MessageChannel implements \PEIP\INF\Channel\Channel {
      * @param $timeout 
      * @return 
      */
-    public function send(\PEIP\INF\Message\Message $message, $timeout = -1){
+    public function send(\PEIP\INF\Message\Message $message, $timeout = -1) {
         
     }
 

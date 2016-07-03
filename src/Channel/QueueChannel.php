@@ -37,7 +37,7 @@ class QueueChannel
      * @param $capacity 
      * @return 
      */
-    public function __construct($capacity = -1){
+    public function __construct($capacity = -1) {
         $this->setCapacity((int)$capacity);
         $this->queue = new SplQueue();  
     }   
@@ -47,7 +47,7 @@ class QueueChannel
      * @access public
      * @return 
      */
-    public function getMessageCount(){
+    public function getMessageCount() {
         return count($this->messages);
     }   
 
@@ -56,7 +56,7 @@ class QueueChannel
      * @access public
      * @return 
      */
-    public function getCapacity(){
+    public function getCapacity() {
         return $this->capacity;
     }       
 
@@ -66,7 +66,7 @@ class QueueChannel
      * @param $capacity 
      * @return 
      */
-    public function setCapacity($capacity){
+    public function setCapacity($capacity) {
         $this->capacity = $capacity;
     }   
 
@@ -76,10 +76,10 @@ class QueueChannel
      * @param $message 
      * @return 
      */
-    protected function doSend(\PEIP\INF\Message\Message $message){
-        if($this->capacity < 1 || $this->getMessageCount() <= $this->getCapacity()){
+    protected function doSend(\PEIP\INF\Message\Message $message) {
+        if ($this->capacity < 1 || $this->getMessageCount() <= $this->getCapacity()) {
             $this->queue->enqueque($message);
-        }else{
+        }else {
             throw new \Exception('Not implemented yet.');
         }            
     }       

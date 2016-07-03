@@ -33,7 +33,7 @@ class ContentClassSelector
      * @param $className 
      * @return 
      */
-    public function __construct($className){
+    public function __construct($className) {
         $this->className = $className;
     }       
             
@@ -43,7 +43,7 @@ class ContentClassSelector
      * @param $message 
      * @return 
      */
-    public function acceptMessage(\PEIP\INF\Message\Message $message){
+    public function acceptMessage(\PEIP\INF\Message\Message $message) {
         return $message->getContent() instanceof $className;
     }           
     

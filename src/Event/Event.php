@@ -49,9 +49,8 @@ class Event
      * @access public
      * @param mixed $subject the subject for the event
      * @param string $name the name of the event
-     * @param array|ArrayAccess $headers the headers for the event 
      */
-    public function __construct($subject, $name, $parameters = array(), $type = false){
+    public function __construct($subject, $name, $parameters = array(), $type = false) {
         parent::__construct($subject, Test::ensureArrayAccess($parameters));
         $this->name = $name;
         $this->type = $type ? $type : get_class($this);
@@ -63,7 +62,7 @@ class Event
      * @access public
      * @return string the name of the event
      */
-    public function getName(){
+    public function getName() {
         return $this->name;
     }
 
@@ -74,7 +73,7 @@ class Event
      * @access public
      * @return string the type of the event
      */
-    public function getType(){
+    public function getType() {
         return $this->name;
     }
   
@@ -84,7 +83,7 @@ class Event
      * @access public
      * @param mixed $value the return-value to set 
      */
-    public function setReturnValue($value){
+    public function setReturnValue($value) {
         $this->value = $value;
     }
   
@@ -94,7 +93,7 @@ class Event
      * @access public
      * @return mixed the return-value to set
      */
-    public function getReturnValue(){
+    public function getReturnValue() {
         return $this->value;
     }
   
@@ -104,8 +103,8 @@ class Event
      * @access public
      * @param boolean $processed 
      */
-    public function setProcessed($processed){
-        $this->processed = (boolean) $processed;
+    public function setProcessed($processed) {
+        $this->processed = (boolean)$processed;
     }
 
     /**
@@ -114,7 +113,7 @@ class Event
      * @access public
      * @return boolean wether the event is processed 
      */
-    public function isProcessed(){
+    public function isProcessed() {
         return $this->processed;
     }
 
@@ -124,7 +123,7 @@ class Event
      * @access public
      * @return mixed the subject/content
      */
-    public function getSubject(){
+    public function getSubject() {
         return $this->getContent();
     }
 }
