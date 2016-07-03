@@ -23,11 +23,11 @@ class ServiceFactory {
      * @param $config configuration of the service
      * @return object the initialized service instance
      */
-    public static function createService(array $config){
+    public static function createService(array $config) {
         $args = array();
         //build arguments for constructor
-        if(isset($config['constructor_arg'])){
-            foreach($config['constructor_arg'] as $arg){
+        if (isset($config['constructor_arg'])) {
+            foreach ($config['constructor_arg'] as $arg) {
                 $args[] = self::buildArg($arg);
             }
         }
@@ -44,21 +44,21 @@ class ServiceFactory {
      * @param string $defaultClass class to create instance for if none is set in config
      * @return object build and modified srvice instance
      */
-    public static function doBuild($config, $arguments, $defaultClass = false){
+    public static function doBuild($config, $arguments, $defaultClass = false) {
         $cls = isset($config["class"]) ? trim((string)$config["class"]) : (string)$defaultClass;
-        if($cls != ''){
+        if ($cls != '') {
             try {
-                $constructor = isset($config["constructor"])?(string)$config["constructor"]:"";
-                if($constructor != '' && Test::assertMethod($cls, $constructor)){
+                $constructor = isset($config["constructor"]) ? (string)$config["constructor"] : "";
+                if ($constructor != '' && Test::assertMethod($cls, $constructor)) {
                     $service = call_user_func_array(array($cls, $constructor), $arguments);
-                }else{
+                }else {
                     $service = self::build($cls, $arguments);
                 }
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 throw new \RuntimeException('Could not create Service "'.$cls.'" -> '.$e->getMessage());
             }
         }
-        if(is_object($service)){
+        if (is_object($service)) {
             return $service;
         }
         throw new \RuntimeException('Could not create Service "'.$cls.'". Class does not exist.');
@@ -71,11 +71,11 @@ class ServiceFactory {
      * @see GenericBuilder
      * @static
      * @access protected
-     * @param object $className name of class to build instance for.
+     * @param string $className name of class to build instance for.
      * @param array $arguments arguments for the constructor
      * @return object build and modified srvice instance
      */
-    public static function build($className, $arguments){
+    public static function build($className, $arguments) {
         return GenericBuilder::getInstance($className)->build($arguments);
     }
 
@@ -86,29 +86,29 @@ class ServiceFactory {
      * @param object $config configuration object to create argument from.
      * @return mixed build argument
      */
-    protected static function buildArg($config){
-        if(trim((string)$config['value']) != ''){
+    protected static function buildArg($config) {
+        if (trim((string)$config['value']) != '') {
             $arg = (string)$config['value'];
-        }elseif($config->getName() == 'value'){
+        }elseif ($config->getName() == 'value') {
             $arg = (string)$config;
-        }elseif($config->getName() == 'list'){
+        }elseif ($config->getName() == 'list') {
             $arg = array();
-            foreach($config->children() as $entry){
-                if($entry->getName() == 'value'){
-                    if($entry['key']){
+            foreach ($config->children() as $entry) {
+                if ($entry->getName() == 'value') {
+                    if ($entry['key']) {
                         $arg[(string)$entry['key']] = (string)$entry;
-                    }else{
+                    }else {
                         $arg[] = (string)$entry;
                     }
-                }elseif($entry->getName() == 'service'){
+                }elseif ($entry->getName() == 'service') {
                     $arg[] = $this->provideService($entry);
                 }
             }
-        }elseif($config->getName() == 'service'){
+        }elseif ($config->getName() == 'service') {
             $arg = self::provideService($config);
-        }elseif($config->list){
+        }elseif ($config->list) {
             $arg = self::buildArg($config->list);
-        }elseif($config->service){
+        }elseif ($config->service) {
             $arg = self::buildArg($config->service);
         }
         return $arg;
@@ -126,24 +126,24 @@ class ServiceFactory {
      * @param string $defaultClass class to create instance for if none is set in config
      * @return object build and modified srvice instance
      */
-    public static function buildAndModify(array $config, $arguments, $defaultClass = ""){
-        if((isset($config["class"]) && "" != (string)$config["class"])  || $defaultClass !== ""){
+    public static function buildAndModify(array $config, $arguments, $defaultClass = "") {
+        if ((isset($config["class"]) && "" != (string)$config["class"]) || $defaultClass !== "") {
              $service = ServiceFactory::doBuild($config, $arguments, $defaultClass);
-        }else{
+        }else {
             throw new \RuntimeException('Could not create Service. no class or reference given.');
         }
-        if(isset($config["ref_property"])){
+        if (isset($config["ref_property"])) {
             $service = $service->{(string)$config["ref_property"]};
-        }elseif(isset($config["ref_method"])){
+        }elseif (isset($config["ref_method"])) {
                 $args = array();
-            if(isset($config['argument'])){
-                        foreach($config['argument'] as $arg){
+            if (isset($config['argument'])) {
+                        foreach ($config['argument'] as $arg) {
                             $args[] = self::buildArg($arg);
                         }
                 }
             $service = call_user_func_array(array($service, (string)$config["ref_method"]), $args);
         }
-        if(!is_object($service)){
+        if (!is_object($service)) {
             throw new \RuntimeException('Could not create Service.');
         }
         $service = self::modifyService($service, $config);
@@ -165,29 +165,29 @@ class ServiceFactory {
      * @param object $config configuration to get the modification instructions from.
      * @return object the modificated service
      */
-    protected function modifyService($service, $config){        
+    protected function modifyService($service, $config) {        
         $config = is_array($config) ? new \ArrayObject($config) : $config;
         // set instance properties
-        if(isset($config->property)){
-            foreach($config->property as $property){
+        if (isset($config->property)) {
+            foreach ($config->property as $property) {
                 $arg = self::buildArg($property);
-                if($arg){
+                if ($arg) {
                     $setter = self::getSetter($property);
-                    if($setter &&  self::hasPublicProperty($service, 'Method', $setter)){
+                    if ($setter && self::hasPublicProperty($service, 'Method', $setter)) {
                         $service->{$setter}($arg);
-                    }elseif(in_array($property, self::hasPublicProperty($service, 'Property', $setter))){
+                    }elseif (in_array($property, self::hasPublicProperty($service, 'Property', $setter))) {
                         $service->$setter = $arg;
                     }
                 }
             }
         }
         // call instance methods
-        if(isset($config->action)){
-            foreach($config->action as $action){
+        if (isset($config->action)) {
+            foreach ($config->action as $action) {
                 $method = (string)$action['method'] != '' ? (string)$action['method'] : NULL;
-                if($method && self::hasPublicProperty($service, 'Method', $method)){
+                if ($method && self::hasPublicProperty($service, 'Method', $method)) {
                     $args = array();
-                    foreach($action->children() as $argument){
+                    foreach ($action->children() as $argument) {
                         $args[] = self::buildArg($argument);
                     }
                     call_user_func_array(array($service, (string)$action['method']), $args);
@@ -195,9 +195,9 @@ class ServiceFactory {
             }
         }
         // register instance listeners
-        if($service instanceof \PEIP\INF\Event\Connectable){
-            if(isset($config->listener)){
-                foreach($config->listener as $listenerConf){
+        if ($service instanceof \PEIP\INF\Event\Connectable) {
+            if (isset($config->listener)) {
+                foreach ($config->listener as $listenerConf) {
                     $event = (string)$listenerConf['event'];
                     $listener = $this->provideService($listenerConf);
                     $service->connect($event, $listener);
