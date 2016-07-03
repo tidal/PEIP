@@ -59,7 +59,7 @@ abstract class ContextPlugin
          * @param string $defaultClass class to create instance for if none is set in config
          * @return object build and modified srvice instance
          */
-    public function buildAndModify($config, $arguments, $defaultClass = false){
+    public function buildAndModify($config, $arguments, $defaultClass = false) {
         return ServiceFactory::buildAndModify($config, $arguments, $defaultClass);
     }
 }

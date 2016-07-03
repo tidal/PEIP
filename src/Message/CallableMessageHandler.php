@@ -56,11 +56,11 @@ class CallableMessageHandler
                 if ($static && !$reflectionFunc->isStatic()) {
                     throw new \InvalidArgumentException('Argument 1 passed to CallableMessageHandler::__construct is not an Callable: Method "'.$method.'" of class '.$class.' is not static.');                  
                 }
-            }else {
+            } else {
                 $reflectionFunc = new \ReflectionFunction($this->callable);  
             }
             $this->requiredParameters = $reflectionFunc->getNumberOfRequiredParameters();
-        }else {
+        } else {
             throw new \InvalidArgumentException('Argument 1 passed to CallableMessageHandler::__construct is not a Callable');
         }   
     }   
@@ -79,8 +79,7 @@ class CallableMessageHandler
         }   
         try {
             return call_user_func_array($this->callable, array($message, $channel, $sent));
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             throw new \RuntimeException('Unable to call Callable: '.$e->getMessage());
         }   
     }   

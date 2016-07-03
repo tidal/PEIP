@@ -26,9 +26,9 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
      * @param Callable|PEIP\INF\Handler\Handler $listener event-handler
      * @return boolean
      */
-    public function connect($name, $object, $listener){ 
+    public function connect($name, $object, $listener) { 
         $class = is_object($object) ? get_class($object) : (string)$object;
-        foreach(Reflection::getImplementedClassesAndInterfaces($object) as $cls){
+        foreach (Reflection::getImplementedClassesAndInterfaces($object) as $cls) {
             $reflection = \PEIP\Util\ReflectionPool::getInstance($class);
             parent::connect($name, $reflection, $listener);
         }
@@ -36,13 +36,13 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
         return true;
     }
 
-    public function disconnect($name, $object, $listener){
+    public function disconnect($name, $object, $listener) {
         $class = is_object($object) ? get_class($object) : (string)$object;
         $res = true;
-        foreach(Reflection::getImplementedClassesAndInterfaces($object) as $cls){
+        foreach (Reflection::getImplementedClassesAndInterfaces($object) as $cls) {
             $reflection = \PEIP\Util\ReflectionPool::getInstance($class);
             $r = parent::disconnect($name, $reflection, $listener);
-            if(!$r){
+            if (!$r) {
                 $res = false;
             }
         }
@@ -69,10 +69,10 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
                         ),
                         $object
                     );
-            }else{
+            }else {
                 throw new \InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
             }
-        }else{
+        }else {
             throw new \InvalidArgumentException('object must be instance of \PEIP\INF\Event\Event');
         }
     }       //put your code here
@@ -87,10 +87,10 @@ class ClassEventDispatcher extends \PEIP\Dispatcher\ObjectEventDispatcher {
          * @param array $headers headers of the event-object as key/value pairs
          * @param string $eventClass event-class to create instances from
          * @return
-         * @see EventBuilder
+         boolean|null @see EventBuilder
          */
-    public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false, $type = false){
-        if(!$this->hasListeners($name, ($object))){
+    public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false, $type = false) {
+        if (!$this->hasListeners($name, ($object))) {
             return false;
         }
 

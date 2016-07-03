@@ -108,7 +108,7 @@ class Pipe
         //if(\PEIP\Util\Test::assertMessage($message)){
             if ($this->getOutputChannel()) { 
                 $this->getOutputChannel()->send($message);
-            }else { 
+            } else { 
                 $this->doSend($message);
             }
         //}

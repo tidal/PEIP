@@ -54,7 +54,7 @@ class StoreCollection
             $store = $this->factory->build();
             if ($store instanceof \PEIP\INF\Data\Store) {
                 $this->setPrivateValue($namespace, $store);
-            }else {
+            } else {
                 throw new \Exception('Could not build Instance of \PEIP\INF\Data\Store from factory.');
             }
         }

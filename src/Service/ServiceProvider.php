@@ -69,7 +69,7 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer {
          * @param string $nodeName the name of the node
          * @param callable $callable a callable which creates instances for node-name
          */
-    public function registerNodeBuilder($nodeName, $callable){
+    public function registerNodeBuilder($nodeName, $callable) {
         $this->nodeBuilders[$nodeName] = $callable;
     }
     /**
@@ -82,16 +82,16 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer {
      * @see XMLContext::includeContext
      * @access protected
      */
-    protected function initNodeBuilders(){
+    protected function initNodeBuilders() {
         $builders = array(
             'service' => 'initService'
         );
-        foreach($builders as $nodeName => $method){
+        foreach ($builders as $nodeName => $method) {
             $this->registerNodeBuilder($nodeName, array($this, $method));
         }
     }
 
-    public function addConfig($config){ 
+    public function addConfig($config) { 
         $this->doFireEvent(
             self::EVENT_BEFORE_ADD_CONFIG,
             array(
@@ -117,7 +117,7 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer {
 
         if ($this->hasService($key)) {
             $service = $this->getService($key);
-        }else {
+        } else {
             $service = $this->createService($key);
         }
 
@@ -149,11 +149,11 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer {
                 ));
 
                 return $node;                
-            }else {
+            } else {
                 $errorMessage = 'COULD NOT BUILD NODE FOR KEY: '.$key;
             }
 
-        }else {
+        } else {
             $errorMessage = 'NO CONFIG FOR KEY: '.$key;
         }
         $this->doFireEvent(self::EVENT_CREATE_SERVICE_ERROR, array(
@@ -197,10 +197,10 @@ class ServiceProvider extends \PEIP\Service\ServiceContainer {
                     self::HEADER_NODE => $nodeInstance
                 ));
                 return $nodeInstance;
-            }else {
+            } else {
                 $errorMessage = 'BUILDER RETURNED NO OBJECT FOR NODE-TYPE: '.$nodeName;
             }
-        }else {
+        } else {
             $errorMessage = 'NO BUILDER FOUND FOR NODE-TYPE: '.$nodeName;
         }
 

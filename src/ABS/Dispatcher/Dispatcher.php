@@ -58,9 +58,9 @@ abstract class Dispatcher {
      * @param mixed $subject subject to notify the listeners of 
      * @return \PEIP\INF\Handler\Handler listener that returned a boolean true value
      */     
-    protected static function doNotifyUntil(array $listeners, $subject){
-        foreach ($listeners as $listener){
-            if (self::doNotifyOne($listener, $subject)){
+    protected static function doNotifyUntil(array $listeners, $subject) {
+        foreach ($listeners as $listener) {
+            if (self::doNotifyOne($listener, $subject)) {
             return $listener;
             }
         }

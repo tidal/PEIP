@@ -38,12 +38,12 @@ class HeaderServiceActivator extends \PEIP\Service\ServiceActivator {
          * @param \PEIP\INF\Message\Message $message message to call the service with it�s content/payload
          * @return mixed result of calling the registered service callable with message content/payload
          */
-    protected function callService(\PEIP\INF\Message\Message $message){
+    protected function callService(\PEIP\INF\Message\Message $message) {
         $res = NULL; 
-        if(is_callable($this->serviceCallable)){
+        if (is_callable($this->serviceCallable)) {
             $res = call_user_func($this->serviceCallable, $message->getHeader($this->headerName));
-        }else{
-            if(is_object($this->serviceCallable) && method_exists($this->serviceCallable, 'handle')){
+        }else {
+            if (is_object($this->serviceCallable) && method_exists($this->serviceCallable, 'handle')) {
                 $res = $this->serviceCallable->handle($message->getHeader($this->headerName));
             }
         }

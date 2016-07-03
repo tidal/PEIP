@@ -30,8 +30,7 @@ class XMLArrayTranslator {
                 throw new \Exception('loading XML failed');  
             }
             
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }     
         
@@ -65,7 +64,7 @@ class XMLArrayTranslator {
                         )
                     );
                 }
-            }else {
+            } else {
                 $array[$name] = array();
             }
             $array[$name][] = $res;

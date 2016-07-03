@@ -44,9 +44,9 @@ abstract class MapDispatcher
      * @param Callable|PEIP\INF\Handler\Handler $listener listener to connect
      * @return 
      */
-    public function connect($name, $listener){
+    public function connect($name, $listener) {
         Test::ensureHandler($listener);
-        if (!$this->hasListeners($name)){
+        if (!$this->hasListeners($name)) {
             $this->listeners[$name] = array();
         }
         $this->listeners[$name][] = $listener;
@@ -61,13 +61,13 @@ abstract class MapDispatcher
      * @param Callable|PEIP\INF\Handler\Handler $listener listener to connect
      * @return 
      */
-    public function disconnect($name, $listener){
-        if (!$this->hasListeners($name)){
+    public function disconnect($name, $listener) {
+        if (!$this->hasListeners($name)) {
             return false;
         }
         $res = false;
-        foreach ($this->listeners[$name] as $i => $callable){
-            if ($listener === $callable){
+        foreach ($this->listeners[$name] as $i => $callable) {
+            if ($listener === $callable) {
             unset($this->listeners[$name][$i]);
             $res = true;
             }

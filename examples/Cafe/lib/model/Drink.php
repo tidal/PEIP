@@ -8,21 +8,21 @@ class Drink {
         $type,
         $iced;
 	
-    public function __construct($orderNumber, $type, $iced){
+    public function __construct($orderNumber, $type, $iced) {
         $this->orderNumber = $orderNumber;
         $this->type = $type;
         $this->iced = $iced;
     }
 
-    public function getType(){
+    public function getType() {
         return $this->type; 
     }
 
-    public function getIced(){
+    public function getIced() {
         return $this->iced; 
     }	
 
-    public function getOrderNumber(){
+    public function getOrderNumber() {
         return $this->orderNumber;
     }
 	

@@ -6,7 +6,7 @@ class Delivery {
         $deliveredDrinks,
         $orderNumber;
 	
-    public function __construct(array $deliveredDrinks){
+    public function __construct(array $deliveredDrinks) {
         $this->deliveredDrinks = $deliveredDrinks;
         $this->orderNumber = $deliveredDrinks[0]->getOrderNumber();
     }

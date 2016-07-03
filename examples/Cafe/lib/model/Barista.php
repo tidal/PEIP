@@ -30,16 +30,16 @@ class Barista {
         return $this->prepareDrink($orderItem['order'], $orderItem['type'], true);
     }    
 	
-    protected function prepareDrink($orderNumber, $type, $iced){
+    protected function prepareDrink($orderNumber, $type, $iced) {
         $drink = new Drink($orderNumber, $type, $iced);	
         return $drink;
     }
 
-    protected function printAction($cold, $orderNr){
-        if($cold){
+    protected function printAction($cold, $orderNr) {
+        if ($cold) {
             $type = 'cold';
             $count = $this->coldDrinkCounter;
-        }else{
+        }else {
             $type = 'hot';
             $count = $this->hotDrinkCounter;    		
         }

@@ -94,7 +94,7 @@ class XMLContext
     public static function createFromFile($file) {
         if (file_exists($file)) {
             return self::createFromString(file_get_contents($file));
-        }else {
+        } else {
             throw new \RuntimeException('Cannot open file  "'.$file.'".');
         }
     }
@@ -126,7 +126,7 @@ class XMLContext
      * @param string $nodeName the name of the node 
      * @param callable $callable a callable which creates instances for node-name 
      */
-    public function registerNodeBuilder($nodeName, $callable){
+    public function registerNodeBuilder($nodeName, $callable) {
         return  $this->getServiceProvider()->registerNodeBuilder($nodeName, $callable);
     }
    
@@ -342,7 +342,7 @@ class XMLContext
      * 
      * @access protected
      * @param object $config 
-     * @return object the initialized service instance
+     * @return \PEIP\INF\Context\ContextPlugin|null the initialized service instance
      */
     protected function initService($config) {
         $id = trim((string)$config['id']);
@@ -384,7 +384,7 @@ class XMLContext
                     $setter = self::getSetter($property);               
                     if ($setter && self::hasPublicProperty($service, 'Method', $setter)) {
                         $service->{$setter}($arg);  
-                    }elseif (in_array($property, self::hasPublicProperty($service, 'Property', $setter))) {
+                    } elseif (in_array($property, self::hasPublicProperty($service, 'Property', $setter))) {
                         $service->$setter = $arg;
                     }                   
                 }
@@ -617,7 +617,7 @@ class XMLContext
         $ref = trim((string)$config['ref']);
         if ($ref != '') {
             $service = $this->getService($ref); 
-        }else {
+        } else {
             $service = $this->createService($config);
         }
         return $service;
@@ -637,7 +637,7 @@ class XMLContext
     protected static function getSetter($config) {
         if ($config['setter']) {
             $setter = (string)$config['setter'];
-        }elseif ($config['name']) {
+        } elseif ($config['name']) {
             $setter = 'set'.ucfirst((string)$config['name']);   
         }
         return $setter;     
@@ -653,26 +653,26 @@ class XMLContext
     protected function buildArg($config) { 
         if (trim((string)$config['value']) != '') {
             $arg = (string)$config['value'];
-        }elseif ($config->getName() == 'value') {
+        } elseif ($config->getName() == 'value') {
             $arg = (string)$config;
-        }elseif ($config->getName() == 'list') {
+        } elseif ($config->getName() == 'list') {
             $arg = array();
             foreach ($config->children() as $entry) { 
                 if ($entry->getName() == 'value') {
                     if ($entry['key']) {
                         $arg[(string)$entry['key']] = (string)$entry;   
-                    }else {
+                    } else {
                         $arg[] = (string)$entry;
                     }
-                }elseif ($entry->getName() == 'service') {
+                } elseif ($entry->getName() == 'service') {
                     $arg[] = $this->provideService($entry);
                 }
             }
-        }elseif ($config->getName() == 'service') {
+        } elseif ($config->getName() == 'service') {
             $arg = $this->provideService($config);
-        }elseif ($config->list) {
+        } elseif ($config->list) {
             $arg = $this->buildArg($config->list);
-        }elseif ($config->service) {
+        } elseif ($config->service) {
             $arg = $this->buildArg($config->service);
         } 
         return $arg; 
@@ -774,7 +774,7 @@ class XMLContext
                 $constructor = (string)$config["constructor"];
         if ($constructor != '') {
             $service = call_user_func_array(array($cls, $constructor), $arguments); 
-        }else {
+        } else {
             $service = self::build($cls, $arguments); 
         }        
             } catch (\Exception $e) {
@@ -797,7 +797,7 @@ class XMLContext
      * @param array $arguments arguments for the constructor 
      * @return object build and modified srvice instance
      */     
-    protected static function build($className, $arguments){
+    protected static function build($className, $arguments) {
         return GenericBuilder::getInstance($className)->build($arguments);
     }
 
@@ -805,9 +805,9 @@ class XMLContext
      * @param string $type
      * @param string $name
      */
-    protected static function hasPublicProperty($service, $type, $name){
+    protected static function hasPublicProperty($service, $type, $name) {
         $reflection = GenericBuilder::getInstance(get_class($service))->getReflectionClass();
-        if($reflection->{'has'.$type}($name) && $reflection->{'get'.$type}($name)->isPublic()){
+        if ($reflection->{'has'.$type}($name) && $reflection->{'get'.$type}($name)->isPublic()) {
                 return true;
         }
         return false;
