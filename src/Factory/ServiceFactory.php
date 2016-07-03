@@ -51,7 +51,7 @@ class ServiceFactory {
                 $constructor = isset($config["constructor"]) ? (string)$config["constructor"] : "";
                 if ($constructor != '' && Test::assertMethod($cls, $constructor)) {
                     $service = call_user_func_array(array($cls, $constructor), $arguments);
-                }else {
+                } else {
                     $service = self::build($cls, $arguments);
                 }
             } catch (\Exception $e) {
@@ -89,26 +89,26 @@ class ServiceFactory {
     protected static function buildArg($config) {
         if (trim((string)$config['value']) != '') {
             $arg = (string)$config['value'];
-        }elseif ($config->getName() == 'value') {
+        } elseif ($config->getName() == 'value') {
             $arg = (string)$config;
-        }elseif ($config->getName() == 'list') {
+        } elseif ($config->getName() == 'list') {
             $arg = array();
             foreach ($config->children() as $entry) {
                 if ($entry->getName() == 'value') {
                     if ($entry['key']) {
                         $arg[(string)$entry['key']] = (string)$entry;
-                    }else {
+                    } else {
                         $arg[] = (string)$entry;
                     }
-                }elseif ($entry->getName() == 'service') {
+                } elseif ($entry->getName() == 'service') {
                     $arg[] = $this->provideService($entry);
                 }
             }
-        }elseif ($config->getName() == 'service') {
+        } elseif ($config->getName() == 'service') {
             $arg = self::provideService($config);
-        }elseif ($config->list) {
+        } elseif ($config->list) {
             $arg = self::buildArg($config->list);
-        }elseif ($config->service) {
+        } elseif ($config->service) {
             $arg = self::buildArg($config->service);
         }
         return $arg;
@@ -129,12 +129,12 @@ class ServiceFactory {
     public static function buildAndModify(array $config, $arguments, $defaultClass = "") {
         if ((isset($config["class"]) && "" != (string)$config["class"]) || $defaultClass !== "") {
              $service = ServiceFactory::doBuild($config, $arguments, $defaultClass);
-        }else {
+        } else {
             throw new \RuntimeException('Could not create Service. no class or reference given.');
         }
         if (isset($config["ref_property"])) {
             $service = $service->{(string)$config["ref_property"]};
-        }elseif (isset($config["ref_method"])) {
+        } elseif (isset($config["ref_method"])) {
                 $args = array();
             if (isset($config['argument'])) {
                         foreach ($config['argument'] as $arg) {
@@ -175,7 +175,7 @@ class ServiceFactory {
                     $setter = self::getSetter($property);
                     if ($setter && self::hasPublicProperty($service, 'Method', $setter)) {
                         $service->{$setter}($arg);
-                    }elseif (in_array($property, self::hasPublicProperty($service, 'Property', $setter))) {
+                    } elseif (in_array($property, self::hasPublicProperty($service, 'Property', $setter))) {
                         $service->$setter = $arg;
                     }
                 }
