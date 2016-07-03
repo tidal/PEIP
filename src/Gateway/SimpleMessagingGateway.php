@@ -114,8 +114,7 @@ class SimpleMessagingGateway
         $this->send($content);
         try {
             $res = $this->receive();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             return NULL;
         }
         return $res;

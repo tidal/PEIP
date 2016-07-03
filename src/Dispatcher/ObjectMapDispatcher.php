@@ -104,7 +104,7 @@ class ObjectMapDispatcher
         $listners = $this->doGetListeners();
         if (!$this->hadListeners($name, $object)) {
             $res = false;
-        }else {
+        } else {
             $listners = $this->doGetListeners();
             $res = (boolean)count($listners[$object][$name]);
         }
@@ -207,11 +207,11 @@ class ObjectMapDispatcher
      * @param $object 
      * @return boolean|null
      */    
-    protected static function doNotify(array $listeners, $subject){
-        foreach($listeners as $listener){ 
-                if($listener instanceof \PEIP\INF\Handler\Handler){
+    protected static function doNotify(array $listeners, $subject) {
+        foreach ($listeners as $listener) { 
+                if ($listener instanceof \PEIP\INF\Handler\Handler) {
                 $listener->handle($subject);
-                }elseif(is_callable($listener)){
+                }elseif (is_callable($listener)) {
                     call_user_func($listener, $subject);
                 }
         }   

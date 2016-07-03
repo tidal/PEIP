@@ -9,7 +9,7 @@ require_once(dirname(__FILE__).'/../../misc/bootstrap.php');
 // simple service class
 class HelloService {
 
-    public function greet($name){
+    public function greet($name) {
         return 'Hello '.$name;
     }
 

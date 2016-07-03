@@ -60,11 +60,11 @@ class PollableChannel
         $message = NULL;
         if ($timeout == 0) {
             $message = $this->getMessage(); 
-        }elseif ($timeout < 0) {
+        } elseif ($timeout < 0) {
             while (!$message = $this->getMessage()) {
                                 
             }
-        }else {
+        } else {
             $time = time() + $timeout;
             while (($time > time()) && !$message = $this->getMessage()) {
                 

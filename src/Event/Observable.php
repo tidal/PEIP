@@ -53,7 +53,7 @@ class Observable implements \PEIP\INF\Event\Observable {
          * @param $observer 
          * @return 
          */
-    public function addObserver(\PEIP\INF\Event\Observer $observer){
+    public function addObserver(\PEIP\INF\Event\Observer $observer) {
         $this->observers[] = $observer;     
     }
 

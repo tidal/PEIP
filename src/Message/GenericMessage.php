@@ -81,8 +81,8 @@ class GenericMessage
          * @access public
          * @return ArrayAccess ArrayAccess object of headers
          */
-    public function getHeaders(){
-        return (array) $this->headers;
+    public function getHeaders() {
+        return (array)$this->headers;
     }
   
     /**
@@ -134,12 +134,10 @@ class GenericMessage
         $res = false;
         try {
             $res = (string)$this->getContent();
-        }
-        catch (\Exception $e) {           
+        } catch (\Exception $e) {           
             try {
                 $res = get_class($this->getContent());
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 return "";
             }
         }     

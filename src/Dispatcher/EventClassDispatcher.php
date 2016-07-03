@@ -35,26 +35,26 @@ class EventClassDispatcher
                         ),
                         $object->getContent()
                     );
-            }else{
+            }else {
                 throw new \InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
             }
-        }else{
+        }else {
             throw new \InvalidArgumentException('object must be instance of \PEIP\INF\Event\Event');
         }
     }       //put your code here
 
-     /**
-     * Creates an event-object with given object as content/subject and notifies
-     * all registers listeners of the event.
-     *
-     * @access public
-     * @param string $name name of the event
-     * @param object $object the subject of the event
-     * @param array $headers headers of the event-object as key/value pairs
-     * @param string $eventClass event-class to create instances from
-     * @return
+        /**
+         * Creates an event-object with given object as content/subject and notifies
+         * all registers listeners of the event.
+         *
+         * @access public
+         * @param string $name name of the event
+         * @param object $object the subject of the event
+         * @param array $headers headers of the event-object as key/value pairs
+         * @param string $eventClass event-class to create instances from
+         * @return
      boolean|null @see EventBuilder
-     */
+         */
     public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false, $type = false) {
         if (!$this->hasListeners($name, ($object))) {
             return false;

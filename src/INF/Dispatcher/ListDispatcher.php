@@ -24,9 +24,9 @@ namespace PEIP\INF\Dispatcher;
 
 interface ListDispatcher extends \PEIP\INF\Dispatcher\Dispatcher {
 
-    public function connect( $handler);
+    public function connect($handler);
 
-    public function disconnect( $handler);
+    public function disconnect($handler);
 
     public function hasListeners();
 

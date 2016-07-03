@@ -57,7 +57,7 @@ if ($cafe) {
                 
     	}	
 
-}else {
+} else {
 	throw new RuntimeException('Could not get CafeGateway');
 }
 

@@ -54,7 +54,7 @@ class PriorityChannel
     protected function doSend(\PEIP\INF\Message\Message $message) {
         if ($this->capacity < 1 || $this->getMessageCount() <= $this->getCapacity()) {
             $this->queue->insert($message, $message->getHeader($this->priorityHeader));
-        }else {
+        } else {
             throw new \Exception('Not implemented yet.');
         }            
     }       
