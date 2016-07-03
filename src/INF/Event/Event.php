@@ -23,14 +23,14 @@ namespace PEIP\INF\Event;
 
 interface Event extends \PEIP\INF\Message\Message {
 
-  public function getName();
+    public function getName();
 
-  public function setReturnValue($value);
+    public function setReturnValue($value);
 
-  public function getReturnValue();
+    public function getReturnValue();
 
-  public function setProcessed($processed);
+    public function setProcessed($processed);
 
-  public function isProcessed();
+    public function isProcessed();
 
 }

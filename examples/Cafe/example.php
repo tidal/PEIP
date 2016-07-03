@@ -44,7 +44,7 @@ $cafe = $context->getGateway('CafeGateway');
  */
 
 
-if($cafe){
+if ($cafe) {
 
 	for ($i = 1; $i <= 10; $i++) {
        	// create and place orders
@@ -57,7 +57,7 @@ if($cafe){
                 
     	}	
 
-}else{
+}else {
 	throw new RuntimeException('Could not get CafeGateway');
 }
 

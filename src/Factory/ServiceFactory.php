@@ -51,7 +51,7 @@ class ServiceFactory {
                 $constructor = isset($config["constructor"]) ? (string)$config["constructor"] : "";
                 if ($constructor != '' && Test::assertMethod($cls, $constructor)) {
                     $service = call_user_func_array(array($cls, $constructor), $arguments);
-                } else {
+                }else {
                     $service = self::build($cls, $arguments);
                 }
             } catch (\Exception $e) {
@@ -97,7 +97,7 @@ class ServiceFactory {
                 if ($entry->getName() == 'value') {
                     if ($entry['key']) {
                         $arg[(string)$entry['key']] = (string)$entry;
-                    } else {
+                    }else {
                         $arg[] = (string)$entry;
                     }
                 } elseif ($entry->getName() == 'service') {
@@ -129,7 +129,7 @@ class ServiceFactory {
     public static function buildAndModify(array $config, $arguments, $defaultClass = "") {
         if ((isset($config["class"]) && "" != (string)$config["class"]) || $defaultClass !== "") {
              $service = ServiceFactory::doBuild($config, $arguments, $defaultClass);
-        } else {
+        }else {
             throw new \RuntimeException('Could not create Service. no class or reference given.');
         }
         if (isset($config["ref_property"])) {

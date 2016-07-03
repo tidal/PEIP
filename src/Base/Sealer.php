@@ -38,7 +38,7 @@ class Sealer implements \PEIP\INF\Base\Sealer, \PEIP\INF\Base\Unsealer{
      * @param ObjectStorage $store an instane of ObjectStorage to act as the internal object-store
      * @return 
      */
-    public function __construct(\SplObjectStorage $store = NULL){
+    public function __construct(\SplObjectStorage $store = NULL) {
         $this->store = (bool)$store ? $store : new ObjectStorage;    
     }   
       
@@ -53,7 +53,7 @@ class Sealer implements \PEIP\INF\Base\Sealer, \PEIP\INF\Base\Unsealer{
      * @param object $box an object to act as the 'box'  
      * @return object the 'box' for the sealed value
      */
-    public function seal($value, $box = false){
+    public function seal($value, $box = false) {
         $box = (bool)$box ? $box : new \stdClass;
         $this->store[$box] = $value;        
         return $box;
@@ -66,7 +66,7 @@ class Sealer implements \PEIP\INF\Base\Sealer, \PEIP\INF\Base\Unsealer{
      * @param object $box the box-object to return the value for. 
      * @return 
      */
-    public function unseal($box){
+    public function unseal($box) {
         return $this->store[$box];
     }
 }

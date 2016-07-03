@@ -21,7 +21,7 @@ namespace PEIP\ABS\Channel;
  */
 
 
- class PollableChannel     
+    class PollableChannel     
     extends \PEIP\ABS\Channel\Channel
     implements \PEIP\INF\Channel\PollableChannel {
 
@@ -34,7 +34,7 @@ namespace PEIP\ABS\Channel;
      * @param $message 
      * @return 
      */
-    protected function doSend(\PEIP\INF\Message\Message $message){
+    protected function doSend(\PEIP\INF\Message\Message $message) {
         $this->messages[] = $message;        
     }
     
@@ -44,17 +44,17 @@ namespace PEIP\ABS\Channel;
      * @param $timeout 
      * @return 
      */
-    public function receive($timeout = -1){
+    public function receive($timeout = -1) {
         $message = NULL;
-        if($timeout == 0){
+        if ($timeout == 0) {
             $message = $this->getMessage(); 
-        }elseif($timeout < 0){
-            while(!$message = $this->getMessage()){
+        }elseif ($timeout < 0) {
+            while (!$message = $this->getMessage()) {
                                 
             }
-        }else{
+        }else {
             $time = time() + $timeout;
-            while(($time > time()) && !$message = $this->getMessage()){
+            while (($time > time()) && !$message = $this->getMessage()) {
                 
             }       
         }
@@ -66,7 +66,7 @@ namespace PEIP\ABS\Channel;
      * @access protected
      * @return 
      */
-    protected function getMessage(){
+    protected function getMessage() {
         return array_shift($this->messages);
     }
     
@@ -75,7 +75,7 @@ namespace PEIP\ABS\Channel;
      * @access public
      * @return 
      */
-    public function clear(){
+    public function clear() {
         $this->messages = array();
     }
     
@@ -85,9 +85,9 @@ namespace PEIP\ABS\Channel;
      * @param $selector 
      * @return 
      */
-    public function purge(\PEIP\INF\Selector\MessageSelector $selector){
-        foreach($this->messages as $key=>$message){
-            if(!$selector->acceptMessage($message)){
+    public function purge(\PEIP\INF\Selector\MessageSelector $selector) {
+        foreach ($this->messages as $key=>$message) {
+            if (!$selector->acceptMessage($message)) {
                 unset($this->messages[$key]);   
             }
         }

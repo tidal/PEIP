@@ -24,7 +24,7 @@ namespace PEIP\Base;
 
 class VisitableArray 
     extends \RecursiveArrayIterator 
-    implements \PEIP\INF\Base\Visitable{
+    implements \PEIP\INF\Base\Visitable {
 
 
     
@@ -33,9 +33,9 @@ class VisitableArray
      * @param $visitor 
      * @return 
      */
-    public function acceptVisitor(\PEIP\INF\Base\Visitor $visitor){
-        if($this->hasChildren()){
-            foreach($this->getChildren as $child){
+    public function acceptVisitor(\PEIP\INF\Base\Visitor $visitor) {
+        if ($this->hasChildren()) {
+            foreach ($this->getChildren as $child) {
                 $child->acceptVisitor($visitor);
             }
         }

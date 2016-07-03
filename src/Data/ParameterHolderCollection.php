@@ -35,7 +35,7 @@ class ParameterHolderCollection
      * @param $factory 
      * @return 
      */
-    public function __construct(\PEIP\INF\Factory\DedicatedFactory $factory){
+    public function __construct(\PEIP\INF\Factory\DedicatedFactory $factory) {
         $this->factory = $factory;
     }
 
@@ -45,12 +45,12 @@ class ParameterHolderCollection
      * @param $namespace 
      * @return 
      */
-    protected function getParameterHolderOrCreate($namespace){
-        if(!$this->hasParameterHolder($namespace)){
+    protected function getParameterHolderOrCreate($namespace) {
+        if (!$this->hasParameterHolder($namespace)) {
             $store = $this->factory->build();
-            if($store instanceof \PEIP\INF\Data\ParameterHolder){
+            if ($store instanceof \PEIP\INF\Data\ParameterHolder) {
                 $this->stores[$namespace] = $store;
-            }else{
+            }else {
                 throw new \Exception('Could not build Instance of \PEIP\INF\Data\ParameterHolder from factory.');
             }
         }
@@ -72,9 +72,9 @@ class ParameterHolderCollection
      * @param $value 
      * @return 
      */
-    public function setParameters($namespace, array $parameters){
+    public function setParameters($namespace, array $parameters) {
         $this->getParameterHolderOrCreate($namespace)->setParameters($parameters);
-   }
+    }
   
   
     /**
@@ -83,9 +83,9 @@ class ParameterHolderCollection
      * @param $parameters 
      * @return 
      */
-    public function addParameters($namespace, array $parameters){
+    public function addParameters($namespace, array $parameters) {
         $this->getParameterHolderOrCreate($namespace)->addParameters($parameters);
-   }
+    }
   
   
     /**
@@ -100,9 +100,9 @@ class ParameterHolderCollection
      * @param $name 
      * @return 
      */
-    public function getParameters($namespace){
+    public function getParameters($namespace) {
         $this->getParameterHolderOrCreate($namespace)->getParameters();
-   }
+    }
   
   
     /**
@@ -111,9 +111,9 @@ class ParameterHolderCollection
      * @param $name 
      * @return 
      */
-    public function getParameter($namespace, $name){
+    public function getParameter($namespace, $name) {
         $this->getParameterHolderOrCreate($namespace)->getParameter($name);
-   }
+    }
   
   
     /**
@@ -123,9 +123,9 @@ class ParameterHolderCollection
      * @param $value 
      * @return 
      */
-    public function setParameter($namespace, $name, $value){
+    public function setParameter($namespace, $name, $value) {
         $this->getParameterHolderOrCreate($namespace)->setParameters($parameters);
-   }
+    }
   
   
     /**
@@ -134,9 +134,9 @@ class ParameterHolderCollection
      * @param $name 
      * @return 
      */
-    public function hasParameter($namespace, $name){
+    public function hasParameter($namespace, $name) {
         $this->getParameterHolderOrCreate($namespace)->hasParameter($name);
-   }
+    }
 
   
     /**
@@ -145,9 +145,9 @@ class ParameterHolderCollection
      * @param $name 
      * @return 
      */
-    public function deleteParameter($namespace, $name){
+    public function deleteParameter($namespace, $name) {
         $this->getParameterHolderOrCreate($namespace)->setParameters($parameters);
-   }
+    }
 
   
     /**
@@ -164,9 +164,9 @@ class ParameterHolderCollection
      * @param $holder 
      * @return 
      */
-    public function setParameterHolder($namespace, \PEIP\INF\Data\ParameterHolder $holder){
+    public function setParameterHolder($namespace, \PEIP\INF\Data\ParameterHolder $holder) {
     $this->stores[$namespace] = $holder;
-  } 
+    } 
 
   
     /**
@@ -181,9 +181,9 @@ class ParameterHolderCollection
      * @param $namespace 
      * @return 
      */
-    public function getParameterHolder($namespace){
+    public function getParameterHolder($namespace) {
     return $this->stores[$namespace];
-  }
+    }
 
   
     /**
@@ -198,9 +198,9 @@ class ParameterHolderCollection
      * @param $namespace 
      * @return 
      */
-    public function hasParameterHolder($namespace){
+    public function hasParameterHolder($namespace) {
     return array_key_exists($namespace, $this->stores);
-  }
+    }
 
   
     /**
@@ -215,9 +215,9 @@ class ParameterHolderCollection
      * @param $namespace 
      * @return 
      */
-    public function deleteParameterHolder($namespace){
+    public function deleteParameterHolder($namespace) {
     unset($this->stores[$namespace]);
-  } 
+    } 
     
     
 

@@ -32,7 +32,7 @@ class ArrayAccess implements \ArrayAccess {
      * @param mixed $offset the offset  
      * @return 
      */
-    public function offsetExists($offset){
+    public function offsetExists($offset) {
         return array_key_exists($name, $this->values);
     }   
        
@@ -43,7 +43,7 @@ class ArrayAccess implements \ArrayAccess {
      * @param mixed $offset the offset 
      * @return 
      */
-    public function offsetGet($offset){
+    public function offsetGet($offset) {
         return array_key_exists($name, $this->values) ? $this->values[$offset] : NULL;
     }
      
@@ -54,7 +54,7 @@ class ArrayAccess implements \ArrayAccess {
      * @param mixed $offset the offset 
      * @return 
      */
-    public function offsetUnset($offset){
+    public function offsetUnset($offset) {
         unset($this->values[$offset]);
     }   
   
@@ -66,7 +66,7 @@ class ArrayAccess implements \ArrayAccess {
      * @param mixed $value value for the offset 
      * @return 
      */
-    public function offsetSet($offset, $value){
+    public function offsetSet($offset, $value) {
         $this->values[$offset] = $value;
     }
 

@@ -33,16 +33,16 @@ abstract class Dispatcher {
      * @param mixed $subject subject to notify the listeners of 
      * @return void
      */ 
-    protected static function doNotify(array $listeners, $subject){
-        foreach($listeners as $listener){
+    protected static function doNotify(array $listeners, $subject) {
+        foreach ($listeners as $listener) {
             self::doNotifyOne($listener, $subject);
         }   
     }  
 
-    protected static function doNotifyOne($listener, $subject){
-        if(is_callable($listener)){
+    protected static function doNotifyOne($listener, $subject) {
+        if (is_callable($listener)) {
             $res = call_user_func($listener, $subject);
-        }else{
+        }else {
             $res = $listener->handle($subject);
         }
         return $res;
@@ -60,9 +60,9 @@ abstract class Dispatcher {
      */     
     protected static function doNotifyUntil(array $listeners, $subject){
         foreach ($listeners as $listener){
-          if (self::doNotifyOne($listener, $subject)){
+            if (self::doNotifyOne($listener, $subject)){
             return $listener;
-          }
+            }
         }
         return NULL;
     } 

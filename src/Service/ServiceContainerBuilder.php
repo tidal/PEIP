@@ -25,7 +25,7 @@ namespace PEIP\Service;
 use \PEIP\Data\InternalStoreAbstract;
 use PEIP\Factory\DedicatedFactory;
 
-class ServiceContainerBuilder extends \PEIP\Data\InternalStoreAbstract{
+class ServiceContainerBuilder extends \PEIP\Data\InternalStoreAbstract {
     
     
     
@@ -35,7 +35,7 @@ class ServiceContainerBuilder extends \PEIP\Data\InternalStoreAbstract{
      * @param $factory 
      * @return 
      */
-    public function setFactory($key, DedicatedFactory $factory){
+    public function setFactory($key, DedicatedFactory $factory) {
             $this->setInternalValue($key, $factory);
     }
 
@@ -45,7 +45,7 @@ class ServiceContainerBuilder extends \PEIP\Data\InternalStoreAbstract{
      * @param $key 
      * @return 
      */
-    public function getFactory($key){
+    public function getFactory($key) {
             $this->getInternalValue($key);
     }
 
@@ -55,7 +55,7 @@ class ServiceContainerBuilder extends \PEIP\Data\InternalStoreAbstract{
      * @param $key 
      * @return 
      */
-    public function hasFactory($key){
+    public function hasFactory($key) {
             $this->hasInternalValue($key);
     }
 
@@ -65,7 +65,7 @@ class ServiceContainerBuilder extends \PEIP\Data\InternalStoreAbstract{
      * @param $key 
      * @return 
      */
-    public function deleteFactory($key){
+    public function deleteFactory($key) {
             $this->deleteInternalValue($key);
     }
 
@@ -75,7 +75,7 @@ class ServiceContainerBuilder extends \PEIP\Data\InternalStoreAbstract{
      * @param $key 
      * @return 
      */
-    public function getService($key){
+    public function getService($key) {
         return isset($this->services[$key]) ? $this->services[$key] : $this->services[$key] = $this->getFactory($key)->build();
     }
     
@@ -86,7 +86,7 @@ class ServiceContainerBuilder extends \PEIP\Data\InternalStoreAbstract{
      * @param $key 
      * @return 
      */
-    public function buildService($key){
+    public function buildService($key) {
         return $this->getFactory($key)->build();
     }   
     

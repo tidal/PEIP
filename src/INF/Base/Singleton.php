@@ -22,6 +22,6 @@ namespace PEIP\INF\Base;
 
 interface Singleton {
 
-    public static function getInstance ();
+    public static function getInstance();
 
 }

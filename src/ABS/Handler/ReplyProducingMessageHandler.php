@@ -42,7 +42,7 @@ abstract class ReplyProducingMessageHandler
      * @param \PEIP\INF\Channel\Channel $outputChannel the output-channel
      * @return \PEIP\ABS\Handler\MessageHandler $this;
      */
-    public function setOutputChannel(\PEIP\INF\Channel\Channel $outputChannel){
+    public function setOutputChannel(\PEIP\INF\Channel\Channel $outputChannel) {
         $this->doSetOutputChannel($outputChannel);
         return $this;
     }   
@@ -51,10 +51,10 @@ abstract class ReplyProducingMessageHandler
      * Connects the handler to the output-channel. 
      * 
      * @access protected
-     * @param \PEIP\INF\Channel\Channel $inputChannel the output-channel to connect the handler to
+     * @param \PEIP\INF\Channel\Channel $outputChannel the output-channel to connect the handler to
      * @return 
      */
-    protected function doSetOutputChannel(\PEIP\INF\Channel\Channel $outputChannel){
+    protected function doSetOutputChannel(\PEIP\INF\Channel\Channel $outputChannel) {
         $this->outputChannel = $outputChannel;
     }
        
@@ -64,7 +64,7 @@ abstract class ReplyProducingMessageHandler
      * @access public
      * @return \PEIP\INF\Channel\Channel output-channel for this handler
      */
-    public function getOutputChannel(){
+    public function getOutputChannel() {
         return $this->outputChannel;
     }
 
@@ -78,7 +78,7 @@ abstract class ReplyProducingMessageHandler
      * @param \PEIP\INF\Message\Message $message the message to resolve output-channel for
      * @return \PEIP\INF\Channel\Channel the output-channel for the message
      */    
-    protected function doGetOutputChannel(\PEIP\INF\Message\Message $message){
+    protected function doGetOutputChannel(\PEIP\INF\Message\Message $message) {
         $replyChannel = $this->resolveReplyChannel($message);
         return $replyChannel ? $replyChannel : $this->getOutputChannel();       
     }
@@ -92,9 +92,9 @@ abstract class ReplyProducingMessageHandler
      * @param \PEIP\INF\Message\Message $message 
      * @return \PEIP\INF\Channel\Channel the reply-channel if found
      */     
-    protected function resolveReplyChannel(\PEIP\INF\Message\Message $message){
-        foreach($this->replyChannelHeaders as $header){
-            if($message->hasHeader($header)){
+    protected function resolveReplyChannel(\PEIP\INF\Message\Message $message) {
+        foreach ($this->replyChannelHeaders as $header) {
+            if ($message->hasHeader($header)) {
                 return $message->getHeader($header);
             }
         }
@@ -111,7 +111,7 @@ abstract class ReplyProducingMessageHandler
      * @access protected
      * @param mixed $content \PEIP\INF\Message\Message or content/payload for new message 
      */
-    protected function replyMessage($content){
+    protected function replyMessage($content) {
         $message = $this->ensureMessage($content);      
         $this->doGetOutputChannel($message)->send($message);      
     }
@@ -125,7 +125,7 @@ abstract class ReplyProducingMessageHandler
      * @param mixed $message \PEIP\INF\Message\Message or content/payload for new message
      * @return \PEIP\INF\Message\Message
      */
-    protected function ensureMessage($message){
+    protected function ensureMessage($message) {
         return ($message instanceof \PEIP\INF\Message\Message) ? $message : $this->buildMessage($message);   
     }
        
@@ -138,7 +138,7 @@ abstract class ReplyProducingMessageHandler
      * @return \PEIP\INF\Message\Message
      * @see MessageBuilder
      */
-    protected function buildMessage($content){
+    protected function buildMessage($content) {
         return $this->getMessageBuilder()->setContent($content)->build();   
     }   
        
@@ -149,7 +149,7 @@ abstract class ReplyProducingMessageHandler
      * @access protected
      * @return MessageBuilder builder for the registered message class
      */
-    protected function getMessageBuilder(){
+    protected function getMessageBuilder() {
         return isset($this->messageBuilder) && ($this->messageBuilder->getMessageClass() == $this->getMessageClass())
             ? $this->messageBuilder
             : $this->messageBuilder = MessageBuilder::getInstance($this->messageClass);
@@ -160,9 +160,9 @@ abstract class ReplyProducingMessageHandler
      * 
      * @access public
      * @param string $messageClass name of the message-class to create reply-messages from. 
-     * @return PEIP\ABS\Handler\ReplyProducingMessageHandler $this
+     * @return ReplyProducingMessageHandler $this
      */
-    public function setMessageClass($messageClass){
+    public function setMessageClass($messageClass) {
         $this->messageClass = $messageClass;
         return $this;
     }
@@ -173,7 +173,7 @@ abstract class ReplyProducingMessageHandler
      * @access public
      * @return string name of the message-class to create reply-messages from. 
      */
-    public function getMessageClass(){
+    public function getMessageClass() {
         return $this->messageClass;
     }       
 
@@ -184,7 +184,7 @@ abstract class ReplyProducingMessageHandler
      * @param string $headerName name of a message-header to look for a reply-channel
      * @return void
      */
-    public function addReplyChannelHeader($headerName){
+    public function addReplyChannelHeader($headerName) {
         $this->replyChannelHeaders[] = $headerName;
     }
     
@@ -193,9 +193,9 @@ abstract class ReplyProducingMessageHandler
      * 
      * @access public
      * @param array $headerNames array of message-header names to look for a reply-channel
-     * @return PEIP\ABS\Handler\ReplyProducingMessageHandler $this
+     * @return ReplyProducingMessageHandler $this
      */
-    public function setReplyChannelHeaders(array $headerNames){
+    public function setReplyChannelHeaders(array $headerNames) {
         $this->replyChannelHeaders = $headerNames;
         return $this;
     } 
@@ -206,7 +206,7 @@ abstract class ReplyProducingMessageHandler
      * @access public
      * @return array array of message-header names to look for a reply-channel
      */
-    public function getReplyChannelHeaders(){
+    public function getReplyChannelHeaders() {
         return $this->replyChannelHeaders;
     }
          
@@ -220,7 +220,7 @@ abstract class ReplyProducingMessageHandler
      * @param \PEIP\INF\Message\Message $message 
      * @return 
      */
-    protected function doHandle(\PEIP\INF\Message\Message $message){
+    protected function doHandle(\PEIP\INF\Message\Message $message) {
         return $this->doReply($message);
     }
        

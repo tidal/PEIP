@@ -27,11 +27,11 @@ class StringMessage
 
     const CONTENT_CAST_TYPE = 'string';
 
-    public function __toString(){
+    public function __toString() {
         return (string)$this->getContent();
     }
 
-    public function getContent(){
+    public function getContent() {
         return (string)parent::getContent();
     }
 
@@ -45,7 +45,7 @@ class StringMessage
      * @param string $name the name of the header
      * @return boolean wether the header is set
      */     
-    public static function build(array $arguments = array()){
+    public static function build(array $arguments = array()) {
         return GenericBuilder::getInstance(__CLASS__)->build($arguments);
     }
 }

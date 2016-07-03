@@ -33,10 +33,10 @@ class Wiretap
      * @param $outputChannel 
      * @return 
      */
-    public function __construct(\PEIP\INF\Channel\Channel $inputChannel, \PEIP\INF\Channel\Channel $outputChannel = NULL){
+    public function __construct(\PEIP\INF\Channel\Channel $inputChannel, \PEIP\INF\Channel\Channel $outputChannel = NULL) {
         $this->setEventName('preSend');
         $this->setInputChannel($inputChannel);
-        if(is_object($outputChannel)){
+        if (is_object($outputChannel)) {
             $this->setOutputChannel($outputChannel);
         }           
     }           
@@ -47,7 +47,7 @@ class Wiretap
      * @param $message 
      * @return 
      */
-    protected function doReply(\PEIP\INF\Message\Message $message){
+    protected function doReply(\PEIP\INF\Message\Message $message) {
         $this->replyMessage($message->getHeader('MESSAGE'));
     }
     

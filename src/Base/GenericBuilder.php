@@ -39,14 +39,14 @@ class GenericBuilder
      * 
      * @access public
      * @param string $className class-name to create objects for
-     * @param ReflectionClass $reflectionClass reflection-class for class. default: NULL 
+     * @param \ReflectionClass $reflectionClass reflection-class for class. default: NULL 
      * @param boolean $storeRef wether to store a reference for new instance. default: true 
      * @return 
      */
-    public function __construct($className, \ReflectionClass $reflectionClass = NULL, $storeRef = true){
-        if($reflectionClass ){
+    public function __construct($className, \ReflectionClass $reflectionClass = NULL, $storeRef = true) {
+        if ($reflectionClass) {
             
-            if($reflectionClass->getName() != $className){
+            if ($reflectionClass->getName() != $className) {
                 throw new \Exception(
                     'Constructing GenericBuilder with wrong ReflectionClass'
                 );
@@ -56,7 +56,7 @@ class GenericBuilder
             $this->reflectionClass = $reflectionClass;
         }
         $this->className = $className;
-        if($storeRef){
+        if ($storeRef) {
             self::$instances[$this->className] = $this;
         }            
     }
@@ -68,8 +68,8 @@ class GenericBuilder
      * @param string $className class-name to return builder instance for 
      * @return GenericBuilder builder instance for class
      */
-    public static function getInstance($className){
-        if(!array_key_exists((string)$className, self::$instances)) {
+    public static function getInstance($className) {
+        if (!array_key_exists((string)$className, self::$instances)) {
             new GenericBuilder($className);
         }
         return self::$instances[$className];
@@ -82,9 +82,9 @@ class GenericBuilder
      * @param array $arguments array of constructore arguments
      * @return object the created object instance
      */
-    public function build(array $arguments = array()){      
-        if(Test::assertClassHasConstructor($this->className)){
-            if(!Test::assertRequiredConstructorParameters($this->className, $arguments)){
+    public function build(array $arguments = array()) {      
+        if (Test::assertClassHasConstructor($this->className)) {
+            if (!Test::assertRequiredConstructorParameters($this->className, $arguments)) {
                 throw new \Exception('Missing Argument '.(count($arguments) + 1).' for '.$this->className.'::__construct');
             }
             return $this->getReflectionClass()->newInstanceArgs($arguments);
@@ -98,7 +98,7 @@ class GenericBuilder
      * @access public
      * @return ReflectionClass
      */
-    public function getReflectionClass(){
+    public function getReflectionClass() {
         return ReflectionPool::getInstance($this->className);
     }
     

@@ -39,7 +39,7 @@ class MessageBuilder
      * @access public
      * @param string $messageClass the message-class to build instances for 
      */
-    public function __construct($messageClass = '\PEIP\Message\GenericMessage'){
+    public function __construct($messageClass = '\PEIP\Message\GenericMessage') {
         $this->messageClass = $messageClass;
         $this->factory = DedicatedFactory::getfromCallable(array($messageClass, 'build'));    
     }
@@ -51,7 +51,7 @@ class MessageBuilder
      * @param array $headers the headers to set
      * @return MessageBuilder $this
      */
-    public function copyHeaders(array $headers){
+    public function copyHeaders(array $headers) {
         $this->headers = array_merge($this->headers, $headers);
         return $this;       
     }
@@ -63,7 +63,7 @@ class MessageBuilder
      * @param array $headers the headers to set
      * @return MessageBuilder $this
      */
-    public function copyHeadersIfAbsent(array $headers){
+    public function copyHeadersIfAbsent(array $headers) {
         $this->headers = array_merge($headers, $this->headers);
         return $this;   
     }
@@ -75,7 +75,7 @@ class MessageBuilder
      * @param string $headerName the name of the header
      * @return MessageBuilder $this
      */
-    public function removeHeader($headerName){
+    public function removeHeader($headerName) {
         unset($this->headers[$headerName]);
         return $this;
     }
@@ -88,7 +88,7 @@ class MessageBuilder
      * @param mixed $headerValue the value for the header
      * @return MessageBuilder $this 
      */
-    public function setHeader($headerName, $headerValue){
+    public function setHeader($headerName, $headerValue) {
         $this->headers[$headerName] = $headerValue;
         return $this;   
     }
@@ -100,7 +100,7 @@ class MessageBuilder
      * @param array $headers the headers to set
      * @return MessageBuilder $this 
      */
-    public function setHeaders(array $headers){
+    public function setHeaders(array $headers) {
         $this->headers = $headers;
         return $this;   
     }
@@ -111,7 +111,7 @@ class MessageBuilder
      * @access public
      * @return array the headers for the message to build 
      */
-    public function getHeaders(){
+    public function getHeaders() {
         return $this->headers;
     }  
         
@@ -122,7 +122,7 @@ class MessageBuilder
      * @param $arguments 
      * @return 
      */
-    public function build(array $headers = array()){
+    public function build(array $headers = array()) {
         $this->copyHeaders($headers);
         return GenericBuilder::getInstance($this->messageClass)
             ->build(array($this->payload, new \ArrayObject($this->headers)));        
@@ -135,7 +135,7 @@ class MessageBuilder
      * @param mixed $payload payload for the message to build 
      * @return MessageBuilder $this 
      */
-    public function setContent($payload){
+    public function setContent($payload) {
         $this->payload = $payload;
         return $this;
     }
@@ -148,7 +148,7 @@ class MessageBuilder
      * @param string $messageClass the message class to build from the builder 
      * @return MessageBuilder new instance of MessageBuilder 
      */    
-    public static function getInstance($messageClass = '\PEIP\Message\GenericMessage'){
+    public static function getInstance($messageClass = '\PEIP\Message\GenericMessage') {
         return new  MessageBuilder($messageClass);
     }
   
@@ -160,7 +160,7 @@ class MessageBuilder
      * @param \PEIP\INF\Message\Message $message the message to get class to build from the builder 
      * @return MessageBuilder new instance of MessageBuilder 
      */      
-    public static function getInstanceFromMessage(\PEIP\INF\Message\Message $message){
+    public static function getInstanceFromMessage(\PEIP\INF\Message\Message $message) {
         return new MessageBuilder(get_class($message));
     }
    
@@ -170,7 +170,7 @@ class MessageBuilder
      * @access public
      * @param string $messageClass the message-class to build new instances for
      */
-    public function setMessageClass($messageClass){
+    public function setMessageClass($messageClass) {
         $this->messageClass = $messageClass;
     }
  
@@ -180,7 +180,7 @@ class MessageBuilder
      * @access public
      * @return string the message-class to build new instances for
      */
-    public function getMessageClass(){
+    public function getMessageClass() {
         return $this->messageClass;
     }         
 }

@@ -22,7 +22,7 @@ namespace PEIP\ABS\Base;
 
 
 abstract class Container 
-    implements \PEIP\INF\Base\Container{
+    implements \PEIP\INF\Base\Container {
 
     protected $content;
        
@@ -33,7 +33,7 @@ abstract class Container
      * @access public
      * @return 
      */
-    public function getContent(){
+    public function getContent() {
         return $this->content;
     }
     

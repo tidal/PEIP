@@ -38,16 +38,16 @@ class DedicatedFactory
      * @param $parameters 
      * @return 
      */
-    protected function __construct($callable ,array $parameters = array()){
+    protected function __construct($callable, array $parameters = array()) {
         $this->callable = $callable;
         $this->setParameters($parameters);
     }
 
-    public static function getfromClass($class, array $parameters = array()){
+    public static function getfromClass($class, array $parameters = array()) {
         return new DedicatedFactory(array($class, '__construct'), $parameters); 
     } 
 
-    public static function getfromCallable($callable, array $parameters = array()){
+    public static function getfromCallable($callable, array $parameters = array()) {
         return new DedicatedFactory($callable, $parameters); 
     } 
     
@@ -57,7 +57,7 @@ class DedicatedFactory
      * @param $arguments 
      * @return 
      */
-    public function build(array $arguments = array()){
+    public function build(array $arguments = array()) {
         $arguments = count($arguments) > 0 ? $arguments : $this->getParameters();
         return (is_array($this->callable) && $this->callable[1] == '__construct') 
             ? GenericBuilder::GetInstance($this->callable[0])->build($arguments) 
@@ -70,7 +70,7 @@ class DedicatedFactory
      * @param $method 
      * @return 
      */
-    public function setConstructor($method){
+    public function setConstructor($method) {
         $this->constructor = (string)$method;
         return $this;
     }   

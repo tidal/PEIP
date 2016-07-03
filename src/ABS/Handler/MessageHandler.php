@@ -43,7 +43,7 @@ abstract class MessageHandler
      * @return 
      */
     public function handle($message){
-         $this->doHandle($this->getMessageFromObject($message));      
+            $this->doHandle($this->getMessageFromObject($message));      
     }
    
     /**
@@ -54,9 +54,9 @@ abstract class MessageHandler
      * @see PEIP\ABS\Handler\MessageHandler::doSetInputChannel
      * @access public
      * @param \PEIP\INF\Channel\Channel $inputChannel the input-channel
-     * @return PEIP\ABS\Handler\MessageHandler $this;
+     * @return MessageHandler $this;
      */
-    public function setInputChannel(\PEIP\INF\Channel\Channel $inputChannel){
+    public function setInputChannel(\PEIP\INF\Channel\Channel $inputChannel) {
         $this->doSetInputChannel($inputChannel);
         return $this;
     }
@@ -77,7 +77,7 @@ abstract class MessageHandler
         $this->inputChannel = $inputChannel;    
         if($this->inputChannel instanceof \PEIP\INF\Channel\SubscribableChannel){
                 $this->inputChannel->subscribe($this);
-        }else{          
+        } else{          
             $this->unwrapEvents = true;
             $this->inputChannel->connect('postSend', $this);
         }  
@@ -90,7 +90,7 @@ abstract class MessageHandler
             && $object->getName() == 'postSend'
             && $object->hasHeader(Pipe::HEADER_MESSAGE)
             && $content instanceof \PEIP\INF\Channel\PollableChannel
-         ){
+            ){
             $object = $content->receive();
         }
         if (!($object instanceof \PEIP\INF\Message\Message)) {
@@ -106,7 +106,7 @@ abstract class MessageHandler
      * @access public
      * @return \PEIP\INF\Channel\Channel input-channel for this handler
      */
-    public function getInputChannel(){
+    public function getInputChannel() {
         return $this->inputChannel;
     }   
       

@@ -32,7 +32,7 @@ abstract class InternalStoreAbstract {
      * @param $key 
      * @return 
      */
-    protected function hasInternalValue($key){
+    protected function hasInternalValue($key) {
         return array_key_exists($key, $this->internalValues);
     }   
     
@@ -42,7 +42,7 @@ abstract class InternalStoreAbstract {
      * @param $key 
      * @return 
      */
-    protected function getInternalValue($key){
+    protected function getInternalValue($key) {
         return array_key_exists($key, $this->internalValues) ? $this->internalValues[$key] : NULL;
     }
     
@@ -52,7 +52,7 @@ abstract class InternalStoreAbstract {
      * @param $key 
      * @return 
      */
-    protected function deleteInternalValue($key){
+    protected function deleteInternalValue($key) {
         unset($this->internalValues[$key]);
     }   
 
@@ -63,7 +63,7 @@ abstract class InternalStoreAbstract {
      * @param $value 
      * @return 
      */
-    protected function setInternalValue($key, $value){
+    protected function setInternalValue($key, $value) {
         $this->internalValues[$key] = $value;
     }
     
@@ -80,7 +80,7 @@ abstract class InternalStoreAbstract {
      * @param $internalValues 
      * @return 
      */
-    protected function setInternalValues(array $internalValues){
+    protected function setInternalValues(array $internalValues) {
         $this->internalValues = $internalValues;        
     }
 
@@ -95,7 +95,7 @@ abstract class InternalStoreAbstract {
      * @access protected
      * @return 
      */
-    protected function getInternalValues(){
+    protected function getInternalValues() {
         return $this->internalValues;
     }
 
@@ -104,7 +104,7 @@ abstract class InternalStoreAbstract {
      * @access protected
      * @return 
      */
-    protected function addInternalValues(){
+    protected function addInternalValues() {
         array_merge($this->internalValues, $internalValues);
     }   
     

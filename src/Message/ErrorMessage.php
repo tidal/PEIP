@@ -36,7 +36,7 @@ class ErrorMessage extends \PEIP\Message\GenericMessage implements \PEIP\INF\Mes
      * @param $headers 
      * @return 
      */
-    public function __construct(\Exception $payload, array $headers = array()){
+    public function __construct(\Exception $payload, array $headers = array()) {
         $this->payload = $payload;
         $this->headers = $headers;
     }

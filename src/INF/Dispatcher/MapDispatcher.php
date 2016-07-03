@@ -25,13 +25,13 @@ interface MapDispatcher
     extends \PEIP\INF\Event\Connectable { 
 
 
-  /**
-   * Notifies all listeners of a given event.
-   *
-   * @param  $event A  instance
-   *
-   * @return  The  instance
-   */
+    /**
+     * Notifies all listeners of a given event.
+     *
+     * @param  $event A  instance
+     *
+     * @return  The  instance
+     */
     public function notify($name, $subject);
   
 

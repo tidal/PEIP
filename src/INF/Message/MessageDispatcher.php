@@ -22,19 +22,19 @@ namespace PEIP\INF\Message;
 
 interface MessageDispatcher {
 
-  public function connect($name, \PEIP\INF\Message\MessageHandler $handler);
+    public function connect($name, \PEIP\INF\Message\MessageHandler $handler);
 
-  public function disconnect($name, \PEIP\INF\Message\MessageHandler $handler);
+    public function disconnect($name, \PEIP\INF\Message\MessageHandler $handler);
 
-  public function notify( $event);
+    public function notify( $event);
 
-  public function notifyUntil( $event);
+    public function notifyUntil( $event);
 
-  public function filter( $event, $value);
+    public function filter( $event, $value);
 
-  public function hasListeners($name);
+    public function hasListeners($name);
 
-  public function getListeners($name);  
+    public function getListeners($name);  
 
 }
 

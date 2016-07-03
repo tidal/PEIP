@@ -33,10 +33,10 @@ class SplittingServiceActivator
      * @param \PEIP\INF\Message\Message $message message to call the service with it�s content/payload
      * @return mixed result of calling the registered service callable with message content/payload
      */
-    public function callService(\PEIP\INF\Message\Message $message){
-        if(is_callable($this->serviceCallable)){
+    public function callService(\PEIP\INF\Message\Message $message) {
+        if (is_callable($this->serviceCallable)) {
             $res = call_user_func_array($this->serviceCallable, $message->getContent());
-        }elseif(is_object($this->serviceCallable) && method_exists($this->serviceCallable, 'handle')){
+        }elseif (is_object($this->serviceCallable) && method_exists($this->serviceCallable, 'handle')) {
             $res = call_user_func_array(array($this->serviceCallable, 'handle'), $message->getContent());               
         }
         return $res;

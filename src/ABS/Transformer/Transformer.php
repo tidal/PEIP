@@ -37,9 +37,9 @@ abstract class Transformer
      * @param \PEIP\INF\Channel\Channel $outputChannel the outputs-channel 
      * @return 
      */
-    public function __construct(\PEIP\INF\Channel\Channel $inputChannel, \PEIP\INF\Channel\Channel $outputChannel = NULL){
+    public function __construct(\PEIP\INF\Channel\Channel $inputChannel, \PEIP\INF\Channel\Channel $outputChannel = NULL) {
         $this->setInputChannel($inputChannel);
-        if(is_object($outputChannel)){
+        if (is_object($outputChannel)) {
             $this->setOutputChannel($outputChannel);    
         }   
     }           
@@ -51,7 +51,7 @@ abstract class Transformer
      * @param \PEIP\INF\Message\Message $message message to transform content 
      * @return 
      */
-    public function doReply(\PEIP\INF\Message\Message $message){     
+    public function doReply(\PEIP\INF\Message\Message $message) {     
         $this->replyMessage($this->transform($message));
     }
   
@@ -62,7 +62,7 @@ abstract class Transformer
      * @param \PEIP\INF\Message\Message $message 
      * @return mixed result of transforming the message 
      */
-    public function transform(\PEIP\INF\Message\Message $message){
+    public function transform(\PEIP\INF\Message\Message $message) {
         return $this->doTransform($message);
     }
 

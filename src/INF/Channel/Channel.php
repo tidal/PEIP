@@ -33,10 +33,10 @@ interface Channel {
      * Send a message, blocking until either the message is accepted or the
      * specified timeout period elapses.
      * 
-     * @param message the {@link Message} to send
-     * @param timeout the timeout in milliseconds
+     * @param message \PEIP\INF\Message\Message {@link Message} to send
+     * @param timeout integer timeout in milliseconds
      * 
-     * @return <code>true</code> if the message is sent successfully,
+     * @return null|boolean if the message is sent successfully,
      * <code>false</false> if the specified timeout period elapses or
      * the send is interrupted
      */

@@ -38,18 +38,18 @@ class ObjectEventDispatcher
      * @access public
      * @param string $name name of the event 
      * @param \PEIP\INF\Event\Event $object an event object
-     * @return boolean
+     * @return boolean|null
      */
-    public function notify($name, $object){
-        if($object instanceof \PEIP\INF\Event\Event){
-            if(is_object($object->getContent())){
-                if($this->hasListeners($name, $object->getContent())){
+    public function notify($name, $object) {
+        if ($object instanceof \PEIP\INF\Event\Event) {
+            if (is_object($object->getContent())) {
+                if ($this->hasListeners($name, $object->getContent())) {
                     return self::doNotify($this->getListeners($name, $object->getContent()), $object);  
                 }                   
-            }else{
+            }else {
                 throw new \InvalidArgumentException('instance of \PEIP\INF\Event\Event must contain subject');
             }   
-        }else{
+        }else {
             throw new \InvalidArgumentException('object must be instance of \PEIP\INF\Event\Event');
         }  
     }   
@@ -66,8 +66,8 @@ class ObjectEventDispatcher
      * @return
      * @see EventBuilder 
      */
-    public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false, $type = false){
-        if(!$this->hasListeners($name, $object)){
+    public function buildAndNotify($name, $object, array $headers = array(), $eventClass = false, $type = false) {
+        if (!$this->hasListeners($name, $object)) {
             return false;
         }
         $event = EventBuilder::getInstance($eventClass)->build(

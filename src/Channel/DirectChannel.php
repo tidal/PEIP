@@ -36,7 +36,7 @@ class DirectChannel
      * @param $timeout 
      * @return boolean wether message was sent successfully
      */
-    public function send(\PEIP\INF\Message\Message $message, $timeout = -1){
+    public function send(\PEIP\INF\Message\Message $message, $timeout = -1) {
         return $this->doSend($message);
     }       
         
@@ -47,7 +47,7 @@ class DirectChannel
      * @param $message 
      * @return 
      */
-    protected function doSend(\PEIP\INF\Message\Message $message){
+    protected function doSend(\PEIP\INF\Message\Message $message) {
         $this->getMessageDispatcher()->notify($message);
         return true;
     }
@@ -57,7 +57,7 @@ class DirectChannel
      * @access public
      * @return 
      */
-    public function getMessageDispatcher(){
+    public function getMessageDispatcher() {
         return isset($this->dispatcher) ? $this->dispatcher : $this->dispatcher = new IteratingDispatcher;
     }   
     

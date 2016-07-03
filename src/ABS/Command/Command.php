@@ -40,7 +40,7 @@ abstract class Command
      * @access public
      * @return 
      */
-    public function __invoke(){
+    public function __invoke() {
         return $this->execute();
     }
    
@@ -51,7 +51,7 @@ abstract class Command
      * @access public
      * @return 
      */
-    public function execute(){
+    public function execute() {
         return call_user_func_array($this->callable, $this->getParameters());
     }   
         

@@ -34,7 +34,7 @@ class ParameterHolder
      * @param string $key name of parameter
      * @return boolean wether parameter is set
      */
-    public function hasParameter($key){
+    public function hasParameter($key) {
         return array_key_exists($key, $this->parameters);
     }   
         
@@ -45,7 +45,7 @@ class ParameterHolder
      * @param string $key name of parameter 
      * @return 
      */
-    public function getParameter($key){
+    public function getParameter($key) {
         return array_key_exists($key, $this->parameters) ? $this->parameters[$key] : NULL;
     }
         
@@ -56,7 +56,7 @@ class ParameterHolder
      * @param string $key name of parameter 
      * @return 
      */
-    public function deleteParameter($key){
+    public function deleteParameter($key) {
         unset($this->parameters[$key]);
     }   
    
@@ -68,7 +68,7 @@ class ParameterHolder
      * @param string $value value to set for the parameter 
      * @return 
      */
-    public function setParameter($key, $value){
+    public function setParameter($key, $value) {
         $this->parameters[$key] = $value;
     }
     
@@ -79,7 +79,7 @@ class ParameterHolder
      * @param array $parameters parameters as key/value pairs 
      * @return 
      */
-    public function setParameters(array $parameters){
+    public function setParameters(array $parameters) {
         $this->parameters = $parameters;        
     }
    
@@ -89,7 +89,7 @@ class ParameterHolder
      * @access public
      * @return array $parameters parameters as key/value pairs
      */
-    public function getParameters(){
+    public function getParameters() {
         return $this->parameters;
     }
    
@@ -101,7 +101,7 @@ class ParameterHolder
      * @param array $parameters parameters as key/value pairs 
      * @return 
      */
-    public function addParameters(array $parameters){
+    public function addParameters(array $parameters) {
         $this->parameters = array_merge($this->parameters, $parameters);
         array_unique($this->parameters);
     }   
@@ -114,7 +114,7 @@ class ParameterHolder
      * @param array $parameters parameters as key/value pairs 
      * @return 
      */
-    public function addParametersIfNot(array $parameters){
+    public function addParametersIfNot(array $parameters) {
         $this->parameters = array_merge($parameters, $this->parameters);
         array_unique($this->parameters);
     }   

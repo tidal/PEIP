@@ -34,7 +34,7 @@ abstract class Connection
      * @param $request 
      * @return 
      */
-    public function sendRequest(\PEIP\ABS\Request\Request $request){
+    public function sendRequest(\PEIP\ABS\Request\Request $request) {
         return $this->doSendRequest($request);
     }
     

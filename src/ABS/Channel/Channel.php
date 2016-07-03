@@ -34,7 +34,7 @@ abstract class Channel
      * @param $name
      * @return
      */
-    public function __construct($name){
+    public function __construct($name) {
         $this->name = $name;
     }
 
@@ -42,7 +42,7 @@ abstract class Channel
      * @access public
      * @return string the channel�s name
      */
-    public function getName(){
+    public function getName() {
         return $this->name;
     }
 
@@ -52,7 +52,7 @@ abstract class Channel
      * @param integer $timeout
      * @return
      */
-    public function send(\PEIP\INF\Message\Message $message, $timeout = -1){
+    public function send(\PEIP\INF\Message\Message $message, $timeout = -1) {
         $this->doFireEvent('preSend', array('MESSAGE'=>$message));
         $sent = $this->doSend($message);
         $this->doFireEvent('postSend', array(

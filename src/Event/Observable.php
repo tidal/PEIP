@@ -36,12 +36,12 @@ class Observable implements \PEIP\INF\Event\Observable {
      * @param $observedObject 
      * @return 
      */
-    public function __construct($observedObject){
+    public function __construct($observedObject) {
         $this->setObserved($observedObject);
     }
 
-    protected function setObserved($observedObject){
-        if(!is_object($observedObject)){
+    protected function setObserved($observedObject) {
+        if (!is_object($observedObject)) {
             throw new \InvalidArgumentException("$observedObject must be an object. ".gettype($var)." given.");
         }
         
@@ -49,10 +49,10 @@ class Observable implements \PEIP\INF\Event\Observable {
     }
 
         /**
-     * @access public
-     * @param $observer 
-     * @return 
-     */
+         * @access public
+         * @param $observer 
+         * @return 
+         */
     public function addObserver(\PEIP\INF\Event\Observer $observer){
         $this->observers[] = $observer;     
     }
@@ -63,9 +63,9 @@ class Observable implements \PEIP\INF\Event\Observable {
      * @param $observer 
      * @return 
      */
-    public function deleteObserver(\PEIP\INF\Event\Observer $observer){
-        foreach($this->observers as $key=>$obs){
-            if($obs == $observer){
+    public function deleteObserver(\PEIP\INF\Event\Observer $observer) {
+        foreach ($this->observers as $key=>$obs) {
+            if ($obs == $observer) {
                 unset($this->observers[$key]);
                 return true;
             }
@@ -78,9 +78,9 @@ class Observable implements \PEIP\INF\Event\Observable {
      * @param $arguments 
      * @return 
      */
-    public function notifyObservers(array $arguments = array()){
-        if($this->hasChanged()){
-            foreach($this->observers as $observer){
+    public function notifyObservers(array $arguments = array()) {
+        if ($this->hasChanged()) {
+            foreach ($this->observers as $observer) {
                 $observer->update($this->observedObject);
             }       
         }
@@ -91,7 +91,7 @@ class Observable implements \PEIP\INF\Event\Observable {
      * @access public
      * @return 
      */
-    public function countObservers(){
+    public function countObservers() {
         return count($this->obeservers);
     }
     
@@ -100,7 +100,7 @@ class Observable implements \PEIP\INF\Event\Observable {
      * @access public
      * @return 
      */
-    public function hasChanged(){
+    public function hasChanged() {
         return $this->hasChanged();
     }
     
@@ -109,7 +109,7 @@ class Observable implements \PEIP\INF\Event\Observable {
      * @access public
      * @return 
      */
-    public function setChanged(){
+    public function setChanged() {
         $this->hasChanged = true;
     }
 
@@ -118,7 +118,7 @@ class Observable implements \PEIP\INF\Event\Observable {
      * @access public
      * @return 
      */
-    public function clearChanged(){
+    public function clearChanged() {
         $this->hasChanged = true;   
     }
 

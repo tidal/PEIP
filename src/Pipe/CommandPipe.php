@@ -34,7 +34,7 @@ class CommandPipe
      * @param $content 
      * @return 
      */
-    protected function replyMessage($content){
+    protected function replyMessage($content) {
         $message = $this->ensureMessage($content);      
         $this->getOutputChannel()->command($message);       
     }

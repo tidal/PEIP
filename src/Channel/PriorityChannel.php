@@ -37,10 +37,10 @@ class PriorityChannel
      * @param $priorityHeader 
      * @return 
      */
-    public function __construct($capacity = -1, $priorityHeader = NULL){
+    public function __construct($capacity = -1, $priorityHeader = NULL) {
         $this->setCapacity((int)$capacity);
         $this->queue = new SplPriorityQueue(); 
-        if($priorityHeader){
+        if ($priorityHeader) {
             $this->priorityHeader = $priorityHeader;
         }
     }   
@@ -51,10 +51,10 @@ class PriorityChannel
      * @param $message 
      * @return 
      */
-    protected function doSend(\PEIP\INF\Message\Message $message){
-        if($this->capacity < 1 || $this->getMessageCount() <= $this->getCapacity()){
+    protected function doSend(\PEIP\INF\Message\Message $message) {
+        if ($this->capacity < 1 || $this->getMessageCount() <= $this->getCapacity()) {
             $this->queue->insert($message, $message->getHeader($this->priorityHeader));
-        }else{
+        }else {
             throw new \Exception('Not implemented yet.');
         }            
     }       

@@ -34,7 +34,7 @@ class TextMessage extends \PEIP\Message\StringMessage {
      * @param $title 
      * @return 
      */
-    public function __construct($content, $title){
+    public function __construct($content, $title) {
         $this->setContent((string)$content);
     }
 
@@ -44,7 +44,7 @@ class TextMessage extends \PEIP\Message\StringMessage {
      * @param $title 
      * @return 
      */
-    public function setTitle($title){
+    public function setTitle($title) {
         $this->title = (string)$title;
     }
 
@@ -53,7 +53,7 @@ class TextMessage extends \PEIP\Message\StringMessage {
      * @access public
      * @return 
      */
-    public function getTitle(){
+    public function getTitle() {
         return $this->title;
     }
 
@@ -64,10 +64,9 @@ class TextMessage extends \PEIP\Message\StringMessage {
      * @static
      * @access public
      * @implements \PEIP\INF\Base\Buildable
-     * @param string $name the name of the header
      * @return boolean wether the header is set
      */
-    public static function build(array $arguments = array()){
+    public static function build(array $arguments = array()) {
         return GenericBuilder::getInstance('\PEIP\Message\StringMessage')->build($arguments);
     }
 

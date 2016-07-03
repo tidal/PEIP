@@ -32,7 +32,7 @@ class ParameterCollection
      * @param $offset 
      * @return 
      */
-    public function offsetExists($offset){
+    public function offsetExists($offset) {
         return $this->hasParameter($offset);
     }   
     
@@ -42,7 +42,7 @@ class ParameterCollection
      * @param $offset 
      * @return 
      */
-    public function offsetGet($offset){
+    public function offsetGet($offset) {
         return $this->getParameter($offset);
     }
     
@@ -52,7 +52,7 @@ class ParameterCollection
      * @param $name 
      * @return 
      */
-    public function offsetUnset($name){
+    public function offsetUnset($name) {
         $this->deleteParameter($name);
     }   
 
@@ -63,7 +63,7 @@ class ParameterCollection
      * @param $name 
      * @return 
      */
-    public function offsetSet($offset, $name){
+    public function offsetSet($offset, $name) {
         $this->setParameter($offeset, $name);
     }
     

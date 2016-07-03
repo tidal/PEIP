@@ -41,11 +41,11 @@ class IteratingDispatcher
      * @param mixed array|ArrayAccess array with values to iterate over
      * @return 
      */
-    public function __construct($array = array()){
+    public function __construct($array = array()) {
         $this->init($array);
     }
 
-    protected function init($array = array()){
+    protected function init($array = array()) {
         $array = Test::assertArrayAccess($array)
             ? $array
             : array();
@@ -59,7 +59,7 @@ class IteratingDispatcher
      * @param mixed $listener the listener to register
      * @return 
      */
-    public function connect($listener){
+    public function connect($listener) {
         $this->listeners[] = $listener;
     }
 
@@ -70,9 +70,9 @@ class IteratingDispatcher
      * @param mixed $listener the listener to unregister
      * @return 
      */
-    public function disconnect($listener){
-        foreach ($this->listeners as $i => $callable){
-            if ($listener === $callable){
+    public function disconnect($listener) {
+        foreach ($this->listeners as $i => $callable) {
+            if ($listener === $callable) {
                 unset($this->listeners[$i]);
             }
         }
@@ -85,7 +85,7 @@ class IteratingDispatcher
      * @access public
      * @return
      */
-    public function disconnectAll(){
+    public function disconnectAll() {
         $this->init();
     }
 
@@ -95,8 +95,8 @@ class IteratingDispatcher
      * @access public
      * @return boolean wether any listener is registered
      */
-    public function hasListeners(){
-        return (boolean) $this->listeners->count();
+    public function hasListeners() {
+        return (boolean)$this->listeners->count();
     }
 
     /**
@@ -108,10 +108,10 @@ class IteratingDispatcher
      * @param mixed $subject the subject to notify about 
      * @return 
      */
-    public function notify($subject){
+    public function notify($subject) {
         $res = NULL;
-        if($this->hasListeners()){
-            if(!$this->listeners->valid()){
+        if ($this->hasListeners()) {
+            if (!$this->listeners->valid()) {
                 $this->listeners->rewind();
             }
             $res = self::doNotifyOne($this->listeners->current(), $subject);
@@ -126,7 +126,7 @@ class IteratingDispatcher
      * @access public
      * @return array registered listeners 
      */
-    public function getListeners(){
+    public function getListeners() {
         return $this->listeners->getArrayCopy();
     }
     

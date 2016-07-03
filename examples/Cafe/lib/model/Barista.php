@@ -31,19 +31,19 @@ class Barista {
     }    
 	
     protected function prepareDrink($orderNumber, $type, $iced){
-    	$drink = new Drink($orderNumber, $type, $iced);	
-    	return $drink;
+        $drink = new Drink($orderNumber, $type, $iced);	
+        return $drink;
     }
 
     protected function printAction($cold, $orderNr){
-    	if($cold){
-    		$type = 'cold';
-    		$count = $this->coldDrinkCounter;
-    	}else{
-    		$type = 'hot';
-    		$count = $this->hotDrinkCounter;    		
-    	}
-    	$total = $this->coldDrinkCounter + $this->hotDrinkCounter;
+        if($cold){
+            $type = 'cold';
+            $count = $this->coldDrinkCounter;
+        }else{
+            $type = 'hot';
+            $count = $this->hotDrinkCounter;    		
+        }
+        $total = $this->coldDrinkCounter + $this->hotDrinkCounter;
         echo PEIP_LINE_SEPARATOR."Barista: prepared $type drink (total #$total- $type #$count) for order #$orderNr";
         flush();    
     }
