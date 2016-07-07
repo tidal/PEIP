@@ -5,69 +5,69 @@ namespace PEIP\Message;
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2016 Timo Michna <timomichna/yahoo.de>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-/**
- * GenericMessage 
+/*
+ * GenericMessage
  *
  * @author Timo Michna <timomichna/yahoo.de>
- * @package PEIP 
- * @subpackage message 
+ * @package PEIP
+ * @subpackage message
  * @extends PEIP\ABS\Base\Container
  * @implements \PEIP\INF\Base\Container, \PEIP\INF\Message\Message, \PEIP\INF\Base\Buildable
  */
 
-use PEIP\Util\Test;
 use PEIP\Base\GenericBuilder;
+use PEIP\Util\Test;
 
-class GenericMessage 
-    implements 
-        \PEIP\INF\Message\Message, 
-        \PEIP\INF\Base\Buildable {
-
+class GenericMessage implements
+        \PEIP\INF\Message\Message,
+        \PEIP\INF\Base\Buildable
+{
     const CONTENT_CAST_TYPE = '';
 
-    private
-        $content,
+    private $content,
         $headers;
-           
+
     /**
-     * constructor
-     * 
-     * @access public
-     * @param mixed $content The content/payload of the message 
+     * constructor.
+     *
+     * @param mixed             $content The content/payload of the message
      * @param array|ArrayAccess $headers headers as key/value pairs
      */
-    public function __construct($content, $headers = array()) {
+    public function __construct($content, $headers = [])
+    {
         $this->doSetContent($content);
-        $this->doSetHeaders($headers);          
+        $this->doSetHeaders($headers);
     }
 
     /**
-     * Returns the content of the container
+     * Returns the content of the container.
      *
      * @implements \PEIP\INF\Base\Container
-     * @access public
+     *
      * @return
      */
-    public function getContent() {
+    public function getContent()
+    {
         return $this->content;
     }
 
     /**
-     * sets content/payload of message - to be overwritten by derived classes
-     * 
-     * @access protected
-     * @param mixed $content The content/payload of the message 
+     * sets content/payload of message - to be overwritten by derived classes.
+     *
+     * @param mixed $content The content/payload of the message
      */
-    protected function doSetContent($content) {
+    protected function doSetContent($content)
+    {
         $this->content = Test::castType($content, self::CONTENT_CAST_TYPE);
     }
 
-    protected function doSetHeaders($headers) {
+    protected function doSetHeaders($headers)
+    {
         $headers = Test::ensureArrayAccess($headers);
         if (is_array($headers)) {
             $headers = new \ArrayObject($headers);
@@ -75,87 +75,95 @@ class GenericMessage
         $this->headers = $headers;
     }
 
-        /**
-         * returns all headers of the message
-         * 
-         * @access public
-         * @return ArrayAccess ArrayAccess object of headers
-         */
-    public function getHeaders() {
-        return (array)$this->headers;
-    }
-  
     /**
-     * returns one specific header of the message
-     * 
-     * @access public
-     * @param string $name the name of the header  
+     * returns all headers of the message.
+     *
+     * @return ArrayAccess ArrayAccess object of headers
+     */
+    public function getHeaders()
+    {
+        return (array) $this->headers;
+    }
+
+    /**
+     * returns one specific header of the message.
+     *
+     * @param string $name the name of the header
+     *
      * @return mixed the value of the header
      */
-    public function getHeader($name) {
-        $name = (string)$name;
-        return isset($this->headers[$name]) ? $this->headers[$name] : NULL;
+    public function getHeader($name)
+    {
+        $name = (string) $name;
+
+        return isset($this->headers[$name]) ? $this->headers[$name] : null;
     }
 
     /**
      * adds a specific header to the message if that header
      * has not allready been set.
      *
-     * @access public
      * @param string $name the name of the header
-     * @return boolean wether the header has been successfully  set
+     *
+     * @return bool wether the header has been successfully  set
      */
-    public function addHeader($name, $value) {
+    public function addHeader($name, $value)
+    {
         if (!$this->hasHeader($name)) {
             $this->headers[$name] = $value;
+
             return true;
         }
+
         return false;
     }
 
     /**
-     * checks wether a specific header is set on the message
-     * 
-     * @access public
+     * checks wether a specific header is set on the message.
+     *
      * @param string $name the name of the header
-     * @return boolean wether the header is set
+     *
+     * @return bool wether the header is set
      */
-    public function hasHeader($name) {
+    public function hasHeader($name)
+    {
         return isset($this->headers[$name]);
     }
 
     /**
      * returns content/payload of the message as string representation for the instance.
      *
-     * @access public
-     * @return string  content/payload of the message
+     * @return string content/payload of the message
      */
-    public function __toString() {
+    public function __toString()
+    {
         $res = false;
         try {
-            $res = (string)$this->getContent();
-        } catch (\Exception $e) {           
+            $res = (string) $this->getContent();
+        } catch (\Exception $e) {
             try {
                 $res = get_class($this->getContent());
             } catch (\Exception $e) {
-                return "";
+                return '';
             }
-        }     
-        
-        return $res;     
+        }
+
+        return $res;
     }
 
     /**
      * Provides a static build method to create new Instances of this class.
-     * Implements \PEIP\INF\Base\Buildable
-     * 
+     * Implements \PEIP\INF\Base\Buildable.
+     *
      * @static
-     * @access public
      * @implements \PEIP\INF\Base\Buildable
+     *
      * @param array $arguments argumends for the constructor
+     *
      * @return GenericMessage new class instance
-     */    
-    public static function build(array $arguments = array()) {
+     */
+    public static function build(array $arguments = [])
+    {
         return GenericBuilder::getInstance(__CLASS__)->build($arguments);
-    }     
-} 
+    }
+}

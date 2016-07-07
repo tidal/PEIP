@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 
 use \PEIP\Base\ObjectStorage as PEIP_Object_Storage;
@@ -6,23 +7,26 @@ use \PEIP\Base\ObjectStorage as PEIP_Object_Storage;
 require_once dirname(__FILE__).'/../../misc/bootstrap.php';
 
 
-class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
-
+class ObjectStorageTest extends PHPUnit_Framework_TestCase
+{
     protected $storage;
 
-    public function setup(){
+    public function setup()
+    {
         $this->storage = new PEIP_Object_Storage();
     }
 
-    public function testCount(){
-        for($x = 1; $x < 5; $x++){
+    public function testCount()
+    {
+        for ($x = 1; $x < 5; $x++) {
             $object = new stdClass();
             $this->storage->attach($object);
             $this->assertEquals($x, $this->storage->count());
         }
     }
 
-    public function testAttachObject(){
+    public function testAttachObject()
+    {
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
@@ -33,13 +37,15 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertTrue($this->storage->offsetExists($object2));
     }
 
-    public function testAttachSingleValue(){
+    public function testAttachSingleValue()
+    {
         $object1 = new stdClass();
         $this->storage->attach($object1, 'foo');
         $this->assertEquals('foo', $this->storage->offsetGet($object1));
     }
 
-    public function testAttachMultiValues(){
+    public function testAttachMultiValues()
+    {
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
@@ -50,13 +56,15 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertEquals(123, $this->storage->offsetGet($object2));
     }
 
-    public function testOffsetSet(){
+    public function testOffsetSet()
+    {
         $object1 = new stdClass();
         $this->storage->attach($object1, 'foo');
         $this->assertTrue($this->storage->offsetExists($object1));
     }
 
-    public function testOffsetUnset(){ 
+    public function testOffsetUnset()
+    {
         $object1 = new stdClass();
         $this->storage->attach($object1, 'foo');
         $this->assertTrue($this->storage->offsetExists($object1));
@@ -64,7 +72,8 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertFalse($this->storage->offsetExists($object1));
     }
 
-    public function testRewindCurrent(){
+    public function testRewindCurrent()
+    {
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
@@ -76,7 +85,8 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertEquals($object1, $this->storage->current());
     }
 
-    public function testNext(){
+    public function testNext()
+    {
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
@@ -89,7 +99,8 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertEquals($object2, $this->storage->current());
     }
 
-    public function testValid(){
+    public function testValid()
+    {
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
@@ -104,8 +115,8 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertFalse($this->storage->valid());
     }
 
-
-    public function testKey(){
+    public function testKey()
+    {
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
@@ -118,8 +129,8 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertEquals(1, $this->storage->key());
     }
 
-
-    public function testGetInfo(){
+    public function testGetInfo()
+    {
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
@@ -132,11 +143,12 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertEquals(123, $this->storage->getInfo());
     }
 
-    public function testAddAll(){
+    public function testAddAll()
+    {
         if (defined('HHVM_VERSION')) {
             $this->markTestSkipped(
                 'HHVM seems to have a bug in SplObjectStorage.addAll'
-            );    
+            );
         }
         $object1 = new stdClass();
         $object1->val = 321;
@@ -144,7 +156,7 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $object2->val = 456;
         $this->storage->attach($object1, 'foo');
         $this->storage->attach($object2, 123);
-        $storage = new PEIP_Object_Storage;
+        $storage = new PEIP_Object_Storage();
         $storage->addAll($this->storage);
         $storage->rewind();
         $this->assertEquals('foo', $storage->getInfo());
@@ -152,19 +164,19 @@ class ObjectStorageTest extends PHPUnit_Framework_TestCase  {
         $this->assertEquals(123, $storage->getInfo());
     }
 
-    public function testRemoveAll(){
+    public function testRemoveAll()
+    {
         $object1 = new stdClass();
         $object1->val = 321;
         $object2 = new stdClass();
         $object2->val = 456;
         $this->storage->attach($object1, 'foo');
         $this->storage->attach($object2, 123);
-        $storage = new PEIP_Object_Storage;
+        $storage = new PEIP_Object_Storage();
         $storage->attach($object1, 'foo');
-        $storage->attach($object2, 123);     
+        $storage->attach($object2, 123);
         $storage->removeAll($this->storage);
         $this->assertFalse($storage->offsetExists($object1));
         $this->assertFalse($storage->offsetExists($object2));
     }
-
 }

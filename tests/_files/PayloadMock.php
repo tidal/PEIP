@@ -2,12 +2,10 @@
 
 
 
-class PayloadMock {
-
-
-	function __toString(){
-		return 'foo';
-	}
-
-
+class PayloadMock
+{
+    public function __toString()
+    {
+        return 'foo';
+    }
 }

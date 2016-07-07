@@ -5,54 +5,49 @@ namespace PEIP\ABS\Command;
 /*
  * This file is part of the PEIP package.
  * (c) 2009-2016 Timo Michna <timomichna/yahoo.de>
- * 
+ *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 
-/**
- * PEIP\ABS\Command\Command 
+/*
+ * PEIP\ABS\Command\Command
  * Basic abstract implementation of comman pattern.
  *
  * @author Timo Michna <timomichna/yahoo.de>
- * @package PEIP 
- * @subpackage command 
+ * @package PEIP
+ * @subpackage command
  * @extends \PEIP\Data\ParameterHolder
  * @implements \PEIP\INF\Data\ParameterHolder, \PEIP\INF\Command\Command
  */
 
 
-use \PEIP\Data\ParameterHolder;
 
-abstract class Command 
-    extends \PEIP\Data\ParameterHolder 
-    implements 
-        \PEIP\INF\Command\Command, 
-        \PEIP\INF\Data\ParameterHolder {
-
-    protected 
-        $params,
+abstract class Command extends \PEIP\Data\ParameterHolder implements
+        \PEIP\INF\Command\Command,
+        \PEIP\INF\Data\ParameterHolder
+{
+    protected $params,
         $callable;
-       
+
     /**
      * Allows a instance of the class to act as a lambda function.
-     * 
-     * @access public
-     * @return 
+     *
+     * @return
      */
-    public function __invoke() {
+    public function __invoke()
+    {
         return $this->execute();
     }
-   
+
     /**
-     * Executes/calls the registered callable with registered 
-     * parameters as arguments
-     * 
-     * @access public
-     * @return 
+     * Executes/calls the registered callable with registered
+     * parameters as arguments.
+     *
+     * @return
      */
-    public function execute() {
+    public function execute()
+    {
         return call_user_func_array($this->callable, $this->getParameters());
-    }   
-        
+    }
 }

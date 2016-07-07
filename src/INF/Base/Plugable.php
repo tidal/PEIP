@@ -11,17 +11,12 @@ namespace PEIP\INF\Base;
  */
 
 /**
- * \PEIP\INF\Event\Connectable
+ * \PEIP\INF\Event\Connectable.
  *
  * @author Timo Michna <timomichna/yahoo.de>
- * @package PEIP
- * @subpackage event
  */
-
-
-
-interface Plugable {
-
+interface Plugable
+{
     public function connect($listener);
 
     public function disconnect($listener);
@@ -32,4 +27,3 @@ interface Plugable {
 
     public function getListeners();
 }
-

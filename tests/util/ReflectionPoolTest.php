@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 
 use \PEIP\Util\ReflectionPool as PEIP_Reflection_Pool;
@@ -8,18 +9,20 @@ PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/ReflectionTe
 
 
 
-class ReflectionPoolTest extends PHPUnit_Framework_TestCase  {
+class ReflectionPoolTest extends PHPUnit_Framework_TestCase
+{
+    public function testGetInstanceReturnsReflectionClass()
+    {
+        $cls = PEIP_Reflection_Pool::getInstance('ReflectionTestClass1');
+        $this->assertTrue($cls instanceof  ReflectionClass);
+        $cls = PEIP_Reflection_Pool::getInstance(new ReflectionTestClass1());
+        $this->assertTrue($cls instanceof  ReflectionClass);
+    }
 
-     public function testGetInstanceReturnsReflectionClass(){
-         $cls = PEIP_Reflection_Pool::getInstance('ReflectionTestClass1');
-         $this->assertTrue($cls instanceof  ReflectionClass);
-         $cls = PEIP_Reflection_Pool::getInstance(new ReflectionTestClass1);
-         $this->assertTrue($cls instanceof  ReflectionClass);
-     }
-
-     public function testGetInstanceCachesReflectionClassInstances(){
-         $cls1 = PEIP_Reflection_Pool::getInstance('ReflectionTestClass1');
-         $cls2 = PEIP_Reflection_Pool::getInstance(new ReflectionTestClass1);
-         $this->assertEquals($cls1, $cls2);
-     }
+    public function testGetInstanceCachesReflectionClassInstances()
+    {
+        $cls1 = PEIP_Reflection_Pool::getInstance('ReflectionTestClass1');
+        $cls2 = PEIP_Reflection_Pool::getInstance(new ReflectionTestClass1());
+        $this->assertEquals($cls1, $cls2);
+    }
 }

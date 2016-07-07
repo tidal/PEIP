@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 
 
 use \PEIP\Service\ServiceContainer as PEIP_Service_Container;
@@ -10,36 +11,34 @@ PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/HelloService
 PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/HelloServiceHandler.php');
 PHPUnit_Util_Fileloader::checkAndLoad(dirname(__FILE__).'/../_files/NoReplyChannel.php');
 
-class ServiceContainerTest extends BaseConnetableTest  {
+class ServiceContainerTest extends BaseConnetableTest
+{
+    public function setup()
+    {
+        $this->serviceContainer = new PEIP_Service_Container();
+    }
 
-
-	public function setup(){
-		$this->serviceContainer = new PEIP_Service_Container();
-	}
-
-    public function testServiceGetterSetter(){
-
-        $service = new HelloService;
+    public function testServiceGetterSetter()
+    {
+        $service = new HelloService();
 
         $this->serviceContainer->setService('HelloService', $service);
 
         $this->assertEquals($service, $this->serviceContainer->getService('HelloService'));
-
     }
 
-    public function testHasService(){
-
-        $service = new HelloService;
+    public function testHasService()
+    {
+        $service = new HelloService();
 
         $this->serviceContainer->setService('HelloService', $service);
 
         $this->assertTrue($this->serviceContainer->hasService('HelloService'));
-
     }
 
-    public function testDeleteService(){
-
-        $service = new HelloService;
+    public function testDeleteService()
+    {
+        $service = new HelloService();
 
         $this->serviceContainer->setService('HelloService', $service);
 
@@ -49,5 +48,4 @@ class ServiceContainerTest extends BaseConnetableTest  {
 
         $this->assertFalse($this->serviceContainer->hasService('HelloService'));
     }
-
 }
