@@ -1,17 +1,17 @@
 <?php
 
 
-class HelloService {
+class HelloService
+{
+    public $salutation = 'Hello';
 
-	public $salutation = 'Hello';
+    public function greet($name)
+    {
+        return $this->salutation.' '.$name;
+    }
 
-	public function greet($name){
-		return $this->salutation.' '.$name;
-	}
-	
-	public function setSalutation($salutation){ 
-		$this->salutation = $salutation;
-	}
-
-
+    public function setSalutation($salutation)
+    {
+        $this->salutation = $salutation;
+    }
 }

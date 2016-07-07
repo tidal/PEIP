@@ -1,4 +1,6 @@
 <?php
 
 
-class SealerBoxMock {}
+class SealerBoxMock
+{
+}

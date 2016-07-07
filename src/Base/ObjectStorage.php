@@ -11,13 +11,10 @@ namespace PEIP\Base;
  */
 
 /**
- * ObjectStorage
+ * ObjectStorage.
  *
  * @author Timo Michna <timomichna/yahoo.de>
- * @package PEIP
- * @subpackage base 
  */
-
-
-class ObjectStorage
-    extends \SplObjectStorage {}
+class ObjectStorage extends \SplObjectStorage
+{
+}

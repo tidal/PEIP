@@ -1,20 +1,20 @@
 <?php
 
 namespace PEIP\Util;
-/* 
+
+/*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 /**
- * Description of Reflection
+ * Description of Reflection.
  *
  * @author timo
  */
-
-class Reflection {
-
-    protected static $classInfo = array();
+class Reflection
+{
+    protected static $classInfo = [];
 
     /*
      * returns implemeted interfaces and (parents) class names as array.
@@ -30,26 +30,23 @@ class Reflection {
      * @return array array with interface/class info for the class
      */
 
-    public static function getImplementedClassesAndInterfaces($class, $store = true){
-        $class = is_object($class) ? get_class($class) : (string)$class;
-        if(isset(self::$classInfo[$class])){
+    public static function getImplementedClassesAndInterfaces($class, $store = true)
+    {
+        $class = is_object($class) ? get_class($class) : (string) $class;
+        if (isset(self::$classInfo[$class])) {
             return self::$classInfo[$class];
         }
         $cls = ReflectionPool::getInstance($class);
         // get the names of implemented interfaces
-        $classInfo = (array)$cls->getInterfaceNames();
+        $classInfo = (array) $cls->getInterfaceNames();
         $classInfo[] = $cls->getName();
         // get names of parent-classes
-        while($cls = $cls->getParentClass()){
+        while ($cls = $cls->getParentClass()) {
             $classInfo[] = $cls->getName();
         }
-        
-        return $store 
+
+        return $store
             ? self::$classInfo[$class] = $classInfo
             : $classInfo;
     }
-
-
-
 }
-

@@ -1,8 +1,6 @@
 <?php
 
 
-class BuilderObjectMock {
-
-
-
+class BuilderObjectMock
+{
 }
